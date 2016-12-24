@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Main bbPress Admin Class
+ * Main IdeaBoard Admin Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
  */
 
@@ -12,45 +12,45 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 if ( !class_exists( 'BBP_Admin' ) ) :
 /**
- * Loads bbPress plugin admin area
+ * Loads IdeaBoard plugin admin area
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  */
 class BBP_Admin {
 
 	/** Directory *************************************************************/
 
 	/**
-	 * @var string Path to the bbPress admin directory
+	 * @var string Path to the IdeaBoard admin directory
 	 */
 	public $admin_dir = '';
 
 	/** URLs ******************************************************************/
 
 	/**
-	 * @var string URL to the bbPress admin directory
+	 * @var string URL to the IdeaBoard admin directory
 	 */
 	public $admin_url = '';
 
 	/**
-	 * @var string URL to the bbPress images directory
+	 * @var string URL to the IdeaBoard images directory
 	 */
 	public $images_url = '';
 
 	/**
-	 * @var string URL to the bbPress admin styles directory
+	 * @var string URL to the IdeaBoard admin styles directory
 	 */
 	public $styles_url = '';
 
 	/**
-	 * @var string URL to the bbPress admin css directory
+	 * @var string URL to the IdeaBoard admin css directory
 	 */
 	public $css_url = '';
 
 	/**
-	 * @var string URL to the bbPress admin js directory
+	 * @var string URL to the IdeaBoard admin js directory
 	 */
 	public $js_url = '';
 
@@ -71,9 +71,9 @@ class BBP_Admin {
 	/** Functions *************************************************************/
 
 	/**
-	 * The main bbPress admin loader
+	 * The main IdeaBoard admin loader
 	 *
-	 * @since bbPress (r2515)
+	 * @since IdeaBoard (r2515)
 	 *
 	 * @uses BBP_Admin::setup_globals() Setup the globals needed
 	 * @uses BBP_Admin::includes() Include the required files
@@ -88,11 +88,11 @@ class BBP_Admin {
 	/**
 	 * Admin globals
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 * @access private
 	 */
 	private function setup_globals() {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 		$this->admin_dir  = trailingslashit( $bbp->includes_dir . 'admin'  ); // Admin path
 		$this->admin_url  = trailingslashit( $bbp->includes_url . 'admin'  ); // Admin url
 		$this->images_url = trailingslashit( $this->admin_url   . 'images' ); // Admin images URL
@@ -104,7 +104,7 @@ class BBP_Admin {
 	/**
 	 * Include required files
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 * @access private
 	 */
 	private function includes() {
@@ -122,7 +122,7 @@ class BBP_Admin {
 	/**
 	 * Setup the admin hooks, actions and filters
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 * @access private
 	 *
 	 * @uses add_action() To add various actions
@@ -138,14 +138,14 @@ class BBP_Admin {
 
 		add_action( 'bbp_admin_menu',              array( $this, 'admin_menus'                )     ); // Add menu item to settings menu
 		add_action( 'bbp_admin_head',              array( $this, 'admin_head'                 )     ); // Add some general styling to the admin area
-		add_action( 'bbp_admin_notices',           array( $this, 'activation_notice'          )     ); // Add notice if not using a bbPress theme
+		add_action( 'bbp_admin_notices',           array( $this, 'activation_notice'          )     ); // Add notice if not using a IdeaBoard theme
 		add_action( 'bbp_register_admin_style',    array( $this, 'register_admin_style'       )     ); // Add green admin style
 		add_action( 'bbp_register_admin_settings', array( $this, 'register_admin_settings'    )     ); // Add settings
 		add_action( 'bbp_activation',              array( $this, 'new_install'                )     ); // Add menu item to settings menu
 		add_action( 'admin_enqueue_scripts',       array( $this, 'enqueue_styles'             )     ); // Add enqueued CSS
 		add_action( 'admin_enqueue_scripts',       array( $this, 'enqueue_scripts'            )     ); // Add enqueued JS
 		add_action( 'wp_dashboard_setup',          array( $this, 'dashboard_widget_right_now' )     ); // Forums 'Right now' Dashboard widget
-		add_action( 'admin_bar_menu',              array( $this, 'admin_bar_about_link'       ), 15 ); // Add a link to bbPress about page to the admin bar
+		add_action( 'admin_bar_menu',              array( $this, 'admin_bar_about_link'       ), 15 ); // Add a link to IdeaBoard about page to the admin bar
 
 		/** Ajax **************************************************************/
 
@@ -155,7 +155,7 @@ class BBP_Admin {
 
 		/** Filters ***********************************************************/
 
-		// Modify bbPress's admin links
+		// Modify IdeaBoard's admin links
 		add_filter( 'plugin_action_links', array( $this, 'modify_plugin_action_links' ), 10, 2 );
 
 		// Map settings capabilities
@@ -165,7 +165,7 @@ class BBP_Admin {
 		add_filter( 'bbp_admin_get_settings_sections', array( $this, 'hide_theme_compat_packages' ) );
 
 		// Allow keymasters to save forums settings
-		add_filter( 'option_page_capability_bbpress',  array( $this, 'option_page_capability_bbpress' ) );
+		add_filter( 'option_page_capability_ideaboard',  array( $this, 'option_page_capability_ideaboard' ) );
 
 		/** Network Admin *****************************************************/
 
@@ -181,7 +181,7 @@ class BBP_Admin {
 	/**
 	 * Add the admin menus
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 *
 	 * @uses add_management_page() To add the Recount page in Tools section
 	 * @uses add_options_page() To add the Forums settings page in Settings
@@ -195,8 +195,8 @@ class BBP_Admin {
 		if ( current_user_can( 'bbp_tools_page' ) ) {
 			if ( current_user_can( 'bbp_tools_repair_page' ) ) {
 				$hooks[] = add_management_page(
-					__( 'Repair Forums', 'bbpress' ),
-					__( 'Forum Repair',  'bbpress' ),
+					__( 'Repair Forums', 'ideaboard' ),
+					__( 'Forum Repair',  'ideaboard' ),
 					$this->minimum_capability,
 					'bbp-repair',
 					'bbp_admin_repair'
@@ -205,8 +205,8 @@ class BBP_Admin {
 
 			if ( current_user_can( 'bbp_tools_import_page' ) ) {
 				$hooks[] = add_management_page(
-					__( 'Import Forums', 'bbpress' ),
-					__( 'Forum Import',  'bbpress' ),
+					__( 'Import Forums', 'ideaboard' ),
+					__( 'Forum Import',  'ideaboard' ),
 					$this->minimum_capability,
 					'bbp-converter',
 					'bbp_converter_settings'
@@ -215,23 +215,23 @@ class BBP_Admin {
 
 			if ( current_user_can( 'bbp_tools_reset_page' ) ) {
 				$hooks[] = add_management_page(
-					__( 'Reset Forums', 'bbpress' ),
-					__( 'Forum Reset',  'bbpress' ),
+					__( 'Reset Forums', 'ideaboard' ),
+					__( 'Forum Reset',  'ideaboard' ),
 					$this->minimum_capability,
 					'bbp-reset',
 					'bbp_admin_reset'
 				);
 			}
 
-			// Fudge the highlighted subnav item when on a bbPress admin page
+			// Fudge the highlighted subnav item when on a IdeaBoard admin page
 			foreach ( $hooks as $hook ) {
 				add_action( "admin_head-$hook", 'bbp_tools_modify_menu_highlight' );
 			}
 
 			// Forums Tools Root
 			add_management_page(
-				__( 'Forums', 'bbpress' ),
-				__( 'Forums', 'bbpress' ),
+				__( 'Forums', 'ideaboard' ),
+				__( 'Forums', 'ideaboard' ),
 				$this->minimum_capability,
 				'bbp-repair',
 				'bbp_admin_repair'
@@ -241,10 +241,10 @@ class BBP_Admin {
 		// Are settings enabled?
 		if ( ! bbp_settings_integration() && current_user_can( 'bbp_settings_page' ) ) {
 			add_options_page(
-				__( 'Forums',  'bbpress' ),
-				__( 'Forums',  'bbpress' ),
+				__( 'Forums',  'ideaboard' ),
+				__( 'Forums',  'ideaboard' ),
 				$this->minimum_capability,
-				'bbpress',
+				'ideaboard',
 				'bbp_admin_settings'
 			);
 		}
@@ -254,8 +254,8 @@ class BBP_Admin {
 
 			// About
 			add_dashboard_page(
-				__( 'Welcome to bbPress',  'bbpress' ),
-				__( 'Welcome to bbPress',  'bbpress' ),
+				__( 'Welcome to IdeaBoard',  'ideaboard' ),
+				__( 'Welcome to IdeaBoard',  'ideaboard' ),
 				$this->minimum_capability,
 				'bbp-about',
 				array( $this, 'about_screen' )
@@ -263,8 +263,8 @@ class BBP_Admin {
 
 			// Credits
 			add_dashboard_page(
-				__( 'Welcome to bbPress',  'bbpress' ),
-				__( 'Welcome to bbPress',  'bbpress' ),
+				__( 'Welcome to IdeaBoard',  'ideaboard' ),
+				__( 'Welcome to IdeaBoard',  'ideaboard' ),
 				$this->minimum_capability,
 				'bbp-credits',
 				array( $this, 'credits_screen' )
@@ -272,13 +272,13 @@ class BBP_Admin {
 		}
 
 		// Bail if plugin is not network activated
-		if ( ! is_plugin_active_for_network( bbpress()->basename ) )
+		if ( ! is_plugin_active_for_network( ideaboard()->basename ) )
 			return;
 
 		add_submenu_page(
 			'index.php',
-			__( 'Update Forums', 'bbpress' ),
-			__( 'Update Forums', 'bbpress' ),
+			__( 'Update Forums', 'ideaboard' ),
+			__( 'Update Forums', 'ideaboard' ),
 			'manage_network',
 			'bbp-update',
 			array( $this, 'update_screen' )
@@ -288,21 +288,21 @@ class BBP_Admin {
 	/**
 	 * Add the network admin menus
 	 *
-	 * @since bbPress (r3689)
+	 * @since IdeaBoard (r3689)
 	 * @uses add_submenu_page() To add the Update Forums page in Updates
 	 */
 	public function network_admin_menus() {
 
 		// Bail if plugin is not network activated
-		if ( ! is_plugin_active_for_network( bbpress()->basename ) )
+		if ( ! is_plugin_active_for_network( ideaboard()->basename ) )
 			return;
 
 		add_submenu_page(
 			'upgrade.php',
-			__( 'Update Forums', 'bbpress' ),
-			__( 'Update Forums', 'bbpress' ),
+			__( 'Update Forums', 'ideaboard' ),
+			__( 'Update Forums', 'ideaboard' ),
 			'manage_network',
-			'bbpress-update',
+			'ideaboard-update',
 			array( $this, 'network_update_screen' )
 		);
 	}
@@ -310,7 +310,7 @@ class BBP_Admin {
 	/**
 	 * If this is a new installation, create some initial forum content.
 	 *
-	 * @since bbPress (r3767)
+	 * @since IdeaBoard (r3767)
 	 * @return type
 	 */
 	public static function new_install() {
@@ -323,7 +323,7 @@ class BBP_Admin {
 	/**
 	 * Register the settings
 	 *
-	 * @since bbPress (r2737)
+	 * @since IdeaBoard (r2737)
 	 *
 	 * @uses add_settings_section() To add our own settings section
 	 * @uses add_settings_field() To add various settings fields
@@ -356,7 +356,7 @@ class BBP_Admin {
 			if ( ( true === $settings_integration ) && !empty( $section['page'] ) ) {
 				$page = $section['page'];
 			} else {
-				$page = 'bbpress';
+				$page = 'ideaboard';
 			}
 
 			// Add the section
@@ -379,7 +379,7 @@ class BBP_Admin {
 	/**
 	 * Maps settings capabilities
 	 *
-	 * @since bbPress (r4242)
+	 * @since IdeaBoard (r4242)
 	 *
 	 * @param array $caps Capabilities for meta capability
 	 * @param string $cap Capability name
@@ -398,7 +398,7 @@ class BBP_Admin {
 			// BuddyPress
 			case 'bbp_settings_buddypress' :
 				if ( ( is_plugin_active( 'buddypress/bp-loader.php' ) && defined( 'BP_VERSION' ) && bp_is_root_blog() ) && is_super_admin() ) {
-					$caps = array( bbpress()->admin->minimum_capability );
+					$caps = array( ideaboard()->admin->minimum_capability );
 				} else {
 					$caps = array( 'do_not_allow' );
 				}
@@ -408,14 +408,14 @@ class BBP_Admin {
 			// Akismet
 			case 'bbp_settings_akismet' :
 				if ( ( is_plugin_active( 'akismet/akismet.php' ) && defined( 'AKISMET_VERSION' ) ) && is_super_admin() ) {
-					$caps = array( bbpress()->admin->minimum_capability );
+					$caps = array( ideaboard()->admin->minimum_capability );
 				} else {
 					$caps = array( 'do_not_allow' );
 				}
 
 				break;
 
-			// bbPress
+			// IdeaBoard
 			case 'bbp_about_page'            : // About and Credits
 			case 'bbp_tools_page'            : // Tools Page
 			case 'bbp_tools_repair_page'     : // Tools - Repair Page
@@ -430,7 +430,7 @@ class BBP_Admin {
 			case 'bbp_settings_user_slugs'   : // Settings - User slugs
 			case 'bbp_settings_per_page'     : // Settings - Per page
 			case 'bbp_settings_per_rss_page' : // Settings - Per RSS page
-				$caps = array( bbpress()->admin->minimum_capability );
+				$caps = array( ideaboard()->admin->minimum_capability );
 				break;
 		}
 
@@ -440,7 +440,7 @@ class BBP_Admin {
 	/**
 	 * Register the importers
 	 *
-	 * @since bbPress (r2737)
+	 * @since IdeaBoard (r2737)
 	 *
 	 * @uses apply_filters() Calls 'bbp_importer_path' filter to allow plugins
 	 *                        to customize the importer script locations.
@@ -455,7 +455,7 @@ class BBP_Admin {
 		require_once( ABSPATH . 'wp-admin/includes/import.php' );
 
 		// Load our importers
-		$importers = apply_filters( 'bbp_importers', array( 'bbpress' ) );
+		$importers = apply_filters( 'bbp_importers', array( 'ideaboard' ) );
 
 		// Loop through included importers
 		foreach ( $importers as $importer ) {
@@ -476,9 +476,9 @@ class BBP_Admin {
 	/**
 	 * Admin area activation notice
 	 *
-	 * Shows a nag message in admin area about the theme not supporting bbPress
+	 * Shows a nag message in admin area about the theme not supporting IdeaBoard
 	 *
-	 * @since bbPress (r2743)
+	 * @since IdeaBoard (r2743)
 	 *
 	 * @uses current_user_can() To check notice should be displayed.
 	 */
@@ -489,7 +489,7 @@ class BBP_Admin {
 	/**
 	 * Add Settings link to plugins area
 	 *
-	 * @since bbPress (r2737)
+	 * @since IdeaBoard (r2737)
 	 *
 	 * @param array $links Links array in which we would prepend our link
 	 * @param string $file Current plugin basename
@@ -497,8 +497,8 @@ class BBP_Admin {
 	 */
 	public static function modify_plugin_action_links( $links, $file ) {
 
-		// Return normal links if not bbPress
-		if ( plugin_basename( bbpress()->file ) !== $file ) {
+		// Return normal links if not IdeaBoard
+		if ( plugin_basename( ideaboard()->file ) !== $file ) {
 			return $links;
 		}
 
@@ -507,12 +507,12 @@ class BBP_Admin {
 
 		// Settings page link
 		if ( current_user_can( 'bbp_settings_page' ) ) {
-			$new_links['settings'] = '<a href="' . esc_url( add_query_arg( array( 'page' => 'bbpress'   ), admin_url( 'options-general.php' ) ) ) . '">' . esc_html__( 'Settings', 'bbpress' ) . '</a>';
+			$new_links['settings'] = '<a href="' . esc_url( add_query_arg( array( 'page' => 'ideaboard'   ), admin_url( 'options-general.php' ) ) ) . '">' . esc_html__( 'Settings', 'ideaboard' ) . '</a>';
 		}
 
 		// About page link
 		if ( current_user_can( 'bbp_about_page' ) ) {
-			$new_links['about']    = '<a href="' . esc_url( add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php'           ) ) ) . '">' . esc_html__( 'About',    'bbpress' ) . '</a>';
+			$new_links['about']    = '<a href="' . esc_url( add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php'           ) ) ) . '">' . esc_html__( 'About',    'ideaboard' ) . '</a>';
 		}
 
 		// Add a few links to the existing links array
@@ -522,18 +522,18 @@ class BBP_Admin {
 	/**
 	 * Add the 'Right now in Forums' dashboard widget
 	 *
-	 * @since bbPress (r2770)
+	 * @since IdeaBoard (r2770)
 	 *
 	 * @uses wp_add_dashboard_widget() To add the dashboard widget
 	 */
 	public static function dashboard_widget_right_now() {
-		wp_add_dashboard_widget( 'bbp-dashboard-right-now', __( 'Right Now in Forums', 'bbpress' ), 'bbp_dashboard_widget_right_now' );
+		wp_add_dashboard_widget( 'bbp-dashboard-right-now', __( 'Right Now in Forums', 'ideaboard' ), 'bbp_dashboard_widget_right_now' );
 	}
 
 	/**
-	 * Add a link to bbPress about page to the admin bar
+	 * Add a link to IdeaBoard about page to the admin bar
 	 *
-	 * @since bbPress (r5136)
+	 * @since IdeaBoard (r5136)
 	 *
 	 * @param WP_Admin_Bar $wp_admin_bar
 	 */
@@ -542,7 +542,7 @@ class BBP_Admin {
 			$wp_admin_bar->add_menu( array(
 				'parent' => 'wp-logo',
 				'id'     => 'bbp-about',
-				'title'  => esc_html__( 'About bbPress', 'bbpress' ),
+				'title'  => esc_html__( 'About IdeaBoard', 'ideaboard' ),
 				'href'   => add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php' ) )
 			) );
 		}
@@ -551,7 +551,7 @@ class BBP_Admin {
 	/**
 	 * Enqueue any admin scripts we might need
 	 *
-	 * @since bbPress (r4260)
+	 * @since IdeaBoard (r4260)
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script( 'suggest' );
@@ -585,7 +585,7 @@ class BBP_Admin {
 	/**
 	 * Enqueue any admin scripts we might need
 	 *
-	 * @since bbPress (r5224)
+	 * @since IdeaBoard (r5224)
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'bbp-admin-css', $this->css_url . 'admin.css', array( 'dashicons' ), bbp_get_version() );
@@ -595,7 +595,7 @@ class BBP_Admin {
 	 * Remove the individual recount and converter menus.
 	 * They are grouped together by h2 tabs
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @uses remove_submenu_page() To remove menu items with alternat navigation
 	 */
@@ -608,13 +608,13 @@ class BBP_Admin {
 	}
 
 	/**
-	 * Registers the bbPress admin color scheme
+	 * Registers the IdeaBoard admin color scheme
 	 *
 	 * Because wp-content can exist outside of the WordPress root there is no
 	 * way to be certain what the relative path of the admin images is.
 	 * We are including the two most common configurations here, just in case.
 	 *
-	 * @since bbPress (r2521)
+	 * @since IdeaBoard (r2521)
 	 *
 	 * @uses wp_admin_css_color() To register the color scheme
 	 */
@@ -627,7 +627,7 @@ class BBP_Admin {
 		// Mint
 		wp_admin_css_color(
 			'bbp-mint',
-			esc_html_x( 'Mint',      'admin color scheme', 'bbpress' ),
+			esc_html_x( 'Mint',      'admin color scheme', 'ideaboard' ),
 			$this->styles_url . 'mint' . $suffix . '.css',
 			array( '#4f6d59', '#33834e', '#5FB37C', '#81c498' ),
 			array( 'base' => '#f1f3f2', 'focus' => '#fff', 'current' => '#fff' )
@@ -636,7 +636,7 @@ class BBP_Admin {
 		// Evergreen
 		wp_admin_css_color(
 			'bbp-evergreen',
-			esc_html_x( 'Evergreen', 'admin color scheme', 'bbpress' ),
+			esc_html_x( 'Evergreen', 'admin color scheme', 'ideaboard' ),
 			$this->styles_url . 'evergreen' . $suffix . '.css',
 			array( '#324d3a', '#446950', '#56b274', '#324d3a' ),
 			array( 'base' => '#f1f3f2', 'focus' => '#fff', 'current' => '#fff' )
@@ -655,13 +655,13 @@ class BBP_Admin {
 	/**
 	 * Hide theme compat package selection if only 1 package is registered
 	 *
-	 * @since bbPress (r4315)
+	 * @since IdeaBoard (r4315)
 	 *
 	 * @param array $sections Forums settings sections
 	 * @return array
 	 */
 	public function hide_theme_compat_packages( $sections = array() ) {
-		if ( count( bbpress()->theme_compat->packages ) <= 1 )
+		if ( count( ideaboard()->theme_compat->packages ) <= 1 )
 			unset( $sections['bbp_settings_theme_compat'] );
 
 		return $sections;
@@ -670,12 +670,12 @@ class BBP_Admin {
 	/**
 	 * Allow keymaster role to save Forums settings
 	 *
-	 * @since bbPress (r4678)
+	 * @since IdeaBoard (r4678)
 	 *
 	 * @param string $capability
 	 * @return string Return 'keep_gate' capability
 	 */
-	public function option_page_capability_bbpress( $capability = 'manage_options' ) {
+	public function option_page_capability_ideaboard( $capability = 'manage_options' ) {
 		$capability = 'keep_gate';
 		return $capability;
 	}
@@ -685,7 +685,7 @@ class BBP_Admin {
 	/**
 	 * Ajax action for facilitating the forum auto-suggest
 	 *
-	 * @since bbPress (r4261)
+	 * @since IdeaBoard (r4261)
 	 *
 	 * @uses get_posts()
 	 * @uses bbp_get_topic_post_type()
@@ -717,7 +717,7 @@ class BBP_Admin {
 		// If we found some topics, loop through and display them
 		if ( ! empty( $topics ) ) {
 			foreach ( (array) $topics as $post ) {
-				printf( esc_html__( '%s - %s', 'bbpress' ), bbp_get_topic_id( $post->ID ), bbp_get_topic_title( $post->ID ) . "\n" );
+				printf( esc_html__( '%s - %s', 'ideaboard' ), bbp_get_topic_id( $post->ID ), bbp_get_topic_title( $post->ID ) . "\n" );
 			}
 		}
 		die();
@@ -726,7 +726,7 @@ class BBP_Admin {
 	/**
 	 * Ajax action for facilitating the topic and reply author auto-suggest
 	 *
-	 * @since bbPress (r5014)
+	 * @since IdeaBoard (r5014)
 	 */
 	public function suggest_user() {
 		global $wpdb;
@@ -755,7 +755,7 @@ class BBP_Admin {
 		// If we found some users, loop through and display them
 		if ( ! empty( $users_query->results ) ) {
 			foreach ( (array) $users_query->results as $user ) {
-				printf( esc_html__( '%s - %s', 'bbpress' ), bbp_get_user_id( $user->ID ), bbp_get_user_nicename( $user->ID, array( 'force' => $user->user_nicename ) ) . "\n" );
+				printf( esc_html__( '%s - %s', 'ideaboard' ), bbp_get_user_id( $user->ID ), bbp_get_user_nicename( $user->ID, array( 'force' => $user->user_nicename ) ) . "\n" );
 			}
 		}
 		die();
@@ -766,70 +766,70 @@ class BBP_Admin {
 	/**
 	 * Output the about screen
 	 *
-	 * @since bbPress (r4159)
+	 * @since IdeaBoard (r4159)
 	 */
 	public function about_screen() {
 
 		list( $display_version ) = explode( '-', bbp_get_version() ); ?>
 
 		<div class="wrap about-wrap">
-			<h1><?php printf( esc_html__( 'Welcome to bbPress %s', 'bbpress' ), $display_version ); ?></h1>
-			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! bbPress %s is bundled up and ready to weather the storm of users in your community!', 'bbpress' ), $display_version ); ?></div>
-			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'bbpress' ), $display_version ); ?></div>
+			<h1><?php printf( esc_html__( 'Welcome to IdeaBoard %s', 'ideaboard' ), $display_version ); ?></h1>
+			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! IdeaBoard %s is bundled up and ready to weather the storm of users in your community!', 'ideaboard' ), $display_version ); ?></div>
+			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'ideaboard' ), $display_version ); ?></div>
 
 			<h2 class="nav-tab-wrapper">
 				<a class="nav-tab nav-tab-active" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-about' ), 'index.php' ) ) ); ?>">
-					<?php esc_html_e( 'What&#8217;s New', 'bbpress' ); ?>
+					<?php esc_html_e( 'What&#8217;s New', 'ideaboard' ); ?>
 				</a><a class="nav-tab" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-credits' ), 'index.php' ) ) ); ?>">
-					<?php esc_html_e( 'Credits', 'bbpress' ); ?>
+					<?php esc_html_e( 'Credits', 'ideaboard' ); ?>
 				</a>
 			</h2>
 
 			<div class="changelog">
-				<h3><?php esc_html_e( 'Forum Subscriptions', 'bbpress' ); ?></h3>
+				<h3><?php esc_html_e( 'Forum Subscriptions', 'ideaboard' ); ?></h3>
 
 				<div class="feature-section col two-col">
 					<div class="last-feature">
-						<h4><?php esc_html_e( 'Subscribe to Forums', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Now your users can subscribe to new topics in specific forums.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Subscribe to Forums', 'ideaboard' ); ?></h4>
+						<p><?php esc_html_e( 'Now your users can subscribe to new topics in specific forums.', 'ideaboard' ); ?></p>
 					</div>
 
 					<div>
-						<h4><?php esc_html_e( 'Manage Subscriptions', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Your users can manage all of their subscriptions in one convenient location.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Manage Subscriptions', 'ideaboard' ); ?></h4>
+						<p><?php esc_html_e( 'Your users can manage all of their subscriptions in one convenient location.', 'ideaboard' ); ?></p>
 					</div>
 				</div>
 			</div>
 
 			<div class="changelog">
-				<h3><?php esc_html_e( 'Converters', 'bbpress' ); ?></h3>
+				<h3><?php esc_html_e( 'Converters', 'ideaboard' ); ?></h3>
 
 				<div class="feature-section col one-col">
 					<div class="last-feature">
-						<p><?php esc_html_e( 'We&#8217;re all abuzz about the hive of new importers, AEF, Drupal, FluxBB, Kunena Forums for Joomla, MyBB, Phorum, PHPFox, PHPWind, PunBB, SMF, Xenforo and XMB. Existing importers are now sweeter than honey with improved importing stickies, topic tags, forum categories and the sting is now gone if you need to remove imported users.', 'bbpress' ); ?></p>
+						<p><?php esc_html_e( 'We&#8217;re all abuzz about the hive of new importers, AEF, Drupal, FluxBB, Kunena Forums for Joomla, MyBB, Phorum, PHPFox, PHPWind, PunBB, SMF, Xenforo and XMB. Existing importers are now sweeter than honey with improved importing stickies, topic tags, forum categories and the sting is now gone if you need to remove imported users.', 'ideaboard' ); ?></p>
 					</div>
 				</div>
 
 				<div class="feature-section col three-col">
 					<div>
-						<h4><?php esc_html_e( 'Theme Compatibility', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Better handling of styles and scripts in the template stack.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Theme Compatibility', 'ideaboard' ); ?></h4>
+						<p><?php esc_html_e( 'Better handling of styles and scripts in the template stack.', 'ideaboard' ); ?></p>
 					</div>
 
 					<div>
-						<h4><?php esc_html_e( 'Polyglot support', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'bbPress fully supports automatic translation updates.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'Polyglot support', 'ideaboard' ); ?></h4>
+						<p><?php esc_html_e( 'IdeaBoard fully supports automatic translation updates.', 'ideaboard' ); ?></p>
 					</div>
 
 					<div class="last-feature">
-						<h4><?php esc_html_e( 'User capabilities', 'bbpress' ); ?></h4>
-						<p><?php esc_html_e( 'Roles and capabilities have been swept through, cleaned up, and simplified.', 'bbpress' ); ?></p>
+						<h4><?php esc_html_e( 'User capabilities', 'ideaboard' ); ?></h4>
+						<p><?php esc_html_e( 'Roles and capabilities have been swept through, cleaned up, and simplified.', 'ideaboard' ); ?></p>
 					</div>
 				</div>
 			</div>
 
 			<div class="return-to-dashboard">
-				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbpress' ), 'options-general.php' ) ) ); ?>"><?php esc_html_e( 'Go to Forum Settings', 'bbpress' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'ideaboard' ), 'options-general.php' ) ) ); ?>"><?php esc_html_e( 'Go to Forum Settings', 'ideaboard' ); ?></a>
 			</div>
 
 		</div>
@@ -843,66 +843,66 @@ class BBP_Admin {
 	 * Hardcoding this in here is pretty janky. It's fine for 2.2, but we'll
 	 * want to leverage api.wordpress.org eventually.
 	 *
-	 * @since bbPress (r4159)
+	 * @since IdeaBoard (r4159)
 	 */
 	public function credits_screen() {
 
 		list( $display_version ) = explode( '-', bbp_get_version() ); ?>
 
 		<div class="wrap about-wrap">
-			<h1><?php printf( esc_html__( 'Welcome to bbPress %s', 'bbpress' ), $display_version ); ?></h1>
-			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! bbPress %s is waxed, polished, and ready for you to take it for a lap or two around the block!', 'bbpress' ), $display_version ); ?></div>
-			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'bbpress' ), $display_version ); ?></div>
+			<h1><?php printf( esc_html__( 'Welcome to IdeaBoard %s', 'ideaboard' ), $display_version ); ?></h1>
+			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! IdeaBoard %s is waxed, polished, and ready for you to take it for a lap or two around the block!', 'ideaboard' ), $display_version ); ?></div>
+			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'ideaboard' ), $display_version ); ?></div>
 
 			<h2 class="nav-tab-wrapper">
 				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-about' ), 'index.php' ) ) ); ?>" class="nav-tab">
-					<?php esc_html_e( 'What&#8217;s New', 'bbpress' ); ?>
+					<?php esc_html_e( 'What&#8217;s New', 'ideaboard' ); ?>
 				</a><a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-credits' ), 'index.php' ) ) ); ?>" class="nav-tab nav-tab-active">
-					<?php esc_html_e( 'Credits', 'bbpress' ); ?>
+					<?php esc_html_e( 'Credits', 'ideaboard' ); ?>
 				</a>
 			</h2>
 
-			<p class="about-description"><?php esc_html_e( 'bbPress is created by a worldwide swarm of busy, busy bees.', 'bbpress' ); ?></p>
+			<p class="about-description"><?php esc_html_e( 'IdeaBoard is created by a worldwide swarm of busy, busy bees.', 'ideaboard' ); ?></p>
 
-			<h4 class="wp-people-group"><?php esc_html_e( 'Project Leaders', 'bbpress' ); ?></h4>
+			<h4 class="wp-people-group"><?php esc_html_e( 'Project Leaders', 'ideaboard' ); ?></h4>
 			<ul class="wp-people-group " id="wp-people-group-project-leaders">
 				<li class="wp-person" id="wp-person-matt">
 					<a href="http://profiles.wordpress.org/matt"><img src="http://0.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?s=60" class="gravatar" alt="Matt Mullenweg" /></a>
 					<a class="web" href="http://profiles.wordpress.org/matt">Matt Mullenweg</a>
-					<span class="title"><?php esc_html_e( 'Founding Developer', 'bbpress' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Founding Developer', 'ideaboard' ); ?></span>
 				</li>
 				<li class="wp-person" id="wp-person-johnjamesjacoby">
 					<a href="http://profiles.wordpress.org/johnjamesjacoby"><img src="http://0.gravatar.com/avatar/81ec16063d89b162d55efe72165c105f?s=60" class="gravatar" alt="John James Jacoby" /></a>
 					<a class="web" href="http://profiles.wordpress.org/johnjamesjacoby">John James Jacoby</a>
-					<span class="title"><?php esc_html_e( 'Lead Developer', 'bbpress' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Lead Developer', 'ideaboard' ); ?></span>
 				</li>
 				<li class="wp-person" id="wp-person-jmdodd">
 					<a href="http://profiles.wordpress.org/jmdodd"><img src="http://0.gravatar.com/avatar/6a7c997edea340616bcc6d0fe03f65dd?s=60" class="gravatar" alt="Jennifer M. Dodd" /></a>
 					<a class="web" href="http://profiles.wordpress.org/jmdodd">Jennifer M. Dodd</a>
-					<span class="title"><?php esc_html_e( 'Feature Developer', 'bbpress' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Feature Developer', 'ideaboard' ); ?></span>
 				</li>
 				<li class="wp-person" id="wp-person-netweb">
 					<a href="http://profiles.wordpress.org/netweb"><img src="http://0.gravatar.com/avatar/97e1620b501da675315ba7cfb740e80f?s=60" class="gravatar" alt="Stephen Edgar" /></a>
 					<a class="web" href="http://profiles.wordpress.org/netweb">Stephen Edgar</a>
-					<span class="title"><?php esc_html_e( 'Converter Specialist', 'bbpress' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Converter Specialist', 'ideaboard' ); ?></span>
 				</li>
 			</ul>
 
-			<h4 class="wp-people-group"><?php esc_html_e( 'Contributing Developers', 'bbpress' ); ?></h4>
+			<h4 class="wp-people-group"><?php esc_html_e( 'Contributing Developers', 'ideaboard' ); ?></h4>
 			<ul class="wp-people-group " id="wp-people-group-contributing-developers">
 				<li class="wp-person" id="wp-person-jaredatch">
 					<a href="http://profiles.wordpress.org/jaredatch"><img src="http://0.gravatar.com/avatar/e341eca9e1a85dcae7127044301b4363?s=60" class="gravatar" alt="Jared Atchison" /></a>
 					<a class="web" href="http://profiles.wordpress.org/jaredatch">Jared Atchison</a>
-					<span class="title"><?php esc_html_e( 'Bug Testing', 'bbpress' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Bug Testing', 'ideaboard' ); ?></span>
 				</li>
 				<li class="wp-person" id="wp-person-gautamgupta">
 					<a href="http://profiles.wordpress.org/gautamgupta"><img src="http://0.gravatar.com/avatar/b0810422cbe6e4eead4def5ae7a90b34?s=60" class="gravatar" alt="Gautam Gupta" /></a>
 					<a class="web" href="http://profiles.wordpress.org/gautamgupta">Gautam Gupta</a>
-					<span class="title"><?php esc_html_e( 'Feature Developer', 'bbpress' ); ?></span>
+					<span class="title"><?php esc_html_e( 'Feature Developer', 'ideaboard' ); ?></span>
 				</li>
 			</ul>
 
-			<h4 class="wp-people-group"><?php esc_html_e( 'Core Contributors to bbPress 2.5', 'bbpress' ); ?></h4>
+			<h4 class="wp-people-group"><?php esc_html_e( 'Core Contributors to IdeaBoard 2.5', 'ideaboard' ); ?></h4>
 			<p class="wp-credits-list">
 				<a href="http://profiles.wordpress.org/alex-ye">alex-ye</a>,
 				<a href="http://profiles.wordpress.org/alexvorn2">alexvorn2</a>,
@@ -933,7 +933,7 @@ class BBP_Admin {
 			</p>
 
 			<div class="return-to-dashboard">
-				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbpress' ), 'options-general.php' ) ) ); ?>"><?php esc_html_e( 'Go to Forum Settings', 'bbpress' ); ?></a>
+				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'ideaboard' ), 'options-general.php' ) ) ); ?>"><?php esc_html_e( 'Go to Forum Settings', 'ideaboard' ); ?></a>
 			</div>
 
 		</div>
@@ -944,9 +944,9 @@ class BBP_Admin {
 	/** Updaters **************************************************************/
 
 	/**
-	 * Update all bbPress forums across all sites
+	 * Update all IdeaBoard forums across all sites
 	 *
-	 * @since bbPress (r3689)
+	 * @since IdeaBoard (r3689)
 	 *
 	 * @global WPDB $wpdb
 	 * @uses get_blog_option()
@@ -959,7 +959,7 @@ class BBP_Admin {
 
 		<div class="wrap">
 			<div id="icon-edit" class="icon32 icon32-posts-topic"><br /></div>
-			<h2><?php esc_html_e( 'Update Forum', 'bbpress' ); ?></h2>
+			<h2><?php esc_html_e( 'Update Forum', 'ideaboard' ); ?></h2>
 
 		<?php
 
@@ -970,8 +970,8 @@ class BBP_Admin {
 				// Run the full updater
 				bbp_version_updater(); ?>
 
-				<p><?php esc_html_e( 'All done!', 'bbpress' ); ?></p>
-				<a class="button" href="index.php?page=bbp-update"><?php esc_html_e( 'Go Back', 'bbpress' ); ?></a>
+				<p><?php esc_html_e( 'All done!', 'ideaboard' ); ?></p>
+				<a class="button" href="index.php?page=bbp-update"><?php esc_html_e( 'Go Back', 'ideaboard' ); ?></a>
 
 				<?php
 
@@ -980,8 +980,8 @@ class BBP_Admin {
 			case 'show' :
 			default : ?>
 
-				<p><?php esc_html_e( 'You can update your forum through this page. Hit the link below to update.', 'bbpress' ); ?></p>
-				<p><a class="button" href="index.php?page=bbp-update&amp;action=bbp-update"><?php esc_html_e( 'Update Forum', 'bbpress' ); ?></a></p>
+				<p><?php esc_html_e( 'You can update your forum through this page. Hit the link below to update.', 'ideaboard' ); ?></p>
+				<p><a class="button" href="index.php?page=bbp-update&amp;action=bbp-update"><?php esc_html_e( 'Update Forum', 'ideaboard' ); ?></a></p>
 
 			<?php break;
 
@@ -991,9 +991,9 @@ class BBP_Admin {
 	}
 
 	/**
-	 * Update all bbPress forums across all sites
+	 * Update all IdeaBoard forums across all sites
 	 *
-	 * @since bbPress (r3689)
+	 * @since IdeaBoard (r3689)
 	 *
 	 * @global WPDB $wpdb
 	 * @uses get_blog_option()
@@ -1007,13 +1007,13 @@ class BBP_Admin {
 
 		<div class="wrap">
 			<div id="icon-edit" class="icon32 icon32-posts-topic"><br /></div>
-			<h2><?php esc_html_e( 'Update Forums', 'bbpress' ); ?></h2>
+			<h2><?php esc_html_e( 'Update Forums', 'ideaboard' ); ?></h2>
 
 		<?php
 
 		// Taking action
 		switch ( $action ) {
-			case 'bbpress-update' :
+			case 'ideaboard-update' :
 
 				// Site counter
 				$n = isset( $_GET['n'] ) ? intval( $_GET['n'] ) : 0;
@@ -1024,8 +1024,8 @@ class BBP_Admin {
 				// No blogs so all done!
 				if ( empty( $blogs ) ) : ?>
 
-					<p><?php esc_html_e( 'All done!', 'bbpress' ); ?></p>
-					<a class="button" href="update-core.php?page=bbpress-update"><?php esc_html_e( 'Go Back', 'bbpress' ); ?></a>
+					<p><?php esc_html_e( 'All done!', 'ideaboard' ); ?></p>
+					<a class="button" href="update-core.php?page=ideaboard-update"><?php esc_html_e( 'Go Back', 'ideaboard' ); ?></a>
 
 				<?php
 
@@ -1042,7 +1042,7 @@ class BBP_Admin {
 
 							<?php
 
-							// Get the response of the bbPress update on this site
+							// Get the response of the IdeaBoard update on this site
 							$response = wp_remote_get(
 								trailingslashit( $siteurl ) . 'wp-admin/index.php?page=bbp-update&action=bbp-update',
 								array( 'timeout' => 30, 'httpversion' => '1.1' )
@@ -1050,12 +1050,12 @@ class BBP_Admin {
 
 							// Site errored out, no response?
 							if ( is_wp_error( $response ) )
-								wp_die( sprintf( __( 'Warning! Problem updating %1$s. Your server may not be able to connect to sites running on it. Error message: <em>%2$s</em>', 'bbpress' ), $siteurl, $response->get_error_message() ) );
+								wp_die( sprintf( __( 'Warning! Problem updating %1$s. Your server may not be able to connect to sites running on it. Error message: <em>%2$s</em>', 'ideaboard' ), $siteurl, $response->get_error_message() ) );
 
 							// Switch to the new blog
 							switch_to_blog( $details[ 'blog_id' ] );
 
-							$basename = bbpress()->basename;
+							$basename = ideaboard()->basename;
 
 							// Run the updater on this site
 							if ( is_plugin_active_for_network( $basename ) || is_plugin_active( $basename ) ) {
@@ -1066,7 +1066,7 @@ class BBP_Admin {
 							restore_current_blog();
 
 							// Do some actions to allow plugins to do things too
-							do_action( 'after_bbpress_upgrade', $response             );
+							do_action( 'after_ideaboard_upgrade', $response             );
 							do_action( 'bbp_upgrade_site',      $details[ 'blog_id' ] );
 
 						endforeach; ?>
@@ -1074,13 +1074,13 @@ class BBP_Admin {
 					</ul>
 
 					<p>
-						<?php esc_html_e( 'If your browser doesn&#8217;t start loading the next page automatically, click this link:', 'bbpress' ); ?>
-						<a class="button" href="update-core.php?page=bbpress-update&amp;action=bbpress-update&amp;n=<?php echo ( $n + 5 ); ?>"><?php esc_html_e( 'Next Forums', 'bbpress' ); ?></a>
+						<?php esc_html_e( 'If your browser doesn&#8217;t start loading the next page automatically, click this link:', 'ideaboard' ); ?>
+						<a class="button" href="update-core.php?page=ideaboard-update&amp;action=ideaboard-update&amp;n=<?php echo ( $n + 5 ); ?>"><?php esc_html_e( 'Next Forums', 'ideaboard' ); ?></a>
 					</p>
 					<script type='text/javascript'>
 						<!--
 						function nextpage() {
-							location.href = 'update-core.php?page=bbpress-update&action=bbpress-update&n=<?php echo ( $n + 5 ) ?>';
+							location.href = 'update-core.php?page=ideaboard-update&action=ideaboard-update&n=<?php echo ( $n + 5 ) ?>';
 						}
 						setTimeout( 'nextpage()', 250 );
 						//-->
@@ -1093,8 +1093,8 @@ class BBP_Admin {
 			case 'show' :
 			default : ?>
 
-				<p><?php esc_html_e( 'You can update all the forums on your network through this page. It works by calling the update script of each site automatically. Hit the link below to update.', 'bbpress' ); ?></p>
-				<p><a class="button" href="update-core.php?page=bbpress-update&amp;action=bbpress-update"><?php esc_html_e( 'Update Forums', 'bbpress' ); ?></a></p>
+				<p><?php esc_html_e( 'You can update all the forums on your network through this page. It works by calling the update script of each site automatically. Hit the link below to update.', 'ideaboard' ); ?></p>
+				<p><a class="button" href="update-core.php?page=ideaboard-update&amp;action=ideaboard-update"><?php esc_html_e( 'Update Forums', 'ideaboard' ); ?></a></p>
 
 			<?php break;
 
@@ -1106,14 +1106,14 @@ class BBP_Admin {
 endif; // class_exists check
 
 /**
- * Setup bbPress Admin
+ * Setup IdeaBoard Admin
  *
- * @since bbPress (r2596)
+ * @since IdeaBoard (r2596)
  *
  * @uses BBP_Admin
  */
 function bbp_admin() {
-	bbpress()->admin = new BBP_Admin();
+	ideaboard()->admin = new BBP_Admin();
 
-	bbpress()->admin->converter = new BBP_Converter();
+	ideaboard()->admin->converter = new BBP_Converter();
 }

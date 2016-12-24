@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress User Template Tags
+ * IdeaBoard User Template Tags
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage TemplateTags
  */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Output a validated user id
  *
- * @since bbPress (r2729)
+ * @since IdeaBoard (r2729)
  *
  * @param int $user_id Optional. User id
  * @param bool $displayed_user_fallback Fallback on displayed user?
@@ -28,7 +28,7 @@ function bbp_user_id( $user_id = 0, $displayed_user_fallback = true, $current_us
 	/**
 	 * Return a validated user id
 	 *
-	 * @since bbPress (r2729)
+	 * @since IdeaBoard (r2729)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @param bool $displayed_user_fallback Fallback on displayed user?
@@ -38,7 +38,7 @@ function bbp_user_id( $user_id = 0, $displayed_user_fallback = true, $current_us
 	 * @return int Validated user id
 	 */
 	function bbp_get_user_id( $user_id = 0, $displayed_user_fallback = true, $current_user_fallback = false ) {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		// Easy empty checking
 		if ( !empty( $user_id ) && is_numeric( $user_id ) ) {
@@ -63,7 +63,7 @@ function bbp_user_id( $user_id = 0, $displayed_user_fallback = true, $current_us
 /**
  * Output ID of current user
  *
- * @since bbPress (r2574)
+ * @since IdeaBoard (r2574)
  *
  * @uses bbp_get_current_user_id() To get the current user id
  */
@@ -73,7 +73,7 @@ function bbp_current_user_id() {
 	/**
 	 * Return ID of current user
 	 *
-	 * @since bbPress (r2574)
+	 * @since IdeaBoard (r2574)
 	 *
 	 * @uses bbp_get_user_id() To get the current user id
 	 * @uses apply_filters() Calls 'bbp_get_current_user_id' with the id
@@ -86,7 +86,7 @@ function bbp_current_user_id() {
 /**
  * Output ID of displayed user
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses bbp_get_displayed_user_id() To get the displayed user id
  */
@@ -96,7 +96,7 @@ function bbp_displayed_user_id() {
 	/**
 	 * Return ID of displayed user
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @uses bbp_get_user_id() To get the displayed user id
 	 * @uses apply_filters() Calls 'bbp_get_displayed_user_id' with the id
@@ -113,7 +113,7 @@ function bbp_displayed_user_id() {
  * the field value that it finds. Since it uses the WP_User object's magic
  * __get() method, it can also be used to get user_meta values.
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param string $field Field to get
  * @param string $filter How to filter the field value (null|raw|db|display|edit)
@@ -129,7 +129,7 @@ function bbp_displayed_user_field( $field = '', $filter = 'display' ) {
 	 * the field value that it finds. Since it uses the WP_User object's magic
 	 * __get() method, it can also be used to get user_meta values.
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @param string $field Field to get
 	 * @param string $filter How to filter the field value (null|raw|db|display|edit)
@@ -141,7 +141,7 @@ function bbp_displayed_user_field( $field = '', $filter = 'display' ) {
 	function bbp_get_displayed_user_field( $field = '', $filter = 'display' ) {
 
 		// Get the displayed user
-		$user         = bbpress()->displayed_user;
+		$user         = ideaboard()->displayed_user;
 
 		// Juggle the user filter property because we don't want to muck up how
 		// other code might interact with this object.
@@ -162,7 +162,7 @@ function bbp_displayed_user_field( $field = '', $filter = 'display' ) {
 /**
  * Output name of current user
  *
- * @since bbPress (r2574)
+ * @since IdeaBoard (r2574)
  *
  * @uses bbp_get_current_user_name() To get the current user name
  */
@@ -172,7 +172,7 @@ function bbp_current_user_name() {
 	/**
 	 * Return name of current user
 	 *
-	 * @since bbPress (r2574)
+	 * @since IdeaBoard (r2574)
 	 *
 	 * @uses apply_filters() Calls 'bbp_get_current_user_name' with the
 	 *                        current user name
@@ -181,7 +181,7 @@ function bbp_current_user_name() {
 	function bbp_get_current_user_name() {
 		global $user_identity;
 
-		$current_user_name = is_user_logged_in() ? $user_identity : __( 'Anonymous', 'bbpress' );
+		$current_user_name = is_user_logged_in() ? $user_identity : __( 'Anonymous', 'ideaboard' );
 
 		return apply_filters( 'bbp_get_current_user_name', $current_user_name );
 	}
@@ -189,7 +189,7 @@ function bbp_current_user_name() {
 /**
  * Output avatar of current user
  *
- * @since bbPress (r2574)
+ * @since IdeaBoard (r2574)
  *
  * @param int $size Size of the avatar. Defaults to 40
  * @uses bbp_get_current_user_avatar() To get the current user avatar
@@ -201,7 +201,7 @@ function bbp_current_user_avatar( $size = 40 ) {
 	/**
 	 * Return avatar of current user
 	 *
-	 * @since bbPress (r2574)
+	 * @since IdeaBoard (r2574)
 	 *
 	 * @param int $size Size of the avatar. Defaults to 40
 	 * @uses bbp_get_current_user_id() To get the current user id
@@ -226,7 +226,7 @@ function bbp_current_user_avatar( $size = 40 ) {
 /**
  * Output link to the profile page of a user
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_profile_link() To get user profile link
@@ -237,7 +237,7 @@ function bbp_user_profile_link( $user_id = 0 ) {
 	/**
 	 * Return link to the profile page of a user
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @uses bbp_get_user_id() To get user id
@@ -263,7 +263,7 @@ function bbp_user_profile_link( $user_id = 0 ) {
 /**
  * Output a users nicename to the screen
  *
- * @since bbPress (r4671)
+ * @since IdeaBoard (r4671)
  *
  * @param int $user_id User ID whose nicename to get
  * @param array $args before|after|user_id|force
@@ -274,7 +274,7 @@ function bbp_user_nicename( $user_id = 0, $args = array() ) {
 	/**
 	 * Return a users nicename to the screen
 	 *
-	 * @since bbPress (r4671)
+	 * @since IdeaBoard (r4671)
 	 *
 	 * @param int $user_id User ID whose nicename to get
 	 * @param array $args before|after|user_id|force
@@ -315,7 +315,7 @@ function bbp_user_nicename( $user_id = 0, $args = array() ) {
 /**
  * Output URL to the profile page of a user
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param int $user_id Optional. User id
  * @param string $user_nicename Optional. User nicename
@@ -327,7 +327,7 @@ function bbp_user_profile_url( $user_id = 0, $user_nicename = '' ) {
 	/**
 	 * Return URL to the profile page of a user
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @param string $user_nicename Optional. User nicename
@@ -376,7 +376,7 @@ function bbp_user_profile_url( $user_id = 0, $user_nicename = '' ) {
 /**
  * Output link to the profile edit page of a user
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_profile_edit_link() To get user profile edit link
@@ -387,7 +387,7 @@ function bbp_user_profile_edit_link( $user_id = 0 ) {
 	/**
 	 * Return link to the profile edit page of a user
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @uses bbp_get_user_id() To get user id
@@ -412,7 +412,7 @@ function bbp_user_profile_edit_link( $user_id = 0 ) {
 /**
  * Output URL to the profile edit page of a user
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param int $user_id Optional. User id
  * @param string $user_nicename Optional. User nicename
@@ -424,7 +424,7 @@ function bbp_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 	/**
 	 * Return URL to the profile edit page of a user
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @param string $user_nicename Optional. User nicename
@@ -440,7 +440,7 @@ function bbp_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 	function bbp_get_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 		global $wp_rewrite;
 
-		$bbp     = bbpress();
+		$bbp     = ideaboard();
 		$user_id = bbp_get_user_id( $user_id );
 		if ( empty( $user_id ) )
 			return false;
@@ -472,7 +472,7 @@ function bbp_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 /**
  * Output a user's main role for display
  *
- * @since bbPress (r3860)
+ * @since IdeaBoard (r3860)
  *
  * @param int $user_id
  * @uses bbp_get_user_display_role To get the user display role
@@ -483,7 +483,7 @@ function bbp_user_display_role( $user_id = 0 ) {
 	/**
 	 * Return a user's main role for display
 	 *
-	 * @since bbPress (r3860)
+	 * @since IdeaBoard (r3860)
 	 *
 	 * @param int $user_id
 	 * @uses bbp_get_user_id() to verify the user ID
@@ -500,11 +500,11 @@ function bbp_user_display_role( $user_id = 0 ) {
 
 		// User is not registered
 		if ( empty( $user_id ) ) {
-			$role = __( 'Guest', 'bbpress' );
+			$role = __( 'Guest', 'ideaboard' );
 
 		// User is not active
 		} elseif ( bbp_is_user_inactive( $user_id ) ) {
-			$role = __( 'Inactive', 'bbpress' );
+			$role = __( 'Inactive', 'ideaboard' );
 
 		// User have a role
 		} else {
@@ -514,7 +514,7 @@ function bbp_user_display_role( $user_id = 0 ) {
 
 		// No role found so default to generic "Member"
 		if ( empty( $role ) ) {
-			$role = __( 'Member', 'bbpress' );
+			$role = __( 'Member', 'ideaboard' );
 		}
 
 		return apply_filters( 'bbp_get_user_display_role', $role, $user_id );
@@ -523,7 +523,7 @@ function bbp_user_display_role( $user_id = 0 ) {
 /**
  * Output the link to the admin section
  *
- * @since bbPress (r2827)
+ * @since IdeaBoard (r2827)
  *
  * @param mixed $args Optional. See {@link bbp_get_admin_link()}
  * @uses bbp_get_admin_link() To get the admin link
@@ -534,7 +534,7 @@ function bbp_admin_link( $args = '' ) {
 	/**
 	 * Return the link to the admin section
 	 *
-	 * @since bbPress (r2827)
+	 * @since IdeaBoard (r2827)
 	 *
 	 * @param mixed $args Optional. This function supports these arguments:
 	 *  - text: The text
@@ -554,7 +554,7 @@ function bbp_admin_link( $args = '' ) {
 
 		// Parse arguments against default values
 		$r = bbp_parse_args( $args, array(
-			'text'   => __( 'Admin', 'bbpress' ),
+			'text'   => __( 'Admin', 'ideaboard' ),
 			'before' => '',
 			'after'  => ''
 		), 'get_admin_link' );
@@ -569,7 +569,7 @@ function bbp_admin_link( $args = '' ) {
 /**
  * Output the author IP address of a post
  *
- * @since bbPress (r3120)
+ * @since IdeaBoard (r3120)
  *
  * @param mixed $args Optional. If it is an integer, it is used as post id.
  * @uses bbp_get_author_ip() To get the post author link
@@ -580,7 +580,7 @@ function bbp_author_ip( $args = '' ) {
 	/**
 	 * Return the author IP address of a post
 	 *
-	 * @since bbPress (r3120)
+	 * @since IdeaBoard (r3120)
 	 *
 	 * @param mixed $args Optional. If an integer, it is used as reply id.
 	 * @uses get_post_meta() To check if it's a topic page
@@ -620,7 +620,7 @@ function bbp_author_ip( $args = '' ) {
  * and correct filters are executed. Used primarily to display topic
  * and reply author information in the anonymous form template-part.
  *
- * @since bbPress (r5119)
+ * @since IdeaBoard (r5119)
  *
  * @param int $post_id
  * @uses bbp_get_author_display_name() to get the author name
@@ -636,7 +636,7 @@ function bbp_author_display_name( $post_id = 0 ) {
 	 * and correct filters are executed. Used primarily to display topic
 	 * and reply author information in the anonymous form template-part.
 	 *
-	 * @since bbPress (r5119)
+	 * @since IdeaBoard (r5119)
 	 *
 	 * @param int $post_id
 	 *
@@ -676,7 +676,7 @@ function bbp_author_display_name( $post_id = 0 ) {
  * and correct filters are executed. Used primarily to display topic
  * and reply author information in the anonymous user form template-part.
  *
- * @since bbPress (r5119)
+ * @since IdeaBoard (r5119)
  *
  * @param int $post_id
  * @uses bbp_get_author_email() to get the author email
@@ -692,7 +692,7 @@ function bbp_author_email( $post_id = 0 ) {
 	 * and correct filters are executed. Used primarily to display topic
 	 * and reply author information in the anonymous user form template-part.
 	 *
-	 * @since bbPress (r5119)
+	 * @since IdeaBoard (r5119)
 	 *
 	 * @param int $post_id
 	 *
@@ -732,7 +732,7 @@ function bbp_author_email( $post_id = 0 ) {
  * and correct filters are executed. Used primarily to display topic
  * and reply author information in the anonymous user form template-part.
  *
- * @since bbPress (r5119)
+ * @since IdeaBoard (r5119)
  *
  * @param int $post_id
  * @uses bbp_get_author_url() to get the author url
@@ -748,7 +748,7 @@ function bbp_author_url( $post_id = 0 ) {
 	 * and correct filters are executed. Used primarily to display topic
 	 * and reply author information in the anonymous user form template-part.
 	 *
-	 * @since bbPress (r5119)
+	 * @since IdeaBoard (r5119)
 	 *
 	 * @param int $post_id
 	 *
@@ -786,7 +786,7 @@ function bbp_author_url( $post_id = 0 ) {
 /**
  * Output the link to the user's favorites page (profile page)
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_favorites_permalink() To get the favorites permalink
@@ -797,7 +797,7 @@ function bbp_favorites_permalink( $user_id = 0 ) {
 	/**
 	 * Return the link to the user's favorites page (profile page)
 	 *
-	 * @since bbPress (r2652)
+	 * @since IdeaBoard (r2652)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @uses bbp_get_user_profile_url() To get the user profile url
@@ -845,7 +845,7 @@ function bbp_favorites_permalink( $user_id = 0 ) {
 /**
  * Output the link to make a topic favorite/remove a topic from favorites
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param mixed $args See {@link bbp_get_user_favorites_link()}
  * @param int $user_id Optional. User id
@@ -861,7 +861,7 @@ function bbp_user_favorites_link( $args = array(), $user_id = 0, $wrap = true ) 
 	 * Return the link to make a topic favorite/remove a topic from
 	 * favorites
 	 *
-	 * @since bbPress (r2652)
+	 * @since IdeaBoard (r2652)
 	 *
 	 * @param mixed $args This function supports these arguments:
 	 *  - subscribe: Favorite text
@@ -891,8 +891,8 @@ function bbp_user_favorites_link( $args = array(), $user_id = 0, $wrap = true ) 
 
 		// Parse arguments against default values
 		$r = bbp_parse_args( $args, array(
-			'favorite'  => __( 'Favorite',  'bbpress' ),
-			'favorited' => __( 'Favorited', 'bbpress' ),
+			'favorite'  => __( 'Favorite',  'ideaboard' ),
+			'favorited' => __( 'Favorited', 'ideaboard' ),
 			'user_id'   => 0,
 			'topic_id'  => 0,
 			'before'    => '',
@@ -949,7 +949,7 @@ function bbp_user_favorites_link( $args = array(), $user_id = 0, $wrap = true ) 
 /**
  * Output the link to the user's subscriptions page (profile page)
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_subscriptions_permalink() To get the subscriptions link
@@ -960,7 +960,7 @@ function bbp_subscriptions_permalink( $user_id = 0 ) {
 	/**
 	 * Return the link to the user's subscriptions page (profile page)
 	 *
-	 * @since bbPress (r2688)
+	 * @since IdeaBoard (r2688)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @uses bbp_get_user_profile_url() To get the user profile url
@@ -1008,7 +1008,7 @@ function bbp_subscriptions_permalink( $user_id = 0 ) {
 /**
  * Output the link to subscribe/unsubscribe from a topic
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
  * @param mixed $args See {@link bbp_get_user_subscribe_link()}
  * @param int $user_id Optional. User id
@@ -1021,7 +1021,7 @@ function bbp_user_subscribe_link( $args = '', $user_id = 0, $wrap = true ) {
 	/**
 	 * Return the link to subscribe/unsubscribe from a forum or topic
 	 *
-	 * @since bbPress (r2668)
+	 * @since IdeaBoard (r2668)
 	 *
 	 * @param mixed $args This function supports these arguments:
 	 *  - subscribe: Subscribe text
@@ -1055,8 +1055,8 @@ function bbp_user_subscribe_link( $args = '', $user_id = 0, $wrap = true ) {
 
 		// Parse arguments against default values
 		$r = bbp_parse_args( $args, array(
-			'subscribe'   => __( 'Subscribe',   'bbpress' ),
-			'unsubscribe' => __( 'Unsubscribe', 'bbpress' ),
+			'subscribe'   => __( 'Subscribe',   'ideaboard' ),
+			'unsubscribe' => __( 'Unsubscribe', 'ideaboard' ),
 			'user_id'     => 0,
 			'topic_id'    => 0,
 			'forum_id'    => 0,
@@ -1151,7 +1151,7 @@ function bbp_user_subscribe_link( $args = '', $user_id = 0, $wrap = true ) {
 /**
  * Edit profile success message
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses bbp_is_single_user() To check if it's the profile page
  * @uses bbp_is_single_user_edit() To check if it's the profile edit page
@@ -1160,7 +1160,7 @@ function bbp_notice_edit_user_success() {
 	if ( isset( $_GET['updated'] ) && ( bbp_is_single_user() || bbp_is_single_user_edit() ) ) : ?>
 
 	<div class="bbp-template-notice updated">
-		<p><?php esc_html_e( 'User updated.', 'bbpress' ); ?></p>
+		<p><?php esc_html_e( 'User updated.', 'ideaboard' ); ?></p>
 	</div>
 
 	<?php endif;
@@ -1169,7 +1169,7 @@ function bbp_notice_edit_user_success() {
 /**
  * Super admin privileges notice
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses is_multisite() To check if the blog is multisite
  * @uses bbp_is_single_user() To check if it's the profile page
@@ -1185,7 +1185,7 @@ function bbp_notice_edit_user_is_super_admin() {
 	if ( is_multisite() && ( bbp_is_single_user() || bbp_is_single_user_edit() ) && current_user_can( 'manage_network_options' ) && is_super_admin( bbp_get_displayed_user_id() ) ) : ?>
 
 	<div class="bbp-template-notice important">
-		<p><?php bbp_is_user_home() || bbp_is_user_home_edit() ? esc_html_e( 'You have super admin privileges.', 'bbpress' ) : esc_html_e( 'This user has super admin privileges.', 'bbpress' ); ?></p>
+		<p><?php bbp_is_user_home() || bbp_is_user_home_edit() ? esc_html_e( 'You have super admin privileges.', 'ideaboard' ) : esc_html_e( 'This user has super admin privileges.', 'ideaboard' ); ?></p>
 	</div>
 
 <?php endif;
@@ -1194,10 +1194,10 @@ function bbp_notice_edit_user_is_super_admin() {
 /**
  * Drop down for selecting the user's display name
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  */
 function bbp_edit_user_display_name() {
-	$bbp            = bbpress();
+	$bbp            = ideaboard();
 	$public_display = array();
 	$public_display['display_username'] = $bbp->displayed_user->user_login;
 
@@ -1237,7 +1237,7 @@ function bbp_edit_user_display_name() {
 /**
  * Output blog role selector (for user edit)
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  */
 function bbp_edit_user_blog_role() {
 
@@ -1252,7 +1252,7 @@ function bbp_edit_user_blog_role() {
 	$blog_roles = bbp_get_blog_roles(); ?>
 
 	<select name="role" id="role">
-		<option value=""><?php esc_html_e( '&mdash; No role for this site &mdash;', 'bbpress' ); ?></option>
+		<option value=""><?php esc_html_e( '&mdash; No role for this site &mdash;', 'ideaboard' ); ?></option>
 
 		<?php foreach ( $blog_roles as $role => $details ) : ?>
 
@@ -1268,7 +1268,7 @@ function bbp_edit_user_blog_role() {
 /**
  * Output forum role selector (for user edit)
  *
- * @since bbPress (r4284)
+ * @since IdeaBoard (r4284)
  */
 function bbp_edit_user_forums_role() {
 
@@ -1287,7 +1287,7 @@ function bbp_edit_user_forums_role() {
 		unset( $dynamic_roles[ bbp_get_keymaster_role() ] ); ?>
 
 	<select name="bbp-forums-role" id="bbp-forums-role">
-		<option value=""><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'bbpress' ); ?></option>
+		<option value=""><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'ideaboard' ); ?></option>
 
 		<?php foreach ( $dynamic_roles as $role => $details ) : ?>
 
@@ -1303,7 +1303,7 @@ function bbp_edit_user_forums_role() {
 /**
  * Return user contact methods Selectbox
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses _wp_get_user_contactmethods() To get the contact methods
  * @uses apply_filters() Calls 'bbp_edit_user_contact_methods' with the methods
@@ -1312,7 +1312,7 @@ function bbp_edit_user_forums_role() {
 function bbp_edit_user_contact_methods() {
 
 	// Get the core WordPress contact methods
-	$contact_methods = _wp_get_user_contactmethods( bbpress()->displayed_user );
+	$contact_methods = _wp_get_user_contactmethods( ideaboard()->displayed_user );
 
 	return apply_filters( 'bbp_edit_user_contact_methods', $contact_methods );
 }
@@ -1322,7 +1322,7 @@ function bbp_edit_user_contact_methods() {
 /**
  * Output the link to the user's topics
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_favorites_permalink() To get the favorites permalink
@@ -1333,7 +1333,7 @@ function bbp_user_topics_created_url( $user_id = 0 ) {
 	/**
 	 * Return the link to the user's topics
 	 *
-	 * @since bbPress (r4225)
+	 * @since IdeaBoard (r4225)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @uses bbp_get_user_profile_url() To get the user profile url
@@ -1382,7 +1382,7 @@ function bbp_user_topics_created_url( $user_id = 0 ) {
 /**
  * Output the link to the user's replies
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_favorites_permalink() To get the favorites permalink
@@ -1393,7 +1393,7 @@ function bbp_user_replies_created_url( $user_id = 0 ) {
 	/**
 	 * Return the link to the user's replies
 	 *
-	 * @since bbPress (r4225)
+	 * @since IdeaBoard (r4225)
 	 *
 	 * @param int $user_id Optional. User id
 	 * @uses bbp_get_user_profile_url() To get the user profile url
@@ -1442,19 +1442,19 @@ function bbp_user_replies_created_url( $user_id = 0 ) {
 /**
  * Handle the login and registration template notices
  *
- * @since bbPress (r2970)
+ * @since IdeaBoard (r2970)
  *
- * @uses WP_Error bbPress::errors::add() To add an error or message
+ * @uses WP_Error IdeaBoard::errors::add() To add an error or message
  */
 function bbp_login_notices() {
 
 	// loggedout was passed
 	if ( !empty( $_GET['loggedout'] ) && ( true === $_GET['loggedout'] ) ) {
-		bbp_add_error( 'loggedout', __( 'You are now logged out.', 'bbpress' ), 'message' );
+		bbp_add_error( 'loggedout', __( 'You are now logged out.', 'ideaboard' ), 'message' );
 
 	// registration is disabled
 	} elseif ( !empty( $_GET['registration'] ) && ( 'disabled' === $_GET['registration'] ) ) {
-		bbp_add_error( 'registerdisabled', __( 'New user registration is currently not allowed.', 'bbpress' ) );
+		bbp_add_error( 'registerdisabled', __( 'New user registration is currently not allowed.', 'ideaboard' ) );
 
 	// Prompt user to check their email
 	} elseif ( !empty( $_GET['checkemail'] ) && in_array( $_GET['checkemail'], array( 'confirm', 'newpass', 'registered' ) ) ) {
@@ -1463,17 +1463,17 @@ function bbp_login_notices() {
 
 			// Email needs confirmation
 			case 'confirm' :
-				bbp_add_error( 'confirm',    __( 'Check your e-mail for the confirmation link.',     'bbpress' ), 'message' );
+				bbp_add_error( 'confirm',    __( 'Check your e-mail for the confirmation link.',     'ideaboard' ), 'message' );
 				break;
 
 			// User requested a new password
 			case 'newpass' :
-				bbp_add_error( 'newpass',    __( 'Check your e-mail for your new password.',         'bbpress' ), 'message' );
+				bbp_add_error( 'newpass',    __( 'Check your e-mail for your new password.',         'ideaboard' ), 'message' );
 				break;
 
 			// User is newly registered
 			case 'registered' :
-				bbp_add_error( 'registered', __( 'Registration complete. Please check your e-mail.', 'bbpress' ), 'message' );
+				bbp_add_error( 'registered', __( 'Registration complete. Please check your e-mail.', 'ideaboard' ), 'message' );
 				break;
 		}
 	}
@@ -1485,7 +1485,7 @@ function bbp_login_notices() {
  * This should be used before {@link get_header()} is called in template files
  * where the user should never have access to the contents of that file.
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @param string $url The URL to redirect to
  * @uses is_user_logged_in() Check if user is logged in
@@ -1510,7 +1510,7 @@ function bbp_logged_in_redirect( $url = '' ) {
 /**
  * Output the required hidden fields when logging in
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @uses apply_filters() To allow custom redirection
  * @uses bbp_redirect_to_field() To output the hidden request url field
@@ -1536,7 +1536,7 @@ function bbp_user_login_fields() {
 /**
  * Output the required hidden fields when registering
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @uses add_query_arg() To add query args
  * @uses bbp_login_url() To get the login url
@@ -1565,7 +1565,7 @@ function bbp_user_register_fields() {
 /**
  * Output the required hidden fields when user lost password
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @uses apply_filters() To allow custom redirection
  * @uses bbp_redirect_to_field() Set referer
@@ -1591,7 +1591,7 @@ function bbp_user_lost_pass_fields() {
 /**
  * Output the author link of a post
  *
- * @since bbPress (r2875)
+ * @since IdeaBoard (r2875)
  *
  * @param mixed $args Optional. If it is an integer, it is used as post id.
  * @uses bbp_get_author_link() To get the post author link
@@ -1602,7 +1602,7 @@ function bbp_author_link( $args = '' ) {
 	/**
 	 * Return the author link of the post
 	 *
-	 * @since bbPress (r2875)
+	 * @since IdeaBoard (r2875)
 	 *
 	 * @param mixed $args Optional. If an integer, it is used as reply id.
 	 * @uses bbp_is_topic() To check if it's a topic page
@@ -1648,7 +1648,7 @@ function bbp_author_link( $args = '' ) {
 
 			// Generate title with the display name of the author
 			if ( empty( $r['link_title'] ) ) {
-				$r['link_title'] = sprintf( !bbp_is_reply_anonymous( $r['post_id'] ) ? __( 'View %s\'s profile', 'bbpress' ) : __( 'Visit %s\'s website', 'bbpress' ), get_the_author_meta( 'display_name', $user_id ) );
+				$r['link_title'] = sprintf( !bbp_is_reply_anonymous( $r['post_id'] ) ? __( 'View %s\'s profile', 'ideaboard' ) : __( 'Visit %s\'s website', 'ideaboard' ), get_the_author_meta( 'display_name', $user_id ) );
 			}
 
 			// Assemble some link bits
@@ -1694,7 +1694,7 @@ function bbp_author_link( $args = '' ) {
 /**
  * Check if the user can access a specific forum
  *
- * @since bbPress (r3127)
+ * @since IdeaBoard (r3127)
  *
  * @uses bbp_get_current_user_id()
  * @uses bbp_get_forum_id()
@@ -1748,7 +1748,7 @@ function bbp_user_can_view_forum( $args = '' ) {
 /**
  * Check if the current user can publish topics
  *
- * @since bbPress (r3127)
+ * @since IdeaBoard (r3127)
  *
  * @uses bbp_is_user_keymaster()
  * @uses is_user_logged_in()
@@ -1784,7 +1784,7 @@ function bbp_current_user_can_publish_topics() {
 /**
  * Check if the current user can publish forums
  *
- * @since bbPress (r3549)
+ * @since IdeaBoard (r3549)
  *
  * @uses bbp_is_user_keymaster()
  * @uses bbp_is_user_active()
@@ -1814,7 +1814,7 @@ function bbp_current_user_can_publish_forums() {
 /**
  * Check if the current user can publish replies
  *
- * @since bbPress (r3127)
+ * @since IdeaBoard (r3127)
  *
  * @uses bbp_is_user_keymaster()
  * @uses is_user_logged_in()
@@ -1858,7 +1858,7 @@ function bbp_current_user_can_publish_replies() {
 /**
  * Get the forums the current user has the ability to see and post to
  *
- * @since bbPress (r3127)
+ * @since IdeaBoard (r3127)
  *
  * @uses bbp_get_forum_post_type()
  * @uses get_posts()
@@ -1907,7 +1907,7 @@ function bbp_get_forums_for_current_user( $args = array() ) {
 /**
  * Performs a series of checks to ensure the current user can create forums.
  *
- * @since bbPress (r3549)
+ * @since IdeaBoard (r3549)
  *
  * @uses bbp_is_user_keymaster()
  * @uses bbp_is_forum_edit()
@@ -1941,7 +1941,7 @@ function bbp_current_user_can_access_create_forum_form() {
 /**
  * Performs a series of checks to ensure the current user can create topics.
  *
- * @since bbPress (r3127)
+ * @since IdeaBoard (r3127)
  *
  * @uses bbp_is_user_keymaster()
  * @uses bbp_is_topic_edit()
@@ -1977,7 +1977,7 @@ function bbp_current_user_can_access_create_topic_form() {
 /**
  * Performs a series of checks to ensure the current user can create replies.
  *
- * @since bbPress (r3127)
+ * @since IdeaBoard (r3127)
  *
  * @uses bbp_is_user_keymaster()
  * @uses bbp_is_topic_edit()
@@ -2014,7 +2014,7 @@ function bbp_current_user_can_access_create_reply_form() {
  * Performs a series of checks to ensure the current user should see the
  * anonymous user form fields.
  *
- * @since bbPress (r5119)
+ * @since IdeaBoard (r5119)
  *
  * @uses bbp_is_anonymous()
  * @uses bbp_is_topic_edit()

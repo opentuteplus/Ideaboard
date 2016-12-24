@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Template Name: bbPress - Forums (Index)
+ * Template Name: IdeaBoard - Forums (Index)
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

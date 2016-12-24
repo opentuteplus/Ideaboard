@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Users Admin Class
+ * IdeaBoard Users Admin Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
  */
 
@@ -12,18 +12,18 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 if ( !class_exists( 'BBP_Users_Admin' ) ) :
 /**
- * Loads bbPress users admin area
+ * Loads IdeaBoard users admin area
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  */
 class BBP_Users_Admin {
 
 	/**
-	 * The bbPress users admin loader
+	 * The IdeaBoard users admin loader
 	 *
-	 * @since bbPress (r2515)
+	 * @since IdeaBoard (r2515)
 	 *
 	 * @uses BBP_Users_Admin::setup_globals() Setup the globals needed
 	 * @uses BBP_Users_Admin::setup_actions() Setup the hooks and actions
@@ -35,7 +35,7 @@ class BBP_Users_Admin {
 	/**
 	 * Setup the admin hooks, actions and filters
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 * @access private
 	 *
 	 * @uses add_action() To add various actions
@@ -61,7 +61,7 @@ class BBP_Users_Admin {
 	/**
 	 * Default interface for setting a forum role
 	 *
-	 * @since bbPress (r4285)
+	 * @since IdeaBoard (r4285)
 	 *
 	 * @param WP_User $profileuser User data
 	 * @return bool Always false
@@ -79,12 +79,12 @@ class BBP_Users_Admin {
 		if ( ! bbp_is_user_keymaster() )
 			unset( $dynamic_roles[ bbp_get_keymaster_role() ] ); ?>
 
-		<h3><?php esc_html_e( 'Forums', 'bbpress' ); ?></h3>
+		<h3><?php esc_html_e( 'Forums', 'ideaboard' ); ?></h3>
 
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th><label for="bbp-forums-role"><?php esc_html_e( 'Forum Role', 'bbpress' ); ?></label></th>
+					<th><label for="bbp-forums-role"><?php esc_html_e( 'Forum Role', 'ideaboard' ); ?></label></th>
 					<td>
 
 						<?php $user_role = bbp_get_user_role( $profileuser->ID ); ?>
@@ -93,11 +93,11 @@ class BBP_Users_Admin {
 
 							<?php if ( ! empty( $user_role ) ) : ?>
 
-								<option value=""><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'bbpress' ); ?></option>
+								<option value=""><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'ideaboard' ); ?></option>
 
 							<?php else : ?>
 
-								<option value="" selected="selected"><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'bbpress' ); ?></option>
+								<option value="" selected="selected"><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'ideaboard' ); ?></option>
 
 							<?php endif; ?>
 
@@ -120,7 +120,7 @@ class BBP_Users_Admin {
 	/**
 	 * Add bulk forums role dropdown to the WordPress users table
 	 *
-	 * @since bbPress (r4360)
+	 * @since IdeaBoard (r4360)
 	 */
 	public static function user_role_bulk_dropdown() {
 
@@ -135,13 +135,13 @@ class BBP_Users_Admin {
 		if ( ! bbp_is_user_keymaster() )
 			unset( $dynamic_roles[ bbp_get_keymaster_role() ] ); ?>
 
-		<label class="screen-reader-text" for="bbp-new-role"><?php esc_html_e( 'Change forum role to&hellip;', 'bbpress' ) ?></label>
+		<label class="screen-reader-text" for="bbp-new-role"><?php esc_html_e( 'Change forum role to&hellip;', 'ideaboard' ) ?></label>
 		<select name="bbp-new-role" id="bbp-new-role" style="display:inline-block; float:none;">
-			<option value=''><?php esc_html_e( 'Change forum role to&hellip;', 'bbpress' ) ?></option>
+			<option value=''><?php esc_html_e( 'Change forum role to&hellip;', 'ideaboard' ) ?></option>
 			<?php foreach ( $dynamic_roles as $role => $details ) : ?>
 				<option value="<?php echo esc_attr( $role ); ?>"><?php echo bbp_translate_user_role( $details['name'] ); ?></option>
 			<?php endforeach; ?>
-		</select><?php submit_button( __( 'Change', 'bbpress' ), 'secondary', 'bbp-change-role', false );
+		</select><?php submit_button( __( 'Change', 'ideaboard' ), 'secondary', 'bbp-change-role', false );
 
 		wp_nonce_field( 'bbp-bulk-users', 'bbp-bulk-users-nonce' );
 	}
@@ -162,7 +162,7 @@ class BBP_Users_Admin {
 		if ( empty( $_REQUEST['users'] ) )
 			return;
 
-		// Bail if this isn't a bbPress action
+		// Bail if this isn't a IdeaBoard action
 		if ( empty( $_REQUEST['bbp-new-role'] ) || empty( $_REQUEST['bbp-change-role'] ) )
 			return;
 
@@ -208,14 +208,14 @@ class BBP_Users_Admin {
 	 * Add Forum Role column to the WordPress Users table, and change the
 	 * core role title to "Site Role"
 	 *
-	 * @since bbPress (r4337)
+	 * @since IdeaBoard (r4337)
 	 *
 	 * @param array $columns Users table columns
 	 * @return array $columns
 	 */
 	public static function user_role_column( $columns = array() ) {
-		$columns['role']          = __( 'Site Role',  'bbpress' );
-		$columns['bbp_user_role'] = __( 'Forum Role', 'bbpress' );
+		$columns['role']          = __( 'Site Role',  'ideaboard' );
+		$columns['bbp_user_role'] = __( 'Forum Role', 'ideaboard' );
 
 		return $columns;
 	}
@@ -223,17 +223,17 @@ class BBP_Users_Admin {
 	/**
 	 * Return user's forums role for display in the WordPress Users list table
 	 *
-	 * @since bbPress (r4337)
+	 * @since IdeaBoard (r4337)
 	 *
 	 * @param string $retval
 	 * @param string $column_name
 	 * @param int $user_id
 	 *
-	 * @return string Displayable bbPress user role
+	 * @return string Displayable IdeaBoard user role
 	 */
 	public static function user_role_row( $retval = '', $column_name = '', $user_id = 0 ) {
 
-		// Only looking for bbPress's user role column
+		// Only looking for IdeaBoard's user role column
 		if ( 'bbp_user_role' === $column_name ) {
 
 			// Get the users role

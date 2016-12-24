@@ -1,18 +1,18 @@
 <?php
 
 /**
- * bbPress Actions
+ * IdeaBoard Actions
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Core
  *
- * This file contains the actions that are used through-out bbPress. They are
+ * This file contains the actions that are used through-out IdeaBoard. They are
  * consolidated here to make searching for them easier, and to help developers
  * understand at a glance the order in which things occur.
  *
  * There are a few common places that additional actions can currently be found
  *
- *  - bbPress: In {@link bbPress::setup_actions()} in bbpress.php
+ *  - IdeaBoard: In {@link IdeaBoard::setup_actions()} in ideaboard.php
  *  - Admin: More in {@link BBP_Admin::setup_actions()} in admin.php
  *
  * @see /core/filters.php
@@ -22,20 +22,20 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Attach bbPress to WordPress
+ * Attach IdeaBoard to WordPress
  *
- * bbPress uses its own internal actions to help aid in third-party plugin
+ * IdeaBoard uses its own internal actions to help aid in third-party plugin
  * development, and to limit the amount of potential future code changes when
  * updates to WordPress core occur.
  *
  * These actions exist to create the concept of 'plugin dependencies'. They
- * provide a safe way for plugins to execute code *only* when bbPress is
+ * provide a safe way for plugins to execute code *only* when IdeaBoard is
  * installed and activated, without needing to do complicated guesswork.
  *
  * For more information on how this works, see the 'Plugin Dependency' section
  * near the bottom of this file.
  *
- *           v--WordPress Actions        v--bbPress Sub-actions
+ *           v--WordPress Actions        v--IdeaBoard Sub-actions
  */
 add_action( 'plugins_loaded',           'bbp_loaded',                 10    );
 add_action( 'init',                     'bbp_init',                   0     ); // Early for bbp_register
@@ -117,14 +117,14 @@ add_action( 'bbp_init', 'bbp_topic_content_autoembed', 8 );
 /**
  * bbp_ready - attached to end 'bbp_init' above
  *
- * Attach actions to the ready action after bbPress has fully initialized.
+ * Attach actions to the ready action after IdeaBoard has fully initialized.
  * The load order helps to execute code at the correct time.
  *                                                v---Load order
  */
 add_action( 'bbp_ready',  'bbp_setup_akismet',    2  ); // Spam prevention for topics and replies
 add_action( 'bp_include', 'bbp_setup_buddypress', 10 ); // Social network integration
 
-// Try to load the bbpress-functions.php file from the active themes
+// Try to load the ideaboard-functions.php file from the active themes
 add_action( 'bbp_after_setup_theme', 'bbp_load_theme_functions', 10 );
 
 // Widgets
@@ -248,7 +248,7 @@ add_action( 'make_spam_user', 'bbp_make_spam_user' );
 // User role
 add_action( 'bbp_profile_update', 'bbp_profile_update_role' );
 
-// Hook WordPress admin actions to bbPress profiles on save
+// Hook WordPress admin actions to IdeaBoard profiles on save
 add_action( 'bbp_user_edit_after', 'bbp_user_edit_after' );
 
 // Caches
@@ -260,12 +260,12 @@ add_action( 'bbp_new_reply_pre_extras',  'bbp_clean_post_cache' );
 add_action( 'bbp_new_reply_post_extras', 'bbp_clean_post_cache' );
 
 /**
- * bbPress needs to redirect the user around in a few different circumstances:
+ * IdeaBoard needs to redirect the user around in a few different circumstances:
  *
  * 1. POST and GET requests
  * 2. Accessing private or hidden content (forums/topics/replies)
  * 3. Editing forums, topics, replies, users, and tags
- * 4. bbPress specific AJAX requests
+ * 4. IdeaBoard specific AJAX requests
  */
 add_action( 'bbp_template_redirect', 'bbp_forum_enforce_blocked', 1  );
 add_action( 'bbp_template_redirect', 'bbp_forum_enforce_hidden',  1  );

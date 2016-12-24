@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Core Theme Compatibility
+ * IdeaBoard Core Theme Compatibility
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage ThemeCompatibility
  */
 
@@ -14,9 +14,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
  * What follows is an attempt at intercepting the natural page load process
- * to replace the_content() with the appropriate bbPress content.
+ * to replace the_content() with the appropriate IdeaBoard content.
  *
- * To do this, bbPress does several direct manipulations of global variables
+ * To do this, IdeaBoard does several direct manipulations of global variables
  * and forces them to do what they are not supposed to be doing.
  *
  * Don't try anything you're about to witness here, at home. Ever.
@@ -31,7 +31,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * for future Theme Packs to use. @link BBP_Twenty_Ten is a good example of
  * extending this class, as is @link bbp_setup_theme_compat()
  *
- * @since bbPress (r3506)
+ * @since IdeaBoard (r3506)
  */
 class BBP_Theme_Compat {
 
@@ -52,7 +52,7 @@ class BBP_Theme_Compat {
 	/**
 	 * Pass the $properties to the object on creation.
 	 *
-	 * @since bbPress (r3926)
+	 * @since IdeaBoard (r3926)
 	 * @param array $properties
 	 */
     public function __construct( Array $properties = array() ) {
@@ -62,7 +62,7 @@ class BBP_Theme_Compat {
 	/**
 	 * Set a theme's property.
 	 *
-	 * @since bbPress (r3926)
+	 * @since IdeaBoard (r3926)
 	 * @param string $property
 	 * @param mixed $value
 	 * @return mixed
@@ -74,7 +74,7 @@ class BBP_Theme_Compat {
 	/**
 	 * Get a theme's property.
 	 *
-	 * @since bbPress (r3926)
+	 * @since IdeaBoard (r3926)
 	 * @param string $property
 	 * @param mixed $value
 	 * @return mixed
@@ -89,11 +89,11 @@ class BBP_Theme_Compat {
 /**
  * Setup the default theme compat theme
  *
- * @since bbPress (r3311)
+ * @since IdeaBoard (r3311)
  * @param BBP_Theme_Compat $theme
  */
 function bbp_setup_theme_compat( $theme = '' ) {
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Make sure theme package is available, set to default if not
 	if ( ! isset( $bbp->theme_compat->packages[$theme] ) || ! is_a( $bbp->theme_compat->packages[$theme], 'BBP_Theme_Compat' ) ) {
@@ -105,83 +105,83 @@ function bbp_setup_theme_compat( $theme = '' ) {
 }
 
 /**
- * Gets the name of the bbPress compatable theme used, in the event the
- * currently active WordPress theme does not explicitly support bbPress.
+ * Gets the name of the IdeaBoard compatable theme used, in the event the
+ * currently active WordPress theme does not explicitly support IdeaBoard.
  * This can be filtered or set manually. Tricky theme authors can override the
- * default and include their own bbPress compatibility layers for their themes.
+ * default and include their own IdeaBoard compatibility layers for their themes.
  *
- * @since bbPress (r3506)
+ * @since IdeaBoard (r3506)
  * @uses apply_filters()
  * @return string
  */
 function bbp_get_theme_compat_id() {
-	return apply_filters( 'bbp_get_theme_compat_id', bbpress()->theme_compat->theme->id );
+	return apply_filters( 'bbp_get_theme_compat_id', ideaboard()->theme_compat->theme->id );
 }
 
 /**
- * Gets the name of the bbPress compatable theme used, in the event the
- * currently active WordPress theme does not explicitly support bbPress.
+ * Gets the name of the IdeaBoard compatable theme used, in the event the
+ * currently active WordPress theme does not explicitly support IdeaBoard.
  * This can be filtered or set manually. Tricky theme authors can override the
- * default and include their own bbPress compatibility layers for their themes.
+ * default and include their own IdeaBoard compatibility layers for their themes.
  *
- * @since bbPress (r3506)
+ * @since IdeaBoard (r3506)
  * @uses apply_filters()
  * @return string
  */
 function bbp_get_theme_compat_name() {
-	return apply_filters( 'bbp_get_theme_compat_name', bbpress()->theme_compat->theme->name );
+	return apply_filters( 'bbp_get_theme_compat_name', ideaboard()->theme_compat->theme->name );
 }
 
 /**
- * Gets the version of the bbPress compatable theme used, in the event the
- * currently active WordPress theme does not explicitly support bbPress.
+ * Gets the version of the IdeaBoard compatable theme used, in the event the
+ * currently active WordPress theme does not explicitly support IdeaBoard.
  * This can be filtered or set manually. Tricky theme authors can override the
- * default and include their own bbPress compatibility layers for their themes.
+ * default and include their own IdeaBoard compatibility layers for their themes.
  *
- * @since bbPress (r3506)
+ * @since IdeaBoard (r3506)
  * @uses apply_filters()
  * @return string
  */
 function bbp_get_theme_compat_version() {
-	return apply_filters( 'bbp_get_theme_compat_version', bbpress()->theme_compat->theme->version );
+	return apply_filters( 'bbp_get_theme_compat_version', ideaboard()->theme_compat->theme->version );
 }
 
 /**
- * Gets the bbPress compatable theme used in the event the currently active
- * WordPress theme does not explicitly support bbPress. This can be filtered,
+ * Gets the IdeaBoard compatable theme used in the event the currently active
+ * WordPress theme does not explicitly support IdeaBoard. This can be filtered,
  * or set manually. Tricky theme authors can override the default and include
- * their own bbPress compatibility layers for their themes.
+ * their own IdeaBoard compatibility layers for their themes.
  *
- * @since bbPress (r3032)
+ * @since IdeaBoard (r3032)
  * @uses apply_filters()
  * @return string
  */
 function bbp_get_theme_compat_dir() {
-	return apply_filters( 'bbp_get_theme_compat_dir', bbpress()->theme_compat->theme->dir );
+	return apply_filters( 'bbp_get_theme_compat_dir', ideaboard()->theme_compat->theme->dir );
 }
 
 /**
- * Gets the bbPress compatable theme used in the event the currently active
- * WordPress theme does not explicitly support bbPress. This can be filtered,
+ * Gets the IdeaBoard compatable theme used in the event the currently active
+ * WordPress theme does not explicitly support IdeaBoard. This can be filtered,
  * or set manually. Tricky theme authors can override the default and include
- * their own bbPress compatibility layers for their themes.
+ * their own IdeaBoard compatibility layers for their themes.
  *
- * @since bbPress (r3032)
+ * @since IdeaBoard (r3032)
  * @uses apply_filters()
  * @return string
  */
 function bbp_get_theme_compat_url() {
-	return apply_filters( 'bbp_get_theme_compat_url', bbpress()->theme_compat->theme->url );
+	return apply_filters( 'bbp_get_theme_compat_url', ideaboard()->theme_compat->theme->url );
 }
 
 /**
  * Gets true/false if page is currently inside theme compatibility
  *
- * @since bbPress (r3265)
+ * @since IdeaBoard (r3265)
  * @return bool
  */
 function bbp_is_theme_compat_active() {
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	if ( empty( $bbp->theme_compat->active ) )
 		return false;
@@ -192,14 +192,14 @@ function bbp_is_theme_compat_active() {
 /**
  * Sets true/false if page is currently inside theme compatibility
  *
- * @since bbPress (r3265)
+ * @since IdeaBoard (r3265)
  * @param bool $set
  * @return bool
  */
 function bbp_set_theme_compat_active( $set = true ) {
-	bbpress()->theme_compat->active = $set;
+	ideaboard()->theme_compat->active = $set;
 
-	return (bool) bbpress()->theme_compat->active;
+	return (bool) ideaboard()->theme_compat->active;
 }
 
 /**
@@ -208,12 +208,12 @@ function bbp_set_theme_compat_active( $set = true ) {
  * Stash possible template files for the current query. Useful if plugins want
  * to override them, or see what files are being scanned for inclusion.
  *
- * @since bbPress (r3311)
+ * @since IdeaBoard (r3311)
  */
 function bbp_set_theme_compat_templates( $templates = array() ) {
-	bbpress()->theme_compat->templates = $templates;
+	ideaboard()->theme_compat->templates = $templates;
 
-	return bbpress()->theme_compat->templates;
+	return ideaboard()->theme_compat->templates;
 }
 
 /**
@@ -222,38 +222,38 @@ function bbp_set_theme_compat_templates( $templates = array() ) {
  * Stash the template file for the current query. Useful if plugins want
  * to override it, or see what file is being included.
  *
- * @since bbPress (r3311)
+ * @since IdeaBoard (r3311)
  */
 function bbp_set_theme_compat_template( $template = '' ) {
-	bbpress()->theme_compat->template = $template;
+	ideaboard()->theme_compat->template = $template;
 
-	return bbpress()->theme_compat->template;
+	return ideaboard()->theme_compat->template;
 }
 
 /**
  * Set the theme compat original_template global
  *
  * Stash the original template file for the current query. Useful for checking
- * if bbPress was able to find a more appropriate template.
+ * if IdeaBoard was able to find a more appropriate template.
  *
- * @since bbPress (r3926)
+ * @since IdeaBoard (r3926)
  */
 function bbp_set_theme_compat_original_template( $template = '' ) {
-	bbpress()->theme_compat->original_template = $template;
+	ideaboard()->theme_compat->original_template = $template;
 
-	return bbpress()->theme_compat->original_template;
+	return ideaboard()->theme_compat->original_template;
 }
 
 /**
  * Set the theme compat original_template global
  *
  * Stash the original template file for the current query. Useful for checking
- * if bbPress was able to find a more appropriate template.
+ * if IdeaBoard was able to find a more appropriate template.
  *
- * @since bbPress (r3926)
+ * @since IdeaBoard (r3926)
  */
 function bbp_is_theme_compat_original_template( $template = '' ) {
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	if ( empty( $bbp->theme_compat->original_template ) )
 		return false;
@@ -262,9 +262,9 @@ function bbp_is_theme_compat_original_template( $template = '' ) {
 }
 
 /**
- * Register a new bbPress theme package to the active theme packages array
+ * Register a new IdeaBoard theme package to the active theme packages array
  *
- * @since bbPress (r3829)
+ * @since IdeaBoard (r3829)
  * @param array $theme
  */
 function bbp_register_theme_package( $theme = array(), $override = true ) {
@@ -277,8 +277,8 @@ function bbp_register_theme_package( $theme = array(), $override = true ) {
 	if ( ! is_a( $theme, 'BBP_Theme_Compat' ) )
 		return;
 
-	// Load up bbPress
-	$bbp = bbpress();
+	// Load up IdeaBoard
+	$bbp = ideaboard();
 
 	// Only override if the flag is set and not previously registered
 	if ( empty( $bbp->theme_compat->packages[$theme->id] ) || ( true === $override ) ) {
@@ -289,7 +289,7 @@ function bbp_register_theme_package( $theme = array(), $override = true ) {
  * This fun little function fills up some WordPress globals with dummy data to
  * stop your average page template from complaining about it missing.
  *
- * @since bbPress (r3108)
+ * @since IdeaBoard (r3108)
  * @global WP_Query $wp_query
  * @global object $post
  * @param array $args
@@ -392,7 +392,7 @@ function bbp_theme_compat_reset_post( $args = array() ) {
 	/**
 	 * Force the header back to 200 status if not a deliberate 404
 	 *
-	 * @see http://bbpress.trac.wordpress.org/ticket/1973
+	 * @see http://ideaboard.trac.wordpress.org/ticket/1973
 	 */
 	if ( ! $wp_query->is_404() ) {
 		status_header( 200 );
@@ -403,10 +403,10 @@ function bbp_theme_compat_reset_post( $args = array() ) {
 }
 
 /**
- * Reset main query vars and filter 'the_content' to output a bbPress
+ * Reset main query vars and filter 'the_content' to output a IdeaBoard
  * template part as needed.
  *
- * @since bbPress (r3032)
+ * @since IdeaBoard (r3032)
  * @param string $template
  * @uses bbp_is_single_user() To check if page is single user
  * @uses bbp_get_single_user_template() To get user template
@@ -436,7 +436,7 @@ function bbp_template_include_theme_compat( $template = '' ) {
 	 * Bail if a root template was already found. This prevents unintended
 	 * recursive filtering of 'the_content'.
 	 *
-	 * @link http://bbpress.trac.wordpress.org/ticket/2429
+	 * @link http://ideaboard.trac.wordpress.org/ticket/2429
 	 */
 	if ( bbp_is_template_included() ) {
 		return $template;
@@ -454,7 +454,7 @@ function bbp_template_include_theme_compat( $template = '' ) {
 		return $template;
 
 	// Define local variable(s)
-	$bbp_shortcodes = bbpress()->shortcodes;
+	$bbp_shortcodes = ideaboard()->shortcodes;
 
 	// Bail if shortcodes are unset somehow
 	if ( !is_a( $bbp_shortcodes, 'BBP_Shortcodes' ) )
@@ -643,7 +643,7 @@ function bbp_template_include_theme_compat( $template = '' ) {
 		// Reset post
 		bbp_theme_compat_reset_post( array(
 			'ID'             => 0,
-			'post_title'     => __( 'Replies', 'bbpress' ),
+			'post_title'     => __( 'Replies', 'ideaboard' ),
 			'post_author'    => 0,
 			'post_date'      => 0,
 			'post_content'   => $bbp_shortcodes->display_reply_index(),
@@ -736,28 +736,28 @@ function bbp_template_include_theme_compat( $template = '' ) {
 			'post_date'      => 0,
 			'post_content'   => $new_content,
 			'post_type'      => '',
-			'post_title'     => sprintf( __( 'Topic Tag: %s', 'bbpress' ), '<span>' . bbp_get_topic_tag_name() . '</span>' ),
+			'post_title'     => sprintf( __( 'Topic Tag: %s', 'ideaboard' ), '<span>' . bbp_get_topic_tag_name() . '</span>' ),
 			'post_status'    => bbp_get_public_status_id(),
 			'comment_status' => 'closed'
 		) );
 	}
 
 	/**
-	 * Bail if the template already matches a bbPress template. This includes
+	 * Bail if the template already matches a IdeaBoard template. This includes
 	 * archive-* and single-* WordPress post_type matches (allowing
-	 * themes to use the expected format) as well as all bbPress-specific
+	 * themes to use the expected format) as well as all IdeaBoard-specific
 	 * template files for users, topics, forums, etc...
 	 *
 	 * We do this after the above checks to prevent incorrect 404 body classes
 	 * and header statuses, as well as to set the post global as needed.
 	 *
-	 * @see http://bbpress.trac.wordpress.org/ticket/1478/
+	 * @see http://ideaboard.trac.wordpress.org/ticket/1478/
 	 */
 	if ( bbp_is_template_included() ) {
 		return $template;
 
 	/**
-	 * If we are relying on bbPress's built in theme compatibility to load
+	 * If we are relying on IdeaBoard's built in theme compatibility to load
 	 * the proper content, we need to intercept the_content, replace the
 	 * output, and display ours instead.
 	 *
@@ -770,8 +770,8 @@ function bbp_template_include_theme_compat( $template = '' ) {
 	 * should be coded without superfluous mark-up and logic (prev/next
 	 * navigation, comments, date/time, etc...)
 	 *
-	 * Hook into the 'bbp_get_bbpress_template' to override the array of
-	 * possible templates, or 'bbp_bbpress_template' to override the result.
+	 * Hook into the 'bbp_get_ideaboard_template' to override the array of
+	 * possible templates, or 'bbp_ideaboard_template' to override the result.
 	 */
 	} elseif ( bbp_is_theme_compat_active() ) {
 		bbp_remove_all_filters( 'the_content' );
@@ -787,7 +787,7 @@ function bbp_template_include_theme_compat( $template = '' ) {
 /**
  * Remove the canonical redirect to allow pretty pagination
  *
- * @since bbPress (r2628)
+ * @since IdeaBoard (r2628)
  * @param string $redirect_url Redirect url
  * @uses WP_Rewrite::using_permalinks() To check if the blog is using permalinks
  * @uses bbp_get_paged() To get the current page number
@@ -844,7 +844,7 @@ function bbp_redirect_canonical( $redirect_url ) {
  * Removes all filters from a WordPress filter, and stashes them in the $bbp
  * global in the event they need to be restored later.
  *
- * @since bbPress (r3251)
+ * @since IdeaBoard (r3251)
  * @global WP_filter $wp_filter
  * @global array $merged_filters
  * @param string $tag
@@ -854,7 +854,7 @@ function bbp_redirect_canonical( $redirect_url ) {
 function bbp_remove_all_filters( $tag, $priority = false ) {
 	global $wp_filter, $merged_filters;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Filters exist
 	if ( isset( $wp_filter[$tag] ) ) {
@@ -896,7 +896,7 @@ function bbp_remove_all_filters( $tag, $priority = false ) {
  * Restores filters from the $bbp global that were removed using
  * bbp_remove_all_filters()
  *
- * @since bbPress (r3251)
+ * @since IdeaBoard (r3251)
  * @global WP_filter $wp_filter
  * @global array $merged_filters
  * @param string $tag
@@ -906,7 +906,7 @@ function bbp_remove_all_filters( $tag, $priority = false ) {
 function bbp_restore_all_filters( $tag, $priority = false ) {
 	global $wp_filter, $merged_filters;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Filters exist
 	if ( isset( $bbp->filters->wp_filter[$tag] ) ) {
@@ -945,9 +945,9 @@ function bbp_restore_all_filters( $tag, $priority = false ) {
 }
 
 /**
- * Force comments_status to 'closed' for bbPress post types
+ * Force comments_status to 'closed' for IdeaBoard post types
  *
- * @since bbPress (r3589)
+ * @since IdeaBoard (r3589)
  * @param bool $open True if open, false if closed
  * @param int $post_id ID of the post to check
  * @return bool True if open, false if closed
@@ -960,7 +960,7 @@ function bbp_force_comment_status( $open, $post_id = 0 ) {
 	// Default return value is what is passed in $open
 	$retval = $open;
 
-	// Only force for bbPress post types
+	// Only force for IdeaBoard post types
 	switch ( $post_type ) {
 		case bbp_get_forum_post_type() :
 		case bbp_get_topic_post_type() :

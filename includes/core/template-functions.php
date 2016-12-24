@@ -1,13 +1,13 @@
 <?php
 
 /**
- * bbPress Template Functions
+ * IdeaBoard Template Functions
  *
  * This file contains functions necessary to mirror the WordPress core template
  * loading process. Many of those functions are not filterable, and even then
- * would not be robust enough to predict where bbPress templates might exist.
+ * would not be robust enough to predict where IdeaBoard templates might exist.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage TemplateFunctions
  */
 
@@ -15,9 +15,9 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Adds bbPress theme support to any active WordPress theme
+ * Adds IdeaBoard theme support to any active WordPress theme
  *
- * @since bbPress (r3032)
+ * @since IdeaBoard (r3032)
  *
  * @param string $slug
  * @param string $name Optional. Default null
@@ -50,7 +50,7 @@ function bbp_get_template_part( $slug, $name = null ) {
  * inherit from a parent theme can just overload one file. If the template is
  * not found in either of those, it looks in the theme-compat folder last.
  *
- * @since bbPress (r3618)
+ * @since IdeaBoard (r3618)
  *
  * @param string|array $template_names Template file(s) to search for, in order.
  * @param bool $load If true the template file will be loaded if it is found.
@@ -92,7 +92,7 @@ function bbp_locate_template( $template_names, $load = false, $require_once = tr
 	}
 
 	/**
-	 * This action exists only to follow the standard bbPress coding convention,
+	 * This action exists only to follow the standard IdeaBoard coding convention,
 	 * and should not be used to short-circuit any part of the template locator.
 	 *
 	 * If you want to override a specific template part, please either filter
@@ -113,7 +113,7 @@ function bbp_locate_template( $template_names, $load = false, $require_once = tr
  *
  * Registers the style if file provided (does NOT overwrite) and enqueues.
  *
- * @since bbPress (r5180)
+ * @since IdeaBoard (r5180)
  *
  * @param string      $handle Name of the stylesheet.
  * @param string|bool $file   Relative path to stylesheet. Example: '/css/mystyle.css'.
@@ -182,7 +182,7 @@ function bbp_enqueue_style( $handle = '', $file = '', $dependencies = array(), $
  *
  * Registers the style if file provided (does NOT overwrite) and enqueues.
  *
- * @since bbPress (r5180)
+ * @since IdeaBoard (r5180)
  *
  * @param string      $handle    Name of the script.
  * @param string|bool $file      Relative path to the script. Example: '/js/myscript.js'.
@@ -253,7 +253,7 @@ function bbp_enqueue_script( $handle = '', $file = '', $dependencies = array(), 
  * relationship, to allow for custom template locations. Used in conjunction
  * with bbp_locate_template(), this allows for easy template overrides.
  *
- * @since bbPress (r4323)
+ * @since IdeaBoard (r4323)
  *
  * @param string $location Callback function that returns the
  * @param int $priority
@@ -271,7 +271,7 @@ function bbp_register_template_stack( $location_callback = '', $priority = 10 ) 
 /**
  * Deregisters a previously registered template stack location.
  *
- * @since bbPress (r4652)
+ * @since IdeaBoard (r4652)
  *
  * @param string $location Callback function that returns the
  * @param int $priority
@@ -293,7 +293,7 @@ function bbp_deregister_template_stack( $location_callback = '', $priority = 10 
  *
  * @see bbp_register_template_stack()
  *
- * @since bbPress (r4323)
+ * @since IdeaBoard (r4323)
  *
  * @global array $wp_filter Stores all of the filters
  * @global array $merged_filters Merges the filter hooks using this function.
@@ -348,7 +348,7 @@ function bbp_get_template_stack() {
 /**
  * Get a template part in an output buffer, and return it
  *
- * @since bbPress (r5043)
+ * @since IdeaBoard (r5043)
  *
  * @param string $slug
  * @param string $name
@@ -378,7 +378,7 @@ function bbp_buffer_template_part( $slug, $name = null, $echo = true ) {
  * the use of {@link bbp_locate_template()}. Allows for more generic template
  * locations without the use of the other get_*_template() functions.
  *
- * @since bbPress (r3629)
+ * @since IdeaBoard (r3629)
  *
  * @param string $type Filename without extension.
  * @param array $templates An optional list of template candidates
@@ -393,7 +393,7 @@ function bbp_get_query_template( $type, $templates = array() ) {
 	if ( empty( $templates ) )
 		$templates = array( "{$type}.php" );
 
-	// Filter possible templates, try to match one, and set any bbPress theme
+	// Filter possible templates, try to match one, and set any IdeaBoard theme
 	// compat properties so they can be cross-checked later.
 	$templates = apply_filters( "bbp_get_{$type}_template", $templates );
 	$templates = bbp_set_theme_compat_templates( $templates );
@@ -406,13 +406,13 @@ function bbp_get_query_template( $type, $templates = array() ) {
 /**
  * Get the possible subdirectories to check for templates in
  *
- * @since bbPress (r3738)
+ * @since IdeaBoard (r3738)
  * @param array $templates Templates we are looking for
  * @return array Possible subfolders to look in
  */
 function bbp_get_template_locations( $templates = array() ) {
 	$locations = array(
-		'bbpress',
+		'ideaboard',
 		'forums',
 		''
 	);
@@ -422,7 +422,7 @@ function bbp_get_template_locations( $templates = array() ) {
 /**
  * Add template locations to template files being searched for
  *
- * @since bbPress (r3738)
+ * @since IdeaBoard (r3738)
  *
  * @param array $templates
  * @return array()
@@ -442,7 +442,7 @@ function bbp_add_template_stack_locations( $stacks = array() ) {
 }
 
 /**
- * Add checks for bbPress conditions to parse_query action
+ * Add checks for IdeaBoard conditions to parse_query action
  *
  * If it's a user page, WP_Query::bbp_is_single_user is set to true.
  * If it's a user edit page, WP_Query::bbp_is_single_user_edit is set to true
@@ -458,7 +458,7 @@ function bbp_add_template_stack_locations( $stacks = array() ) {
  * If it's a view page, WP_Query::bbp_is_view is set to true
  * If it's a search page, WP_Query::bbp_is_search is set to true
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @param WP_Query $posts_query
  *
@@ -590,7 +590,7 @@ function bbp_parse_query( $posts_query ) {
 		$posts_query->set( 'author_name', $the_user->user_nicename );
 
 		// Set the displayed user global to this user
-		bbpress()->displayed_user = $the_user;
+		ideaboard()->displayed_user = $the_user;
 
 	// View Page
 	} elseif ( !empty( $bbp_view ) ) {

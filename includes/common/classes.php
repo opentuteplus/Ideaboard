@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Classes
+ * IdeaBoard Classes
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Classes
  */
 
@@ -12,17 +12,17 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 if ( !class_exists( 'BBP_Component' ) ) :
 /**
- * bbPress Component Class
+ * IdeaBoard Component Class
  *
- * The bbPress component class is responsible for simplifying the creation
+ * The IdeaBoard component class is responsible for simplifying the creation
  * of components that share similar behaviors and routines. It is used
- * internally by bbPress to create forums, topics and replies, but can be
+ * internally by IdeaBoard to create forums, topics and replies, but can be
  * extended to create other really neat things.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Classes
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  */
 class BBP_Component {
 
@@ -56,9 +56,9 @@ class BBP_Component {
 	/** Methods ***************************************************************/
 
 	/**
-	 * bbPress Component loader
+	 * IdeaBoard Component loader
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 *
 	 * @param mixed $args Required. Supports these args:
 	 *  - name: Unique name (for internal identification)
@@ -82,7 +82,7 @@ class BBP_Component {
 	/**
 	 * Component global variables
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 * @access private
 	 *
 	 * @uses apply_filters() Calls 'bbp_{@link BBP_Component::name}_id'
@@ -97,7 +97,7 @@ class BBP_Component {
 	/**
 	 * Include required files
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 * @access private
 	 *
 	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}includes'
@@ -109,7 +109,7 @@ class BBP_Component {
 	/**
 	 * Setup the actions
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 * @access private
 	 *
 	 * @uses add_action() To add various actions
@@ -129,7 +129,7 @@ class BBP_Component {
 	/**
 	 * Setup the component post types
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 *
 	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_register_post_types'
 	 */
@@ -140,7 +140,7 @@ class BBP_Component {
 	/**
 	 * Register component specific taxonomies
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 *
 	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_register_taxonomies'
 	 */
@@ -151,7 +151,7 @@ class BBP_Component {
 	/**
 	 * Add any additional rewrite tags
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 *
 	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_add_rewrite_tags'
 	 */
@@ -162,7 +162,7 @@ class BBP_Component {
 	/**
 	 * Generate any additional rewrite rules
 	 *
-	 * @since bbPress (r2700)
+	 * @since IdeaBoard (r2700)
 	 *
 	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_generate_rewrite_rules'
 	 */
@@ -174,12 +174,12 @@ endif; // BBP_Component
 
 if ( class_exists( 'Walker' ) ) :
 /**
- * Create HTML dropdown list of bbPress forums/topics.
+ * Create HTML dropdown list of IdeaBoard forums/topics.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Classes
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  * @uses Walker
  */
 class BBP_Walker_Dropdown extends Walker {
@@ -187,7 +187,7 @@ class BBP_Walker_Dropdown extends Walker {
 	/**
 	 * @see Walker::$tree_type
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @var string
 	 */
@@ -196,7 +196,7 @@ class BBP_Walker_Dropdown extends Walker {
 	/**
 	 * @see Walker::$db_fields
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @var array
 	 */
@@ -207,7 +207,7 @@ class BBP_Walker_Dropdown extends Walker {
 	/**
 	 * Set the tree_type
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 */
 	public function __construct() {
 		$this->tree_type = bbp_get_forum_post_type();
@@ -216,7 +216,7 @@ class BBP_Walker_Dropdown extends Walker {
 	/**
 	 * @see Walker::start_el()
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @param string $output Passed by reference. Used to append additional
 	 *                        content.
@@ -261,19 +261,19 @@ class BBP_Walker_Dropdown extends Walker {
 }
 
 /**
- * Create hierarchical list of bbPress replies.
+ * Create hierarchical list of IdeaBoard replies.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Classes
  *
- * @since bbPress (r4944)
+ * @since IdeaBoard (r4944)
  */
 class BBP_Walker_Reply extends Walker {
 
 	/**
 	 * @see Walker::$tree_type
 	 *
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 *
 	 * @var string
 	 */
@@ -282,7 +282,7 @@ class BBP_Walker_Reply extends Walker {
 	/**
 	 * @see Walker::$db_fields
 	 *
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 *
 	 * @var array
 	 */
@@ -294,14 +294,14 @@ class BBP_Walker_Reply extends Walker {
 	/**
 	 * @see Walker::start_lvl()
 	 *
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 *
 	 * @param string $output Passed by reference. Used to append additional content
 	 * @param int $depth Depth of reply
 	 * @param array $args Uses 'style' argument for type of HTML list
 	 */
 	public function start_lvl( &$output = '', $depth = 0, $args = array() ) {
-		bbpress()->reply_query->reply_depth = $depth + 1;
+		ideaboard()->reply_query->reply_depth = $depth + 1;
 
 		switch ( $args['style'] ) {
 			case 'div':
@@ -319,14 +319,14 @@ class BBP_Walker_Reply extends Walker {
 	/**
 	 * @see Walker::end_lvl()
 	 *
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 *
 	 * @param string $output Passed by reference. Used to append additional content
 	 * @param int $depth Depth of reply
 	 * @param array $args Will only append content if style argument value is 'ol' or 'ul'
 	 */
 	public function end_lvl( &$output = '', $depth = 0, $args = array() ) {
-		bbpress()->reply_query->reply_depth = (int) $depth + 1;
+		ideaboard()->reply_query->reply_depth = (int) $depth + 1;
 
 		switch ( $args['style'] ) {
 			case 'div':
@@ -342,7 +342,7 @@ class BBP_Walker_Reply extends Walker {
 	}
 
 	/**
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 */
 	public function display_element( $element = false, &$children_elements = array(), $max_depth = 0, $depth = 0, $args = array(), &$output = '' ) {
 
@@ -369,15 +369,15 @@ class BBP_Walker_Reply extends Walker {
 	/**
 	 * @see Walker:start_el()
 	 *
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 */
 	public function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 ) {
 
 		// Set up reply
 		$depth++;
-		bbpress()->reply_query->reply_depth = $depth;
-		bbpress()->reply_query->post        = $object;
-		bbpress()->current_reply_id         = $object->ID;
+		ideaboard()->reply_query->reply_depth = $depth;
+		ideaboard()->reply_query->post        = $object;
+		ideaboard()->current_reply_id         = $object->ID;
 
 		// Check for a callback and use it if specified
 		if ( !empty( $args['callback'] ) ) {
@@ -396,7 +396,7 @@ class BBP_Walker_Reply extends Walker {
 	}
 
 	/**
-	 * @since bbPress (r4944)
+	 * @since IdeaBoard (r4944)
 	 */
 	public function end_el( &$output = '', $object = false, $depth = 0, $args = array() ) {
 

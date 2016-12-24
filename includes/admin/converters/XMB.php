@@ -3,8 +3,8 @@
 /**
  * Implementation of XMB Forum converter.
  *
- * @since bbPress (r5143)
- * @link Codex Docs http://codex.bbpress.org/import-forums/xmb
+ * @since IdeaBoard (r5143)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/xmb
  */
 class XMB extends BBP_Converter_Base {
 
@@ -702,7 +702,7 @@ class XMB extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 

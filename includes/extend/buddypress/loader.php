@@ -1,19 +1,19 @@
 <?php
 
 /**
- * bbPress BuddyPress Component Class
+ * IdeaBoard BuddyPress Component Class
  *
- * bbPress and BuddyPress are designed to connect together seamlessly and
+ * IdeaBoard and BuddyPress are designed to connect together seamlessly and
  * invisibly, and this is the hunk of code necessary to make that happen.
  *
  * The code in this BuddyPress Extension does some pretty complicated stuff,
- * far outside the realm of the simplicity bbPress is traditionally known for.
+ * far outside the realm of the simplicity IdeaBoard is traditionally known for.
  *
- * While the rest of bbPress serves as an example of how to write pretty, simple
+ * While the rest of IdeaBoard serves as an example of how to write pretty, simple
  * code, what's in these files is pure madness. It should not be used as an
  * example of anything other than successfully juggling chainsaws and puppy-dogs.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  */
 
@@ -24,9 +24,9 @@ if ( !class_exists( 'BBP_Forums_Component' ) ) :
 /**
  * Loads Forums Component
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  */
 class BBP_Forums_Component extends BP_Component {
@@ -34,13 +34,13 @@ class BBP_Forums_Component extends BP_Component {
 	/**
 	 * Start the forums component creation process
 	 *
-	 * @since bbPress (r3552)
+	 * @since IdeaBoard (r3552)
 	 */
 	public function __construct() {
 		parent::start(
 			'forums',
-			__( 'Forums', 'bbpress' ),
-			bbpress()->includes_dir . 'extend/buddypress/'
+			__( 'Forums', 'ideaboard' ),
+			ideaboard()->includes_dir . 'extend/buddypress/'
 		);
 		$this->includes();
 		$this->setup_globals();
@@ -83,7 +83,7 @@ class BBP_Forums_Component extends BP_Component {
 	 * The BP_FORUMS_SLUG constant is deprecated, and only used here for
 	 * backwards compatibility.
 	 *
-	 * @since bbPress (r3552)
+	 * @since IdeaBoard (r3552)
 	 */
 	public function setup_globals( $args = array() ) {
 		$bp = buddypress();
@@ -102,7 +102,7 @@ class BBP_Forums_Component extends BP_Component {
 			'slug'          => BP_FORUMS_SLUG,
 			'root_slug'     => isset( $bp->pages->forums->slug ) ? $bp->pages->forums->slug : BP_FORUMS_SLUG,
 			'has_directory' => false,
-			'search_string' => __( 'Search Forums...', 'bbpress' ),
+			'search_string' => __( 'Search Forums...', 'ideaboard' ),
 		);
 
 		parent::setup_globals( $args );
@@ -111,11 +111,11 @@ class BBP_Forums_Component extends BP_Component {
 	/**
 	 * Setup the actions
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @access private
 	 * @uses add_filter() To add various filters
 	 * @uses add_action() To add various actions
-	 * @link http://bbpress.trac.wordpress.org/ticket/2176
+	 * @link http://ideaboard.trac.wordpress.org/ticket/2176
 	 */
 	public function setup_actions() {
 
@@ -128,16 +128,16 @@ class BBP_Forums_Component extends BP_Component {
 	/**
 	 * Instantiate classes for BuddyPress integration
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 */
 	public function setup_components() {
 
 		// Always load the members component
-		bbpress()->extend->buddypress->members = new BBP_BuddyPress_Members;
+		ideaboard()->extend->buddypress->members = new BBP_BuddyPress_Members;
 
 		// Create new activity class
 		if ( bp_is_active( 'activity' ) ) {
-			bbpress()->extend->buddypress->activity = new BBP_BuddyPress_Activity;
+			ideaboard()->extend->buddypress->activity = new BBP_BuddyPress_Activity;
 		}
 
 		// Register the group extension only if groups are active
@@ -150,7 +150,7 @@ class BBP_Forums_Component extends BP_Component {
 	 * Allow the variables, actions, and filters to be modified by third party
 	 * plugins and themes.
 	 *
-	 * @since bbPress (r3902)
+	 * @since IdeaBoard (r3902)
 	 */
 	private function fully_loaded() {
 		do_action_ref_array( 'bbp_buddypress_loaded', array( $this ) );
@@ -159,7 +159,7 @@ class BBP_Forums_Component extends BP_Component {
 	/**
 	 * Setup BuddyBar navigation
 	 *
-	 * @since bbPress (r3552)
+	 * @since IdeaBoard (r3552)
 	 */
 	public function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
@@ -172,7 +172,7 @@ class BBP_Forums_Component extends BP_Component {
 
 		// Add 'Forums' to the main navigation
 		$main_nav = array(
-			'name'                => __( 'Forums', 'bbpress' ),
+			'name'                => __( 'Forums', 'ideaboard' ),
 			'slug'                => $this->slug,
 			'position'            => 80,
 			'screen_function'     => 'bbp_member_forums_screen_topics',
@@ -193,7 +193,7 @@ class BBP_Forums_Component extends BP_Component {
 
 		// Topics started
 		$sub_nav[] = array(
-			'name'            => __( 'Topics Started', 'bbpress' ),
+			'name'            => __( 'Topics Started', 'ideaboard' ),
 			'slug'            => bbp_get_topic_archive_slug(),
 			'parent_url'      => $forums_link,
 			'parent_slug'     => $this->slug,
@@ -204,7 +204,7 @@ class BBP_Forums_Component extends BP_Component {
 
 		// Replies to topics
 		$sub_nav[] = array(
-			'name'            => __( 'Replies Created', 'bbpress' ),
+			'name'            => __( 'Replies Created', 'ideaboard' ),
 			'slug'            => bbp_get_reply_archive_slug(),
 			'parent_url'      => $forums_link,
 			'parent_slug'     => $this->slug,
@@ -215,7 +215,7 @@ class BBP_Forums_Component extends BP_Component {
 
 		// Favorite topics
 		$sub_nav[] = array(
-			'name'            => __( 'Favorites', 'bbpress' ),
+			'name'            => __( 'Favorites', 'ideaboard' ),
 			'slug'            => bbp_get_user_favorites_slug(),
 			'parent_url'      => $forums_link,
 			'parent_slug'     => $this->slug,
@@ -227,7 +227,7 @@ class BBP_Forums_Component extends BP_Component {
 		// Subscribed topics (my profile only)
 		if ( bp_is_my_profile() ) {
 			$sub_nav[] = array(
-				'name'            => __( 'Subscriptions', 'bbpress' ),
+				'name'            => __( 'Subscriptions', 'ideaboard' ),
 				'slug'            => bbp_get_user_subscriptions_slug(),
 				'parent_url'      => $forums_link,
 				'parent_slug'     => $this->slug,
@@ -243,7 +243,7 @@ class BBP_Forums_Component extends BP_Component {
 	/**
 	 * Set up the admin bar
 	 *
-	 * @since bbPress (r3552)
+	 * @since IdeaBoard (r3552)
 	 */
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
 
@@ -258,7 +258,7 @@ class BBP_Forums_Component extends BP_Component {
 			$wp_admin_nav[] = array(
 				'parent' => buddypress()->my_account_menu_id,
 				'id'     => 'my-account-' . $this->id,
-				'title'  => __( 'Forums', 'bbpress' ),
+				'title'  => __( 'Forums', 'ideaboard' ),
 				'href'   => trailingslashit( $forums_link )
 			);
 
@@ -266,7 +266,7 @@ class BBP_Forums_Component extends BP_Component {
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-topics',
-				'title'  => __( 'Topics Started', 'bbpress' ),
+				'title'  => __( 'Topics Started', 'ideaboard' ),
 				'href'   => trailingslashit( $forums_link . bbp_get_topic_archive_slug() )
 			);
 
@@ -274,7 +274,7 @@ class BBP_Forums_Component extends BP_Component {
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-replies',
-				'title'  => __( 'Replies Created', 'bbpress' ),
+				'title'  => __( 'Replies Created', 'ideaboard' ),
 				'href'   => trailingslashit( $forums_link . bbp_get_reply_archive_slug() )
 			);
 
@@ -282,7 +282,7 @@ class BBP_Forums_Component extends BP_Component {
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-favorites',
-				'title'  => __( 'Favorite Topics', 'bbpress' ),
+				'title'  => __( 'Favorite Topics', 'ideaboard' ),
 				'href'   => trailingslashit( $forums_link . bbp_get_user_favorites_slug() )
 			);
 
@@ -290,7 +290,7 @@ class BBP_Forums_Component extends BP_Component {
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-subscriptions',
-				'title'  => __( 'Subscribed Topics', 'bbpress' ),
+				'title'  => __( 'Subscribed Topics', 'ideaboard' ),
 				'href'   => trailingslashit( $forums_link . bbp_get_user_subscriptions_slug() )
 			);
 		}
@@ -301,7 +301,7 @@ class BBP_Forums_Component extends BP_Component {
 	/**
 	 * Sets up the title for pages and <title>
 	 *
-	 * @since bbPress (r3552)
+	 * @since IdeaBoard (r3552)
 	 */
 	public function setup_title() {
 		$bp = buddypress();
@@ -309,7 +309,7 @@ class BBP_Forums_Component extends BP_Component {
 		// Adjust title based on view
 		if ( bp_is_forums_component() ) {
 			if ( bp_is_my_profile() ) {
-				$bp->bp_options_title = __( 'Forums', 'bbpress' );
+				$bp->bp_options_title = __( 'Forums', 'ideaboard' );
 			} elseif ( bp_is_user() ) {
 				$bp->bp_options_avatar = bp_core_fetch_avatar( array(
 					'item_id' => bp_displayed_user_id(),

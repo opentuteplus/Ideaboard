@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress - Forum Archive
+ * IdeaBoard - Forum Archive
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

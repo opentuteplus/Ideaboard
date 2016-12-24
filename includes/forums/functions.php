@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Forum Functions
+ * IdeaBoard Forum Functions
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Functions
  */
 
@@ -16,7 +16,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * A wrapper for wp_insert_post() that also includes the necessary meta values
  * for the forum to function properly.
  *
- * @since bbPress (r3349)
+ * @since IdeaBoard (r3349)
  *
  * @uses bbp_parse_args()
  * @uses bbp_get_forum_post_type()
@@ -96,7 +96,7 @@ function bbp_insert_forum( $forum_data = array(), $forum_meta = array() ) {
  * @uses remove_filter() To remove kses filters if needed
  * @uses apply_filters() Calls 'bbp_new_forum_pre_title' with the content
  * @uses apply_filters() Calls 'bbp_new_forum_pre_content' with the content
- * @uses bbPress::errors::get_error_codes() To get the {@link WP_Error} errors
+ * @uses IdeaBoard::errors::get_error_codes() To get the {@link WP_Error} errors
  * @uses wp_insert_post() To insert the forum
  * @uses do_action() Calls 'bbp_new_forum' with the forum id, forum id,
  *                    anonymous data and reply author
@@ -104,7 +104,7 @@ function bbp_insert_forum( $forum_data = array(), $forum_meta = array() ) {
  * @uses bbp_unstick_forum() To unstick the forum
  * @uses bbp_get_forum_permalink() To get the forum permalink
  * @uses wp_safe_redirect() To redirect to the forum link
- * @uses bbPress::errors::get_error_messages() To get the {@link WP_Error} error
+ * @uses IdeaBoard::errors::get_error_messages() To get the {@link WP_Error} error
  *                                              messages
  */
 function bbp_new_forum_handler( $action = '' ) {
@@ -115,7 +115,7 @@ function bbp_new_forum_handler( $action = '' ) {
 
 	// Nonce check
 	if ( ! bbp_verify_nonce_request( 'bbp-new-forum' ) ) {
-		bbp_add_error( 'bbp_new_forum_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_new_forum_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
@@ -128,7 +128,7 @@ function bbp_new_forum_handler( $action = '' ) {
 
 	// User cannot create forums
 	if ( !current_user_can( 'publish_forums' ) ) {
-		bbp_add_error( 'bbp_forum_permissions', __( '<strong>ERROR</strong>: You do not have permission to create new forums.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_permissions', __( '<strong>ERROR</strong>: You do not have permission to create new forums.', 'ideaboard' ) );
 		return;
 	}
 
@@ -152,7 +152,7 @@ function bbp_new_forum_handler( $action = '' ) {
 
 	// No forum title
 	if ( empty( $forum_title ) )
-		bbp_add_error( 'bbp_forum_title', __( '<strong>ERROR</strong>: Your forum needs a title.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_title', __( '<strong>ERROR</strong>: Your forum needs a title.', 'ideaboard' ) );
 
 	/** Forum Content *********************************************************/
 
@@ -164,7 +164,7 @@ function bbp_new_forum_handler( $action = '' ) {
 
 	// No forum content
 	if ( empty( $forum_content ) )
-		bbp_add_error( 'bbp_forum_content', __( '<strong>ERROR</strong>: Your forum description cannot be empty.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_content', __( '<strong>ERROR</strong>: Your forum description cannot be empty.', 'ideaboard' ) );
 
 	/** Forum Parent **********************************************************/
 
@@ -178,46 +178,46 @@ function bbp_new_forum_handler( $action = '' ) {
 
 	// No forum parent was passed (should never happen)
 	if ( empty( $forum_parent_id ) ) {
-		bbp_add_error( 'bbp_new_forum_missing_parent', __( '<strong>ERROR</strong>: Your forum must have a parent.', 'bbpress' ) );
+		bbp_add_error( 'bbp_new_forum_missing_parent', __( '<strong>ERROR</strong>: Your forum must have a parent.', 'ideaboard' ) );
 
 	// Forum exists
 	} elseif ( !empty( $forum_parent_id ) ) {
 
 		// Forum is a category
 		if ( bbp_is_forum_category( $forum_parent_id ) ) {
-			bbp_add_error( 'bbp_new_forum_forum_category', __( '<strong>ERROR</strong>: This forum is a category. No forums can be created in this forum.', 'bbpress' ) );
+			bbp_add_error( 'bbp_new_forum_forum_category', __( '<strong>ERROR</strong>: This forum is a category. No forums can be created in this forum.', 'ideaboard' ) );
 		}
 
 		// Forum is closed and user cannot access
 		if ( bbp_is_forum_closed( $forum_parent_id ) && !current_user_can( 'edit_forum', $forum_parent_id ) ) {
-			bbp_add_error( 'bbp_new_forum_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new forums.', 'bbpress' ) );
+			bbp_add_error( 'bbp_new_forum_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new forums.', 'ideaboard' ) );
 		}
 
 		// Forum is private and user cannot access
 		if ( bbp_is_forum_private( $forum_parent_id ) && !current_user_can( 'read_private_forums' ) ) {
-			bbp_add_error( 'bbp_new_forum_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new forums in it.', 'bbpress' ) );
+			bbp_add_error( 'bbp_new_forum_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new forums in it.', 'ideaboard' ) );
 		}
 
 		// Forum is hidden and user cannot access
 		if ( bbp_is_forum_hidden( $forum_parent_id ) && !current_user_can( 'read_hidden_forums' ) ) {
-			bbp_add_error( 'bbp_new_forum_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new forums in it.', 'bbpress' ) );
+			bbp_add_error( 'bbp_new_forum_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new forums in it.', 'ideaboard' ) );
 		}
 	}
 
 	/** Forum Flooding ********************************************************/
 
 	if ( !bbp_check_for_flood( $anonymous_data, $forum_author ) )
-		bbp_add_error( 'bbp_forum_flood', __( '<strong>ERROR</strong>: Slow down; you move too fast.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_flood', __( '<strong>ERROR</strong>: Slow down; you move too fast.', 'ideaboard' ) );
 
 	/** Forum Duplicate *******************************************************/
 
 	if ( !bbp_check_for_duplicate( array( 'post_type' => bbp_get_forum_post_type(), 'post_author' => $forum_author, 'post_content' => $forum_content, 'anonymous_data' => $anonymous_data ) ) )
-		bbp_add_error( 'bbp_forum_duplicate', __( '<strong>ERROR</strong>: This forum already exists.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_duplicate', __( '<strong>ERROR</strong>: This forum already exists.', 'ideaboard' ) );
 
 	/** Forum Blacklist *******************************************************/
 
 	if ( !bbp_check_for_blacklist( $anonymous_data, $forum_author, $forum_title, $forum_content ) )
-		bbp_add_error( 'bbp_forum_blacklist', __( '<strong>ERROR</strong>: Your forum cannot be created at this time.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_blacklist', __( '<strong>ERROR</strong>: Your forum cannot be created at this time.', 'ideaboard' ) );
 
 	/** Forum Moderation ******************************************************/
 
@@ -329,7 +329,7 @@ function bbp_new_forum_handler( $action = '' ) {
 	// Errors
 	} else {
 		$append_error = ( is_wp_error( $forum_id ) && $forum_id->get_error_message() ) ? $forum_id->get_error_message() . ' ' : '';
-		bbp_add_error( 'bbp_forum_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your forum:' . $append_error, 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your forum:' . $append_error, 'ideaboard' ) );
 	}
 }
 
@@ -337,7 +337,7 @@ function bbp_new_forum_handler( $action = '' ) {
  * Handles the front end edit forum submission
  *
  * @param string $action The requested action to compare this function to
- * @uses bbPress:errors::add() To log various error messages
+ * @uses IdeaBoard:errors::add() To log various error messages
  * @uses bbp_get_forum() To get the forum
  * @uses bbp_verify_nonce_request() To verify the nonce and check the request
  * @uses bbp_is_forum_anonymous() To check if forum is by an anonymous user
@@ -353,7 +353,7 @@ function bbp_new_forum_handler( $action = '' ) {
  *                        forum id
  * @uses apply_filters() Calls 'bbp_edit_forum_pre_content' with the content
  *                        and forum id
- * @uses bbPress::errors::get_error_codes() To get the {@link WP_Error} errors
+ * @uses IdeaBoard::errors::get_error_codes() To get the {@link WP_Error} errors
  * @uses wp_save_post_revision() To save a forum revision
  * @uses bbp_update_forum_revision_log() To update the forum revision log
  * @uses wp_update_post() To update the forum
@@ -363,7 +363,7 @@ function bbp_new_forum_handler( $action = '' ) {
  *                                 to another
  * @uses bbp_get_forum_permalink() To get the forum permalink
  * @uses wp_safe_redirect() To redirect to the forum link
- * @uses bbPress::errors::get_error_messages() To get the {@link WP_Error} error
+ * @uses IdeaBoard::errors::get_error_messages() To get the {@link WP_Error} error
  *                                              messages
  */
 function bbp_edit_forum_handler( $action = '' ) {
@@ -381,7 +381,7 @@ function bbp_edit_forum_handler( $action = '' ) {
 
 	// Forum id was not passed
 	if ( empty( $_POST['bbp_forum_id'] ) ) {
-		bbp_add_error( 'bbp_edit_forum_id', __( '<strong>ERROR</strong>: Forum ID not found.', 'bbpress' ) );
+		bbp_add_error( 'bbp_edit_forum_id', __( '<strong>ERROR</strong>: Forum ID not found.', 'ideaboard' ) );
 		return;
 
 	// Forum id was passed
@@ -392,17 +392,17 @@ function bbp_edit_forum_handler( $action = '' ) {
 
 	// Nonce check
 	if ( ! bbp_verify_nonce_request( 'bbp-edit-forum_' . $forum_id ) ) {
-		bbp_add_error( 'bbp_edit_forum_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_edit_forum_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 
 	// Forum does not exist
 	} elseif ( empty( $forum ) ) {
-		bbp_add_error( 'bbp_edit_forum_not_found', __( '<strong>ERROR</strong>: The forum you want to edit was not found.', 'bbpress' ) );
+		bbp_add_error( 'bbp_edit_forum_not_found', __( '<strong>ERROR</strong>: The forum you want to edit was not found.', 'ideaboard' ) );
 		return;
 
 	// User cannot edit this forum
 	} elseif ( !current_user_can( 'edit_forum', $forum_id ) ) {
-		bbp_add_error( 'bbp_edit_forum_permissions', __( '<strong>ERROR</strong>: You do not have permission to edit that forum.', 'bbpress' ) );
+		bbp_add_error( 'bbp_edit_forum_permissions', __( '<strong>ERROR</strong>: You do not have permission to edit that forum.', 'ideaboard' ) );
 		return;
 	}
 
@@ -428,17 +428,17 @@ function bbp_edit_forum_handler( $action = '' ) {
 
 		// Forum is closed and user cannot access
 		if ( bbp_is_forum_closed( $forum_parent_id ) && !current_user_can( 'edit_forum', $forum_parent_id ) ) {
-			bbp_add_error( 'bbp_edit_forum_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new forums.', 'bbpress' ) );
+			bbp_add_error( 'bbp_edit_forum_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new forums.', 'ideaboard' ) );
 		}
 
 		// Forum is private and user cannot access
 		if ( bbp_is_forum_private( $forum_parent_id ) && !current_user_can( 'read_private_forums' ) ) {
-			bbp_add_error( 'bbp_edit_forum_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new forums in it.', 'bbpress' ) );
+			bbp_add_error( 'bbp_edit_forum_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new forums in it.', 'ideaboard' ) );
 		}
 
 		// Forum is hidden and user cannot access
 		if ( bbp_is_forum_hidden( $forum_parent_id ) && !current_user_can( 'read_hidden_forums' ) ) {
-			bbp_add_error( 'bbp_edit_forum_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new forums in it.', 'bbpress' ) );
+			bbp_add_error( 'bbp_edit_forum_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new forums in it.', 'ideaboard' ) );
 		}
 	}
 
@@ -452,7 +452,7 @@ function bbp_edit_forum_handler( $action = '' ) {
 
 	// No forum title
 	if ( empty( $forum_title ) )
-		bbp_add_error( 'bbp_edit_forum_title', __( '<strong>ERROR</strong>: Your forum needs a title.', 'bbpress' ) );
+		bbp_add_error( 'bbp_edit_forum_title', __( '<strong>ERROR</strong>: Your forum needs a title.', 'ideaboard' ) );
 
 	/** Forum Content *********************************************************/
 
@@ -464,12 +464,12 @@ function bbp_edit_forum_handler( $action = '' ) {
 
 	// No forum content
 	if ( empty( $forum_content ) )
-		bbp_add_error( 'bbp_edit_forum_content', __( '<strong>ERROR</strong>: Your forum description cannot be empty.', 'bbpress' ) );
+		bbp_add_error( 'bbp_edit_forum_content', __( '<strong>ERROR</strong>: Your forum description cannot be empty.', 'ideaboard' ) );
 
 	/** Forum Blacklist *******************************************************/
 
 	if ( !bbp_check_for_blacklist( $anonymous_data, bbp_get_forum_author_id( $forum_id ), $forum_title, $forum_content ) )
-		bbp_add_error( 'bbp_forum_blacklist', __( '<strong>ERROR</strong>: Your forum cannot be edited at this time.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_blacklist', __( '<strong>ERROR</strong>: Your forum cannot be edited at this time.', 'ideaboard' ) );
 
 	/** Forum Moderation ******************************************************/
 
@@ -576,14 +576,14 @@ function bbp_edit_forum_handler( $action = '' ) {
 
 	} else {
 		$append_error = ( is_wp_error( $forum_id ) && $forum_id->get_error_message() ) ? $forum_id->get_error_message() . ' ' : '';
-		bbp_add_error( 'bbp_forum_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your forum:' . $append_error . 'Please try again.', 'bbpress' ) );
+		bbp_add_error( 'bbp_forum_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your forum:' . $append_error . 'Please try again.', 'ideaboard' ) );
 	}
 }
 
 /**
  * Handle the saving of core forum metadata (Status, Visibility, and Type)
  *
- * @since bbPress (r3678)
+ * @since IdeaBoard (r3678)
  * @param int $forum_id
  * @uses bbp_is_forum_closed() To check if forum is closed
  * @uses bbp_close_forum() To close forum
@@ -663,7 +663,7 @@ function bbp_save_forum_extras( $forum_id = 0 ) {
 /**
  * Closes a forum
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id forum id
  * @uses do_action() Calls 'bbp_close_forum' with the forum id
@@ -687,7 +687,7 @@ function bbp_close_forum( $forum_id = 0 ) {
 /**
  * Opens a forum
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id forum id
  * @uses do_action() Calls 'bbp_open_forum' with the forum id
@@ -712,7 +712,7 @@ function bbp_open_forum( $forum_id = 0 ) {
 /**
  * Make the forum a category
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id Optional. Forum id
  * @uses update_post_meta() To update the forum category meta
@@ -734,7 +734,7 @@ function bbp_categorize_forum( $forum_id = 0 ) {
 /**
  * Remove the category status from a forum
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id Optional. Forum id
  * @uses delete_post_meta() To delete the forum category meta
@@ -756,7 +756,7 @@ function bbp_normalize_forum( $forum_id = 0 ) {
 /**
  * Mark the forum as public
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id Optional. Forum id
  * @uses update_post_meta() To update the forum private meta
@@ -816,7 +816,7 @@ function bbp_publicize_forum( $forum_id = 0, $current_visibility = '' ) {
 /**
  * Mark the forum as private
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id Optional. Forum id
  * @uses update_post_meta() To update the forum private meta
@@ -866,7 +866,7 @@ function bbp_privatize_forum( $forum_id = 0, $current_visibility = '' ) {
 /**
  * Mark the forum as hidden
  *
- * @since bbPress (r2996)
+ * @since IdeaBoard (r2996)
  *
  * @param int $forum_id Optional. Forum id
  * @uses update_post_meta() To update the forum private meta
@@ -916,7 +916,7 @@ function bbp_hide_forum( $forum_id = 0, $current_visibility = '' ) {
 /**
  * Recaches the private and hidden forums
  *
- * @since bbPress (r5017)
+ * @since IdeaBoard (r5017)
  *
  * @uses delete_option() to delete private and hidden forum pointers
  * @uses WP_Query() To query post IDs
@@ -966,7 +966,7 @@ function bbp_repair_forum_visibility() {
 /**
  * Remove a deleted forum from all users' subscriptions
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $forum_id Get the forum ID to remove
  * @uses bbp_is_subscriptions_active() To check if the subscriptions are active
@@ -1008,7 +1008,7 @@ function bbp_remove_forum_from_all_subscriptions( $forum_id = 0 ) {
 /**
  * Bump the total topic count of a forum
  *
- * @since bbPress (r3825)
+ * @since IdeaBoard (r3825)
  *
  * @param int $forum_id Optional. Forum id.
  * @param int $difference Optional. Default 1
@@ -1058,7 +1058,7 @@ function bbp_bump_forum_topic_count( $forum_id = 0, $difference = 1, $update_anc
 /**
  * Bump the total hidden topic count of a forum
  *
- * @since bbPress (r3825)
+ * @since IdeaBoard (r3825)
  *
  * @param int $forum_id Optional. Forum id.
  * @param int $difference Optional. Default 1
@@ -1084,7 +1084,7 @@ function bbp_bump_forum_topic_count_hidden( $forum_id = 0, $difference = 1 ) {
 /**
  * Bump the total topic count of a forum
  *
- * @since bbPress (r3825)
+ * @since IdeaBoard (r3825)
  *
  * @param int $forum_id Optional. Forum id.
  * @param int $difference Optional. Default 1
@@ -1136,7 +1136,7 @@ function bbp_bump_forum_reply_count( $forum_id = 0, $difference = 1, $update_anc
 /**
  * Update the forum last topic id
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @param int $topic_id Optional. Topic id
@@ -1201,7 +1201,7 @@ function bbp_update_forum_last_topic_id( $forum_id = 0, $topic_id = 0 ) {
 /**
  * Update the forum last reply id
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @param int $reply_id Optional. Reply id
@@ -1264,7 +1264,7 @@ function bbp_update_forum_last_reply_id( $forum_id = 0, $reply_id = 0 ) {
 /**
  * Update the forum last active post id
  *
- * @since bbPress (r2860)
+ * @since IdeaBoard (r2860)
  *
  * @param int $forum_id Optional. Forum id
  * @param int $active_id Optional. Active post id
@@ -1328,7 +1328,7 @@ function bbp_update_forum_last_active_id( $forum_id = 0, $active_id = 0 ) {
 /**
  * Update the forums last active date/time (aka freshness)
  *
- * @since bbPress (r2680)
+ * @since IdeaBoard (r2680)
  *
  * @param int $forum_id Optional. Topic id
  * @param string $new_time Optional. New time in mysql format
@@ -1357,7 +1357,7 @@ function bbp_update_forum_last_active_time( $forum_id = 0, $new_time = '' ) {
 /**
  * Update the forum sub-forum count
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_id() To get the forum id
@@ -1377,7 +1377,7 @@ function bbp_update_forum_subforum_count( $forum_id = 0, $subforums = 0 ) {
 /**
  * Adjust the total topic count of a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id or topic id. It is checked whether it
  *                       is a topic or a forum. If it's a topic, its parent,
@@ -1421,7 +1421,7 @@ function bbp_update_forum_topic_count( $forum_id = 0 ) {
 /**
  * Adjust the total hidden topic count of a forum (hidden includes trashed and spammed topics)
  *
- * @since bbPress (r2888)
+ * @since IdeaBoard (r2888)
  *
  * @param int $forum_id Optional. Topic id to update
  * @param int $topic_count Optional. Set the topic count manually
@@ -1468,7 +1468,7 @@ function bbp_update_forum_topic_count_hidden( $forum_id = 0, $topic_count = 0 ) 
 /**
  * Adjust the total reply count of a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id or topic id. It is checked whether it
  *                       is a topic or a forum. If it's a topic, its parent,
@@ -1526,7 +1526,7 @@ function bbp_update_forum_reply_count( $forum_id = 0 ) {
  * database to get their results. As such, this function can be costly to run
  * but is necessary to keep everything accurate.
  *
- * @since bbPress (r2908)
+ * @since IdeaBoard (r2908)
  *
  * @param mixed $args Supports these arguments:
  *  - forum_id: Forum id
@@ -1593,43 +1593,43 @@ function bbp_update_forum( $args = '' ) {
 /**
  * Return an associative array of available topic statuses
  *
- * @since bbPress (r5059)
+ * @since IdeaBoard (r5059)
  *
  * @return array
  */
 function bbp_get_forum_statuses() {
 	return apply_filters( 'bbp_get_forum_statuses', array(
-		'open'   => _x( 'Open',    'Open the forum',  'bbpress' ),
-		'closed' => _x( 'Closed',  'Close the forum', 'bbpress' )
+		'open'   => _x( 'Open',    'Open the forum',  'ideaboard' ),
+		'closed' => _x( 'Closed',  'Close the forum', 'ideaboard' )
 	) );
 }
 
 /**
  * Return an associative array of forum types
  *
- * @since bbPress (r5059)
+ * @since IdeaBoard (r5059)
  *
  * @return array
  */
 function bbp_get_forum_types() {
 	return apply_filters( 'bbp_get_forum_types', array(
-		'forum'    => _x( 'Forum',    'Forum accepts new topics', 'bbpress' ),
-		'category' => _x( 'Category', 'Forum is a category',      'bbpress' )
+		'forum'    => _x( 'Forum',    'Forum accepts new topics', 'ideaboard' ),
+		'category' => _x( 'Category', 'Forum is a category',      'ideaboard' )
 	) );
 }
 
 /**
  * Return an associative array of forum visibility
  *
- * @since bbPress (r5059)
+ * @since IdeaBoard (r5059)
  *
  * @return array
  */
 function bbp_get_forum_visibilities() {
 	return apply_filters( 'bbp_get_forum_visibilities', array(
-		bbp_get_public_status_id()  => _x( 'Public',  'Make forum public',  'bbpress' ),
-		bbp_get_private_status_id() => _x( 'Private', 'Make forum private', 'bbpress' ),
-		bbp_get_hidden_status_id()  => _x( 'Hidden',  'Make forum hidden',  'bbpress' )
+		bbp_get_public_status_id()  => _x( 'Public',  'Make forum public',  'ideaboard' ),
+		bbp_get_private_status_id() => _x( 'Private', 'Make forum private', 'ideaboard' ),
+		bbp_get_hidden_status_id()  => _x( 'Hidden',  'Make forum hidden',  'ideaboard' )
 	) );
 }
 
@@ -1640,7 +1640,7 @@ function bbp_get_forum_visibilities() {
  *
  * Only hidden forum ids are returned. Public and private ids are not.
  *
- * @since bbPress (r3007)
+ * @since IdeaBoard (r3007)
  *
  * @uses get_option() Returns the unserialized array of hidden forum ids
  * @uses apply_filters() Calls 'bbp_forum_query_topic_ids' with the topic ids
@@ -1657,7 +1657,7 @@ function bbp_get_hidden_forum_ids() {
  *
  * Only private forum ids are returned. Public and hidden ids are not.
  *
- * @since bbPress (r3007)
+ * @since IdeaBoard (r3007)
  *
  * @uses get_option() Returns the unserialized array of private forum ids
  * @uses apply_filters() Calls 'bbp_forum_query_topic_ids' with the topic ids
@@ -1673,7 +1673,7 @@ function bbp_get_private_forum_ids() {
  * Returns a meta_query that either includes or excludes hidden forum IDs
  * from a query.
  *
- * @since bbPress (r3291)
+ * @since IdeaBoard (r3291)
  *
  * @param string Optional. The type of value to return. (string|array|meta_query)
  *
@@ -1757,7 +1757,7 @@ function bbp_exclude_forum_ids( $type = 'string' ) {
  * to hardcode this logic into each query. It also protects forum content for
  * plugins that might be doing their own queries.
  *
- * @since bbPress (r3291)
+ * @since IdeaBoard (r3291)
  *
  * @param WP_Query $posts_query
  *
@@ -1863,7 +1863,7 @@ function bbp_pre_get_posts_normalize_forum_visibility( $posts_query = null ) {
  *
  * Only topics with published and closed statuses are returned
  *
- * @since bbPress (r2908)
+ * @since IdeaBoard (r2908)
  *
  * @param int $forum_id Forum id
  * @uses bbp_get_topic_post_type() To get the topic post type
@@ -1882,7 +1882,7 @@ function bbp_forum_query_topic_ids( $forum_id ) {
  *
  * Only forums with published status are returned
  *
- * @since bbPress (r2908)
+ * @since IdeaBoard (r2908)
  *
  * @param int $forum_id Forum id
  * @uses bbp_get_forum_post_type() To get the forum post type
@@ -1900,7 +1900,7 @@ function bbp_forum_query_subforum_ids( $forum_id ) {
 /**
  * Callback to sort forum ID's based on last active time
  *
- * @since bbPress (r3789)
+ * @since IdeaBoard (r3789)
  * @param int $a First forum ID to compare
  * @param int $b Second forum ID to compare
  * @return Position change based on sort
@@ -1914,7 +1914,7 @@ function _bbp_forum_query_usort_subforum_ids( $a = 0, $b = 0 ) {
 /**
  * Returns the forum's last reply id
  *
- * @since bbPress (r2908)
+ * @since IdeaBoard (r2908)
  *
  * @param int $forum_id Forum id
  * @param int $topic_ids Optional. Topic ids
@@ -1931,7 +1931,7 @@ function bbp_forum_query_last_reply_id( $forum_id, $topic_ids = 0 ) {
 	global $wpdb;
 
 	$cache_id = 'bbp_get_forum_' . $forum_id . '_reply_id';
-	$reply_id = wp_cache_get( $cache_id, 'bbpress_posts' );
+	$reply_id = wp_cache_get( $cache_id, 'ideaboard_posts' );
 
 	if ( false === $reply_id ) {
 
@@ -1942,9 +1942,9 @@ function bbp_forum_query_last_reply_id( $forum_id, $topic_ids = 0 ) {
 		if ( !empty( $topic_ids ) ) {
 			$topic_ids = implode( ',', wp_parse_id_list( $topic_ids ) );
 			$reply_id  = (int) $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_parent IN ( {$topic_ids} ) AND post_status = '%s' AND post_type = '%s' ORDER BY ID DESC LIMIT 1;", bbp_get_public_status_id(), bbp_get_reply_post_type() ) );
-			wp_cache_set( $cache_id, $reply_id, 'bbpress_posts' ); // May be (int) 0
+			wp_cache_set( $cache_id, $reply_id, 'ideaboard_posts' ); // May be (int) 0
 		} else {
-			wp_cache_set( $cache_id, '0', 'bbpress_posts' );
+			wp_cache_set( $cache_id, '0', 'ideaboard_posts' );
 		}
 	}
 
@@ -1957,7 +1957,7 @@ function bbp_forum_query_last_reply_id( $forum_id, $topic_ids = 0 ) {
  * Check if it's a hidden forum or a topic or reply of a hidden forum and if
  * the user can't view it, then sets a 404
  *
- * @since bbPress (r2996)
+ * @since IdeaBoard (r2996)
  *
  * @uses current_user_can() To check if the current user can read private forums
  * @uses is_singular() To check if it's a singular page
@@ -2010,7 +2010,7 @@ function bbp_forum_enforce_hidden() {
  * Check if it's a private forum or a topic or reply of a private forum and if
  * the user can't view it, then sets a 404
  *
- * @since bbPress (r2996)
+ * @since IdeaBoard (r2996)
  *
  * @uses current_user_can() To check if the current user can read private forums
  * @uses is_singular() To check if it's a singular page
@@ -2064,7 +2064,7 @@ function bbp_forum_enforce_private() {
 /**
  * Redirect if unathorized user is attempting to edit a forum
  *
- * @since bbPress (r3607)
+ * @since IdeaBoard (r3607)
  *
  * @uses bbp_is_forum_edit()
  * @uses current_user_can()
@@ -2088,7 +2088,7 @@ function bbp_check_forum_edit() {
 /**
  * Delete all topics (and their replies) for a specific forum ID
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  *
  * @param int $forum_id
  * @uses bbp_get_forum_id() To validate the forum ID
@@ -2136,7 +2136,7 @@ function bbp_delete_forum_topics( $forum_id = 0 ) {
 /**
  * Trash all topics inside a forum
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  *
  * @param int $forum_id
  * @uses bbp_get_forum_id() To validate the forum ID
@@ -2203,7 +2203,7 @@ function bbp_trash_forum_topics( $forum_id = 0 ) {
 /**
  * Trash all topics inside a forum
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  *
  * @param int $forum_id
  * @uses bbp_get_forum_id() To validate the forum ID
@@ -2246,7 +2246,7 @@ function bbp_untrash_forum_topics( $forum_id = 0 ) {
  * handled by WordPress core API functions. It is used to clean up after
  * a forum that is being deleted.
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  * @uses bbp_get_forum_id() To get the forum id
  * @uses bbp_is_forum() To check if the passed id is a forum
  * @uses do_action() Calls 'bbp_delete_forum' with the forum id
@@ -2267,7 +2267,7 @@ function bbp_delete_forum( $forum_id = 0 ) {
  * handled by WordPress core API functions. It is used to clean up after
  * a forum that is being trashed.
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  * @uses bbp_get_forum_id() To get the forum id
  * @uses bbp_is_forum() To check if the passed id is a forum
  * @uses do_action() Calls 'bbp_trash_forum' with the forum id
@@ -2284,7 +2284,7 @@ function bbp_trash_forum( $forum_id = 0 ) {
 /**
  * Called before untrashing a forum
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  * @uses bbp_get_forum_id() To get the forum id
  * @uses bbp_is_forum() To check if the passed id is a forum
  * @uses do_action() Calls 'bbp_untrash_forum' with the forum id
@@ -2303,7 +2303,7 @@ function bbp_untrash_forum( $forum_id = 0 ) {
 /**
  * Called after deleting a forum
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  * @uses bbp_get_forum_id() To get the forum id
  * @uses bbp_is_forum() To check if the passed id is a forum
  * @uses do_action() Calls 'bbp_deleted_forum' with the forum id
@@ -2320,7 +2320,7 @@ function bbp_deleted_forum( $forum_id = 0 ) {
 /**
  * Called after trashing a forum
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  * @uses bbp_get_forum_id() To get the forum id
  * @uses bbp_is_forum() To check if the passed id is a forum
  * @uses do_action() Calls 'bbp_trashed_forum' with the forum id
@@ -2337,7 +2337,7 @@ function bbp_trashed_forum( $forum_id = 0 ) {
 /**
  * Called after untrashing a forum
  *
- * @since bbPress (r3668)
+ * @since IdeaBoard (r3668)
  * @uses bbp_get_forum_id() To get the forum id
  * @uses bbp_is_forum() To check if the passed id is a forum
  * @uses do_action() Calls 'bbp_untrashed_forum' with the forum id

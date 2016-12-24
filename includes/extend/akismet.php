@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Main bbPress Akismet Class
+ * Main IdeaBoard Akismet Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Akismet
  */
 
@@ -14,17 +14,17 @@ if ( !class_exists( 'BBP_Akismet' ) ) :
 /**
  * Loads Akismet extension
  *
- * @since bbPress (r3277)
+ * @since IdeaBoard (r3277)
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Akismet
  */
 class BBP_Akismet {
 
 	/**
-	 * The main bbPress Akismet loader
+	 * The main IdeaBoard Akismet loader
 	 *
-	 * @since bbPress (r3277)
+	 * @since IdeaBoard (r3277)
 	 *
 	 * @uses add_filter()
 	 */
@@ -35,7 +35,7 @@ class BBP_Akismet {
 	/**
 	 * Setup the admin hooks
 	 *
-	 * @since bbPress (r3277)
+	 * @since IdeaBoard (r3277)
 	 * @access private
 	 *
 	 * @uses add_filter() To add various filters
@@ -46,7 +46,7 @@ class BBP_Akismet {
 		// Prevent debug notices
 		$checks = array();
 
-		// bbPress functions to check for spam
+		// IdeaBoard functions to check for spam
 		$checks['check']  = array(
 			'bbp_new_topic_pre_insert'  => 1,  // New topic check
 			'bbp_new_reply_pre_insert'  => 1,  // New reply check
@@ -54,7 +54,7 @@ class BBP_Akismet {
 			'bbp_edit_reply_pre_insert' => 1   // Edit reply check
 		);
 
-		// bbPress functions for spam and ham submissions
+		// IdeaBoard functions for spam and ham submissions
 		$checks['submit'] = array(
 			'bbp_spammed_topic'   => 10, // Spammed topic
 			'bbp_unspammed_topic' => 10, // Unspammed reply
@@ -79,7 +79,7 @@ class BBP_Akismet {
 	/**
 	 * Converts topic/reply data into Akismet comment checking format
 	 *
-	 * @since bbPress (r3277)
+	 * @since IdeaBoard (r3277)
 	 *
 	 * @param string $post_data
 	 *
@@ -197,7 +197,7 @@ class BBP_Akismet {
 	/**
 	 * Submit a post for spamming or hamming
 	 *
-	 * @since bbPress (r3277)
+	 * @since IdeaBoard (r3277)
 	 *
 	 * @param int $post_id
 	 *
@@ -306,14 +306,14 @@ class BBP_Akismet {
 
 				// Spammy
 				case 'spam' :
-					$this->update_post_history( $post_id, sprintf( esc_html__( '%1$s reported this %2$s as spam', 'bbpress' ),     $post_data['reporter'], $post_data['comment_type'] ), 'report-spam' );
+					$this->update_post_history( $post_id, sprintf( esc_html__( '%1$s reported this %2$s as spam', 'ideaboard' ),     $post_data['reporter'], $post_data['comment_type'] ), 'report-spam' );
 					update_post_meta( $post_id, '_bbp_akismet_user_result', 'true'                 );
 					update_post_meta( $post_id, '_bbp_akismet_user',        $post_data['reporter'] );
 					break;
 
 				// Hammy
 				case 'ham'  :
-					$this->update_post_history( $post_id, sprintf( esc_html__( '%1$s reported this %2$s as not spam', 'bbpress' ), $post_data['reporter'], $post_data['comment_type'] ), 'report-ham'  );
+					$this->update_post_history( $post_id, sprintf( esc_html__( '%1$s reported this %2$s as not spam', 'ideaboard' ), $post_data['reporter'], $post_data['comment_type'] ), 'report-ham'  );
 					update_post_meta( $post_id, '_bbp_akismet_user_result', 'false'                 );
 					update_post_meta( $post_id, '_bbp_akismet_user',         $post_data['reporter'] );
 
@@ -332,7 +332,7 @@ class BBP_Akismet {
 	/**
 	 * Ping Akismet service and check for spam/ham response
 	 *
-	 * @since bbPress (r3277)
+	 * @since IdeaBoard (r3277)
 	 *
 	 * @param array $post_data
 	 * @param string $check Accepts check|submit
@@ -402,7 +402,7 @@ class BBP_Akismet {
 		if ( !empty( $response[1] ) ) {
 			$post_data['bbp_akismet_result'] = $response[1];
 		} else {
-			$post_data['bbp_akismet_result'] = esc_html__( 'No response', 'bbpress' );
+			$post_data['bbp_akismet_result'] = esc_html__( 'No response', 'ideaboard' );
 		}
 
 		// This is ham
@@ -412,7 +412,7 @@ class BBP_Akismet {
 	/**
 	 * Update post meta after a spam check
 	 *
-	 * @since bbPress (r3308)
+	 * @since IdeaBoard (r3308)
 	 *
 	 * @param int $post_id
 	 * @param object $_post
@@ -460,11 +460,11 @@ class BBP_Akismet {
 
 					// Leave a trail so other's know what we did
 					update_post_meta( $post_id, '_bbp_akismet_result', 'true' );
-					$this->update_post_history( $post_id, esc_html__( 'Akismet caught this post as spam', 'bbpress' ), 'check-spam' );
+					$this->update_post_history( $post_id, esc_html__( 'Akismet caught this post as spam', 'ideaboard' ), 'check-spam' );
 
 					// If post_status isn't the spam status, as expected, leave a note
 					if ( bbp_get_spam_status_id() !== $_post->post_status ) {
-						$this->update_post_history( $post_id, sprintf( esc_html__( 'Post status was changed to %s', 'bbpress' ), $_post->post_status ), 'status-changed-' . $_post->post_status );
+						$this->update_post_history( $post_id, sprintf( esc_html__( 'Post status was changed to %s', 'ideaboard' ), $_post->post_status ), 'status-changed-' . $_post->post_status );
 					}
 
 				// Normal result: false
@@ -472,21 +472,21 @@ class BBP_Akismet {
 
 					// Leave a trail so other's know what we did
 					update_post_meta( $post_id, '_bbp_akismet_result', 'false' );
-					$this->update_post_history( $post_id, esc_html__( 'Akismet cleared this post as not spam', 'bbpress' ), 'check-ham' );
+					$this->update_post_history( $post_id, esc_html__( 'Akismet cleared this post as not spam', 'ideaboard' ), 'check-ham' );
 
 					// If post_status is the spam status, which isn't expected, leave a note
 					if ( bbp_get_spam_status_id() === $_post->post_status ) {
 
 						// @todo Use wp_blacklist_check()
 
-						$this->update_post_history( $post_id, sprintf( esc_html__( 'Post status was changed to %s', 'bbpress' ), $_post->post_status ), 'status-changed-' . $_post->post_status );
+						$this->update_post_history( $post_id, sprintf( esc_html__( 'Post status was changed to %s', 'ideaboard' ), $_post->post_status ), 'status-changed-' . $_post->post_status );
 					}
 
 				// Abnormal result: error
 				} else {
 					// Leave a trail so other's know what we did
 					update_post_meta( $post_id, '_bbp_akismet_error', time() );
-					$this->update_post_history( $post_id, sprintf( esc_html__( 'Akismet was unable to check this post (response: %s), will automatically retry again later.', 'bbpress' ), $this->last_post['bbp_akismet_result'] ), 'check-error' );
+					$this->update_post_history( $post_id, sprintf( esc_html__( 'Akismet was unable to check this post (response: %s), will automatically retry again later.', 'ideaboard' ), $this->last_post['bbp_akismet_result'] ), 'check-error' );
 				}
 
 				// Record the complete original data as submitted for checking
@@ -500,7 +500,7 @@ class BBP_Akismet {
 	/**
 	 * Update a post's Akismet history
 	 *
-	 * @since bbPress (r3308)
+	 * @since IdeaBoard (r3308)
 	 *
 	 * @param int $post_id
 	 * @param string $message
@@ -536,7 +536,7 @@ class BBP_Akismet {
 	/**
 	 * Get a post's Akismet history
 	 *
-	 * @since bbPress (r3308)
+	 * @since IdeaBoard (r3308)
 	 *
 	 * @param int $post_id
 	 *
@@ -559,7 +559,7 @@ class BBP_Akismet {
 	/**
 	 * Handle any terms submitted with a post flagged as spam
 	 *
-	 * @since bbPress (r3308)
+	 * @since IdeaBoard (r3308)
 	 *
 	 * @param string $terms Comma-separated list of terms
 	 * @param int $topic_id
@@ -590,19 +590,19 @@ class BBP_Akismet {
 	}
 
 	/**
-	 * Submit data to Akismet service with unique bbPress User Agent
+	 * Submit data to Akismet service with unique IdeaBoard User Agent
 	 *
 	 * This code is directly taken from the akismet_http_post() function and
-	 * documented to bbPress 2.0 standard.
+	 * documented to IdeaBoard 2.0 standard.
 	 *
-	 * @since bbPress (r3466)
+	 * @since IdeaBoard (r3466)
 	 *
 	 * @param string $request The request we are sending
 	 * @param string $host The host to send our request to
 	 * @param string $path The path from the host
 	 * @param string $port The port to use
 	 * @param string $ip Optional Override $host with an IP address
-	 * @uses bbp_get_version() To get the current bbPress version
+	 * @uses bbp_get_version() To get the current IdeaBoard version
 	 * @return mixed WP_Error on error, array on success, empty on failure
 	 */
 	private function http_post( $request, $host, $path, $port = 80, $ip = '' ) {
@@ -617,7 +617,7 @@ class BBP_Akismet {
 		$errstr         = null;
 
 		// Untque User Agent
-		$akismet_ua     = "bbPress/{$bbp_version} | ";
+		$akismet_ua     = "IdeaBoard/{$bbp_version} | ";
 		$akismet_ua    .= 'Akismet/' . constant( 'AKISMET_VERSION' );
 
 		// Use specific IP (if provided)
@@ -691,7 +691,7 @@ class BBP_Akismet {
 	/**
 	 * Return a user's roles on this site (including super_admin)
 	 *
-	 * @since bbPress (r4812)
+	 * @since IdeaBoard (r4812)
 	 *
 	 * @param type $user_id
 	 * @return boolean
@@ -725,14 +725,14 @@ class BBP_Akismet {
 	/**
 	 * Add Aksimet History metaboxes to topics and replies
 	 *
-	 * @since bbPress (r5049)
+	 * @since IdeaBoard (r5049)
 	 */
 	public function add_metaboxes() {
 
 		// Topics
 		add_meta_box(
 			'bbp_akismet_topic_history',
-			__( 'Akismet History', 'bbpress' ),
+			__( 'Akismet History', 'ideaboard' ),
 			array( $this, 'history_metabox' ),
 			bbp_get_topic_post_type(),
 			'normal',
@@ -742,7 +742,7 @@ class BBP_Akismet {
 		// Replies
 		add_meta_box(
 			'bbp_akismet_reply_history',
-			__( 'Akismet History', 'bbpress' ),
+			__( 'Akismet History', 'ideaboard' ),
 			array( $this, 'history_metabox' ),
 			bbp_get_reply_post_type(),
 			'normal',
@@ -753,7 +753,7 @@ class BBP_Akismet {
 	/**
 	 * Output for Akismet History metabox
 	 *
-	 * @since bbPress (r5049)
+	 * @since IdeaBoard (r5049)
 	 *
 	 * @uses get_post_history() To get the Akismet history for the post
 	 * @uses get_the_ID() To get the post ID
@@ -790,7 +790,7 @@ class BBP_Akismet {
 
 			<?php else : ?>
 
-				<p><?php esc_html_e( 'No recorded history. Akismet has not checked this post.', 'bbpress' ); ?></p>
+				<p><?php esc_html_e( 'No recorded history. Akismet has not checked this post.', 'ideaboard' ); ?></p>
 
 			<?php endif; ?>
 

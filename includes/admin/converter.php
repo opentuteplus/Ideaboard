@@ -1,11 +1,11 @@
 <?php
 
 /**
- * bbPress Converter
+ * IdeaBoard Converter
  *
  * Based on the hard work of Adam Ellis at http://bbconverter.com
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
  */
 
@@ -18,9 +18,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 class BBP_Converter {
 
 	/**
-	 * The main bbPress Converter loader
+	 * The main IdeaBoard Converter loader
 	 *
-	 * @since bbPress (r3813)
+	 * @since IdeaBoard (r3813)
 	 * @uses BBP_Converter::includes() Include the required files
 	 * @uses BBP_Converter::setup_actions() Setup the actions
 	 */
@@ -55,7 +55,7 @@ class BBP_Converter {
 	/**
 	 * Setup the default actions
 	 *
-	 * @since bbPress (r3813)
+	 * @since IdeaBoard (r3813)
 	 * @uses add_action() To add various actions
 	 */
 	private function setup_actions() {
@@ -73,7 +73,7 @@ class BBP_Converter {
 	/**
 	 * Register the settings
 	 *
-	 * @since bbPress (r3813)
+	 * @since IdeaBoard (r3813)
 	 * @uses add_settings_section() To add our own settings section
 	 * @uses add_settings_field() To add various settings fields
 	 * @uses register_setting() To register various settings
@@ -81,64 +81,64 @@ class BBP_Converter {
 	public function register_admin_settings() {
 
 		// Add the main section
-		add_settings_section( 'bbpress_converter_main',     __( 'Database Settings', 'bbpress' ),  'bbp_converter_setting_callback_main_section', 'bbpress_converter' );
+		add_settings_section( 'ideaboard_converter_main',     __( 'Database Settings', 'ideaboard' ),  'bbp_converter_setting_callback_main_section', 'ideaboard_converter' );
 
 		// System Select
-		add_settings_field( '_bbp_converter_platform',      __( 'Select Platform',   'bbpress' ),  'bbp_converter_setting_callback_platform', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_platform',           'sanitize_title' );
+		add_settings_field( '_bbp_converter_platform',      __( 'Select Platform',   'ideaboard' ),  'bbp_converter_setting_callback_platform', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_platform',           'sanitize_title' );
 
 		// Database Server
-		add_settings_field( '_bbp_converter_db_server',     __( 'Database Server',   'bbpress' ),  'bbp_converter_setting_callback_dbserver', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_db_server',          'sanitize_title' );
+		add_settings_field( '_bbp_converter_db_server',     __( 'Database Server',   'ideaboard' ),  'bbp_converter_setting_callback_dbserver', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_server',          'sanitize_title' );
 
 		// Database Server Port
-		add_settings_field( '_bbp_converter_db_port',       __( 'Database Port',     'bbpress' ),  'bbp_converter_setting_callback_dbport', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_db_port',            'sanitize_title' );
+		add_settings_field( '_bbp_converter_db_port',       __( 'Database Port',     'ideaboard' ),  'bbp_converter_setting_callback_dbport', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_port',            'sanitize_title' );
 
 		// Database Name
-		add_settings_field( '_bbp_converter_db_name',       __( 'Database Name',     'bbpress' ),  'bbp_converter_setting_callback_dbname', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_db_name',            'sanitize_title' );
+		add_settings_field( '_bbp_converter_db_name',       __( 'Database Name',     'ideaboard' ),  'bbp_converter_setting_callback_dbname', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_name',            'sanitize_title' );
 
 		// Database User
-		add_settings_field( '_bbp_converter_db_user',       __( 'Database User',     'bbpress' ),  'bbp_converter_setting_callback_dbuser', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_db_user',            'sanitize_title' );
+		add_settings_field( '_bbp_converter_db_user',       __( 'Database User',     'ideaboard' ),  'bbp_converter_setting_callback_dbuser', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_user',            'sanitize_title' );
 
 		// Database Pass
-		add_settings_field( '_bbp_converter_db_pass',       __( 'Database Password', 'bbpress' ),  'bbp_converter_setting_callback_dbpass', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_db_pass',            'sanitize_title' );
+		add_settings_field( '_bbp_converter_db_pass',       __( 'Database Password', 'ideaboard' ),  'bbp_converter_setting_callback_dbpass', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_pass',            'sanitize_title' );
 
 		// Database Prefix
-		add_settings_field( '_bbp_converter_db_prefix',     __( 'Table Prefix',      'bbpress' ),  'bbp_converter_setting_callback_dbprefix', 'bbpress_converter', 'bbpress_converter_main' );
-		register_setting  ( 'bbpress_converter_main',       '_bbp_converter_db_prefix',          'sanitize_title' );
+		add_settings_field( '_bbp_converter_db_prefix',     __( 'Table Prefix',      'ideaboard' ),  'bbp_converter_setting_callback_dbprefix', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_prefix',          'sanitize_title' );
 
 		// Add the options section
-		add_settings_section( 'bbpress_converter_opt',      __( 'Options',           'bbpress' ),  'bbp_converter_setting_callback_options_section', 'bbpress_converter' );
+		add_settings_section( 'ideaboard_converter_opt',      __( 'Options',           'ideaboard' ),  'bbp_converter_setting_callback_options_section', 'ideaboard_converter' );
 
 		// Rows Limit
-		add_settings_field( '_bbp_converter_rows',          __( 'Rows Limit',        'bbpress' ),  'bbp_converter_setting_callback_rows', 'bbpress_converter', 'bbpress_converter_opt' );
-		register_setting  ( 'bbpress_converter_opt',        '_bbp_converter_rows',               'intval' );
+		add_settings_field( '_bbp_converter_rows',          __( 'Rows Limit',        'ideaboard' ),  'bbp_converter_setting_callback_rows', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_rows',               'intval' );
 
 		// Delay Time
-		add_settings_field( '_bbp_converter_delay_time',    __( 'Delay Time',        'bbpress' ), 'bbp_converter_setting_callback_delay_time', 'bbpress_converter', 'bbpress_converter_opt' );
-		register_setting  ( 'bbpress_converter_opt',        '_bbp_converter_delay_time',        'intval' );
+		add_settings_field( '_bbp_converter_delay_time',    __( 'Delay Time',        'ideaboard' ), 'bbp_converter_setting_callback_delay_time', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_delay_time',        'intval' );
 
 		// Convert Users ?
-		add_settings_field( '_bbp_converter_convert_users', __( 'Convert Users',     'bbpress' ), 'bbp_converter_setting_callback_convert_users', 'bbpress_converter', 'bbpress_converter_opt' );
-		register_setting  ( 'bbpress_converter_opt',        '_bbp_converter_convert_users',     'intval' );
+		add_settings_field( '_bbp_converter_convert_users', __( 'Convert Users',     'ideaboard' ), 'bbp_converter_setting_callback_convert_users', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_convert_users',     'intval' );
 
 		// Restart
-		add_settings_field( '_bbp_converter_restart',       __( 'Start Over',        'bbpress' ), 'bbp_converter_setting_callback_restart', 'bbpress_converter', 'bbpress_converter_opt' );
-		register_setting  ( 'bbpress_converter_opt',        '_bbp_converter_restart',           'intval' );
+		add_settings_field( '_bbp_converter_restart',       __( 'Start Over',        'ideaboard' ), 'bbp_converter_setting_callback_restart', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_restart',           'intval' );
 
 		// Clean
-		add_settings_field( '_bbp_converter_clean',         __( 'Purge Previous Import', 'bbpress' ), 'bbp_converter_setting_callback_clean', 'bbpress_converter', 'bbpress_converter_opt' );
-		register_setting  ( 'bbpress_converter_opt',        '_bbp_converter_clean',             'intval' );
+		add_settings_field( '_bbp_converter_clean',         __( 'Purge Previous Import', 'ideaboard' ), 'bbp_converter_setting_callback_clean', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_clean',             'intval' );
 	}
 
 	/**
 	 * Admin scripts
 	 *
-	 * @since bbPress (r3813)
+	 * @since IdeaBoard (r3813)
 	 */
 	public function admin_head() { ?>
 
@@ -220,7 +220,7 @@ class BBP_Converter {
 					jQuery('#bbp-converter-start').hide();
 					jQuery('#bbp-converter-stop').show();
 					jQuery('#bbp-converter-progress').show();
-					bbconverter_log( '<p class="loading"><?php esc_html_e( 'Starting Conversion', 'bbpress' ); ?></p>' );
+					bbconverter_log( '<p class="loading"><?php esc_html_e( 'Starting Conversion', 'ideaboard' ); ?></p>' );
 					bbconverter_run();
 				}
 			}
@@ -245,7 +245,7 @@ class BBP_Converter {
 			function bbconverter_success(response) {
 				bbconverter_log(response);
 
-				if ( response == '<p class="loading"><?php esc_html_e( 'Conversion Complete', 'bbpress' ); ?></p>' || response.indexOf('error') > -1 ) {
+				if ( response == '<p class="loading"><?php esc_html_e( 'Conversion Complete', 'ideaboard' ); ?></p>' || response.indexOf('error') > -1 ) {
 					bbconverter_log('<p>Repair any missing information: <a href="<?php echo admin_url(); ?>tools.php?page=bbp-repair">Continue</a></p>');
 					bbconverter_stop();
 				} else if( bbconverter_is_running ) { // keep going
@@ -275,7 +275,7 @@ class BBP_Converter {
 	/**
 	 * Wrap the converter output in paragraph tags, so styling can be applied
 	 *
-	 * @since bbPress (r4052)
+	 * @since IdeaBoard (r4052)
 	 *
 	 * @param string $output
 	 */
@@ -295,7 +295,7 @@ class BBP_Converter {
 	/**
 	 * Callback processor
 	 *
-	 * @since bbPress (r3813)
+	 * @since IdeaBoard (r3813)
 	 */
 	public function process_callback() {
 
@@ -344,11 +344,11 @@ class BBP_Converter {
 						update_option( '_bbp_converter_start', 0         );
 						$this->sync_table( true );
 						if ( empty( $start ) ) {
-							$this->converter_output( __( 'No data to clean', 'bbpress' ) );
+							$this->converter_output( __( 'No data to clean', 'ideaboard' ) );
 						}
 					} else {
 						update_option( '_bbp_converter_start', $max + 1 );
-						$this->converter_output( sprintf( __( 'Deleting previously converted data (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+						$this->converter_output( sprintf( __( 'Deleting previously converted data (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 					}
 				} else {
 					update_option( '_bbp_converter_step',  $step + 1 );
@@ -364,11 +364,11 @@ class BBP_Converter {
 						update_option( '_bbp_converter_step',  $step + 1 );
 						update_option( '_bbp_converter_start', 0         );
 						if ( empty( $start ) ) {
-							$this->converter_output( __( 'No users to convert', 'bbpress' ) );
+							$this->converter_output( __( 'No users to convert', 'ideaboard' ) );
 						}
 					} else {
 						update_option( '_bbp_converter_start', $max + 1 );
-						$this->converter_output( sprintf(  __( 'Converting users (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+						$this->converter_output( sprintf(  __( 'Converting users (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 					}
 				} else {
 					update_option( '_bbp_converter_step',  $step + 1 );
@@ -384,11 +384,11 @@ class BBP_Converter {
 						update_option( '_bbp_converter_step',  $step + 1 );
 						update_option( '_bbp_converter_start', 0         );
 						if ( empty( $start ) ) {
-							$this->converter_output( __( 'No passwords to clear', 'bbpress' ) );
+							$this->converter_output( __( 'No passwords to clear', 'ideaboard' ) );
 						}
 					} else {
 						update_option( '_bbp_converter_start', $max + 1 );
-						$this->converter_output( sprintf( __( 'Delete users WordPress default passwords (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+						$this->converter_output( sprintf( __( 'Delete users WordPress default passwords (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 					}
 				} else {
 					update_option( '_bbp_converter_step',  $step + 1 );
@@ -403,11 +403,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No forums to convert', 'bbpress' ) );
+						$this->converter_output( __( 'No forums to convert', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Converting forums (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Converting forums (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -418,11 +418,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No forum parents to convert', 'bbpress' ) );
+						$this->converter_output( __( 'No forum parents to convert', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Calculating forum hierarchy (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Calculating forum hierarchy (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -433,11 +433,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No topics to convert', 'bbpress' ) );
+						$this->converter_output( __( 'No topics to convert', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Converting topics (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Converting topics (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -448,11 +448,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No stickies to stick', 'bbpress' ) );
+						$this->converter_output( __( 'No stickies to stick', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Calculating topic stickies (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Calculating topic stickies (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -463,11 +463,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No super stickies to stick', 'bbpress' ) );
+						$this->converter_output( __( 'No super stickies to stick', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Calculating topic super stickies (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Calculating topic super stickies (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -478,11 +478,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No tags to convert', 'bbpress' ) );
+						$this->converter_output( __( 'No tags to convert', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Converting topic tags (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Converting topic tags (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -493,11 +493,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No replies to convert', 'bbpress' ) );
+						$this->converter_output( __( 'No replies to convert', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Converting replies (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Converting replies (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -508,11 +508,11 @@ class BBP_Converter {
 					update_option( '_bbp_converter_step',  $step + 1 );
 					update_option( '_bbp_converter_start', 0         );
 					if ( empty( $start ) ) {
-						$this->converter_output( __( 'No reply_to parents to convert', 'bbpress' ) );
+						$this->converter_output( __( 'No reply_to parents to convert', 'ideaboard' ) );
 					}
 				} else {
 					update_option( '_bbp_converter_start', $max + 1 );
-					$this->converter_output( sprintf( __( 'Calculating reply_to parents (%1$s - %2$s)', 'bbpress' ), $min, $max ) );
+					$this->converter_output( sprintf( __( 'Calculating reply_to parents (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
@@ -522,7 +522,7 @@ class BBP_Converter {
 				delete_option( '_bbp_converter_start' );
 				delete_option( '_bbp_converter_query' );
 
-				$this->converter_output( __( 'Conversion Complete', 'bbpress' ) );
+				$this->converter_output( __( 'Conversion Complete', 'ideaboard' ) );
 
 				break;
 		}
@@ -531,7 +531,7 @@ class BBP_Converter {
 	/**
 	 * Create Tables for fast syncing
 	 *
-	 * @since bbPress (r3813)
+	 * @since IdeaBoard (r3813)
 	 */
 	public function sync_table( $drop = false ) {
 		global $wpdb;
@@ -573,7 +573,7 @@ class BBP_Converter {
 /**
  * Base class to be extended by specific individual importers
  *
- * @since bbPress (r3813)
+ * @since IdeaBoard (r3813)
  */
 abstract class BBP_Converter_Base {
 
@@ -1048,7 +1048,7 @@ abstract class BBP_Converter_Base {
 	}
 
 	/**
-	 * This method converts old forum heirarchy to new bbPress heirarchy.
+	 * This method converts old forum heirarchy to new IdeaBoard heirarchy.
 	 */
 	public function convert_forum_parents( $start ) {
 
@@ -1074,9 +1074,9 @@ abstract class BBP_Converter_Base {
 	}
 
 	/**
-	 * This method converts old topic stickies to new bbPress stickies.
+	 * This method converts old topic stickies to new IdeaBoard stickies.
 	 *
-	 * @since bbPress (r)
+	 * @since IdeaBoard (r)
 	 *
 	 * @uses WPDB $wpdb
 	 * @uses bbp_stick_topic() to set the imported topic as sticky
@@ -1105,9 +1105,9 @@ abstract class BBP_Converter_Base {
 	}
 
 	/**
-	 * This method converts old topic super stickies to new bbPress super stickies.
+	 * This method converts old topic super stickies to new IdeaBoard super stickies.
 	 *
-	 * @since bbPress (r)
+	 * @since IdeaBoard (r)
 	 *
 	 * @uses WPDB $wpdb
 	 * @uses bbp_stick_topic() to set the imported topic as super sticky
@@ -1137,7 +1137,7 @@ abstract class BBP_Converter_Base {
 	}
 
 	/**
-	 * This method converts old reply_to post id to new bbPress reply_to post id.
+	 * This method converts old reply_to post id to new IdeaBoard reply_to post id.
 	 */
 	public function convert_reply_to_parents( $start ) {
 
@@ -1434,7 +1434,7 @@ abstract class BBP_Converter_Base {
 	}
 
 	protected function callback_html( $field ) {
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		return html_entity_decode( $bbcode->Parse( $field ) );
 	}
@@ -1466,7 +1466,7 @@ abstract class BBP_Converter_Base {
 function bbp_new_converter( $platform ) {
 	$found = false;
 
-	if ( $curdir = opendir( bbpress()->admin->admin_dir . 'converters/' ) ) {
+	if ( $curdir = opendir( ideaboard()->admin->admin_dir . 'converters/' ) ) {
 		while ( $file = readdir( $curdir ) ) {
 			if ( stristr( $file, '.php' ) && stristr( $file, 'index' ) === FALSE ) {
 				$file = preg_replace( '/.php/', '', $file );
@@ -1480,7 +1480,7 @@ function bbp_new_converter( $platform ) {
 	}
 
 	if ( true === $found ) {
-		require_once( bbpress()->admin->admin_dir . 'converters/' . $platform . '.php' );
+		require_once( ideaboard()->admin->admin_dir . 'converters/' . $platform . '.php' );
 		return new $platform;
 	} else {
 		return null;

@@ -3,7 +3,7 @@
 /**
  * Single Forum
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

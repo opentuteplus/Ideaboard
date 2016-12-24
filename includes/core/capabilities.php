@@ -1,13 +1,13 @@
 <?php
 
 /**
- * bbPress Capabilites
+ * IdeaBoard Capabilites
  *
  * The functions in this file are used primarily as convenient wrappers for
  * capability output in user profiles. This includes mapping capabilities and
  * groups to human readable strings,
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Capabilities
  */
 
@@ -19,7 +19,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Returns an array of capabilities based on the role that is being requested.
  *
- * @since bbPress (r2994)
+ * @since IdeaBoard (r2994)
  *
  * @todo Map all of these and deprecate
  *
@@ -211,7 +211,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 /**
  * Adds capabilities to WordPress user roles.
  *
- * @since bbPress (r2608)
+ * @since IdeaBoard (r2608)
  */
 function bbp_add_caps() {
 
@@ -228,7 +228,7 @@ function bbp_add_caps() {
 /**
  * Removes capabilities from WordPress user roles.
  *
- * @since bbPress (r2608)
+ * @since IdeaBoard (r2608)
  */
 function bbp_remove_caps() {
 
@@ -245,7 +245,7 @@ function bbp_remove_caps() {
 /**
  * Get the $wp_roles global without needing to declare it everywhere
  *
- * @since bbPress (r4293)
+ * @since IdeaBoard (r4293)
  *
  * @global WP_Roles $wp_roles
  * @return WP_Roles
@@ -261,9 +261,9 @@ function bbp_get_wp_roles() {
 }
 
 /**
- * Get the available roles minus bbPress's dynamic roles
+ * Get the available roles minus IdeaBoard's dynamic roles
  *
- * @since bbPress (r5064)
+ * @since IdeaBoard (r5064)
  *
  * @uses bbp_get_wp_roles() To load and get the $wp_roles global
  * @return array
@@ -276,7 +276,7 @@ function bbp_get_blog_roles() {
 	// Apply the WordPress 'editable_roles' filter to let plugins ride along.
 	//
 	// We use this internally via bbp_filter_blog_editable_roles() to remove
-	// any custom bbPress roles that are added to the global.
+	// any custom IdeaBoard roles that are added to the global.
 	$the_roles = isset( $wp_roles->roles ) ? $wp_roles->roles : false;
 	$all_roles = apply_filters( 'editable_roles', $the_roles );
 
@@ -286,16 +286,16 @@ function bbp_get_blog_roles() {
 /** Forum Roles ***************************************************************/
 
 /**
- * Add the bbPress roles to the $wp_roles global.
+ * Add the IdeaBoard roles to the $wp_roles global.
  *
  * We do this to avoid adding these values to the database.
  *
- * @since bbPress (r4290)
+ * @since IdeaBoard (r4290)
  *
  * @param WP_Roles $wp_roles The main WordPress roles global
  *
  * @uses bbp_get_wp_roles() To load and get the $wp_roles global
- * @uses bbp_get_dynamic_roles() To get and add bbPress's roles to $wp_roles
+ * @uses bbp_get_dynamic_roles() To get and add IdeaBoard's roles to $wp_roles
  * @return WP_Roles The main $wp_roles global
  */
 function bbp_add_forums_roles( $wp_roles = null ) {
@@ -319,7 +319,7 @@ function bbp_add_forums_roles( $wp_roles = null ) {
 /**
  * Helper function to add filter to option_wp_user_roles
  *
- * @since bbPress (r4363)
+ * @since IdeaBoard (r4363)
  *
  * @see _bbp_reinit_dynamic_roles()
  *
@@ -343,18 +343,18 @@ function bbp_filter_user_roles_option() {
  * it here for now, knowing that improvements will come to WordPress core later.
  *
  * Also note that if using the $wp_user_roles global non-database approach,
- * bbPress does not have an intercept point to add its dynamic roles.
+ * IdeaBoard does not have an intercept point to add its dynamic roles.
  *
  * @see switch_to_blog()
  * @see restore_current_blog()
  * @see WP_Roles::_init()
  *
- * @since bbPress (r4363)
+ * @since IdeaBoard (r4363)
  *
- * @internal Used by bbPress to reinitialize dynamic roles on blog switch
+ * @internal Used by IdeaBoard to reinitialize dynamic roles on blog switch
  *
  * @param array $roles
- * @return array Combined array of database roles and dynamic bbPress roles
+ * @return array Combined array of database roles and dynamic IdeaBoard roles
  */
 function _bbp_reinit_dynamic_roles( $roles = array() ) {
 	foreach ( bbp_get_dynamic_roles() as $role_id => $details ) {
@@ -376,7 +376,7 @@ function _bbp_reinit_dynamic_roles( $roles = array() ) {
  * only editors or authors. This filter allows admins to delegate
  * user management.
  *
- * @since bbPress (r4284)
+ * @since IdeaBoard (r4284)
  *
  * @return array
  */
@@ -418,7 +418,7 @@ function bbp_get_dynamic_roles() {
 /**
  * Gets a translated role name from a role ID
  *
- * @since bbPress (r4792)
+ * @since IdeaBoard (r4792)
  *
  * @param string $role_id
  * @return string Translated role name
@@ -431,19 +431,19 @@ function bbp_get_dynamic_role_name( $role_id = '' ) {
 }
 
 /**
- * Removes the bbPress roles from the editable roles array
+ * Removes the IdeaBoard roles from the editable roles array
  *
  * This used to use array_diff_assoc() but it randomly broke before 2.2 release.
  * Need to research what happened, and if there's a way to speed this up.
  *
- * @since bbPress (r4303)
+ * @since IdeaBoard (r4303)
  *
  * @param array $all_roles All registered roles
  * @return array 
  */
 function bbp_filter_blog_editable_roles( $all_roles = array() ) {
 
-	// Loop through bbPress roles
+	// Loop through IdeaBoard roles
 	foreach ( array_keys( bbp_get_dynamic_roles() ) as $bbp_role ) {
 
 		// Loop through WordPress roles
@@ -460,9 +460,9 @@ function bbp_filter_blog_editable_roles( $all_roles = array() ) {
 }
 
 /**
- * The keymaster role for bbPress users
+ * The keymaster role for IdeaBoard users
  *
- * @since bbPress (r4284)
+ * @since IdeaBoard (r4284)
  *
  * @uses apply_filters() Allow override of hardcoded keymaster role
  * @return string
@@ -472,9 +472,9 @@ function bbp_get_keymaster_role() {
 }
 
 /**
- * The moderator role for bbPress users
+ * The moderator role for IdeaBoard users
  *
- * @since bbPress (r3410)
+ * @since IdeaBoard (r3410)
  *
  * @uses apply_filters() Allow override of hardcoded moderator role
  * @return string
@@ -486,7 +486,7 @@ function bbp_get_moderator_role() {
 /**
  * The participant role for registered user that can participate in forums
  *
- * @since bbPress (r3410)
+ * @since IdeaBoard (r3410)
  *
  * @uses apply_filters() Allow override of hardcoded participant role
  * @return string
@@ -498,7 +498,7 @@ function bbp_get_participant_role() {
 /**
  * The spectator role is for registered users without any capabilities
  *
- * @since bbPress (r3860)
+ * @since IdeaBoard (r3860)
  *
  * @uses apply_filters() Allow override of hardcoded spectator role
  * @return string
@@ -510,7 +510,7 @@ function bbp_get_spectator_role() {
 /**
  * The blocked role is for registered users that cannot spectate or participate
  *
- * @since bbPress (r4284)
+ * @since IdeaBoard (r4284)
  *
  * @uses apply_filters() Allow override of hardcoded blocked role
  * @return string
@@ -522,24 +522,24 @@ function bbp_get_blocked_role() {
 /** Deprecated ****************************************************************/
 
 /**
- * Adds bbPress-specific user roles.
+ * Adds IdeaBoard-specific user roles.
  *
- * @since bbPress (r2741)
+ * @since IdeaBoard (r2741)
  * @deprecated since version 2.2
  */
 function bbp_add_roles() {
-	_doing_it_wrong( 'bbp_add_roles', __( 'Editable forum roles no longer exist.', 'bbpress' ), '2.2' );
+	_doing_it_wrong( 'bbp_add_roles', __( 'Editable forum roles no longer exist.', 'ideaboard' ), '2.2' );
 }
 
 /**
- * Removes bbPress-specific user roles.
+ * Removes IdeaBoard-specific user roles.
  *
- * @since bbPress (r2741)
+ * @since IdeaBoard (r2741)
  * @deprecated since version 2.2
  */
 function bbp_remove_roles() {
 
-	// Remove the bbPress roles
+	// Remove the IdeaBoard roles
 	foreach ( array_keys( bbp_get_dynamic_roles() ) as $bbp_role ) {
 		remove_role( $bbp_role );
 	}

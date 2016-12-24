@@ -1,18 +1,18 @@
 <?php
 
 /**
- * bbPress Filters
+ * IdeaBoard Filters
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Core
  *
- * This file contains the filters that are used through-out bbPress. They are
+ * This file contains the filters that are used through-out IdeaBoard. They are
  * consolidated here to make searching for them easier, and to help developers
  * understand at a glance the order in which things occur.
  *
  * There are a few common places that additional filters can currently be found
  *
- *  - bbPress: In {@link bbPress::setup_actions()} in bbpress.php
+ *  - IdeaBoard: In {@link IdeaBoard::setup_actions()} in ideaboard.php
  *  - Admin: More in {@link BBP_Admin::setup_actions()} in admin.php
  *
  * @see /core/actions.php
@@ -22,20 +22,20 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Attach bbPress to WordPress
+ * Attach IdeaBoard to WordPress
  *
- * bbPress uses its own internal actions to help aid in third-party plugin
+ * IdeaBoard uses its own internal actions to help aid in third-party plugin
  * development, and to limit the amount of potential future code changes when
  * updates to WordPress core occur.
  *
  * These actions exist to create the concept of 'plugin dependencies'. They
- * provide a safe way for plugins to execute code *only* when bbPress is
+ * provide a safe way for plugins to execute code *only* when IdeaBoard is
  * installed and activated, without needing to do complicated guesswork.
  *
  * For more information on how this works, see the 'Plugin Dependency' section
  * near the bottom of this file.
  *
- *           v--WordPress Actions       v--bbPress Sub-actions
+ *           v--WordPress Actions       v--IdeaBoard Sub-actions
  */
 add_filter( 'request',                 'bbp_request',            10    );
 add_filter( 'template_include',        'bbp_template_include',   10    );
@@ -51,7 +51,7 @@ add_filter( 'plugin_locale',           'bbp_plugin_locale',      10, 2 );
 // Fix post author id for anonymous posts (set it back to 0) when the post status is changed
 add_filter( 'wp_insert_post_data', 'bbp_fix_post_author', 30, 2 );
 
-// Force comments_status on bbPress post types
+// Force comments_status on IdeaBoard post types
 add_filter( 'comments_open', 'bbp_force_comment_status' );
 
 // Add post_parent__in to posts_where
@@ -66,7 +66,7 @@ add_filter( 'the_title', 'bbp_get_reply_title_fallback', 2, 2 );
 /**
  * Feeds
  *
- * bbPress comes with a number of custom RSS2 feeds that get handled outside
+ * IdeaBoard comes with a number of custom RSS2 feeds that get handled outside
  * the normal scope of feeds that WordPress would normally serve. To do this,
  * we filter every page request, listen for a feed request, and trap it.
  */
@@ -75,14 +75,14 @@ add_filter( 'bbp_request', 'bbp_request_feed_trap' );
 /**
  * Template Compatibility
  *
- * If you want to completely bypass this and manage your own custom bbPress
+ * If you want to completely bypass this and manage your own custom IdeaBoard
  * template hierarchy, start here by removing this filter, then look at how
  * bbp_template_include() works and do something similar. :)
  */
 add_filter( 'bbp_template_include',   'bbp_template_include_theme_supports', 2, 1 );
 add_filter( 'bbp_template_include',   'bbp_template_include_theme_compat',   4, 2 );
 
-// Filter bbPress template locations
+// Filter IdeaBoard template locations
 add_filter( 'bbp_get_template_stack', 'bbp_add_template_stack_locations'          );
 
 // Links
@@ -242,9 +242,9 @@ add_filter( 'bbp_map_meta_caps', 'bbp_map_reply_meta_caps',     10, 4 ); // Repl
 add_filter( 'bbp_map_meta_caps', 'bbp_map_topic_tag_meta_caps', 10, 4 ); // Topic tags
 
 // Clickables
-add_filter( 'bbp_make_clickable', 'bbp_make_urls_clickable',      2 ); // https://bbpress.org
-add_filter( 'bbp_make_clickable', 'bbp_make_ftps_clickable',      4 ); // ftps://bbpress.org
-add_filter( 'bbp_make_clickable', 'bbp_make_emails_clickable',    6 ); // jjj@bbpress.org
+add_filter( 'bbp_make_clickable', 'bbp_make_urls_clickable',      2 ); // https://ideaboard.org
+add_filter( 'bbp_make_clickable', 'bbp_make_ftps_clickable',      4 ); // ftps://ideaboard.org
+add_filter( 'bbp_make_clickable', 'bbp_make_emails_clickable',    6 ); // jjj@ideaboard.org
 add_filter( 'bbp_make_clickable', 'bbp_make_mentions_clickable',  8 ); // @jjj
 
 /** Deprecated ****************************************************************/
@@ -261,26 +261,26 @@ add_filter( 'bbp_make_clickable', 'bbp_make_mentions_clickable',  8 ); // @jjj
 /**
  * Deprecated locale filter
  *
- * @since bbPress (r4213)
+ * @since IdeaBoard (r4213)
  *
  * @param string $locale
  * @return string  $domain
  */
 function _bbp_filter_locale( $locale = '', $domain = '' ) {
 
-	// Only apply to the bbPress text-domain
-	if ( bbpress()->domain !== $domain ) {
+	// Only apply to the IdeaBoard text-domain
+	if ( ideaboard()->domain !== $domain ) {
 		return $locale;
 	}
 
-	return apply_filters( 'bbpress_locale', $locale, $domain );
+	return apply_filters( 'ideaboard_locale', $locale, $domain );
 }
 add_filter( 'bbp_plugin_locale', '_bbp_filter_locale', 10, 1 );
 
 /**
  * Deprecated forums query filter
  *
- * @since bbPress (r3961)
+ * @since IdeaBoard (r3961)
  * @param array $args
  * @return array
  */
@@ -292,7 +292,7 @@ add_filter( 'bbp_after_has_forums_parse_args', '_bbp_has_forums_query' );
 /**
  * Deprecated topics query filter
  *
- * @since bbPress (r3961)
+ * @since IdeaBoard (r3961)
  * @param array $args
  * @return array
  */
@@ -304,7 +304,7 @@ add_filter( 'bbp_after_has_topics_parse_args', '_bbp_has_topics_query' );
 /**
  * Deprecated replies query filter
  *
- * @since bbPress (r3961)
+ * @since IdeaBoard (r3961)
  * @param array $args
  * @return array
  */

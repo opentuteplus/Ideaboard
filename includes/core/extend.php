@@ -1,12 +1,12 @@
 <?php
 
 /**
- * bbPress Extentions
+ * IdeaBoard Extentions
  *
- * There's a world of really cool plugins out there, and bbPress comes with
+ * There's a world of really cool plugins out there, and IdeaBoard comes with
  * support for some of the most popular ones.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Extend
  */
 
@@ -14,11 +14,11 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Loads Akismet inside the bbPress global class
+ * Loads Akismet inside the IdeaBoard global class
  *
- * @since bbPress (r3277)
+ * @since IdeaBoard (r3277)
  *
- * @return If bbPress is not active
+ * @return If IdeaBoard is not active
  */
 function bbp_setup_akismet() {
 
@@ -29,17 +29,17 @@ function bbp_setup_akismet() {
 	if ( !bbp_is_akismet_active() ) return;
 
 	// Include the Akismet Component
-	require( bbpress()->includes_dir . 'extend/akismet.php' );
+	require( ideaboard()->includes_dir . 'extend/akismet.php' );
 
-	// Instantiate Akismet for bbPress
-	bbpress()->extend->akismet = new BBP_Akismet();
+	// Instantiate Akismet for IdeaBoard
+	ideaboard()->extend->akismet = new BBP_Akismet();
 }
 
 /**
  * Requires and creates the BuddyPress extension, and adds component creation
  * action to bp_init hook. @see bbp_setup_buddypress_component()
  *
- * @since bbPress (r3395)
+ * @since IdeaBoard (r3395)
  * @return If BuddyPress is not active
  */
 function bbp_setup_buddypress() {
@@ -49,7 +49,7 @@ function bbp_setup_buddypress() {
 		/**
 		 * Helper for BuddyPress 1.6 and earlier
 		 *
-		 * @since bbPress (r4395)
+		 * @since IdeaBoard (r4395)
 		 * @return BuddyPress
 		 */
 		function buddypress() {
@@ -62,8 +62,8 @@ function bbp_setup_buddypress() {
 		return;
 
 	// Include the BuddyPress Component
-	require( bbpress()->includes_dir . 'extend/buddypress/loader.php' );
+	require( ideaboard()->includes_dir . 'extend/buddypress/loader.php' );
 
-	// Instantiate BuddyPress for bbPress
-	bbpress()->extend->buddypress = new BBP_Forums_Component();
+	// Instantiate BuddyPress for IdeaBoard
+	ideaboard()->extend->buddypress = new BBP_Forums_Component();
 }

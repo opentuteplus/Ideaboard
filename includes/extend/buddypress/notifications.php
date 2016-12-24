@@ -4,7 +4,7 @@
  * Filter registered notifications components, and add 'forums' to the queried
  * 'component_name' array.
  *
- * @since bbPress (r5232)
+ * @since IdeaBoard (r5232)
  *
  * @see BP_Notifications_Notification::get()
  * @param array $component_names
@@ -28,9 +28,9 @@ add_filter( 'bp_notifications_get_registered_components', 'bbp_filter_notificati
 /**
  * Format the BuddyBar/Toolbar notifications
  *
- * @since bbPress (r5155)
+ * @since IdeaBoard (r5155)
  *
- * @package bbPress
+ * @package IdeaBoard
  *
  * @param string $action The kind of notification being rendered
  * @param int $item_id The primary item id
@@ -45,16 +45,16 @@ function bbp_format_buddypress_notifications( $action, $item_id, $secondary_item
 		$topic_id    = bbp_get_reply_topic_id( $item_id );
 		$topic_title = bbp_get_topic_title( $topic_id );
 		$topic_link  = wp_nonce_url( add_query_arg( array( 'action' => 'bbp_mark_read', 'topic_id' => $topic_id ), bbp_get_reply_url( $item_id ) ), 'bbp_mark_topic_' . $topic_id );
-		$title_attr  = __( 'Topic Replies', 'bbpress' );
+		$title_attr  = __( 'Topic Replies', 'ideaboard' );
 
 		if ( (int) $total_items > 1 ) {
-			$text   = sprintf( __( 'You have %d new replies', 'bbpress' ), (int) $total_items );
+			$text   = sprintf( __( 'You have %d new replies', 'ideaboard' ), (int) $total_items );
 			$filter = 'bbp_multiple_new_subscription_notification';
 		} else {
 			if ( !empty( $secondary_item_id ) ) {
-				$text = sprintf( __( 'You have %d new reply to %2$s from %3$s', 'bbpress' ), (int) $total_items, $topic_title, bp_core_get_user_displayname( $secondary_item_id ) );
+				$text = sprintf( __( 'You have %d new reply to %2$s from %3$s', 'ideaboard' ), (int) $total_items, $topic_title, bp_core_get_user_displayname( $secondary_item_id ) );
 			} else {
-				$text = sprintf( __( 'You have %d new reply to %s',             'bbpress' ), (int) $total_items, $topic_title );
+				$text = sprintf( __( 'You have %d new reply to %s',             'ideaboard' ), (int) $total_items, $topic_title );
 			}
 			$filter = 'bbp_single_new_subscription_notification';
 		}
@@ -82,7 +82,7 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bbp_format_buddypres
  * Hooked into the new reply function, this notification action is responsible
  * for notifying topic and hierarchical reply authors of topic replies.
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $reply_id
  * @param int $topic_id
@@ -136,7 +136,7 @@ add_action( 'bbp_new_reply', 'bbp_buddypress_add_notification', 10, 7 );
 /**
  * Mark notifications as read when reading a topic
  *
- * @since bbPress (r5155)
+ * @since IdeaBoard (r5155)
  *
  * @return If not trying to mark a notification as read
  */
@@ -158,11 +158,11 @@ function bbp_buddypress_mark_notifications( $action = '' ) {
 
 	// Check nonce
 	if ( ! bbp_verify_nonce_request( 'bbp_mark_topic_' . $topic_id ) ) {
-		bbp_add_error( 'bbp_notification_topic_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_notification_topic_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 
 	// Check current user's ability to edit the user
 	} elseif ( !current_user_can( 'edit_user', $user_id ) ) {
-		bbp_add_error( 'bbp_notification_permissions', __( '<strong>ERROR</strong>: You do not have permission to mark notifications for that user.', 'bbpress' ) );
+		bbp_add_error( 'bbp_notification_permissions', __( '<strong>ERROR</strong>: You do not have permission to mark notifications for that user.', 'ideaboard' ) );
 	}
 
 	// Bail if we have errors

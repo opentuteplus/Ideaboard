@@ -3,8 +3,8 @@
 /**
  * Implementation of PunBB v1.4.2 Forum converter.
  *
- * @since bbPress (r5153)
- * @link Codex Docs http://codex.bbpress.org/import-forums/punbb
+ * @since IdeaBoard (r5153)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/punbb
  */
 class PunBB extends BBP_Converter_Base {
 
@@ -674,7 +674,7 @@ class PunBB extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 }

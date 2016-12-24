@@ -1,15 +1,15 @@
 <?php
 
 /**
- * bbPress BuddyPress Group Extension Class
+ * IdeaBoard BuddyPress Group Extension Class
  *
- * This file is responsible for connecting bbPress to BuddyPress's Groups
+ * This file is responsible for connecting IdeaBoard to BuddyPress's Groups
  * Component. It's a great example of how to perform both simple and advanced
- * techniques to manipulate bbPress's default output.
+ * techniques to manipulate IdeaBoard's default output.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
- * @todo maybe move to BuddyPress Forums once bbPress 1.1 can be removed
+ * @todo maybe move to BuddyPress Forums once IdeaBoard 1.1 can be removed
  */
 
 // Exit if accessed directly
@@ -19,9 +19,9 @@ if ( !class_exists( 'BBP_Forums_Group_Extension' ) && class_exists( 'BP_Group_Ex
 /**
  * Loads Group Extension for Forums Component
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  * @todo Everything
  */
@@ -30,9 +30,9 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/** Methods ***************************************************************/
 
 	/**
-	 * Setup bbPress group extension variables
+	 * Setup IdeaBoard group extension variables
 	 *
-	 * @since bbPress (r3552)
+	 * @since IdeaBoard (r3552)
 	 */
 	public function __construct() {
 		$this->setup_variables();
@@ -44,15 +44,15 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Setup the group forums class variables
 	 *
-	 * @since bbPress ()
+	 * @since IdeaBoard ()
 	 */
 	private function setup_variables() {
 
 		// Component Name
-		$this->name          = __( 'Forum', 'bbpress' );
-		$this->nav_item_name = __( 'Forum', 'bbpress' );
+		$this->name          = __( 'Forum', 'ideaboard' );
+		$this->nav_item_name = __( 'Forum', 'ideaboard' );
 
-		// Component slugs (hardcoded to match bbPress 1.x functionality)
+		// Component slugs (hardcoded to match IdeaBoard 1.x functionality)
 		$this->slug          = 'forum';
 		$this->topic_slug    = 'topic';
 		$this->reply_slug    = 'reply';
@@ -77,7 +77,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Setup the group forums class actions
 	 *
-	 * @since bbPress (r4552)
+	 * @since IdeaBoard (r4552)
 	 */
 	private function setup_actions() {
 
@@ -87,13 +87,13 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		// Remove group forum cap map when view is done
 		add_action( 'bbp_after_group_forum_display', array( $this, 'remove_group_forum_meta_cap_map' ) );
 
-		// bbPress needs to listen to BuddyPress group deletion.
+		// IdeaBoard needs to listen to BuddyPress group deletion.
 		add_action( 'groups_before_delete_group',    array( $this, 'disconnect_forum_from_group'     ) );
 
-		// Adds a bbPress metabox to the new BuddyPress Group Admin UI
+		// Adds a IdeaBoard metabox to the new BuddyPress Group Admin UI
 		add_action( 'bp_groups_admin_meta_boxes',    array( $this, 'group_admin_ui_edit_screen'      ) );
 
-		// Saves the bbPress options if they come from the BuddyPress Group Admin UI
+		// Saves the IdeaBoard options if they come from the BuddyPress Group Admin UI
 		add_action( 'bp_group_admin_edit_after',     array( $this, 'edit_screen_save'                ) );
 
 		// Adds a hidden input value to the "Group Settings" page
@@ -103,7 +103,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Setup the group forums class filters
 	 *
-	 * @since bbPress (r4552)
+	 * @since IdeaBoard (r4552)
 	 */
 	private function setup_filters() {
 
@@ -148,7 +148,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * The primary display function for group forums
 	 *
-	 * @since bbPress (r3746)
+	 * @since IdeaBoard (r3746)
 	 *
 	 * @param int $group_id ID of the current group. Available only on BP 2.2+.
 	 */
@@ -173,7 +173,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Maybe unset the group forum nav item if group does not have a forum
 	 *
-	 * @since bbPress (r4552)
+	 * @since IdeaBoard (r4552)
 	 *
 	 * @return If not viewing a single group
 	 */
@@ -193,7 +193,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Allow group members to have advanced priviledges in group forum topics.
 	 *
-	 * @since bbPress (r4434)
+	 * @since IdeaBoard (r4434)
 	 *
 	 * @param array $caps
 	 * @param string $cap
@@ -243,7 +243,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Remove the topic meta cap map, so it doesn't interfere with sidebars.
 	 *
-	 * @since bbPress (r4434)
+	 * @since IdeaBoard (r4434)
 	 */
 	public function remove_group_forum_meta_cap_map() {
 		remove_filter( 'bbp_map_meta_caps', array( $this, 'map_group_forum_meta_caps' ), 99, 4 );
@@ -254,7 +254,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Show forums and new forum form when editing a group
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 * @param object $group (the group to edit if in Group Admin UI)
 	 * @uses is_admin() To check if we're in the Group Admin UI
 	 * @uses bbp_get_template_part()
@@ -272,36 +272,36 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		// Should box be checked already?
 		$checked = is_admin() ? bp_group_is_forum_enabled( $group ) : bp_get_new_group_enable_forum() || bp_group_is_forum_enabled( bp_get_group_id() ); ?>
 
-		<h4><?php esc_html_e( 'Group Forum Settings', 'bbpress' ); ?></h4>
+		<h4><?php esc_html_e( 'Group Forum Settings', 'ideaboard' ); ?></h4>
 
 		<fieldset>
-			<legend class="screen-reader-text"><?php esc_html_e( 'Group Forum Settings', 'bbpress' ); ?></legend>
-			<p><?php esc_html_e( 'Create a discussion forum to allow members of this group to communicate in a structured, bulletin-board style fashion.', 'bbpress' ); ?></p>
+			<legend class="screen-reader-text"><?php esc_html_e( 'Group Forum Settings', 'ideaboard' ); ?></legend>
+			<p><?php esc_html_e( 'Create a discussion forum to allow members of this group to communicate in a structured, bulletin-board style fashion.', 'ideaboard' ); ?></p>
 
 			<div class="field-group">
 				<div class="checkbox">
-					<label><input type="checkbox" name="bbp-edit-group-forum" id="bbp-edit-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'bbpress' ); ?></label>
+					<label><input type="checkbox" name="bbp-edit-group-forum" id="bbp-edit-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'ideaboard' ); ?></label>
 				</div>
 
-				<p class="description"><?php esc_html_e( 'Saying no will not delete existing forum content.', 'bbpress' ); ?></p>
+				<p class="description"><?php esc_html_e( 'Saying no will not delete existing forum content.', 'ideaboard' ); ?></p>
 			</div>
 
 			<?php if ( bbp_is_user_keymaster() ) : ?>
 				<div class="field-group">
-					<label for="bbp_group_forum_id"><?php esc_html_e( 'Group Forum:', 'bbpress' ); ?></label>
+					<label for="bbp_group_forum_id"><?php esc_html_e( 'Group Forum:', 'ideaboard' ); ?></label>
 					<?php
 						bbp_dropdown( array(
 							'select_id' => 'bbp_group_forum_id',
-							'show_none' => __( '(No Forum)', 'bbpress' ),
+							'show_none' => __( '(No Forum)', 'ideaboard' ),
 							'selected'  => $forum_id
 						) );
 					?>
-					<p class="description"><?php esc_html_e( 'Network administrators can reconfigure which forum belongs to this group.', 'bbpress' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Network administrators can reconfigure which forum belongs to this group.', 'ideaboard' ); ?></p>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( !is_admin() ) : ?>
-				<input type="submit" value="<?php esc_attr_e( 'Save Settings', 'bbpress' ); ?>" />
+				<input type="submit" value="<?php esc_attr_e( 'Save Settings', 'ideaboard' ); ?>" />
 			<?php endif; ?>
 
 		</fieldset>
@@ -319,7 +319,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Save the Group Forum data on edit
 	 *
-	 * @since bbPress (r3465)
+	 * @since IdeaBoard (r3465)
 	 * @param int $group_id (to handle Group Admin UI hook bp_group_admin_edit_after )
 	 * @uses bbp_new_forum_handler() To check for forum creation
 	 * @uses bbp_edit_forum_handler() To check for forum edit
@@ -336,7 +336,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 
 		// Theme-side Nonce check
 		} elseif ( ! bbp_verify_nonce_request( 'groups_edit_save_' . $this->slug ) ) {
-			bbp_add_error( 'bbp_edit_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+			bbp_add_error( 'bbp_edit_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 			return;
  		}
 
@@ -426,15 +426,15 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Adds a metabox to BuddyPress Group Admin UI
 	 *
-	 * @since bbPress (r4814)
+	 * @since IdeaBoard (r4814)
 	 *
 	 * @uses add_meta_box
 	 * @uses BBP_Forums_Group_Extension::group_admin_ui_display_metabox() To display the edit screen
 	 */
 	public function group_admin_ui_edit_screen() {
 		add_meta_box(
-			'bbpress_group_admin_ui_meta_box',
-			_x( 'Discussion Forum', 'group admin edit screen', 'bbpress' ),
+			'ideaboard_group_admin_ui_meta_box',
+			_x( 'Discussion Forum', 'group admin edit screen', 'ideaboard' ),
 			array( $this, 'group_admin_ui_display_metabox' ),
 			get_current_screen()->id,
 			'side',
@@ -443,9 +443,9 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	}
 
 	/**
-	 * Displays the bbPress metabox in BuddyPress Group Admin UI
+	 * Displays the IdeaBoard metabox in BuddyPress Group Admin UI
 	 *
-	 * @since bbPress (r4814)
+	 * @since IdeaBoard (r4814)
 	 *
 	 * @param object $item (group object)
 	 * @uses add_meta_box
@@ -460,7 +460,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Show forums and new forum form when creating a group
 	 *
-	 * @since bbPress (r3465)
+	 * @since IdeaBoard (r3465)
 	 */
 	public function create_screen( $group_id = 0 ) {
 
@@ -475,12 +475,12 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 
 		$checked = bp_get_new_group_enable_forum() || groups_get_groupmeta( $group_id, 'forum_id' ); ?>
 
-		<h4><?php esc_html_e( 'Group Forum', 'bbpress' ); ?></h4>
+		<h4><?php esc_html_e( 'Group Forum', 'ideaboard' ); ?></h4>
 
-		<p><?php esc_html_e( 'Create a discussion forum to allow members of this group to communicate in a structured, bulletin-board style fashion.', 'bbpress' ); ?></p>
+		<p><?php esc_html_e( 'Create a discussion forum to allow members of this group to communicate in a structured, bulletin-board style fashion.', 'ideaboard' ); ?></p>
 
 		<div class="checkbox">
-			<label><input type="checkbox" name="bbp-create-group-forum" id="bbp-create-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'bbpress' ); ?></label>
+			<label><input type="checkbox" name="bbp-create-group-forum" id="bbp-create-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'ideaboard' ); ?></label>
 		</div>
 
 		<?php
@@ -489,13 +489,13 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Save the Group Forum data on create
 	 *
-	 * @since bbPress (r3465)
+	 * @since IdeaBoard (r3465)
 	 */
 	public function create_screen_save( $group_id = 0 ) {
 
 		// Nonce check
 		if ( ! bbp_verify_nonce_request( 'groups_create_save_' . $this->slug ) ) {
-			bbp_add_error( 'bbp_create_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+			bbp_add_error( 'bbp_create_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 			return;
 		}
 
@@ -588,7 +588,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Creating a group forum or category (including root for group)
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 * @param type $forum_args
 	 * @uses bbp_get_forum_id()
 	 * @uses bp_get_current_group_id()
@@ -613,7 +613,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Removing a group forum or category (including root for group)
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 * @param type $forum_args
 	 * @uses bbp_get_forum_id()
 	 * @uses bp_get_current_group_id()
@@ -667,7 +667,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Toggle the enable_forum group setting on or off
 	 *
-	 * @since bbPress (r4612)
+	 * @since IdeaBoard (r4612)
 	 *
 	 * @param int $group_id The group to toggle
 	 * @param bool $enabled True for on, false for off
@@ -694,7 +694,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			$this->disconnect_forum_from_group( $group_id );
 		}
 
-		// Update bbPress' internal private and forum ID variables
+		// Update IdeaBoard' internal private and forum ID variables
 		bbp_repair_forum_visibility();
 
 		// Return the group
@@ -706,10 +706,10 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Output the forums for a group in the edit screens
 	 *
-	 * As of right now, bbPress only supports 1-to-1 group forum relationships.
+	 * As of right now, IdeaBoard only supports 1-to-1 group forum relationships.
 	 * In the future, many-to-many should be allowed.
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 * @uses bp_get_current_group_id()
 	 * @uses bbp_get_group_forum_ids()
 	 * @uses bbp_has_forums()
@@ -721,8 +721,8 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		// Allow actions immediately before group forum output
 		do_action( 'bbp_before_group_forum_display' );
 
-		// Load up bbPress once
-		$bbp = bbpress();
+		// Load up IdeaBoard once
+		$bbp = ideaboard();
 
 		/** Query Resets ******************************************************/
 
@@ -743,7 +743,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		// Assume forum query
 		bbp_set_query_name( 'bbp_single_forum' ); ?>
 
-		<div id="bbpress-forums">
+		<div id="ideaboard-forums">
 
 			<?php switch ( $forum_action ) :
 
@@ -772,7 +772,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 					else : ?>
 
 						<div id="message" class="info">
-							<p><?php esc_html_e( 'This group does not currently have a forum.', 'bbpress' ); ?></p>
+							<p><?php esc_html_e( 'This group does not currently have a forum.', 'ideaboard' ); ?></p>
 						</div>
 
 					<?php endif;
@@ -907,7 +907,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Strip super stickies from the topic query
 	 *
-	 * @since bbPress (r4810)
+	 * @since IdeaBoard (r4810)
 	 * @access private
 	 * @param array $super the super sticky post ID's
 	 * @return array (empty)
@@ -920,7 +920,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Unset the type super sticky from topic type
 	 *
-	 * @since bbPress (r4810)
+	 * @since IdeaBoard (r4810)
 	 * @access private
 	 * @param array $args
 	 * @return array $args without the to-front link
@@ -935,7 +935,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Ugly preg_replace to hide the to front admin link
 	 *
-	 * @since bbPress (r4810)
+	 * @since IdeaBoard (r4810)
 	 * @access private
 	 * @param string $retval
 	 * @param array $args
@@ -954,7 +954,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Redirect to the group forum screen
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 * @param str $redirect_url
 	 * @param str $redirect_to
 	 */
@@ -971,7 +971,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Redirect to the group forum screen
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 */
 	public function new_reply_redirect_to( $redirect_url = '', $redirect_to = '', $reply_id = 0 ) {
 		global $wp_rewrite;
@@ -1005,7 +1005,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Redirect to the group admin forum edit screen
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 * @uses groups_get_current_group()
 	 * @uses bp_is_group_admin_screen()
 	 * @uses trailingslashit()
@@ -1039,7 +1039,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		$forum_ids = bbp_get_group_forum_ids( bp_get_current_group_id() ); ?>
 
 		<p>
-			<label for="bbp_forum_id"><?php esc_html_e( 'Forum:', 'bbpress' ); ?></label><br />
+			<label for="bbp_forum_id"><?php esc_html_e( 'Forum:', 'ideaboard' ); ?></label><br />
 			<?php bbp_dropdown( array( 'include' => $forum_ids, 'selected' => bbp_get_form_topic_forum() ) ); ?>
 		</p>
 
@@ -1049,7 +1049,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Permissions to view the 'New Topic'/'Reply To' form in a BuddyPress group.
 	 *
-	 * @since bbPress (r4608)
+	 * @since IdeaBoard (r4608)
 	 *
 	 * @param bool $retval Are we allowed to view the reply form?
 	 * @uses bp_is_group() To determine if we're on a group page
@@ -1092,11 +1092,11 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * enabled.
 	 *
 	 * Due to the way BuddyPress' group admin settings page saves its settings,
-	 * we need to let BP know that bbPress added a forum.
+	 * we need to let BP know that IdeaBoard added a forum.
 	 *
-	 * @since bbPress (r5026)
+	 * @since IdeaBoard (r5026)
 	 *
-	 * @link http://bbpress.trac.wordpress.org/ticket/2339/
+	 * @link http://ideaboard.trac.wordpress.org/ticket/2339/
 	 * @see groups_screen_group_admin_settings()
 	 */
 	public function group_settings_hidden_field() {
@@ -1113,7 +1113,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/** Permalink Mappers *****************************************************/
 
 	/**
-	 * Maybe map a bbPress forum/topic/reply permalink to the corresponding group
+	 * Maybe map a IdeaBoard forum/topic/reply permalink to the corresponding group
 	 *
 	 * @param int $post_id
 	 * @uses get_post()
@@ -1184,7 +1184,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Map a forum permalink to its corresponding group
 	 *
-	 * @since bbPress (r3802)
+	 * @since IdeaBoard (r3802)
 	 * @param string $url
 	 * @param int $forum_id
 	 * @uses maybe_map_permalink_to_group()
@@ -1197,7 +1197,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Map a topic permalink to its group forum
 	 *
-	 * @since bbPress (r3802)
+	 * @since IdeaBoard (r3802)
 	 * @param string $url
 	 * @param int $topic_id
 	 * @uses maybe_map_permalink_to_group()
@@ -1210,7 +1210,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Map a reply permalink to its group forum
 	 *
-	 * @since bbPress (r3802)
+	 * @since IdeaBoard (r3802)
 	 * @param string $url
 	 * @param int $reply_id
 	 * @uses maybe_map_permalink_to_group()
@@ -1234,7 +1234,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		if ( empty( $new ) )
 			return $url;
 
-		return trailingslashit( $new ) . bbpress()->edit_id  . '/';
+		return trailingslashit( $new ) . ideaboard()->edit_id  . '/';
 	}
 
 	/**
@@ -1324,7 +1324,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * Ensure that forum content associated with a BuddyPress group can only be
 	 * viewed via the group URL.
 	 *
-	 * @since bbPress (r3802)
+	 * @since IdeaBoard (r3802)
 	 */
 	public function redirect_canonical() {
 
@@ -1368,7 +1368,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	/**
 	 * Map a forum post to its corresponding group in the group activity stream.
 	 *
-	 * @since bbPress (r4396)
+	 * @since IdeaBoard (r4396)
 	 *
 	 * @param array $args Arguments from BBP_BuddyPress_Activity::record_activity()
 	 * @uses groups_get_current_group() To see if we're posting from a BP group

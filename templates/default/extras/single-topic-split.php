@@ -3,7 +3,7 @@
 /**
  * Split topic page
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

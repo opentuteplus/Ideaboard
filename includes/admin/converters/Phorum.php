@@ -3,8 +3,8 @@
 /**
  * Implementation of Phorum Forum converter.
  *
- * @since bbPress (r5141)
- * @link Codex Docs http://codex.bbpress.org/import-forums/phorum
+ * @since IdeaBoard (r5141)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/phorum
  */
 class Phorum extends BBP_Converter_Base {
 

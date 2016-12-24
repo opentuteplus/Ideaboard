@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress User Profile Edit
+ * IdeaBoard User Profile Edit
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

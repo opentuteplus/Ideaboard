@@ -1,17 +1,17 @@
 <?php
 
 /**
- * bbPress 1.1 Converter
+ * IdeaBoard 1.1 Converter
  *
- * @since bbPress (r3816)
- * @link Codex Docs http://codex.bbpress.org/import-forums/bbpress-1-x-buddypress-group-forums
+ * @since IdeaBoard (r3816)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/ideaboard-1-x-buddypress-group-forums
  */
-class bbPress1 extends BBP_Converter_Base {
+class IdeaBoard1 extends BBP_Converter_Base {
 
 	/**
 	 * Main constructor
 	 *
-	 * @uses bbPress1::setup_globals()
+	 * @uses IdeaBoard1::setup_globals()
 	 */
 	function __construct() {
 		parent::__construct();
@@ -107,7 +107,7 @@ class bbPress1 extends BBP_Converter_Base {
 			'to_fieldname'   => 'menu_order'
 		);
 
-		// Forum type (bbPress v1.x Forum > 0 or Category = 0, Stored in postmeta)
+		// Forum type (IdeaBoard v1.x Forum > 0 or Category = 0, Stored in postmeta)
 		$this->field_map[] = array(
 			'from_tablename'  => 'meta',
 			'from_fieldname'  => 'meta_value',
@@ -217,7 +217,7 @@ class bbPress1 extends BBP_Converter_Base {
 			'callback_method' => 'callback_html'
 		);
 
-		// Topic status (Spam, Trash or Publish, bbPress v1.x publish = 0, trash = 1 & spam = 2)
+		// Topic status (Spam, Trash or Publish, IdeaBoard v1.x publish = 0, trash = 1 & spam = 2)
 		$this->field_map[] = array(
 			'from_tablename'  => 'posts',
 			'from_fieldname'  => 'post_status',
@@ -407,7 +407,7 @@ class bbPress1 extends BBP_Converter_Base {
 			'callback_method' => 'callback_userid'
 		);
 
-		// Reply status (Spam, Trash or Publish, bbPress v1.x publish = 0, trash = 1 & spam = 2)
+		// Reply status (Spam, Trash or Publish, IdeaBoard v1.x publish = 0, trash = 1 & spam = 2)
 		$this->field_map[] = array(
 			'from_tablename'  => 'posts',
 			'from_fieldname'  => 'post_status',
@@ -552,10 +552,10 @@ class bbPress1 extends BBP_Converter_Base {
 	}
 
 	/**
-	 * Translate the post status from bbPress 1's numeric's to WordPress's
+	 * Translate the post status from IdeaBoard 1's numeric's to WordPress's
 	 * strings.
 	 *
-	 * @param int $status bbPress 1.x numeric post status
+	 * @param int $status IdeaBoard 1.x numeric post status
 	 * @return string WordPress safe
 	 */
 	public function callback_status( $status = 0 ) {
@@ -577,9 +577,9 @@ class bbPress1 extends BBP_Converter_Base {
 	}
 
 	/**
-	 * Translate the forum type from bbPress 1.x numeric's to WordPress's strings.
+	 * Translate the forum type from IdeaBoard 1.x numeric's to WordPress's strings.
 	 *
-	 * @param int $status bbPress 1.x numeric forum type
+	 * @param int $status IdeaBoard 1.x numeric forum type
 	 * @return string WordPress safe
 	 */
 	public function callback_forum_type( $status = 0 ) {
@@ -592,24 +592,24 @@ class bbPress1 extends BBP_Converter_Base {
 	}
 
 	/**
-	 * Translate the topic sticky status type from bbPress 1.x numeric's to WordPress's strings.
+	 * Translate the topic sticky status type from IdeaBoard 1.x numeric's to WordPress's strings.
 	 *
-	 * @param int $status bbPress 1.x numeric forum type
+	 * @param int $status IdeaBoard 1.x numeric forum type
 	 * @return string WordPress safe
 	 */
 	public function callback_sticky_status( $status = 0 ) {
 		switch ( $status ) {
 			case 2 :
-				$status = 'super-sticky'; // bbPress Super Sticky 'topic_sticky = 2'
+				$status = 'super-sticky'; // IdeaBoard Super Sticky 'topic_sticky = 2'
 				break;
 
 			case 1 :
-				$status = 'sticky';       // bbPress Sticky 'topic_sticky = 1'
+				$status = 'sticky';       // IdeaBoard Sticky 'topic_sticky = 1'
 				break;
 
 			case 0  :
 			default :
-				$status = 'normal';       // bbPress Normal Topic 'topic_sticky = 0'
+				$status = 'normal';       // IdeaBoard Normal Topic 'topic_sticky = 0'
 				break;
 		}
 		return $status;
@@ -618,7 +618,7 @@ class bbPress1 extends BBP_Converter_Base {
 	/**
 	 * Verify the topic reply count.
 	 *
-	 * @param int $count bbPress 1.x topic and reply counts
+	 * @param int $count IdeaBoard 1.x topic and reply counts
 	 * @return string WordPress safe
 	 */
 	public function callback_topic_reply_count( $count = 1 ) {
@@ -629,11 +629,11 @@ class bbPress1 extends BBP_Converter_Base {
 	/**
 	 * Set the reply title
 	 *
-	 * @param string $title bbPress 1.x topic title of this reply
+	 * @param string $title IdeaBoard 1.x topic title of this reply
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 
@@ -662,7 +662,7 @@ class bbPress1 extends BBP_Converter_Base {
 	 * - decodes necessary HTML entities
 	 */
 	protected function callback_html( $field ) {
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		$bbcode->enable_smileys = false;
 		$bbcode->smiley_regex   = false;

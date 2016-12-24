@@ -1,12 +1,12 @@
 <?php
 
 /**
- * bbPress Common Template Tags
+ * IdeaBoard Common Template Tags
  *
  * Common template tags are ones that are used by more than one component, like
  * forums, topics, replies, users, topic tags, etc...
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage TemplateTags
  */
 
@@ -18,7 +18,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Ouput the forum URL
  *
- * @since bbPress (r3979)
+ * @since IdeaBoard (r3979)
  *
  * @uses bbp_get_forums_url() To get the forums URL
  * @param string $path Additional path with leading slash
@@ -29,7 +29,7 @@ function bbp_forums_url( $path = '/' ) {
 	/**
 	 * Return the forum URL
 	 *
-	 * @since bbPress (r3979)
+	 * @since IdeaBoard (r3979)
 	 *
 	 * @uses home_url() To get the home URL
 	 * @uses bbp_get_root_slug() To get the forum root location
@@ -42,7 +42,7 @@ function bbp_forums_url( $path = '/' ) {
 /**
  * Ouput the forum URL
  *
- * @since bbPress (r3979)
+ * @since IdeaBoard (r3979)
  *
  * @uses bbp_get_topics_url() To get the topics URL
  * @param string $path Additional path with leading slash
@@ -53,7 +53,7 @@ function bbp_topics_url( $path = '/' ) {
 	/**
 	 * Return the forum URL
 	 *
-	 * @since bbPress (r3979)
+	 * @since IdeaBoard (r3979)
 	 *
 	 * @uses home_url() To get the home URL
 	 * @uses bbp_get_topic_archive_slug() To get the topics archive location
@@ -69,7 +69,7 @@ function bbp_topics_url( $path = '/' ) {
 /**
  * Add our custom head action to wp_head
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @uses do_action() Calls 'bbp_head'
 */
@@ -80,7 +80,7 @@ function bbp_head() {
 /**
  * Add our custom head action to wp_head
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @uses do_action() Calls 'bbp_footer'
  */
@@ -93,7 +93,7 @@ function bbp_footer() {
 /**
  * Check if current site is public
  *
- * @since bbPress (r3398)
+ * @since IdeaBoard (r3398)
  *
  * @param int $site_id
  * @uses get_current_blog_id()
@@ -114,9 +114,9 @@ function bbp_is_site_public( $site_id = 0 ) {
 }
 
 /**
- * Check if current page is a bbPress forum
+ * Check if current page is a IdeaBoard forum
  *
- * @since bbPress (r2549)
+ * @since IdeaBoard (r2549)
  *
  * @param int $post_id Possible post_id to check
  * @uses bbp_get_forum_post_type() To get the forum post type
@@ -137,7 +137,7 @@ function bbp_is_forum( $post_id = 0 ) {
 /**
  * Check if we are viewing a forum archive.
  *
- * @since bbPress (r3251)
+ * @since IdeaBoard (r3251)
  *
  * @uses is_post_type_archive() To check if we are looking at the forum archive
  * @uses bbp_get_forum_post_type() To get the forum post type ID
@@ -160,7 +160,7 @@ function bbp_is_forum_archive() {
 /**
  * Viewing a single forum
  *
- * @since bbPress (r3338)
+ * @since IdeaBoard (r3338)
  *
  * @uses is_single()
  * @uses bbp_get_forum_post_type()
@@ -188,7 +188,7 @@ function bbp_is_single_forum() {
 /**
  * Check if current page is a forum edit page
  *
- * @since bbPress (r3553)
+ * @since IdeaBoard (r3553)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_forum_edit is true
  * @return bool True if it's the forum edit page, false if not
@@ -211,9 +211,9 @@ function bbp_is_forum_edit() {
 }
 
 /**
- * Check if current page is a bbPress topic
+ * Check if current page is a IdeaBoard topic
  *
- * @since bbPress (r2549)
+ * @since IdeaBoard (r2549)
  *
  * @param int $post_id Possible post_id to check
  * @uses bbp_get_topic_post_type() To get the topic post type
@@ -235,7 +235,7 @@ function bbp_is_topic( $post_id = 0 ) {
 /**
  * Viewing a single topic
  *
- * @since bbPress (r3338)
+ * @since IdeaBoard (r3338)
  *
  * @uses is_single()
  * @uses bbp_get_topic_post_type()
@@ -263,7 +263,7 @@ function bbp_is_single_topic() {
 /**
  * Check if we are viewing a topic archive.
  *
- * @since bbPress (r3251)
+ * @since IdeaBoard (r3251)
  *
  * @uses is_post_type_archive() To check if we are looking at the topic archive
  * @uses bbp_get_topic_post_type() To get the topic post type ID
@@ -285,7 +285,7 @@ function bbp_is_topic_archive() {
 /**
  * Check if current page is a topic edit page
  *
- * @since bbPress (r2753)
+ * @since IdeaBoard (r2753)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_topic_edit is true
  * @return bool True if it's the topic edit page, false if not
@@ -310,7 +310,7 @@ function bbp_is_topic_edit() {
 /**
  * Check if current page is a topic merge page
  *
- * @since bbPress (r2756)
+ * @since IdeaBoard (r2756)
  *
  * @uses bbp_is_topic_edit() To check if it's a topic edit page
  * @return bool True if it's the topic merge page, false if not
@@ -330,7 +330,7 @@ function bbp_is_topic_merge() {
 /**
  * Check if current page is a topic split page
  *
- * @since bbPress (r2756)
+ * @since IdeaBoard (r2756)
  *
  * @uses bbp_is_topic_edit() To check if it's a topic edit page
  * @return bool True if it's the topic split page, false if not
@@ -350,7 +350,7 @@ function bbp_is_topic_split() {
 /**
  * Check if the current page is a topic tag
  *
- * @since bbPress (r3311)
+ * @since IdeaBoard (r3311)
  *
  * @return bool True if it's a topic tag, false if not
  */
@@ -368,7 +368,7 @@ function bbp_is_topic_tag() {
 	$retval = false;
 
 	// Check tax and query vars
-	if ( is_tax( bbp_get_topic_tag_tax_id() ) || !empty( bbpress()->topic_query->is_tax ) || get_query_var( 'bbp_topic_tag' ) )
+	if ( is_tax( bbp_get_topic_tag_tax_id() ) || !empty( ideaboard()->topic_query->is_tax ) || get_query_var( 'bbp_topic_tag' ) )
 		$retval = true;
 
 	return (bool) apply_filters( 'bbp_is_topic_tag', $retval );
@@ -377,7 +377,7 @@ function bbp_is_topic_tag() {
 /**
  * Check if the current page is editing a topic tag
  *
- * @since bbPress (r3346)
+ * @since IdeaBoard (r3346)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_topic_tag_edit is true
  * @return bool True if editing a topic tag, false if not
@@ -404,9 +404,9 @@ function bbp_is_topic_tag_edit() {
 }
 
 /**
- * Check if the current post type is one of bbPress's
+ * Check if the current post type is one of IdeaBoard's
  *
- * @since bbPress (r3311)
+ * @since IdeaBoard (r3311)
  *
  * @param mixed $the_post Optional. Post object or post ID.
  * @uses get_post_type()
@@ -421,7 +421,7 @@ function bbp_is_custom_post_type( $the_post = false ) {
 	// Assume false
 	$retval = false;
 
-	// Viewing one of the bbPress post types
+	// Viewing one of the IdeaBoard post types
 	if ( in_array( get_post_type( $the_post ), array(
 		bbp_get_forum_post_type(),
 		bbp_get_topic_post_type(),
@@ -433,9 +433,9 @@ function bbp_is_custom_post_type( $the_post = false ) {
 }
 
 /**
- * Check if current page is a bbPress reply
+ * Check if current page is a IdeaBoard reply
  *
- * @since bbPress (r2549)
+ * @since IdeaBoard (r2549)
  *
  * @param int $post_id Possible post_id to check
  * @uses bbp_get_reply_post_type() To get the reply post type
@@ -457,7 +457,7 @@ function bbp_is_reply( $post_id = 0 ) {
 /**
  * Check if current page is a reply edit page
  *
- * @since bbPress (r2753)
+ * @since IdeaBoard (r2753)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_reply_edit is true
  * @return bool True if it's the reply edit page, false if not
@@ -500,7 +500,7 @@ function bbp_is_reply_move() {
 /**
  * Viewing a single reply
  *
- * @since bbPress (r3344)
+ * @since IdeaBoard (r3344)
  *
  * @uses is_single()
  * @uses bbp_get_reply_post_type()
@@ -526,9 +526,9 @@ function bbp_is_single_reply() {
 }
 
 /**
- * Check if current page is a bbPress user's favorites page (profile page)
+ * Check if current page is a IdeaBoard user's favorites page (profile page)
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @return bool True if it's the favorites page, false if not
  */
@@ -546,9 +546,9 @@ function bbp_is_favorites() {
 }
 
 /**
- * Check if current page is a bbPress user's subscriptions page (profile page)
+ * Check if current page is a IdeaBoard user's subscriptions page (profile page)
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @return bool True if it's the subscriptions page, false if not
  */
@@ -566,10 +566,10 @@ function bbp_is_subscriptions() {
 }
 
 /**
- * Check if current page shows the topics created by a bbPress user (profile
+ * Check if current page shows the topics created by a IdeaBoard user (profile
  * page)
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @return bool True if it's the topics created page, false if not
  */
@@ -587,10 +587,10 @@ function bbp_is_topics_created() {
 }
 
 /**
- * Check if current page shows the topics created by a bbPress user (profile
+ * Check if current page shows the topics created by a IdeaBoard user (profile
  * page)
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @return bool True if it's the topics created page, false if not
  */
@@ -610,7 +610,7 @@ function bbp_is_replies_created() {
 /**
  * Check if current page is the currently logged in users author page
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  * @uses bbp_is_single_user() Check query variable
  * @uses is_user_logged_in() Must be logged in to be home
  * @uses bbp_get_displayed_user_id()
@@ -633,7 +633,7 @@ function bbp_is_user_home() {
 /**
  * Check if current page is the currently logged in users author edit page
  *
- * @since bbPress (r3918)
+ * @since IdeaBoard (r3918)
  * @uses bbp_is_single_user_edit() Check query variable
  * @uses is_user_logged_in() Must be logged in to be home
  * @uses bbp_get_displayed_user_id()
@@ -654,7 +654,7 @@ function bbp_is_user_home_edit() {
 /**
  * Check if current page is a user profile page
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_single_user is set to true
  * @return bool True if it's a user's profile page, false if not
@@ -675,7 +675,7 @@ function bbp_is_single_user() {
 /**
  * Check if current page is a user profile edit page
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_single_user_edit is set to true
  * @return bool True if it's a user's profile edit page, false if not
@@ -696,7 +696,7 @@ function bbp_is_single_user_edit() {
 /**
  * Check if current page is a user profile page
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_single_user_profile is set to true
  * @return bool True if it's a user's profile page, false if not
@@ -717,7 +717,7 @@ function bbp_is_single_user_profile() {
 /**
  * Check if current page is a user topics created page
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_single_user_topics is set to true
  * @return bool True if it's a user's topics page, false if not
@@ -738,7 +738,7 @@ function bbp_is_single_user_topics() {
 /**
  * Check if current page is a user replies created page
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_single_user_replies is set to true
  * @return bool True if it's a user's replies page, false if not
@@ -759,7 +759,7 @@ function bbp_is_single_user_replies() {
 /**
  * Check if current page is a view page
  *
- * @since bbPress (r2789)
+ * @since IdeaBoard (r2789)
  *
  * @global WP_Query $wp_query To check if WP_Query::bbp_is_view is true
  * @uses bbp_is_query_name() To get the query name
@@ -785,7 +785,7 @@ function bbp_is_single_view() {
 /**
  * Check if current page is a search page
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @global WP_Query $wp_query To check if WP_Query::bbp_is_search is true
  * @uses bbp_is_query_name() To get the query name
@@ -819,7 +819,7 @@ function bbp_is_search() {
 /**
  * Check if current page is a search results page
  *
- * @since bbPress (r4919)
+ * @since IdeaBoard (r4919)
  *
  * @global WP_Query $wp_query To check if WP_Query::bbp_is_search is true
  * @uses bbp_is_query_name() To get the query name
@@ -853,7 +853,7 @@ function bbp_is_search_results() {
 /**
  * Check if current page is an edit page
  *
- * @since bbPress (r3585)
+ * @since IdeaBoard (r3585)
  *
  * @uses WP_Query Checks if WP_Query::bbp_is_edit is true
  * @return bool True if it's the edit page, false if not
@@ -874,7 +874,7 @@ function bbp_is_edit() {
 /**
  * Use the above is_() functions to output a body class for each scenario
  *
- * @since bbPress (r2926)
+ * @since IdeaBoard (r2926)
  *
  * @param array $wp_classes
  * @param array $custom_classes
@@ -1004,12 +1004,12 @@ function bbp_body_class( $wp_classes, $custom_classes = false ) {
 
 	/** Clean up **************************************************************/
 
-	// Add bbPress class if we are within a bbPress page
+	// Add IdeaBoard class if we are within a IdeaBoard page
 	if ( !empty( $bbp_classes ) ) {
-		$bbp_classes[] = 'bbpress';
+		$bbp_classes[] = 'ideaboard';
 	}
 
-	// Merge WP classes with bbPress classes and remove any duplicates
+	// Merge WP classes with IdeaBoard classes and remove any duplicates
 	$classes = array_unique( array_merge( (array) $bbp_classes, (array) $wp_classes ) );
 
 	// Deprecated filter (do not use)
@@ -1019,9 +1019,9 @@ function bbp_body_class( $wp_classes, $custom_classes = false ) {
 }
 
 /**
- * Use the above is_() functions to return if in any bbPress page
+ * Use the above is_() functions to return if in any IdeaBoard page
  *
- * @since bbPress (r3344)
+ * @since IdeaBoard (r3344)
  *
  * @uses bbp_is_single_forum()
  * @uses bbp_is_single_topic()
@@ -1038,9 +1038,9 @@ function bbp_body_class( $wp_classes, $custom_classes = false ) {
  * @uses bbp_is_subscriptions()
  * @uses bbp_is_favorites()
  * @uses bbp_is_topics_created()
- * @return bool In a bbPress page
+ * @return bool In a IdeaBoard page
  */
-function is_bbpress() {
+function is_ideaboard() {
 
 	// Defalt to false
 	$retval = false;
@@ -1124,7 +1124,7 @@ function is_bbpress() {
 
 	/** Done ******************************************************************/
 
-	return (bool) apply_filters( 'is_bbpress', $retval );
+	return (bool) apply_filters( 'is_ideaboard', $retval );
 }
 
 /** Forms *********************************************************************/
@@ -1132,7 +1132,7 @@ function is_bbpress() {
 /**
  * Output the login form action url
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @param string $args Pass a URL to redirect to
  * @uses add_query_arg() To add a arg to the url
@@ -1146,7 +1146,7 @@ function bbp_wp_login_action( $args = '' ) {
 	/**
 	 * Return the login form action url
 	 *
-	 * @since bbPress (r5691)
+	 * @since IdeaBoard (r5691)
 	 *
 	 * @param string $args Pass a URL to redirect to
 	 * @uses add_query_arg() To add a arg to the url
@@ -1182,7 +1182,7 @@ function bbp_wp_login_action( $args = '' ) {
  * The referer link is the current Request URI from the server super global. To
  * check the field manually, use bbp_get_redirect_to().
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @param string $redirect_to Pass a URL to redirect to
  *
@@ -1215,7 +1215,7 @@ function bbp_redirect_to_field( $redirect_to = '' ) {
  * Use the $input_type parameter to properly process the value. This
  * ensures correct sanitization of the value for the receiving input.
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @param string $request Name of $_REQUEST to look for
  * @param string $input_type Type of input. Default: text. Accepts:
@@ -1231,7 +1231,7 @@ function bbp_sanitize_val( $request = '', $input_type = 'text' ) {
 	 * Use the $input_type parameter to properly process the value. This
 	 * ensures correct sanitization of the value for the receiving input.
 	 *
-	 * @since bbPress (r2815)
+	 * @since IdeaBoard (r2815)
 	 *
 	 * @param string $request Name of $_REQUEST to look for
 	 * @param string $input_type Type of input. Default: text. Accepts:
@@ -1276,7 +1276,7 @@ function bbp_sanitize_val( $request = '', $input_type = 'text' ) {
  * template file. Calling this function will automatically increment the global
  * tab index by default.
  *
- * @since bbPress (r2810)
+ * @since IdeaBoard (r2810)
  *
  * @param int $auto_increment Optional. Default true. Set to false to prevent
  *                             increment
@@ -1292,7 +1292,7 @@ function bbp_tab_index( $auto_increment = true ) {
 	 * within a template file. Calling this function will automatically
 	 * increment the global tab index by default.
 	 *
-	 * @since bbPress (r2810)
+	 * @since IdeaBoard (r2810)
 	 *
 	 * @uses apply_filters Allows return value to be filtered
 	 * @param int $auto_increment Optional. Default true. Set to false to
@@ -1300,7 +1300,7 @@ function bbp_tab_index( $auto_increment = true ) {
 	 * @return int $bbp->tab_index The global tab index
 	 */
 	function bbp_get_tab_index( $auto_increment = true ) {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		if ( true === $auto_increment )
 			++$bbp->tab_index;
@@ -1314,7 +1314,7 @@ function bbp_tab_index( $auto_increment = true ) {
  *
  * Can be used for any post type, but is mostly used for topics and forums.
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param mixed $args See {@link bbp_get_dropdown()} for arguments
  */
@@ -1325,7 +1325,7 @@ function bbp_dropdown( $args = '' ) {
 	 * Output a select box allowing to pick which forum/topic a new
 	 * topic/reply belongs in.
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @param mixed $args The function supports these args:
 	 *  - post_type: Post type, defaults to bbp_get_forum_post_type() (bbp_forum)
@@ -1346,7 +1346,7 @@ function bbp_dropdown( $args = '' ) {
 	 *  - select_id: ID of the select box. Defaults to 'bbp_forum_id'
 	 *  - tab: Tabindex value. False or integer
 	 *  - options_only: Show only <options>? No <select>?
-	 *  - show_none: Boolean or String __( '(No Forum)', 'bbpress' )
+	 *  - show_none: Boolean or String __( '(No Forum)', 'ideaboard' )
 	 *  - disable_categories: Disable forum categories and closed forums?
 	 *                         Defaults to true. Only for forums and when
 	 *                         the category option is displayed.
@@ -1423,7 +1423,7 @@ function bbp_dropdown( $args = '' ) {
 		if ( empty( $r['options_only'] ) ) {
 
 			// Should this select appear disabled?
-			$disabled  = disabled( isset( bbpress()->options[ $r['disabled'] ] ), true, false );
+			$disabled  = disabled( isset( ideaboard()->options[ $r['disabled'] ] ), true, false );
 
 			// Setup the tab index attribute
 			$tab       = !empty( $r['tab'] ) ? ' tabindex="' . intval( $r['tab'] ) . '"' : '';
@@ -1454,17 +1454,17 @@ function bbp_dropdown( $args = '' ) {
 
 					// Topics
 					case bbp_get_topic_post_type() :
-						$retval .= esc_html__( 'No topics available', 'bbpress' );
+						$retval .= esc_html__( 'No topics available', 'ideaboard' );
 						break;
 
 					// Forums
 					case bbp_get_forum_post_type() :
-						$retval .= esc_html__( 'No forums available', 'bbpress' );
+						$retval .= esc_html__( 'No forums available', 'ideaboard' );
 						break;
 
 					// Any other
 					default :
-						$retval .= esc_html__( 'None available', 'bbpress' );
+						$retval .= esc_html__( 'None available', 'ideaboard' );
 						break;
 				}
 			}
@@ -1489,7 +1489,7 @@ function bbp_dropdown( $args = '' ) {
 /**
  * Output the required hidden fields when creating/editing a forum
  *
- * @since bbPress (r3553)
+ * @since IdeaBoard (r3553)
  *
  * @uses bbp_is_forum_edit() To check if it's the forum edit page
  * @uses wp_nonce_field() To generate hidden nonce fields
@@ -1538,7 +1538,7 @@ function bbp_forum_form_fields() {
 /**
  * Output the required hidden fields when creating/editing a topic
  *
- * @since bbPress (r2753)
+ * @since IdeaBoard (r2753)
  *
  * @uses bbp_is_topic_edit() To check if it's the topic edit page
  * @uses wp_nonce_field() To generate hidden nonce fields
@@ -1583,7 +1583,7 @@ function bbp_topic_form_fields() {
 /**
  * Output the required hidden fields when creating/editing a reply
  *
- * @since bbPress (r2753)
+ * @since IdeaBoard (r2753)
  *
  * @uses bbp_is_reply_edit() To check if it's the reply edit page
  * @uses wp_nonce_field() To generate hidden nonce fields
@@ -1626,7 +1626,7 @@ function bbp_reply_form_fields() {
 /**
  * Output the required hidden fields when editing a user
  *
- * @since bbPress (r2690)
+ * @since IdeaBoard (r2690)
  *
  * @uses bbp_displayed_user_id() To output the displayed user id
  * @uses wp_nonce_field() To generate a hidden referer field
@@ -1645,7 +1645,7 @@ function bbp_edit_user_form_fields() {
  *
  * Output the required hidden fields when merging a topic
  *
- * @since bbPress (r2756)
+ * @since IdeaBoard (r2756)
  *
  * @uses wp_nonce_field() To generate a hidden nonce field
  * @uses bbp_topic_id() To output the topic id
@@ -1664,7 +1664,7 @@ function bbp_merge_topic_form_fields() {
  *
  * Output the required hidden fields when splitting a topic
  *
- * @since bbPress (r2756)
+ * @since IdeaBoard (r2756)
  *
  * @uses wp_nonce_field() To generate a hidden nonce field
  */
@@ -1696,7 +1696,7 @@ function bbp_move_reply_form_fields() {
 /**
  * Output a textarea or TinyMCE if enabled
  *
- * @since bbPress (r3586)
+ * @since IdeaBoard (r3586)
  *
  * @param array $args
  * @uses bbp_get_the_content() To return the content to output
@@ -1707,7 +1707,7 @@ function bbp_the_content( $args = array() ) {
 	/**
 	 * Return a textarea or TinyMCE if enabled
 	 *
-	 * @since bbPress (r3586)
+	 * @since IdeaBoard (r3586)
 	 *
 	 * @param array $args
 	 *
@@ -1811,7 +1811,7 @@ function bbp_the_content( $args = array() ) {
 /**
  * Edit TinyMCE plugins to match core behaviour
  *
- * @since bbPress (r4574)
+ * @since IdeaBoard (r4574)
  *
  * @param array $plugins
  * @see tiny_mce_plugins, teeny_mce_plugins
@@ -1836,7 +1836,7 @@ function bbp_get_tiny_mce_plugins( $plugins = array() ) {
 /**
  * Edit TeenyMCE buttons to match allowedtags
  *
- * @since bbPress (r4605)
+ * @since IdeaBoard (r4605)
  *
  * @param array $buttons
  * @see teeny_mce_buttons
@@ -1861,7 +1861,7 @@ function bbp_get_teeny_mce_buttons( $buttons = array() ) {
 /**
  * Edit TinyMCE quicktags buttons to match allowedtags
  *
- * @since bbPress (r4606)
+ * @since IdeaBoard (r4606)
  *
  * @param array $buttons
  * @see quicktags_settings
@@ -1890,7 +1890,7 @@ function bbp_get_quicktags_settings( $settings = array() ) {
 /**
  * Output the view id
  *
- * @since bbPress (r2789)
+ * @since IdeaBoard (r2789)
  *
  * @param string $view Optional. View id
  * @uses bbp_get_view_id() To get the view id
@@ -1904,7 +1904,7 @@ function bbp_view_id( $view = '' ) {
 	 *
 	 * Use view id if supplied, otherwise bbp_get_view_rewrite_id() query var.
 	 *
-	 * @since bbPress (r2789)
+	 * @since IdeaBoard (r2789)
 	 *
 	 * @param string $view Optional. View id.
 	 * @uses sanitize_title() To sanitize the view id
@@ -1913,7 +1913,7 @@ function bbp_view_id( $view = '' ) {
 	 * @return bool|string ID on success, false on failure
 	 */
 	function bbp_get_view_id( $view = '' ) {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		if ( !empty( $view ) ) {
 			$view = sanitize_title( $view );
@@ -1933,7 +1933,7 @@ function bbp_view_id( $view = '' ) {
 /**
  * Output the view name aka title
  *
- * @since bbPress (r2789)
+ * @since IdeaBoard (r2789)
  *
  * @param string $view Optional. View id
  * @uses bbp_get_view_title() To get the view title
@@ -1948,14 +1948,14 @@ function bbp_view_title( $view = '' ) {
 	 * If a view id is supplied, that is used. Otherwise the bbp_view
 	 * query var is checked for.
 	 *
-	 * @since bbPress (r2789)
+	 * @since IdeaBoard (r2789)
 	 *
 	 * @param string $view Optional. View id
 	 * @uses bbp_get_view_id() To get the view id
 	 * @return bool|string Title on success, false on failure
 	 */
 	function bbp_get_view_title( $view = '' ) {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		$view = bbp_get_view_id( $view );
 		if ( empty( $view ) )
@@ -1967,7 +1967,7 @@ function bbp_view_title( $view = '' ) {
 /**
  * Output the view url
  *
- * @since bbPress (r2789)
+ * @since IdeaBoard (r2789)
  *
  * @param string $view Optional. View id
  * @uses bbp_get_view_url() To get the view url
@@ -1978,7 +1978,7 @@ function bbp_view_url( $view = false ) {
 	/**
 	 * Return the view url
 	 *
-	 * @since bbPress (r2789)
+	 * @since IdeaBoard (r2789)
 	 *
 	 * @param string $view Optional. View id
 	 * @uses sanitize_title() To sanitize the view id
@@ -2013,7 +2013,7 @@ function bbp_view_url( $view = false ) {
 /**
  * Check the passed parameter against the current _bbp_query_name
  *
- * @since bbPress (r2980)
+ * @since IdeaBoard (r2980)
  *
  * @uses bbp_get_query_name() Get the query var '_bbp_query_name'
  * @return bool True if match, false if not
@@ -2025,7 +2025,7 @@ function bbp_is_query_name( $name = '' )  {
 /**
  * Get the '_bbp_query_name' setting
  *
- * @since bbPress (r2695)
+ * @since IdeaBoard (r2695)
  *
  * @uses get_query_var() To get the query var '_bbp_query_name'
  * @return string To return the query var value
@@ -2037,7 +2037,7 @@ function bbp_get_query_name()  {
 /**
  * Set the '_bbp_query_name' setting to $name
  *
- * @since bbPress (r2692)
+ * @since IdeaBoard (r2692)
  *
  * @param string $name What to set the query var to
  * @uses set_query_var() To set the query var '_bbp_query_name'
@@ -2049,7 +2049,7 @@ function bbp_set_query_name( $name = '' )  {
 /**
  * Used to clear the '_bbp_query_name' setting
  *
- * @since bbPress (r2692)
+ * @since IdeaBoard (r2692)
  *
  * @uses bbp_set_query_name() To set the query var '_bbp_query_name' value to ''
  */
@@ -2062,7 +2062,7 @@ function bbp_reset_query_name() {
 /**
  * Output the page title as a breadcrumb
  *
- * @since bbPress (r2589)
+ * @since IdeaBoard (r2589)
  *
  * @param string $sep Separator. Defaults to '&larr;'
  * @param bool $current_page Include the current item
@@ -2076,7 +2076,7 @@ function bbp_title_breadcrumb( $args = array() ) {
 /**
  * Output a breadcrumb
  *
- * @since bbPress (r2589)
+ * @since IdeaBoard (r2589)
  *
  * @param string $sep Separator. Defaults to '&larr;'
  * @param bool $current_page Include the current item
@@ -2089,7 +2089,7 @@ function bbp_breadcrumb( $args = array() ) {
 	/**
 	 * Return a breadcrumb ( forum -> topic -> reply )
 	 *
-	 * @since bbPress (r2589)
+	 * @since IdeaBoard (r2589)
 	 *
 	 * @param string $sep Separator. Defaults to '&larr;'
 	 * @param bool $current_page Include the current item
@@ -2135,7 +2135,7 @@ function bbp_breadcrumb( $args = array() ) {
 
 			// Default to 'Home'
 			} else {
-				$pre_front_text = __( 'Home', 'bbpress' );
+				$pre_front_text = __( 'Home', 'ideaboard' );
 			}
 		}
 
@@ -2205,15 +2205,15 @@ function bbp_breadcrumb( $args = array() ) {
 
 			// If capable, include a link to edit the tag
 			if ( current_user_can( 'manage_topic_tags' ) ) {
-				$tag_data[] = '<a href="' . esc_url( bbp_get_topic_tag_edit_link() ) . '" class="bbp-edit-topic-tag-link">' . esc_html__( '(Edit)', 'bbpress' ) . '</a>';
+				$tag_data[] = '<a href="' . esc_url( bbp_get_topic_tag_edit_link() ) . '" class="bbp-edit-topic-tag-link">' . esc_html__( '(Edit)', 'ideaboard' ) . '</a>';
 			}
 
 			// Implode the results of the tag data
-			$pre_current_text = sprintf( __( 'Topic Tag: %s', 'bbpress' ), implode( ' ', $tag_data ) );
+			$pre_current_text = sprintf( __( 'Topic Tag: %s', 'ideaboard' ), implode( ' ', $tag_data ) );
 
 		// Edit Topic Tag
 		} elseif ( bbp_is_topic_tag_edit() ) {
-			$pre_current_text = __( 'Edit', 'bbpress' );
+			$pre_current_text = __( 'Edit', 'ideaboard' );
 
 		// Single
 		} else {
@@ -2230,7 +2230,7 @@ function bbp_breadcrumb( $args = array() ) {
 			'after'           => '</p></div>',
 
 			// Separator
-			'sep'             => is_rtl() ? __( '&lsaquo;', 'bbpress' ) : __( '&rsaquo;', 'bbpress' ),
+			'sep'             => is_rtl() ? __( '&lsaquo;', 'ideaboard' ) : __( '&rsaquo;', 'ideaboard' ),
 			'pad_sep'         => 1,
 			'sep_before'      => '<span class="bbp-breadcrumb-sep">',
 			'sep_after'       => '</span>',
@@ -2323,11 +2323,11 @@ function bbp_breadcrumb( $args = array() ) {
 
 		// Edit topic tag
 		} elseif ( bbp_is_topic_tag_edit() ) {
-			$crumbs[] = '<a href="' . esc_url( get_term_link( bbp_get_topic_tag_id(), bbp_get_topic_tag_tax_id() ) ) . '" class="bbp-breadcrumb-topic-tag">' . sprintf( __( 'Topic Tag: %s', 'bbpress' ), bbp_get_topic_tag_name() ) . '</a>';
+			$crumbs[] = '<a href="' . esc_url( get_term_link( bbp_get_topic_tag_id(), bbp_get_topic_tag_tax_id() ) ) . '" class="bbp-breadcrumb-topic-tag">' . sprintf( __( 'Topic Tag: %s', 'ideaboard' ), bbp_get_topic_tag_name() ) . '</a>';
 
 		// Search
 		} elseif ( bbp_is_search() && bbp_get_search_terms() ) {
-			$crumbs[] = '<a href="' . esc_url( bbp_get_search_url() ) . '" class="bbp-breadcrumb-search">' . esc_html__( 'Search', 'bbpress' ) . '</a>';
+			$crumbs[] = '<a href="' . esc_url( bbp_get_search_url() ) . '" class="bbp-breadcrumb-search">' . esc_html__( 'Search', 'ideaboard' ) . '</a>';
 		}
 
 		/** Current ***********************************************************/
@@ -2373,7 +2373,7 @@ function bbp_breadcrumb( $args = array() ) {
  * This is useful for displaying in the post area, which elements and
  * attributes are supported. As well as any plugins which want to display it.
  *
- * @since bbPress (r2780)
+ * @since IdeaBoard (r2780)
  *
  * @uses bbp_get_allowed_tags()
  */
@@ -2386,7 +2386,7 @@ function bbp_allowed_tags() {
 	 * This is useful for displaying in the post area, which elements and
 	 * attributes are supported. As well as any plugins which want to display it.
 	 *
-	 * @since bbPress (r2780)
+	 * @since IdeaBoard (r2780)
 	 *
 	 * @uses bbp_kses_allowed_tags() To get the allowed tags
 	 * @uses apply_filters() Calls 'bbp_allowed_tags' with the tags
@@ -2414,11 +2414,11 @@ function bbp_allowed_tags() {
 /**
  * Display possible errors & messages inside a template file
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
- * @uses WP_Error bbPress::errors::get_error_codes() To get the error codes
- * @uses WP_Error bbPress::errors::get_error_data() To get the error data
- * @uses WP_Error bbPress::errors::get_error_messages() To get the error
+ * @uses WP_Error IdeaBoard::errors::get_error_codes() To get the error codes
+ * @uses WP_Error IdeaBoard::errors::get_error_data() To get the error data
+ * @uses WP_Error IdeaBoard::errors::get_error_messages() To get the error
  *                                                       messages
  * @uses is_wp_error() To check if it's a {@link WP_Error}
  */
@@ -2431,8 +2431,8 @@ function bbp_template_notices() {
 	// Define local variable(s)
 	$errors = $messages = array();
 
-	// Get bbPress
-	$bbp = bbpress();
+	// Get IdeaBoard
+	$bbp = ideaboard();
 
 	// Loop through notices
 	foreach ( $bbp->errors->get_error_codes() as $code ) {
@@ -2478,7 +2478,7 @@ function bbp_template_notices() {
 /**
  * Output the logout link
  *
- * @since bbPress (r2827)
+ * @since IdeaBoard (r2827)
  *
  * @param string $redirect_to Redirect to url
  * @uses bbp_get_logout_link() To get the logout link
@@ -2489,7 +2489,7 @@ function bbp_logout_link( $redirect_to = '' ) {
 	/**
 	 * Return the logout link
 	 *
-	 * @since bbPress (r2827)
+	 * @since IdeaBoard (r2827)
 	 *
 	 * @param string $redirect_to Redirect to url
 	 * @uses wp_logout_url() To get the logout url
@@ -2498,15 +2498,15 @@ function bbp_logout_link( $redirect_to = '' ) {
 	 * @return string The logout link
 	 */
 	function bbp_get_logout_link( $redirect_to = '' ) {
-		return apply_filters( 'bbp_get_logout_link', '<a href="' . wp_logout_url( $redirect_to ) . '" class="button logout-link">' . esc_html__( 'Log Out', 'bbpress' ) . '</a>', $redirect_to );
+		return apply_filters( 'bbp_get_logout_link', '<a href="' . wp_logout_url( $redirect_to ) . '" class="button logout-link">' . esc_html__( 'Log Out', 'ideaboard' ) . '</a>', $redirect_to );
 	}
 
 /** Title *********************************************************************/
 
 /**
- * Custom page title for bbPress pages
+ * Custom page title for IdeaBoard pages
  *
- * @since bbPress (r2788)
+ * @since IdeaBoard (r2788)
  *
  * @param string $title Optional. The title (not used).
  * @param string $sep Optional, default is '&raquo;'. How to separate the
@@ -2552,34 +2552,34 @@ function bbp_title( $title = '', $sep = '&raquo;', $seplocation = '' ) {
 	// Forum edit page
 	} elseif ( bbp_is_forum_edit() ) {
 		$new_title['text']   = bbp_get_forum_title();
-		$new_title['format'] = esc_attr__( 'Forum Edit: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Forum Edit: %s', 'ideaboard' );
 
 	// Topic edit page
 	} elseif ( bbp_is_topic_edit() ) {
 		$new_title['text']   = bbp_get_topic_title();
-		$new_title['format'] = esc_attr__( 'Topic Edit: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Topic Edit: %s', 'ideaboard' );
 
 	// Reply edit page
 	} elseif ( bbp_is_reply_edit() ) {
 		$new_title['text']   = bbp_get_reply_title();
-		$new_title['format'] = esc_attr__( 'Reply Edit: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Reply Edit: %s', 'ideaboard' );
 
 	// Topic tag edit page
 	} elseif ( bbp_is_topic_tag_edit() ) {
 		$new_title['text']   = bbp_get_topic_tag_name();
-		$new_title['format'] = esc_attr__( 'Topic Tag Edit: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Topic Tag Edit: %s', 'ideaboard' );
 
 	/** Singles ***************************************************************/
 
 	// Forum page
 	} elseif ( bbp_is_single_forum() ) {
 		$new_title['text']   = bbp_get_forum_title();
-		$new_title['format'] = esc_attr__( 'Forum: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Forum: %s', 'ideaboard' );
 
 	// Topic page
 	} elseif ( bbp_is_single_topic() ) {
 		$new_title['text']   = bbp_get_topic_title();
-		$new_title['format'] = esc_attr__( 'Topic: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Topic: %s', 'ideaboard' );
 
 	// Replies
 	} elseif ( bbp_is_single_reply() ) {
@@ -2588,7 +2588,7 @@ function bbp_title( $title = '', $sep = '&raquo;', $seplocation = '' ) {
 	// Topic tag page
 	} elseif ( bbp_is_topic_tag() || get_query_var( 'bbp_topic_tag' ) ) {
 		$new_title['text']   = bbp_get_topic_tag_name();
-		$new_title['format'] = esc_attr__( 'Topic Tag: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'Topic Tag: %s', 'ideaboard' );
 
 	/** Users *****************************************************************/
 
@@ -2597,32 +2597,32 @@ function bbp_title( $title = '', $sep = '&raquo;', $seplocation = '' ) {
 
 		// User is viewing their own profile
 		if ( bbp_is_user_home() ) {
-			$new_title['text'] = esc_attr_x( 'Your', 'User viewing his/her own profile', 'bbpress' );
+			$new_title['text'] = esc_attr_x( 'Your', 'User viewing his/her own profile', 'ideaboard' );
 
 		// User is viewing someone else's profile (so use their display name)
 		} else {
-			$new_title['text'] = sprintf( esc_attr_x( "%s's", 'User viewing another users profile', 'bbpress' ), get_userdata( bbp_get_user_id() )->display_name );
+			$new_title['text'] = sprintf( esc_attr_x( "%s's", 'User viewing another users profile', 'ideaboard' ), get_userdata( bbp_get_user_id() )->display_name );
 		}
 
 		// User topics created
 		if ( bbp_is_single_user_topics() ) {
-			$new_title['format'] = esc_attr__( "%s Topics",        'bbpress' );
+			$new_title['format'] = esc_attr__( "%s Topics",        'ideaboard' );
 
 		// User rueplies created
 		} elseif ( bbp_is_single_user_replies() ) {
-			$new_title['format'] = esc_attr__( "%s Replies",       'bbpress' );
+			$new_title['format'] = esc_attr__( "%s Replies",       'ideaboard' );
 
 		// User favorites
 		} elseif ( bbp_is_favorites() ) {
-			$new_title['format'] = esc_attr__( "%s Favorites",     'bbpress' );
+			$new_title['format'] = esc_attr__( "%s Favorites",     'ideaboard' );
 
 		// User subscriptions
 		} elseif ( bbp_is_subscriptions() ) {
-			$new_title['format'] = esc_attr__( "%s Subscriptions", 'bbpress' );
+			$new_title['format'] = esc_attr__( "%s Subscriptions", 'ideaboard' );
 
 		// User "home"
 		} else {
-			$new_title['format'] = esc_attr__( "%s Profile",       'bbpress' );
+			$new_title['format'] = esc_attr__( "%s Profile",       'ideaboard' );
 		}
 
 	// Profile edit page
@@ -2630,12 +2630,12 @@ function bbp_title( $title = '', $sep = '&raquo;', $seplocation = '' ) {
 
 		// Current user
 		if ( bbp_is_user_home_edit() ) {
-			$new_title['text']   = esc_attr__( 'Edit Your Profile', 'bbpress' );
+			$new_title['text']   = esc_attr__( 'Edit Your Profile', 'ideaboard' );
 
 		// Other user
 		} else {
 			$new_title['text']   = get_userdata( bbp_get_user_id() )->display_name;
-			$new_title['format'] = esc_attr__( "Edit %s's Profile", 'bbpress' );
+			$new_title['format'] = esc_attr__( "Edit %s's Profile", 'ideaboard' );
 		}
 
 	/** Views *****************************************************************/
@@ -2643,7 +2643,7 @@ function bbp_title( $title = '', $sep = '&raquo;', $seplocation = '' ) {
 	// Views
 	} elseif ( bbp_is_single_view() ) {
 		$new_title['text']   = bbp_get_view_title();
-		$new_title['format'] = esc_attr__( 'View: %s', 'bbpress' );
+		$new_title['format'] = esc_attr__( 'View: %s', 'ideaboard' );
 
 	/** Search ****************************************************************/
 

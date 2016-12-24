@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Do not put custom translations here. They will be deleted on bbPress updates.
+ * Do not put custom translations here. They will be deleted on IdeaBoard updates.
  *
- * Keep custom bbPress translations in /wp-content/languages/bbpress/
+ * Keep custom IdeaBoard translations in /wp-content/languages/ideaboard/
  */

@@ -1,4 +1,4 @@
-=== bbPress ===
+=== IdeaBoard ===
 Contributors: matt, johnjamesjacoby, jmdodd, netweb
 Tags: forums, discussion, support, theme, akismet, multisite
 Requires at least: 4.7
@@ -7,29 +7,29 @@ Stable tag: 2.5.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-bbPress is forum software, made the WordPress way.
+IdeaBoard is forum software, made the WordPress way.
 
 == Description ==
 
-Have you ever been frustrated with forum or bulletin board software that was slow, bloated and always got your server hacked? bbPress is focused on ease of integration, ease of use, web standards, and speed.
+Have you ever been frustrated with forum or bulletin board software that was slow, bloated and always got your server hacked? IdeaBoard is focused on ease of integration, ease of use, web standards, and speed.
 
-We're keeping things as small and light as possible while still allowing for great add-on features through WordPress's extensive plugin system. What does all that mean? bbPress is lean, mean, and ready to take on any job you throw at it.
+We're keeping things as small and light as possible while still allowing for great add-on features through WordPress's extensive plugin system. What does all that mean? IdeaBoard is lean, mean, and ready to take on any job you throw at it.
 
 == Installation ==
 
 = From your WordPress dashboard =
 
 1. Visit 'Plugins > Add New'
-2. Search for 'bbPress'
-3. Activate bbPress from your Plugins page. (You'll be greeted with a Welcome page.)
+2. Search for 'IdeaBoard'
+3. Activate IdeaBoard from your Plugins page. (You'll be greeted with a Welcome page.)
 4. Visit 'Forums > Add New' and create some forums. (You can always delete these later.)
 5. If you have pretty permalinks enabled, visit yourdomain.com/forums, or if you do not have pretty permalinks enabled, visit yourdomain.com?post_type=forum
 
 = From WordPress.org =
 
-1. Download bbPress.
-2. Upload the 'bbpress' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
-3. Activate bbPress from your Plugins page. (You'll be greeted with a Welcome page.)
+1. Download IdeaBoard.
+2. Upload the 'ideaboard' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
+3. Activate IdeaBoard from your Plugins page. (You'll be greeted with a Welcome page.)
 4. Visit 'Forums > Add New' and create some forums. (You can always delete these later.)
 5. If you have pretty permalinks enabled, visit yourdomain.com/forums, or if you do not have pretty permalinks enabled, visit yourdomain.com?post_type=forum
 
@@ -191,7 +191,7 @@ We're keeping things as small and light as possible while still allowing for gre
 
 = 2.1 =
 * WordPress 3.4 compatibility
-* Deprecate $bbp global, use bbpress() singleton
+* Deprecate $bbp global, use ideaboard() singleton
 * Private forums now visible to registered users
 * Updated forum converter
 * Topic and reply edits now ran through Akismet
@@ -203,7 +203,7 @@ We're keeping things as small and light as possible while still allowing for gre
 * Improved post cache invalidation
 * Improved admin-side nonce checks
 * Improved admin settings API
-* Improved bbPress 1.1 converter
+* Improved IdeaBoard 1.1 converter
 * Improved BuddyPress integration
 * Improved Theme-Compatibility
 * Improved template coverage

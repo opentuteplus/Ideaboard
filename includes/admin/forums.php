@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Forum Admin Class
+ * IdeaBoard Forum Admin Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
  */
 
@@ -12,11 +12,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 if ( !class_exists( 'BBP_Forums_Admin' ) ) :
 /**
- * Loads bbPress forums admin area
+ * Loads IdeaBoard forums admin area
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  */
 class BBP_Forums_Admin {
 
@@ -30,9 +30,9 @@ class BBP_Forums_Admin {
 	/** Functions *************************************************************/
 
 	/**
-	 * The main bbPress forums admin loader
+	 * The main IdeaBoard forums admin loader
 	 *
-	 * @since bbPress (r2515)
+	 * @since IdeaBoard (r2515)
 	 *
 	 * @uses BBP_Forums_Admin::setup_globals() Setup the globals needed
 	 * @uses BBP_Forums_Admin::setup_actions() Setup the hooks and actions
@@ -46,7 +46,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Setup the admin hooks, actions and filters
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 * @access private
 	 *
 	 * @uses add_action() To add various actions
@@ -83,7 +83,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Should we bail out of this method?
 	 *
-	 * @since bbPress (r4067)
+	 * @since IdeaBoard (r4067)
 	 * @return boolean
 	 */
 	private function bail() {
@@ -96,7 +96,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Admin globals
 	 *
-	 * @since bbPress (r2646)
+	 * @since IdeaBoard (r2646)
 	 * @access private
 	 */
 	private function setup_globals() {
@@ -106,9 +106,9 @@ class BBP_Forums_Admin {
 	/** Contextual Help *******************************************************/
 
 	/**
-	 * Contextual help for bbPress forum edit page
+	 * Contextual help for IdeaBoard forum edit page
 	 *
-	 * @since bbPress (r3119)
+	 * @since IdeaBoard (r3119)
 	 * @uses get_current_screen()
 	 */
 	public function edit_help() {
@@ -118,117 +118,117 @@ class BBP_Forums_Admin {
 		// Overview
 		get_current_screen()->add_help_tab( array(
 			'id'		=> 'overview',
-			'title'		=> __( 'Overview', 'bbpress' ),
+			'title'		=> __( 'Overview', 'ideaboard' ),
 			'content'	=>
-				'<p>' . __( 'This screen displays the individual forums on your site. You can customize the display of this screen to suit your workflow.', 'bbpress' ) . '</p>'
+				'<p>' . __( 'This screen displays the individual forums on your site. You can customize the display of this screen to suit your workflow.', 'ideaboard' ) . '</p>'
 		) );
 
 		// Screen Content
 		get_current_screen()->add_help_tab( array(
 			'id'		=> 'screen-content',
-			'title'		=> __( 'Screen Content', 'bbpress' ),
+			'title'		=> __( 'Screen Content', 'ideaboard' ),
 			'content'	=>
-				'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'bbpress' ) . '</p>' .
+				'<p>' . __( 'You can customize the display of this screen&#8217;s contents in a number of ways:', 'ideaboard' ) . '</p>' .
 				'<ul>' .
-					'<li>' . __( 'You can hide/display columns based on your needs and decide how many forums to list per screen using the Screen Options tab.',                                                                                                                                'bbpress' ) . '</li>' .
-					'<li>' . __( 'You can filter the list of forums by forum status using the text links in the upper left to show All, Published, or Trashed forums. The default view is to show all forums.',                                                                                 'bbpress' ) . '</li>' .
-					'<li>' . __( 'You can refine the list to show only forums from a specific month by using the dropdown menus above the forums list. Click the Filter button after making your selection. You also can refine the list by clicking on the forum creator in the forums list.', 'bbpress' ) . '</li>' .
+					'<li>' . __( 'You can hide/display columns based on your needs and decide how many forums to list per screen using the Screen Options tab.',                                                                                                                                'ideaboard' ) . '</li>' .
+					'<li>' . __( 'You can filter the list of forums by forum status using the text links in the upper left to show All, Published, or Trashed forums. The default view is to show all forums.',                                                                                 'ideaboard' ) . '</li>' .
+					'<li>' . __( 'You can refine the list to show only forums from a specific month by using the dropdown menus above the forums list. Click the Filter button after making your selection. You also can refine the list by clicking on the forum creator in the forums list.', 'ideaboard' ) . '</li>' .
 				'</ul>'
 		) );
 
 		// Available Actions
 		get_current_screen()->add_help_tab( array(
 			'id'		=> 'action-links',
-			'title'		=> __( 'Available Actions', 'bbpress' ),
+			'title'		=> __( 'Available Actions', 'ideaboard' ),
 			'content'	=>
-				'<p>' . __( 'Hovering over a row in the forums list will display action links that allow you to manage your forum. You can perform the following actions:', 'bbpress' ) . '</p>' .
+				'<p>' . __( 'Hovering over a row in the forums list will display action links that allow you to manage your forum. You can perform the following actions:', 'ideaboard' ) . '</p>' .
 				'<ul>' .
-					'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that forum. You can also reach that screen by clicking on the forum title.',                                                                              'bbpress' ) . '</li>' .
-					'<li>' . __( '<strong>Trash</strong> removes your forum from this list and places it in the trash, from which you can permanently delete it.',                                                                                    'bbpress' ) . '</li>' .
-					'<li>' . __( '<strong>View</strong> will show you what your draft forum will look like if you publish it. View will take you to your live site to view the forum. Which link is available depends on your forum&#8217;s status.', 'bbpress' ) . '</li>' .
+					'<li>' . __( '<strong>Edit</strong> takes you to the editing screen for that forum. You can also reach that screen by clicking on the forum title.',                                                                              'ideaboard' ) . '</li>' .
+					'<li>' . __( '<strong>Trash</strong> removes your forum from this list and places it in the trash, from which you can permanently delete it.',                                                                                    'ideaboard' ) . '</li>' .
+					'<li>' . __( '<strong>View</strong> will show you what your draft forum will look like if you publish it. View will take you to your live site to view the forum. Which link is available depends on your forum&#8217;s status.', 'ideaboard' ) . '</li>' .
 				'</ul>'
 		) );
 
 		// Bulk Actions
 		get_current_screen()->add_help_tab( array(
 			'id'		=> 'bulk-actions',
-			'title'		=> __( 'Bulk Actions', 'bbpress' ),
+			'title'		=> __( 'Bulk Actions', 'ideaboard' ),
 			'content'	=>
-				'<p>' . __( 'You can also edit or move multiple forums to the trash at once. Select the forums you want to act on using the checkboxes, then select the action you want to take from the Bulk Actions menu and click Apply.',           'bbpress' ) . '</p>' .
-				'<p>' . __( 'When using Bulk Edit, you can change the metadata (categories, author, etc.) for all selected forums at once. To remove a forum from the grouping, just click the x next to its name in the Bulk Edit area that appears.', 'bbpress' ) . '</p>'
+				'<p>' . __( 'You can also edit or move multiple forums to the trash at once. Select the forums you want to act on using the checkboxes, then select the action you want to take from the Bulk Actions menu and click Apply.',           'ideaboard' ) . '</p>' .
+				'<p>' . __( 'When using Bulk Edit, you can change the metadata (categories, author, etc.) for all selected forums at once. To remove a forum from the grouping, just click the x next to its name in the Bulk Edit area that appears.', 'ideaboard' ) . '</p>'
 		) );
 
 		// Help Sidebar
 		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:', 'bbpress' ) . '</strong></p>' .
-			'<p>' . __( '<a href="http://codex.bbpress.org" target="_blank">bbPress Documentation</a>',    'bbpress' ) . '</p>' .
-			'<p>' . __( '<a href="http://bbpress.org/forums/" target="_blank">bbPress Support Forums</a>', 'bbpress' ) . '</p>'
+			'<p><strong>' . __( 'For more information:', 'ideaboard' ) . '</strong></p>' .
+			'<p>' . __( '<a href="http://codex.ideaboard.org" target="_blank">IdeaBoard Documentation</a>',    'ideaboard' ) . '</p>' .
+			'<p>' . __( '<a href="http://ideaboard.org/forums/" target="_blank">IdeaBoard Support Forums</a>', 'ideaboard' ) . '</p>'
 		);
 	}
 
 	/**
-	 * Contextual help for bbPress forum edit page
+	 * Contextual help for IdeaBoard forum edit page
 	 *
-	 * @since bbPress (r3119)
+	 * @since IdeaBoard (r3119)
 	 * @uses get_current_screen()
 	 */
 	public function new_help() {
 
 		if ( $this->bail() ) return;
 
-		$customize_display = '<p>' . __( 'The title field and the big forum editing Area are fixed in place, but you can reposition all the other boxes using drag and drop, and can minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'bbpress' ) . '</p>';
+		$customize_display = '<p>' . __( 'The title field and the big forum editing Area are fixed in place, but you can reposition all the other boxes using drag and drop, and can minimize or expand them by clicking the title bar of each box. Use the Screen Options tab to unhide more boxes (Excerpt, Send Trackbacks, Custom Fields, Discussion, Slug, Author) or to choose a 1- or 2-column layout for this screen.', 'ideaboard' ) . '</p>';
 
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'customize-display',
-			'title'   => __( 'Customizing This Display', 'bbpress' ),
+			'title'   => __( 'Customizing This Display', 'ideaboard' ),
 			'content' => $customize_display,
 		) );
 
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'title-forum-editor',
-			'title'   => __( 'Title and Forum Editor', 'bbpress' ),
+			'title'   => __( 'Title and Forum Editor', 'ideaboard' ),
 			'content' =>
-				'<p>' . __( '<strong>Title</strong> - Enter a title for your forum. After you enter a title, you&#8217;ll see the permalink below, which you can edit.', 'bbpress' ) . '</p>' .
-				'<p>' . __( '<strong>Forum Editor</strong> - Enter the text for your forum. There are two modes of editing: Visual and HTML. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The HTML mode allows you to enter raw HTML along with your forum text. You can insert media files by clicking the icons above the forum editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in HTML mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular forum editor.', 'bbpress' ) . '</p>'
+				'<p>' . __( '<strong>Title</strong> - Enter a title for your forum. After you enter a title, you&#8217;ll see the permalink below, which you can edit.', 'ideaboard' ) . '</p>' .
+				'<p>' . __( '<strong>Forum Editor</strong> - Enter the text for your forum. There are two modes of editing: Visual and HTML. Choose the mode by clicking on the appropriate tab. Visual mode gives you a WYSIWYG editor. Click the last icon in the row to get a second row of controls. The HTML mode allows you to enter raw HTML along with your forum text. You can insert media files by clicking the icons above the forum editor and following the directions. You can go to the distraction-free writing screen via the Fullscreen icon in Visual mode (second to last in the top row) or the Fullscreen button in HTML mode (last in the row). Once there, you can make buttons visible by hovering over the top area. Exit Fullscreen back to the regular forum editor.', 'ideaboard' ) . '</p>'
 		) );
 
-		$publish_box = '<p>' . __( '<strong>Publish</strong> - You can set the terms of publishing your forum in the Publish box. For Status, Visibility, and Publish (immediately), click on the Edit link to reveal more options. Visibility includes options for password-protecting a forum or making it stay at the top of your blog indefinitely (sticky). Publish (immediately) allows you to set a future or past date and time, so you can schedule a forum to be published in the future or backdate a forum.', 'bbpress' ) . '</p>';
+		$publish_box = '<p>' . __( '<strong>Publish</strong> - You can set the terms of publishing your forum in the Publish box. For Status, Visibility, and Publish (immediately), click on the Edit link to reveal more options. Visibility includes options for password-protecting a forum or making it stay at the top of your blog indefinitely (sticky). Publish (immediately) allows you to set a future or past date and time, so you can schedule a forum to be published in the future or backdate a forum.', 'ideaboard' ) . '</p>';
 
 		if ( current_theme_supports( 'forum-thumbnails' ) && post_type_supports( 'forum', 'thumbnail' ) ) {
-			$publish_box .= '<p>' . __( '<strong>Featured Image</strong> - This allows you to associate an image with your forum without inserting it. This is usually useful only if your theme makes use of the featured image as a forum thumbnail on the home page, a custom header, etc.', 'bbpress' ) . '</p>';
+			$publish_box .= '<p>' . __( '<strong>Featured Image</strong> - This allows you to associate an image with your forum without inserting it. This is usually useful only if your theme makes use of the featured image as a forum thumbnail on the home page, a custom header, etc.', 'ideaboard' ) . '</p>';
 		}
 
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'forum-attributes',
-			'title'   => __( 'Forum Attributes', 'bbpress' ),
+			'title'   => __( 'Forum Attributes', 'ideaboard' ),
 			'content' =>
-				'<p>' . __( 'Select the attributes that your forum should have:', 'bbpress' ) . '</p>' .
+				'<p>' . __( 'Select the attributes that your forum should have:', 'ideaboard' ) . '</p>' .
 				'<ul>' .
-					'<li>' . __( '<strong>Type</strong> indicates if the forum is a category or forum. Categories generally contain other forums.',                                                                                'bbpress' ) . '</li>' .
-					'<li>' . __( '<strong>Status</strong> allows you to close a forum to new topics and forums.',                                                                                                                  'bbpress' ) . '</li>' .
-					'<li>' . __( '<strong>Visibility</strong> lets you pick the scope of each forum and what users are allowed to access it.',                                                                                     'bbpress' ) . '</li>' .
-					'<li>' . __( '<strong>Parent</strong> dropdown determines the parent forum. Select the forum or category from the dropdown, or leave the default (No Parent) to create the forum at the root of your forums.', 'bbpress' ) . '</li>' .
-					'<li>' . __( '<strong>Order</strong> allows you to order your forums numerically.',                                                                                                                            'bbpress' ) . '</li>' .
+					'<li>' . __( '<strong>Type</strong> indicates if the forum is a category or forum. Categories generally contain other forums.',                                                                                'ideaboard' ) . '</li>' .
+					'<li>' . __( '<strong>Status</strong> allows you to close a forum to new topics and forums.',                                                                                                                  'ideaboard' ) . '</li>' .
+					'<li>' . __( '<strong>Visibility</strong> lets you pick the scope of each forum and what users are allowed to access it.',                                                                                     'ideaboard' ) . '</li>' .
+					'<li>' . __( '<strong>Parent</strong> dropdown determines the parent forum. Select the forum or category from the dropdown, or leave the default (No Parent) to create the forum at the root of your forums.', 'ideaboard' ) . '</li>' .
+					'<li>' . __( '<strong>Order</strong> allows you to order your forums numerically.',                                                                                                                            'ideaboard' ) . '</li>' .
 				'</ul>'
 		) );
 
 		get_current_screen()->add_help_tab( array(
 			'id'      => 'publish-box',
-			'title'   => __( 'Publish Box', 'bbpress' ),
+			'title'   => __( 'Publish Box', 'ideaboard' ),
 			'content' => $publish_box,
 		) );
 
 		get_current_screen()->set_help_sidebar(
-			'<p><strong>' . __( 'For more information:', 'bbpress' ) . '</strong></p>' .
-			'<p>' . __( '<a href="http://codex.bbpress.org" target="_blank">bbPress Documentation</a>',    'bbpress' ) . '</p>' .
-			'<p>' . __( '<a href="http://bbpress.org/forums/" target="_blank">bbPress Support Forums</a>', 'bbpress' ) . '</p>'
+			'<p><strong>' . __( 'For more information:', 'ideaboard' ) . '</strong></p>' .
+			'<p>' . __( '<a href="http://codex.ideaboard.org" target="_blank">IdeaBoard Documentation</a>',    'ideaboard' ) . '</p>' .
+			'<p>' . __( '<a href="http://ideaboard.org/forums/" target="_blank">IdeaBoard Support Forums</a>', 'ideaboard' ) . '</p>'
 		);
 	}
 
 	/**
 	 * Add the forum attributes metabox
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @uses bbp_get_forum_post_type() To get the forum post type
 	 * @uses add_meta_box() To add the metabox
@@ -240,7 +240,7 @@ class BBP_Forums_Admin {
 
 		add_meta_box (
 			'bbp_forum_attributes',
-			__( 'Forum Attributes', 'bbpress' ),
+			__( 'Forum Attributes', 'ideaboard' ),
 			'bbp_forum_metabox',
 			$this->post_type,
 			'side',
@@ -253,7 +253,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Pass the forum attributes for processing
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @param int $forum_id Forum id
 	 * @uses current_user_can() To check if the current user is capable of
@@ -313,7 +313,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Add some general styling to the admin area
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @uses bbp_get_forum_post_type() To get the forum post type
 	 * @uses bbp_get_topic_post_type() To get the topic post type
@@ -393,12 +393,12 @@ class BBP_Forums_Admin {
 	/**
 	 * Manage the column headers for the forums page
 	 *
-	 * @since bbPress (r2485)
+	 * @since IdeaBoard (r2485)
 	 *
 	 * @param array $columns The columns
 	 * @uses apply_filters() Calls 'bbp_admin_forums_column_headers' with
 	 *                        the columns
-	 * @return array $columns bbPress forum columns
+	 * @return array $columns IdeaBoard forum columns
 	 */
 	public function column_headers( $columns ) {
 
@@ -406,12 +406,12 @@ class BBP_Forums_Admin {
 
 		$columns = array (
 			'cb'                    => '<input type="checkbox" />',
-			'title'                 => __( 'Forum',     'bbpress' ),
-			'bbp_forum_topic_count' => __( 'Topics',    'bbpress' ),
-			'bbp_forum_reply_count' => __( 'Replies',   'bbpress' ),
-			'author'                => __( 'Creator',   'bbpress' ),
-			'bbp_forum_created'     => __( 'Created' ,  'bbpress' ),
-			'bbp_forum_freshness'   => __( 'Freshness', 'bbpress' )
+			'title'                 => __( 'Forum',     'ideaboard' ),
+			'bbp_forum_topic_count' => __( 'Topics',    'ideaboard' ),
+			'bbp_forum_reply_count' => __( 'Replies',   'ideaboard' ),
+			'author'                => __( 'Creator',   'ideaboard' ),
+			'bbp_forum_created'     => __( 'Created' ,  'ideaboard' ),
+			'bbp_forum_freshness'   => __( 'Freshness', 'ideaboard' )
 		);
 
 		return apply_filters( 'bbp_admin_forums_column_headers', $columns );
@@ -420,7 +420,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Print extra columns for the forums page
 	 *
-	 * @since bbPress (r2485)
+	 * @since IdeaBoard (r2485)
 	 *
 	 * @param string $column Column
 	 * @param int $forum_id Forum id
@@ -460,7 +460,7 @@ class BBP_Forums_Admin {
 				if ( !empty( $last_active ) )
 					echo esc_html( $last_active );
 				else
-					esc_html_e( 'No Topics', 'bbpress' );
+					esc_html_e( 'No Topics', 'ideaboard' );
 
 				break;
 
@@ -476,7 +476,7 @@ class BBP_Forums_Admin {
 	 * Remove the quick-edit action link and display the description under
 	 * the forum title
 	 *
-	 * @since bbPress (r2577)
+	 * @since IdeaBoard (r2577)
 	 *
 	 * @param array $actions Actions
 	 * @param array $forum Forum object
@@ -498,7 +498,7 @@ class BBP_Forums_Admin {
 	/**
 	 * Custom user feedback messages for forum post type
 	 *
-	 * @since bbPress (r3080)
+	 * @since IdeaBoard (r3080)
 	 *
 	 * @global int $post_ID
 	 * @uses bbp_get_forum_permalink()
@@ -526,41 +526,41 @@ class BBP_Forums_Admin {
 			0 =>  '', // Left empty on purpose
 
 			// Updated
-			1 =>  sprintf( __( 'Forum updated. <a href="%s">View forum</a>', 'bbpress' ), $forum_url ),
+			1 =>  sprintf( __( 'Forum updated. <a href="%s">View forum</a>', 'ideaboard' ), $forum_url ),
 
 			// Custom field updated
-			2 => __( 'Custom field updated.', 'bbpress' ),
+			2 => __( 'Custom field updated.', 'ideaboard' ),
 
 			// Custom field deleted
-			3 => __( 'Custom field deleted.', 'bbpress' ),
+			3 => __( 'Custom field deleted.', 'ideaboard' ),
 
 			// Forum updated
-			4 => __( 'Forum updated.', 'bbpress' ),
+			4 => __( 'Forum updated.', 'ideaboard' ),
 
 			// Restored from revision
 			// translators: %s: date and time of the revision
 			5 => isset( $_GET['revision'] )
-					? sprintf( __( 'Forum restored to revision from %s', 'bbpress' ), wp_post_revision_title( (int) $_GET['revision'], false ) )
+					? sprintf( __( 'Forum restored to revision from %s', 'ideaboard' ), wp_post_revision_title( (int) $_GET['revision'], false ) )
 					: false,
 
 			// Forum created
-			6 => sprintf( __( 'Forum created. <a href="%s">View forum</a>', 'bbpress' ), $forum_url ),
+			6 => sprintf( __( 'Forum created. <a href="%s">View forum</a>', 'ideaboard' ), $forum_url ),
 
 			// Forum saved
-			7 => __( 'Forum saved.', 'bbpress' ),
+			7 => __( 'Forum saved.', 'ideaboard' ),
 
 			// Forum submitted
-			8 => sprintf( __( 'Forum submitted. <a target="_blank" href="%s">Preview forum</a>', 'bbpress' ), esc_url( add_query_arg( 'preview', 'true', $forum_url ) ) ),
+			8 => sprintf( __( 'Forum submitted. <a target="_blank" href="%s">Preview forum</a>', 'ideaboard' ), esc_url( add_query_arg( 'preview', 'true', $forum_url ) ) ),
 
 			// Forum scheduled
-			9 => sprintf( __( 'Forum scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview forum</a>', 'bbpress' ),
+			9 => sprintf( __( 'Forum scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview forum</a>', 'ideaboard' ),
 					// translators: Publish box date format, see http://php.net/date
-					date_i18n( __( 'M j, Y @ G:i', 'bbpress' ),
+					date_i18n( __( 'M j, Y @ G:i', 'ideaboard' ),
 					strtotime( $post_date ) ),
 					$forum_url ),
 
 			// Forum draft updated
-			10 => sprintf( __( 'Forum draft updated. <a target="_blank" href="%s">Preview forum</a>', 'bbpress' ), esc_url( add_query_arg( 'preview', 'true', $forum_url ) ) ),
+			10 => sprintf( __( 'Forum draft updated. <a target="_blank" href="%s">Preview forum</a>', 'ideaboard' ), esc_url( add_query_arg( 'preview', 'true', $forum_url ) ) ),
 		);
 
 		return $messages;
@@ -569,15 +569,15 @@ class BBP_Forums_Admin {
 endif; // class_exists check
 
 /**
- * Setup bbPress Forums Admin
+ * Setup IdeaBoard Forums Admin
  *
  * This is currently here to make hooking and unhooking of the admin UI easy.
  * It could use dependency injection in the future, but for now this is easier.
  *
- * @since bbPress (r2596)
+ * @since IdeaBoard (r2596)
  *
  * @uses BBP_Forums_Admin
  */
 function bbp_admin_forums() {
-	bbpress()->admin->forums = new BBP_Forums_Admin();
+	ideaboard()->admin->forums = new BBP_Forums_Admin();
 }

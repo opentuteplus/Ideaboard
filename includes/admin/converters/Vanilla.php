@@ -3,8 +3,8 @@
 /**
  * Implementation of Vanilla 2.0.18.1 Converter
  *
- * @since bbPress (r4717)
- * @link Codex Docs http://codex.bbpress.org/import-forums/vanilla
+ * @since IdeaBoard (r4717)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/vanilla
  */
 class Vanilla extends BBP_Converter_Base {
 
@@ -532,7 +532,7 @@ class Vanilla extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 
@@ -557,7 +557,7 @@ class Vanilla extends BBP_Converter_Base {
 	* This callback processes any custom BBCodes with parser.php
 	*/
 	protected function callback_html( $field ) {
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		$bbcode->enable_smileys = false;
 		$bbcode->smiley_regex   = false;

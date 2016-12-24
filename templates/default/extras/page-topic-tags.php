@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Template Name: bbPress - Topic Tags
+ * Template Name: IdeaBoard - Topic Tags
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 
@@ -19,9 +19,9 @@ get_header(); ?>
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="entry-content">
 
-				<?php get_the_content() ? the_content() : _e( '<p>This is a collection of tags that are currently popular on our forums.</p>', 'bbpress' ); ?>
+				<?php get_the_content() ? the_content() : _e( '<p>This is a collection of tags that are currently popular on our forums.</p>', 'ideaboard' ); ?>
 
-				<div id="bbpress-forums">
+				<div id="ideaboard-forums">
 
 					<?php bbp_breadcrumb(); ?>
 

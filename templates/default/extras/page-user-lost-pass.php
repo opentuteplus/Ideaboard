@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Template Name: bbPress - User Lost Password
+ * Template Name: IdeaBoard - User Lost Password
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 
@@ -25,7 +25,7 @@ get_header(); ?>
 
 				<?php the_content(); ?>
 
-				<div id="bbpress-forums">
+				<div id="ideaboard-forums">
 
 					<?php bbp_breadcrumb(); ?>
 

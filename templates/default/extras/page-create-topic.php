@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Template Name: bbPress - Create Topic
+ * Template Name: IdeaBoard - Create Topic
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

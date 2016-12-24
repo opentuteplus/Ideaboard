@@ -3,7 +3,7 @@
 /**
  * Move reply page
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

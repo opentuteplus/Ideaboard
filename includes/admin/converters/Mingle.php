@@ -3,8 +3,8 @@
 /**
  * Implementation of Mingle Forums converter.
  *
- * @since bbPress (r4691)
- * @link Codex Docs http://codex.bbpress.org/import-forums/mingle
+ * @since IdeaBoard (r4691)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/mingle
  */
 class Mingle extends BBP_Converter_Base {
 
@@ -473,7 +473,7 @@ class Mingle extends BBP_Converter_Base {
 	* This callback processes any custom BBCodes with parser.php
 	*/
 	protected function callback_html( $field ) {
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		$bbcode->enable_smileys = false;
 		$bbcode->smiley_regex   = false;

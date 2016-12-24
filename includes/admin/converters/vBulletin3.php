@@ -3,8 +3,8 @@
 /**
  * Implementation of vBulletin v3.x Converter.
  *
- * @since bbPress (r5151)
- * @link Codex Docs http://codex.bbpress.org/import-forums/vbulletin
+ * @since IdeaBoard (r5151)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/vbulletin
  */
 class vBulletin3 extends BBP_Converter_Base {
 
@@ -649,7 +649,7 @@ class vBulletin3 extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 
@@ -698,7 +698,7 @@ class vBulletin3 extends BBP_Converter_Base {
 		$field = $vbulletin_markup;
 
 		// Parse out any bbCodes in $field with the BBCode 'parser.php'
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		$bbcode->enable_smileys = false;
 		$bbcode->smiley_regex   = false;

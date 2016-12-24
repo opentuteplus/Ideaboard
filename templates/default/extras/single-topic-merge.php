@@ -3,7 +3,7 @@
 /**
  * Merge topic page
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

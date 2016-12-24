@@ -1,18 +1,18 @@
 <?php
 
 /**
- * bbPress Forum Capabilites
+ * IdeaBoard Forum Capabilites
  *
  * Used to map forum capabilities to WordPress's existing capabilities.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Capabilities
  */
 
 /**
  * Return forum capabilities
  *
- * @since bbPress (r2593)
+ * @since IdeaBoard (r2593)
  *
  * @uses apply_filters() Calls 'bbp_get_forum_caps' with the capabilities
  * @return array Forum capabilities
@@ -32,7 +32,7 @@ function bbp_get_forum_caps() {
 /**
  * Maps forum capabilities
  *
- * @since bbPress (r4242)
+ * @since IdeaBoard (r4242)
  *
  * @param array $caps Capabilities for meta capability
  * @param string $cap Capability name

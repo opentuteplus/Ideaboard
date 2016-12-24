@@ -1,18 +1,18 @@
 <?php
 
 /**
- * bbPress User Capabilites
+ * IdeaBoard User Capabilites
  *
  * Used to map user capabilities to WordPress's existing capabilities.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Capabilities
  */
 
 /**
  * Maps primary capabilities
  *
- * @since bbPress (r4242)
+ * @since IdeaBoard (r4242)
  *
  * @param array $caps Capabilities for meta capability
  * @param string $cap Capability name
@@ -47,7 +47,7 @@ function bbp_map_primary_meta_caps( $caps = array(), $cap = '', $user_id = 0, $a
 /**
  * Return a user's main role
  *
- * @since bbPress (r3860)
+ * @since IdeaBoard (r3860)
  *
  * @param int $user_id
  * @uses bbp_get_user_id() To get the user id
@@ -82,7 +82,7 @@ function bbp_set_user_role( $user_id = 0, $new_role = '' ) {
 			// Add the new role
 			if ( !empty( $new_role ) ) {
 
-				// Make sure bbPress roles are added
+				// Make sure IdeaBoard roles are added
 				bbp_add_forums_roles();
 
 				$user->add_role( $new_role );
@@ -100,7 +100,7 @@ function bbp_set_user_role( $user_id = 0, $new_role = '' ) {
 /**
  * Return a user's forums role
  *
- * @since bbPress (r3860)
+ * @since IdeaBoard (r3860)
  *
  * @param int $user_id
  * @uses bbp_get_user_id() To get the user id
@@ -115,17 +115,17 @@ function bbp_get_user_role( $user_id = 0 ) {
 	$user    = get_userdata( $user_id );
 	$role    = false;
 
-	// User has roles so look for a bbPress one
+	// User has roles so look for a IdeaBoard one
 	if ( ! empty( $user->roles ) ) {
 
-		// Look for a bbPress role
+		// Look for a IdeaBoard role
 		$roles = array_intersect(
 			array_values( $user->roles ),
 			array_keys( bbp_get_dynamic_roles() )
 		);
 
 		// If there's a role in the array, use the first one. This isn't very
-		// smart, but since roles aren't exactly hierarchical, and bbPress
+		// smart, but since roles aren't exactly hierarchical, and IdeaBoard
 		// does not yet have a UI for multiple user roles, it's fine for now.
 		if ( !empty( $roles ) ) {
 			$role = array_shift( $roles );
@@ -138,7 +138,7 @@ function bbp_get_user_role( $user_id = 0 ) {
 /**
  * Return a user's blog role
  *
- * @since bbPress (r4446)
+ * @since IdeaBoard (r4446)
  *
  * @param int $user_id
  * @uses bbp_get_user_id() To get the user id
@@ -148,7 +148,7 @@ function bbp_get_user_role( $user_id = 0 ) {
  */
 function bbp_get_user_blog_role( $user_id = 0 ) {
 
-	// Add bbPress roles (returns $wp_roles global)
+	// Add IdeaBoard roles (returns $wp_roles global)
 	bbp_add_forums_roles();
 
 	// Validate user id
@@ -159,7 +159,7 @@ function bbp_get_user_blog_role( $user_id = 0 ) {
 	// User has roles so lets
 	if ( ! empty( $user->roles ) ) {
 
-		// Look for a non bbPress role
+		// Look for a non IdeaBoard role
 		$roles     = array_intersect(
 			array_values( $user->roles ),
 			array_keys( bbp_get_blog_roles() )
@@ -180,7 +180,7 @@ function bbp_get_user_blog_role( $user_id = 0 ) {
  * Helper function hooked to 'bbp_profile_update' action to save or
  * update user roles and capabilities.
  *
- * @since bbPress (r4235)
+ * @since IdeaBoard (r4235)
  *
  * @param int $user_id
  * @uses bbp_reset_user_caps() to reset caps
@@ -222,7 +222,7 @@ function bbp_profile_update_role( $user_id = 0 ) {
  * This function will bail if the forum is not global in a multisite
  * installation of WordPress, or if the user is marked as spam or deleted.
  *
- * @since bbPress (r3380)
+ * @since IdeaBoard (r3380)
  *
  * @uses is_user_logged_in() To bail if user is not logged in
  * @uses bbp_get_user_role() To bail if user already has a role
@@ -238,7 +238,7 @@ function bbp_set_current_user_default_role() {
 
 	/** Sanity ****************************************************************/
 
-	// Bail if deactivating bbPress
+	// Bail if deactivating IdeaBoard
 	if ( bbp_is_deactivation() )
 		return;
 
@@ -263,8 +263,8 @@ function bbp_set_current_user_default_role() {
 
 	/** Ready *****************************************************************/
 
-	// Load up bbPress once
-	$bbp         = bbpress();
+	// Load up IdeaBoard once
+	$bbp         = ideaboard();
 
 	// Get whether or not to add a role to the user account
 	$add_to_site = bbp_allow_global_access();
@@ -291,7 +291,7 @@ function bbp_set_current_user_default_role() {
 	// Add the user to the site
 	if ( true === $add_to_site ) {
 
-		// Make sure bbPress roles are added
+		// Make sure IdeaBoard roles are added
 		bbp_add_forums_roles();
 
 		$bbp->current_user->add_role( $new_role );
@@ -304,13 +304,13 @@ function bbp_set_current_user_default_role() {
 }
 
 /**
- * Return a map of WordPress roles to bbPress roles. Used to automatically grant
- * appropriate bbPress roles to WordPress users that wouldn't already have a
+ * Return a map of WordPress roles to IdeaBoard roles. Used to automatically grant
+ * appropriate IdeaBoard roles to WordPress users that wouldn't already have a
  * role in the forums. Also guarantees WordPress admins get the Keymaster role.
  *
- * @since bbPress (r4334)
+ * @since IdeaBoard (r4334)
  *
- * @return array Filtered array of WordPress roles to bbPress roles
+ * @return array Filtered array of WordPress roles to IdeaBoard roles
  */
 function bbp_get_user_role_map() {
 
@@ -332,7 +332,7 @@ function bbp_get_user_role_map() {
 /**
  * Checks if the user has been marked as a spammer.
  *
- * @since bbPress (r3355)
+ * @since IdeaBoard (r3355)
  *
  * @param int $user_id int The ID for the user.
  * @return bool True if spammer, False if not.
@@ -368,7 +368,7 @@ function bbp_is_user_spammer( $user_id = 0 ) {
 /**
  * Mark a users topics and replies as spam when the user is marked as spam
  *
- * @since bbPress (r3405)
+ * @since IdeaBoard (r3405)
  *
  * @global WPDB $wpdb
  * @param int $user_id Optional. User ID to spam. Defaults to displayed user.
@@ -456,7 +456,7 @@ function bbp_make_spam_user( $user_id = 0 ) {
 /**
  * Mark a users topics and replies as spam when the user is marked as spam
  *
- * @since bbPress (r3405)
+ * @since IdeaBoard (r3405)
  *
  * @global WPDB $wpdb
  * @param int $user_id Optional. User ID to unspam. Defaults to displayed user.
@@ -543,7 +543,7 @@ function bbp_make_ham_user( $user_id = 0 ) {
 /**
  * Checks if the user has been marked as deleted.
  *
- * @since bbPress (r3355)
+ * @since IdeaBoard (r3355)
  *
  * @param int $user_id int The ID for the user.
  * @return bool True if deleted, False if not.
@@ -579,7 +579,7 @@ function bbp_is_user_deleted( $user_id = 0 ) {
 /**
  * Checks if user is active
  *
- * @since bbPress (r3502)
+ * @since IdeaBoard (r3502)
  *
  * @uses is_user_logged_in() To check if user is logged in
  * @uses bbp_get_displayed_user_id() To get current user ID
@@ -614,7 +614,7 @@ function bbp_is_user_active( $user_id = 0 ) {
 /**
  * Checks if user is not active.
  *
- * @since bbPress (r3502)
+ * @since IdeaBoard (r3502)
  *
  * @uses is_user_logged_in() To check if user is logged in
  * @uses bbp_get_displayed_user_id() To get current user ID
@@ -640,7 +640,7 @@ function bbp_is_user_inactive( $user_id = 0 ) {
 /**
  * Checks if user is a keymaster
  *
- * @since bbPress (r4783)
+ * @since IdeaBoard (r4783)
  *
  * @param int $user_id 
  * @return bool True if keymaster, false if not
@@ -657,7 +657,7 @@ function bbp_is_user_keymaster( $user_id = 0 ) {
 /**
  * Does a user have a profile for the current site
  *
- * @since bbPress (r4362)
+ * @since IdeaBoard (r4362)
  *
  * @param int $user_id User ID to check
  * @param int $blog_id Blog ID to check

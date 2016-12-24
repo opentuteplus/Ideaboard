@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Search Template Tags
+ * IdeaBoard Search Template Tags
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage TemplateTags
  */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * The main search loop. WordPress does the heavy lifting.
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @param mixed $args All the arguments supported by {@link WP_Query}
  * @uses bbp_get_view_all() Are we showing all results?
@@ -34,8 +34,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @uses bbp_get_search_url() To get the forum search url
  * @uses paginate_links() To paginate search results
  * @uses apply_filters() Calls 'bbp_has_search_results' with
- *                        bbPress::search_query::have_posts()
- *                        and bbPress::reply_query
+ *                        IdeaBoard::search_query::have_posts()
+ *                        and IdeaBoard::reply_query
  * @return object Multidimensional array of search information
  */
 function bbp_has_search_results( $args = '' ) {
@@ -85,8 +85,8 @@ function bbp_has_search_results( $args = '' ) {
 	// Parse arguments against default values
 	$r = bbp_parse_args( $args, $default, 'has_search_results' );
 
-	// Get bbPress
-	$bbp = bbpress();
+	// Get IdeaBoard
+	$bbp = ideaboard();
 
 	// Call the query
 	if ( ! empty( $r['s'] ) ) {
@@ -160,16 +160,16 @@ function bbp_has_search_results( $args = '' ) {
 /**
  * Whether there are more search results available in the loop
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
- * @uses WP_Query bbPress::search_query::have_posts() To check if there are more
+ * @uses WP_Query IdeaBoard::search_query::have_posts() To check if there are more
  *                                                     search results available
  * @return object Search information
  */
 function bbp_search_results() {
 
 	// Put into variable to check against next
-	$have_posts = bbpress()->search_query->have_posts();
+	$have_posts = ideaboard()->search_query->have_posts();
 
 	// Reset the post data when finished
 	if ( empty( $have_posts ) )
@@ -181,18 +181,18 @@ function bbp_search_results() {
 /**
  * Loads up the current search result in the loop
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
- * @uses WP_Query bbPress::search_query::the_post() To get the current search result
+ * @uses WP_Query IdeaBoard::search_query::the_post() To get the current search result
  * @return object Search information
  */
 function bbp_the_search_result() {
-	$search_result = bbpress()->search_query->the_post();
+	$search_result = ideaboard()->search_query->the_post();
 
 	// Reset each current (forum|topic|reply) id
-	bbpress()->current_forum_id = bbp_get_forum_id();
-	bbpress()->current_topic_id = bbp_get_topic_id();
-	bbpress()->current_reply_id = bbp_get_reply_id();
+	ideaboard()->current_forum_id = bbp_get_forum_id();
+	ideaboard()->current_topic_id = bbp_get_topic_id();
+	ideaboard()->current_reply_id = bbp_get_reply_id();
 
 	return $search_result;
 }
@@ -200,7 +200,7 @@ function bbp_the_search_result() {
 /**
  * Output the search page title
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @uses bbp_get_search_title()
  */
@@ -211,7 +211,7 @@ function bbp_search_title() {
 	/**
 	 * Get the search page title
 	 *
-	 * @since bbPress (r4579)
+	 * @since IdeaBoard (r4579)
 	 *
 	 * @uses bbp_get_search_terms()
 	 */
@@ -222,11 +222,11 @@ function bbp_search_title() {
 
 		// No search terms specified
 		if ( empty( $search_terms ) ) {
-			$title = esc_html__( 'Search', 'bbpress' );
+			$title = esc_html__( 'Search', 'ideaboard' );
 
 		// Include search terms in title
 		} else {
-			$title = sprintf( esc_html__( "Search Results for '%s'", 'bbpress' ), esc_attr( $search_terms ) );
+			$title = sprintf( esc_html__( "Search Results for '%s'", 'ideaboard' ), esc_attr( $search_terms ) );
 		}
 
 		return apply_filters( 'bbp_get_search_title', $title, $search_terms );
@@ -235,7 +235,7 @@ function bbp_search_title() {
 /**
  * Output the search url
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @uses bbp_get_search_url() To get the search url
  */
@@ -245,7 +245,7 @@ function bbp_search_url() {
 	/**
 	 * Return the search url
 	 *
-	 * @since bbPress (r4579)
+	 * @since IdeaBoard (r4579)
 	 *
 	 * @uses user_trailingslashit() To fix slashes
 	 * @uses trailingslashit() To fix slashes
@@ -273,7 +273,7 @@ function bbp_search_url() {
 /**
  * Output the search results url
  *
- * @since bbPress (r4928)
+ * @since IdeaBoard (r4928)
  *
  * @uses bbp_get_search_url() To get the search url
  */
@@ -283,7 +283,7 @@ function bbp_search_results_url() {
 	/**
 	 * Return the search url
 	 *
-	 * @since bbPress (r4928)
+	 * @since IdeaBoard (r4928)
 	 *
 	 * @uses user_trailingslashit() To fix slashes
 	 * @uses trailingslashit() To fix slashes
@@ -323,7 +323,7 @@ function bbp_search_results_url() {
 /**
  * Output the search terms
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @param string $search_terms Optional. Search terms
  * @uses bbp_get_search_terms() To get the search terms
@@ -335,7 +335,7 @@ function bbp_search_terms( $search_terms = '' ) {
 	/**
 	 * Get the search terms
 	 *
-	 * @since bbPress (r4579)
+	 * @since IdeaBoard (r4579)
 	 *
 	 * If search terms are supplied, those are used. Otherwise check the
 	 * search rewrite id query var.
@@ -365,7 +365,7 @@ function bbp_search_terms( $search_terms = '' ) {
 /**
  * Output the search result pagination count
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @uses bbp_get_search_pagination_count() To get the search result pagination count
  */
@@ -376,7 +376,7 @@ function bbp_search_pagination_count() {
 	/**
 	 * Return the search results pagination count
 	 *
-	 * @since bbPress (r4579)
+	 * @since IdeaBoard (r4579)
 	 *
 	 * @uses bbp_number_format() To format the number value
 	 * @uses apply_filters() Calls 'bbp_get_search_pagination_count' with the
@@ -384,7 +384,7 @@ function bbp_search_pagination_count() {
 	 * @return string Search pagination count
 	 */
 	function bbp_get_search_pagination_count() {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		// Define local variable(s)
 		$retstr = '';
@@ -398,11 +398,11 @@ function bbp_search_pagination_count() {
 
 		// Single page of results
 		if ( empty( $to_num ) ) {
-			$retstr = sprintf( _n( 'Viewing %1$s result', 'Viewing %1$s results', $total_int, 'bbpress' ), $total );
+			$retstr = sprintf( _n( 'Viewing %1$s result', 'Viewing %1$s results', $total_int, 'ideaboard' ), $total );
 
 		// Several pages of results
 		} else {
-			$retstr = sprintf( _n( 'Viewing %2$s results (of %4$s total)', 'Viewing %1$s results - %2$s through %3$s (of %4$s total)', $bbp->search_query->post_count, 'bbpress' ), $bbp->search_query->post_count, $from_num, $to_num, $total );
+			$retstr = sprintf( _n( 'Viewing %2$s results (of %4$s total)', 'Viewing %1$s results - %2$s through %3$s (of %4$s total)', $bbp->search_query->post_count, 'ideaboard' ), $bbp->search_query->post_count, $from_num, $to_num, $total );
 
 		}
 
@@ -413,7 +413,7 @@ function bbp_search_pagination_count() {
 /**
  * Output search pagination links
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @uses bbp_get_search_pagination_links() To get the search pagination links
  */
@@ -424,14 +424,14 @@ function bbp_search_pagination_links() {
 	/**
 	 * Return search pagination links
 	 *
-	 * @since bbPress (r4579)
+	 * @since IdeaBoard (r4579)
 	 *
 	 * @uses apply_filters() Calls 'bbp_get_search_pagination_links' with the
 	 *                        pagination links
 	 * @return string Search pagination links
 	 */
 	function bbp_get_search_pagination_links() {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		if ( !isset( $bbp->search_query->pagination_links ) || empty( $bbp->search_query->pagination_links ) )
 			return false;

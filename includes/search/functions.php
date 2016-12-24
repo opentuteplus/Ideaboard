@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Search Functions
+ * IdeaBoard Search Functions
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Functions
  */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Run the search query
  *
- * @since bbPress (r4579) 
+ * @since IdeaBoard (r4579) 
  *
  * @param mixed $new_args New arguments
  * @uses bbp_get_search_query_args() To get the search query args
@@ -40,7 +40,7 @@ function bbp_search_query( $new_args = array() ) {
 /**
  * Return the search's query args
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @uses bbp_get_search_terms() To get the search terms
  * @return array Query arguments
@@ -57,7 +57,7 @@ function bbp_get_search_query_args() {
 /**
  * Redirect to search results page if needed
  *
- * @since bbPress (r4928)
+ * @since IdeaBoard (r4928)
  * @return If a redirect is not needed
  */
 function bbp_search_results_redirect() {

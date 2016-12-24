@@ -3,8 +3,8 @@
 /**
  * Implementation of SimplePress v5 converter.
  *
- * @since bbPress (r4638)
- * @link Codex Docs http://codex.bbpress.org/import-forums/simplepress/
+ * @since IdeaBoard (r4638)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/simplepress/
  */
 class SimplePress5 extends BBP_Converter_Base {
 
@@ -534,7 +534,7 @@ class SimplePress5 extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 
@@ -573,7 +573,7 @@ class SimplePress5 extends BBP_Converter_Base {
 		$field = $simplepress_markup;
 
 		// Parse out any bbCodes with the BBCode 'parser.php'
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		$bbcode->enable_smileys = false;
 		$bbcode->smiley_regex   = false;

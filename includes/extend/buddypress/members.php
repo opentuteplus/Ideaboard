@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress BuddyPress Members Class
+ * IdeaBoard BuddyPress Members Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  */
 
@@ -14,17 +14,17 @@ if ( !class_exists( 'BBP_Forums_Members' ) ) :
 /**
  * Member profile modifications
  *
- * @since bbPress (r4395)
+ * @since IdeaBoard (r4395)
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  */
 class BBP_BuddyPress_Members {
 
 	/**
-	 * Main constructor for modifying bbPress profile links
+	 * Main constructor for modifying IdeaBoard profile links
 	 *
-	 * @since bbPress (r4395)
+	 * @since IdeaBoard (r4395)
 	 */
 	public function __construct() {
 		$this->setup_actions();
@@ -34,7 +34,7 @@ class BBP_BuddyPress_Members {
 	/**
 	 * Setup the actions
 	 *
-	 * @since bbPress (r4395)
+	 * @since IdeaBoard (r4395)
 	 *
 	 * @access private
 	 * @uses add_filter() To add various filters
@@ -61,7 +61,7 @@ class BBP_BuddyPress_Members {
 	/**
 	 * Setup the filters
 	 *
-	 * @since bbPress (r4395)
+	 * @since IdeaBoard (r4395)
 	 *
 	 * @access private
 	 * @uses add_filter() To add various filters
@@ -76,9 +76,9 @@ class BBP_BuddyPress_Members {
 	/** Filters ***************************************************************/
 
 	/**
-	 * Override bbPress profile URL with BuddyPress profile URL
+	 * Override IdeaBoard profile URL with BuddyPress profile URL
 	 *
-	 * @since bbPress (r3401)
+	 * @since IdeaBoard (r3401)
 	 * @param string $url
 	 * @param int $user_id
 	 * @param string $user_nicename
@@ -88,7 +88,7 @@ class BBP_BuddyPress_Members {
 
 		// Define local variable(s)
 		$profile_url    = '';
-		$component_slug = bbpress()->extend->buddypress->slug;
+		$component_slug = ideaboard()->extend->buddypress->slug;
 
 		// Special handling for forum component
 		if ( bp_is_current_component( $component_slug ) ) {
@@ -119,29 +119,29 @@ class BBP_BuddyPress_Members {
 	}
 
 	/**
-	 * Override bbPress favorites URL with BuddyPress profile URL
+	 * Override IdeaBoard favorites URL with BuddyPress profile URL
 	 *
-	 * @since bbPress (r3721)
+	 * @since IdeaBoard (r3721)
 	 * @param string $url
 	 * @param int $user_id
 	 * @return string
 	 */
 	public function get_favorites_permalink( $url, $user_id ) {
-		$component_slug = bbpress()->extend->buddypress->slug;
+		$component_slug = ideaboard()->extend->buddypress->slug;
 		$url            = trailingslashit( bp_core_get_user_domain( $user_id ) . $component_slug . '/' . bbp_get_user_favorites_slug() );
 		return $url;
 	}
 
 	/**
-	 * Override bbPress subscriptions URL with BuddyPress profile URL
+	 * Override IdeaBoard subscriptions URL with BuddyPress profile URL
 	 *
-	 * @since bbPress (r3721)
+	 * @since IdeaBoard (r3721)
 	 * @param string $url
 	 * @param int $user_id
 	 * @return string
 	 */
 	public function get_subscriptions_permalink( $url, $user_id ) {
-		$component_slug = bbpress()->extend->buddypress->slug;
+		$component_slug = ideaboard()->extend->buddypress->slug;
 		$url            = trailingslashit( bp_core_get_user_domain( $user_id ) . $component_slug . '/' . bbp_get_user_subscriptions_slug() );
 		return $url;
 	}
@@ -150,7 +150,7 @@ class BBP_BuddyPress_Members {
 	 * Set favorites and subscriptions query variables if viewing member profile
 	 * pages.
 	 *
-	 * @since bbPress (r4615)
+	 * @since IdeaBoard (r4615)
 	 *
 	 * @global WP_Query $wp_query
 	 * @return If not viewing your own profile

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Shortcodes
+ * IdeaBoard Shortcodes
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Shortcodes
  */
 
@@ -12,9 +12,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 if ( !class_exists( 'BBP_Shortcodes' ) ) :
 /**
- * bbPress Shortcode Class
+ * IdeaBoard Shortcode Class
  *
- * @since bbPress (r3031)
+ * @since IdeaBoard (r3031)
  */
 class BBP_Shortcodes {
 
@@ -30,7 +30,7 @@ class BBP_Shortcodes {
 	/**
 	 * Add the register_shortcodes action to bbp_init
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @uses setup_globals()
 	 * @uses add_shortcodes()
@@ -43,7 +43,7 @@ class BBP_Shortcodes {
 	/**
 	 * Shortcode globals
 	 *
-	 * @since bbPress (r3143)
+	 * @since IdeaBoard (r3143)
 	 * @access private
 	 *
 	 * @uses apply_filters()
@@ -97,9 +97,9 @@ class BBP_Shortcodes {
 	}
 
 	/**
-	 * Register the bbPress shortcodes
+	 * Register the IdeaBoard shortcodes
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @uses add_shortcode()
 	 * @uses do_action()
@@ -113,10 +113,10 @@ class BBP_Shortcodes {
 	/**
 	 * Unset some globals in the $bbp object that hold query related info
 	 *
-	 * @since bbPress (r3034)
+	 * @since IdeaBoard (r3034)
 	 */
 	private function unset_globals() {
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		// Unset global queries
 		$bbp->forum_query  = new WP_Query();
@@ -144,7 +144,7 @@ class BBP_Shortcodes {
 	 * than outputting the HTML at run-time. This allows shortcodes to appear
 	 * in the correct location in the_content() instead of when it's created.
 	 *
-	 * @since bbPress (r3079)
+	 * @since IdeaBoard (r3079)
 	 *
 	 * @param string $query_name
 	 *
@@ -163,7 +163,7 @@ class BBP_Shortcodes {
 	/**
 	 * Return the contents of the output buffer and flush its contents.
 	 *
-	 * @since bbPress( r3079)
+	 * @since IdeaBoard( r3079)
 	 *
 	 * @uses BBP_Shortcodes::unset_globals() Cleans up global values
 	 * @return string Contents of output buffer.
@@ -186,7 +186,7 @@ class BBP_Shortcodes {
 	 * Display an index of all visible root level forums in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -212,7 +212,7 @@ class BBP_Shortcodes {
 	 * Display the contents of a specific forum ID in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -227,7 +227,7 @@ class BBP_Shortcodes {
 			return $content;
 
 		// Set passed attribute to $forum_id for clarity
-		$forum_id = bbpress()->current_forum_id = $attr['id'];
+		$forum_id = ideaboard()->current_forum_id = $attr['id'];
 
 		// Bail if ID passed is not a forum
 		if ( !bbp_is_forum( $forum_id ) )
@@ -253,7 +253,7 @@ class BBP_Shortcodes {
 	 * Display the forum form in an output buffer and return to ensure
 	 * post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3566)
+	 * @since IdeaBoard (r3566)
 	 *
 	 * @uses get_template_part()
 	 */
@@ -275,7 +275,7 @@ class BBP_Shortcodes {
 	 * Display an index of all visible root level topics in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -307,7 +307,7 @@ class BBP_Shortcodes {
 	 * Display the contents of a specific topic ID in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -324,7 +324,7 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Set passed attribute to $forum_id for clarity
-		$topic_id = bbpress()->current_topic_id = $attr['id'];
+		$topic_id = ideaboard()->current_topic_id = $attr['id'];
 		$forum_id = bbp_get_topic_forum_id( $topic_id );
 
 		// Bail if ID passed is not a topic
@@ -334,7 +334,7 @@ class BBP_Shortcodes {
 		// Reset the queries if not in theme compat
 		if ( !bbp_is_theme_compat_active() ) {
 
-			$bbp = bbpress();
+			$bbp = ideaboard();
 
 			// Reset necessary forum_query attributes for topics loop to function
 			$bbp->forum_query->query_vars['post_type'] = bbp_get_forum_post_type();
@@ -369,9 +369,9 @@ class BBP_Shortcodes {
 	 *
 	 * Supports 'forum_id' attribute to display the topic form for a particular
 	 * forum. This currently has styling issues from not being wrapped in
-	 * <div id="bbpress-forums"></div> which will need to be sorted out later.
+	 * <div id="ideaboard-forums"></div> which will need to be sorted out later.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -391,7 +391,7 @@ class BBP_Shortcodes {
 		if ( !empty( $attr['forum_id'] ) ) {
 
 			// Set the global current_forum_id for future requests
-			bbpress()->current_forum_id = $forum_id = bbp_get_forum_id( $attr['forum_id'] );
+			ideaboard()->current_forum_id = $forum_id = bbp_get_forum_id( $attr['forum_id'] );
 
 			// Start output buffer
 			$this->start( 'bbp_single_forum' );
@@ -425,7 +425,7 @@ class BBP_Shortcodes {
 	 * Display the contents of a specific reply ID in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -442,7 +442,7 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Set passed attribute to $reply_id for clarity
-		$reply_id = bbpress()->current_reply_id = $attr['id'];
+		$reply_id = ideaboard()->current_reply_id = $attr['id'];
 		$forum_id = bbp_get_reply_forum_id( $reply_id );
 
 		// Bail if ID passed is not a reply
@@ -452,7 +452,7 @@ class BBP_Shortcodes {
 		// Reset the queries if not in theme compat
 		if ( !bbp_is_theme_compat_active() ) {
 
-			$bbp = bbpress();
+			$bbp = ideaboard();
 
 			// Reset necessary forum_query attributes for replys loop to function
 			$bbp->forum_query->query_vars['post_type'] = bbp_get_forum_post_type();
@@ -485,7 +485,7 @@ class BBP_Shortcodes {
 	 * Display the reply form in an output buffer and return to ensure
 	 * post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @uses get_template_part()
 	 */
@@ -507,7 +507,7 @@ class BBP_Shortcodes {
 	 * Display a tag cloud of all topic tags in an output buffer and return to
 	 * ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3110)
+	 * @since IdeaBoard (r3110)
 	 *
 	 * @return string
 	 */
@@ -535,7 +535,7 @@ class BBP_Shortcodes {
 	 * Display the contents of a specific topic tag in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3110)
+	 * @since IdeaBoard (r3110)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -560,7 +560,7 @@ class BBP_Shortcodes {
 		$this->start( 'bbp_topic_tag' );
 
 		// Set passed attribute to $ag_id for clarity
-		bbpress()->current_topic_tag_id = $tag_id = $attr['id'];
+		ideaboard()->current_topic_tag_id = $tag_id = $attr['id'];
 
 		// Output template
 		bbp_get_template_part( 'content', 'archive-topic' );
@@ -573,7 +573,7 @@ class BBP_Shortcodes {
 	 * Display the contents of a specific topic tag in an output buffer
 	 * and return to ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3346)
+	 * @since IdeaBoard (r3346)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -601,7 +601,7 @@ class BBP_Shortcodes {
 	 * Display the contents of a specific view in an output buffer and return to
 	 * ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r3031)
+	 * @since IdeaBoard (r3031)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -625,7 +625,7 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Set the current view ID
-		bbpress()->current_view_id = $view_id;
+		ideaboard()->current_view_id = $view_id;
 
 		// Load the view
 		bbp_view_query( $view_id );
@@ -643,7 +643,7 @@ class BBP_Shortcodes {
 	 * Display the search form in an output buffer and return to ensure
 	 * post/page contents are displayed first.
 	 *
-	 * @since bbPress (r4585)
+	 * @since IdeaBoard (r4585)
 	 *
 	 * @uses get_template_part()
 	 */
@@ -668,7 +668,7 @@ class BBP_Shortcodes {
 	 * Display the contents of search results in an output buffer and return to
 	 * ensure that post/page contents are displayed first.
 	 *
-	 * @since bbPress (r4579)
+	 * @since IdeaBoard (r4579)
 	 *
 	 * @param array $attr
 	 * @param string $content
@@ -716,7 +716,7 @@ class BBP_Shortcodes {
 	/**
 	 * Display a login form
 	 *
-	 * @since bbPress (r3302)
+	 * @since IdeaBoard (r3302)
 	 *
 	 * @return string
 	 */
@@ -741,7 +741,7 @@ class BBP_Shortcodes {
 	/**
 	 * Display a register form
 	 *
-	 * @since bbPress (r3302)
+	 * @since IdeaBoard (r3302)
 	 *
 	 * @return string
 	 */
@@ -766,7 +766,7 @@ class BBP_Shortcodes {
 	/**
 	 * Display a lost password form
 	 *
-	 * @since bbPress (r3302)
+	 * @since IdeaBoard (r3302)
 	 *
 	 * @return string
 	 */
@@ -793,7 +793,7 @@ class BBP_Shortcodes {
 	/**
 	 * Display forum statistics
 	 *
-	 * @since bbPress (r4509)
+	 * @since IdeaBoard (r4509)
 	 *
 	 * @return shring
 	 */
@@ -815,7 +815,7 @@ class BBP_Shortcodes {
 	/**
 	 * Display a breadcrumb
 	 *
-	 * @since bbPress (r3302)
+	 * @since IdeaBoard (r3302)
 	 *
 	 * @return string
 	 */
@@ -839,7 +839,7 @@ class BBP_Shortcodes {
 	/**
 	 * Filter the query for the topic index
 	 *
-	 * @since bbPress (r3637)
+	 * @since IdeaBoard (r3637)
 	 *
 	 * @param array $args
 	 * @return array
@@ -854,7 +854,7 @@ class BBP_Shortcodes {
 	/**
 	 * Filter the query for topic tags
 	 *
-	 * @since bbPress (r3637)
+	 * @since IdeaBoard (r3637)
 	 *
 	 * @param array $args
 	 * @return array
@@ -863,7 +863,7 @@ class BBP_Shortcodes {
 		$args['tax_query'] = array( array(
 			'taxonomy' => bbp_get_topic_tag_tax_id(),
 			'field'    => 'id',
-			'terms'    => bbpress()->current_topic_tag_id
+			'terms'    => ideaboard()->current_topic_tag_id
 		) );
 
 		return $args;

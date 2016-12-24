@@ -3,8 +3,8 @@
 /**
  *  Implementation of XenForo converter.
  *
- * @since bbPress (r5145)
- * @link Codex Docs http://codex.bbpress.org/import-forums/xenforo
+ * @since IdeaBoard (r5145)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/xenforo
  */
 class XenForo extends BBP_Converter_Base {
 
@@ -719,7 +719,7 @@ class XenForo extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 }

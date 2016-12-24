@@ -1,18 +1,18 @@
 <?php
 
 /**
- * bbPress Topic Capabilites
+ * IdeaBoard Topic Capabilites
  *
  * Used to map topic capabilities to WordPress's existing capabilities.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Capabilities
  */
 
 /**
  * Return topic capabilities
  *
- * @since bbPress (r2593)
+ * @since IdeaBoard (r2593)
  *
  * @uses apply_filters() Calls 'bbp_get_topic_caps' with the capabilities
  * @return array Topic capabilities
@@ -32,7 +32,7 @@ function bbp_get_topic_caps() {
 /**
  * Return topic tag capabilities
  *
- * @since bbPress (r2593)
+ * @since IdeaBoard (r2593)
  *
  * @uses apply_filters() Calls 'bbp_get_topic_tag_caps' with the capabilities
  * @return array Topic tag capabilities
@@ -49,7 +49,7 @@ function bbp_get_topic_tag_caps() {
 /**
  * Maps topic capabilities
  *
- * @since bbPress (r4242)
+ * @since IdeaBoard (r4242)
  *
  * @param array $caps Capabilities for meta capability
  * @param string $cap Capability name
@@ -207,7 +207,7 @@ function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 /**
  * Maps topic tag capabilities
  *
- * @since bbPress (r4242)
+ * @since IdeaBoard (r4242)
  *
  * @param array $caps Capabilities for meta capability
  * @param string $cap Capability name

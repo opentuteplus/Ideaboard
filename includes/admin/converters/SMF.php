@@ -3,8 +3,8 @@
 /**
  * Implementation of SMF Forum converter.
  *
- * @since bbPress (r5189)
- * @link Codex Docs http://codex.bbpress.org/import-forums/smf
+ * @since IdeaBoard (r5189)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/smf
  */
 class SMF extends BBP_Converter_Base {
 
@@ -653,7 +653,7 @@ class SMF extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 
@@ -731,7 +731,7 @@ class SMF extends BBP_Converter_Base {
 		$field = $SMF_markup;
 
 		// Parse out any bbCodes in $field with the BBCode 'parser.php'
-		require_once( bbpress()->admin->admin_dir . 'parser.php' );
+		require_once( ideaboard()->admin->admin_dir . 'parser.php' );
 		$bbcode = BBCode::getInstance();
 		$bbcode->enable_smileys = false;
 		$bbcode->smiley_regex   = false;

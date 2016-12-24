@@ -3,8 +3,8 @@
 /**
  * Implementation of Kunena v3.x Forums for Joomla Forum converter.
  *
- * @since bbPress (r5144)
- * @link Codex Docs http://codex.bbpress.org/import-forums/kunena/
+ * @since IdeaBoard (r5144)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/kunena/
  */
 class Kunena3 extends BBP_Converter_Base {
 
@@ -809,7 +809,7 @@ class Kunena3 extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 }

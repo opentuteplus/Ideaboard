@@ -3,7 +3,7 @@
 /**
  * Single User
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

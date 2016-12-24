@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Localization
+ * IdeaBoard Localization
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Localization
  */
 
@@ -24,34 +24,34 @@ defined( 'ABSPATH' ) || exit;
  *
  * @see translate_user_role()
  *
- * @since 2.6.0 bbPress
+ * @since 2.6.0 IdeaBoard
  *
  * @param string $name The role name.
  * @return string Translated role name on success, original name on failure.
  */
 function bbp_translate_user_role( $name ) {
-	return translate_with_gettext_context( before_last_bar( $name ), 'User role', 'bbpress' );
+	return translate_with_gettext_context( before_last_bar( $name ), 'User role', 'ideaboard' );
 }
 
 /**
  * Dummy gettext calls to get strings in the catalog.
  *
- * @since 2.6.0 bbPress
+ * @since 2.6.0 IdeaBoard
  */
 function bbp_dummy_role_names() {
 
 	/* translators: user role */
-	_x( 'Keymaster', 'User role', 'bbpress' );
+	_x( 'Keymaster', 'User role', 'ideaboard' );
 
 	/* translators: user role */
-	_x( 'Moderator', 'User role', 'bbpress' );
+	_x( 'Moderator', 'User role', 'ideaboard' );
 
 	/* translators: user role */
-	_x( 'Participant', 'User role', 'bbpress' );
+	_x( 'Participant', 'User role', 'ideaboard' );
 
 	/* translators: user role */
-	_x( 'Spectator', 'User role', 'bbpress' );
+	_x( 'Spectator', 'User role', 'ideaboard' );
 
 	/* translators: user role */
-	_x( 'Blocked', 'User role', 'bbpress' );
+	_x( 'Blocked', 'User role', 'ideaboard' );
 }

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Example converter base impoprter template for bbPress
+ * Example converter base impoprter template for IdeaBoard
  *
- * @since bbPress (r4689)
- * @link Codex Docs http://codex.bbpress.org/import-forums/custom-import
+ * @since IdeaBoard (r4689)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/custom-import
  */
 class Example extends BBP_Converter_Base {
 

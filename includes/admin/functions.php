@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Admin Functions
+ * IdeaBoard Admin Functions
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Administration
  */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Add a separator to the WordPress admin menus
  *
- * @since bbPress (r2957)
+ * @since IdeaBoard (r2957)
  */
 function bbp_admin_separator() {
 
@@ -29,31 +29,31 @@ function bbp_admin_separator() {
 	// Loop through caps, and look for a reason to show the separator
 	foreach ( $caps as $cap ) {
 		if ( current_user_can( $cap ) ) {
-			bbpress()->admin->show_separator = true;
+			ideaboard()->admin->show_separator = true;
 			break;
 		}
 	}
 
 	// Bail if no separator
-	if ( false === bbpress()->admin->show_separator ) {
+	if ( false === ideaboard()->admin->show_separator ) {
 		return;
 	}
 
 	global $menu;
 
-	$menu[] = array( '', 'read', 'separator-bbpress', '', 'wp-menu-separator bbpress' );
+	$menu[] = array( '', 'read', 'separator-ideaboard', '', 'wp-menu-separator ideaboard' );
 }
 
 /**
  * Tell WordPress we have a custom menu order
  *
- * @since bbPress (r2957)
+ * @since IdeaBoard (r2957)
  *
  * @param bool $menu_order Menu order
  * @return mixed True if separator, false if not
  */
 function bbp_admin_custom_menu_order( $menu_order = false ) {
-	if ( false === bbpress()->admin->show_separator )
+	if ( false === ideaboard()->admin->show_separator )
 		return $menu_order;
 
 	return true;
@@ -62,7 +62,7 @@ function bbp_admin_custom_menu_order( $menu_order = false ) {
 /**
  * Move our custom separator above our custom post types
  *
- * @since bbPress (r2957)
+ * @since IdeaBoard (r2957)
  *
  * @param array $menu_order Menu Order
  * @uses bbp_get_forum_post_type() To get the forum post type
@@ -70,8 +70,8 @@ function bbp_admin_custom_menu_order( $menu_order = false ) {
  */
 function bbp_admin_menu_order( $menu_order ) {
 
-	// Bail if user cannot see any top level bbPress menus
-	if ( empty( $menu_order ) || ( false === bbpress()->admin->show_separator ) )
+	// Bail if user cannot see any top level IdeaBoard menus
+	if ( empty( $menu_order ) || ( false === ideaboard()->admin->show_separator ) )
 		return $menu_order;
 
 	// Initialize our custom order array
@@ -80,7 +80,7 @@ function bbp_admin_menu_order( $menu_order ) {
 	// Menu values
 	$second_sep   = 'separator2';
 	$custom_menus = array(
-		'separator-bbpress',                               // Separator
+		'separator-ideaboard',                               // Separator
 		'edit.php?post_type=' . bbp_get_forum_post_type(), // Forums
 		'edit.php?post_type=' . bbp_get_topic_post_type(), // Topics
 		'edit.php?post_type=' . bbp_get_reply_post_type()  // Replies
@@ -89,7 +89,7 @@ function bbp_admin_menu_order( $menu_order ) {
 	// Loop through menu order and do some rearranging
 	foreach ( $menu_order as $item ) {
 
-		// Position bbPress menus above appearance
+		// Position IdeaBoard menus above appearance
 		if ( $second_sep == $item ) {
 
 			// Add our custom menus
@@ -115,7 +115,7 @@ function bbp_admin_menu_order( $menu_order ) {
 /**
  * Filter sample permalinks so that certain languages display properly.
  *
- * @since bbPress (r3336)
+ * @since IdeaBoard (r3336)
  *
  * @param string $post_link Custom post type permalink
  * @param object $_post Post data object
@@ -140,7 +140,7 @@ function bbp_filter_sample_permalink( $post_link, $_post, $leavename = false, $s
 /**
  * Sanitize permalink slugs when saving the settings page.
  *
- * @since bbPress (r5364)
+ * @since IdeaBoard (r5364)
  *
  * @param string $slug
  * @return string
@@ -168,9 +168,9 @@ function bbp_sanitize_slug( $slug = '' ) {
 }
 
 /**
- * Uninstall all bbPress options and capabilities from a specific site.
+ * Uninstall all IdeaBoard options and capabilities from a specific site.
  *
- * @since bbPress (r3765)
+ * @since IdeaBoard (r3765)
  * @param type $site_id
  */
 function bbp_do_uninstall( $site_id = 0 ) {
@@ -185,11 +185,11 @@ function bbp_do_uninstall( $site_id = 0 ) {
 }
 
 /**
- * Redirect user to bbPress's What's New page on activation
+ * Redirect user to IdeaBoard's What's New page on activation
  *
- * @since bbPress (r4389)
+ * @since IdeaBoard (r4389)
  *
- * @internal Used internally to redirect bbPress to the about page on activation
+ * @internal Used internally to redirect IdeaBoard to the about page on activation
  *
  * @uses get_transient() To see if transient to redirect exists
  * @uses delete_transient() To delete the transient if it exists
@@ -220,25 +220,25 @@ function bbp_do_activation_redirect() {
 		return;
 	}
 
-	// Redirect to bbPress about page
+	// Redirect to IdeaBoard about page
 	wp_safe_redirect( add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php' ) ) );
 }
 
 /**
  * This tells WP to highlight the Tools > Forums menu item,
- * regardless of which actual bbPress Tools screen we are on.
+ * regardless of which actual IdeaBoard Tools screen we are on.
  *
  * The conditional prevents the override when the user is viewing settings or
  * any third-party plugins.
  *
- * @since bbPress (r3888)
+ * @since IdeaBoard (r3888)
  * @global string $plugin_page
  * @global array $submenu_file
  */
 function bbp_tools_modify_menu_highlight() {
 	global $plugin_page, $submenu_file;
 
-	// This tweaks the Tools subnav menu to only show one bbPress menu item
+	// This tweaks the Tools subnav menu to only show one IdeaBoard menu item
 	if ( ! in_array( $plugin_page, array( 'bbp-settings' ) ) )
 		$submenu_file = 'bbp-repair';
 }
@@ -246,7 +246,7 @@ function bbp_tools_modify_menu_highlight() {
 /**
  * Output the tabs in the admin area
  *
- * @since bbPress (r3872)
+ * @since IdeaBoard (r3872)
  * @param string $active_tab Name of the tab that is active
  */
 function bbp_tools_admin_tabs( $active_tab = '' ) {
@@ -256,7 +256,7 @@ function bbp_tools_admin_tabs( $active_tab = '' ) {
 	/**
 	 * Output the tabs in the admin area
 	 *
-	 * @since bbPress (r3872)
+	 * @since IdeaBoard (r3872)
 	 * @param string $active_tab Name of the tab that is active
 	 */
 	function bbp_get_tools_admin_tabs( $active_tab = '' ) {
@@ -270,15 +270,15 @@ function bbp_tools_admin_tabs( $active_tab = '' ) {
 		$tabs = apply_filters( 'bbp_tools_admin_tabs', array(
 			'0' => array(
 				'href' => get_admin_url( '', add_query_arg( array( 'page' => 'bbp-repair'    ), 'tools.php' ) ),
-				'name' => __( 'Repair Forums', 'bbpress' )
+				'name' => __( 'Repair Forums', 'ideaboard' )
 			),
 			'1' => array(
 				'href' => get_admin_url( '', add_query_arg( array( 'page' => 'bbp-converter' ), 'tools.php' ) ),
-				'name' => __( 'Import Forums', 'bbpress' )
+				'name' => __( 'Import Forums', 'ideaboard' )
 			),
 			'2' => array(
 				'href' => get_admin_url( '', add_query_arg( array( 'page' => 'bbp-reset'     ), 'tools.php' ) ),
-				'name' => __( 'Reset Forums', 'bbpress' )
+				'name' => __( 'Reset Forums', 'ideaboard' )
 			)
 		) );
 

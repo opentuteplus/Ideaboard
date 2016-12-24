@@ -1,18 +1,18 @@
 <?php
 
 /**
- * bbPress Reply Capabilites
+ * IdeaBoard Reply Capabilites
  *
  * Used to map reply capabilities to WordPress's existing capabilities.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Capabilities
  */
 
 /**
  * Return reply capabilities
  *
- * @since bbPress (r2593)
+ * @since IdeaBoard (r2593)
  *
  * @uses apply_filters() Calls 'bbp_get_reply_caps' with the capabilities
  * @return array Reply capabilities
@@ -31,7 +31,7 @@ function bbp_get_reply_caps() {
 /**
  * Maps topic capabilities
  *
- * @since bbPress (r4242)
+ * @since IdeaBoard (r4242)
  *
  * @param array $caps Capabilities for meta capability
  * @param string $cap Capability name

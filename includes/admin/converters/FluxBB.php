@@ -3,8 +3,8 @@
 /**
  * Implementation of FluxBB Forum converter.
  *
- * @since bbPress (r5138)
- * @link Codex Docs http://codex.bbpress.org/import-forums/fluxbb
+ * @since IdeaBoard (r5138)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/fluxbb
  */
 class FluxBB extends BBP_Converter_Base {
 
@@ -640,7 +640,7 @@ class FluxBB extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 }

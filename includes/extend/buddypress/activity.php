@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress BuddyPress Activity Class
+ * IdeaBoard BuddyPress Activity Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  */
 
@@ -14,9 +14,9 @@ if ( !class_exists( 'BBP_BuddyPress_Activity' ) ) :
 /**
  * Loads BuddyPress Activity extension
  *
- * @since bbPress (r3395)
+ * @since IdeaBoard (r3395)
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
  */
 class BBP_BuddyPress_Activity {
@@ -82,9 +82,9 @@ class BBP_BuddyPress_Activity {
 	/** Setup Methods *********************************************************/
 
 	/**
-	 * The bbPress BuddyPress Activity loader
+	 * The IdeaBoard BuddyPress Activity loader
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -96,14 +96,14 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Extension variables
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @access private
 	 * @uses apply_filters() Calls various filters
 	 */
 	private function setup_globals() {
 
 		// The name of the BuddyPress component, used in activity streams
-		$this->component    = 'bbpress';
+		$this->component    = 'ideaboard';
 
 		// Forums
 		$this->forum_create = 'bbp_forum_create';
@@ -122,7 +122,7 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Setup the actions
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @access private
 	 * @uses add_filter() To add various filters
 	 * @uses add_action() To add various actions
@@ -157,7 +157,7 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Setup the filters
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @access private
 	 * @uses add_filter() To add various filters
 	 * @uses add_action() To add various actions
@@ -175,7 +175,7 @@ class BBP_BuddyPress_Activity {
 	 * Allow the variables, actions, and filters to be modified by third party
 	 * plugins and themes.
 	 *
-	 * @since bbPress (r3902)
+	 * @since IdeaBoard (r3902)
 	 */
 	private function fully_loaded() {
 		do_action_ref_array( 'bbp_buddypress_activity_loaded', array( $this ) );
@@ -186,20 +186,20 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Register our activity actions with BuddyPress
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @uses bp_activity_set_action()
 	 */
 	public function register_activity_actions() {
 
 		// Sitewide activity stream items
-		bp_activity_set_action( $this->component, $this->topic_create, esc_html__( 'New forum topic', 'bbpress' ) );
-		bp_activity_set_action( $this->component, $this->reply_create, esc_html__( 'New forum reply', 'bbpress' ) );
+		bp_activity_set_action( $this->component, $this->topic_create, esc_html__( 'New forum topic', 'ideaboard' ) );
+		bp_activity_set_action( $this->component, $this->reply_create, esc_html__( 'New forum reply', 'ideaboard' ) );
 	}
 
 	/**
-	 * Wrapper for recoding bbPress actions to the BuddyPress activity stream
+	 * Wrapper for recoding IdeaBoard actions to the BuddyPress activity stream
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @param type $args Array of arguments for bp_activity_add()
 	 * @uses bbp_get_current_user_id()
 	 * @uses bp_core_current_time()
@@ -230,9 +230,9 @@ class BBP_BuddyPress_Activity {
 	}
 
 	/**
-	 * Wrapper for deleting bbPress actions from BuddyPress activity stream
+	 * Wrapper for deleting IdeaBoard actions from BuddyPress activity stream
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @param type $args Array of arguments for bp_activity_add()
 	 * @uses bbp_get_current_user_id()
 	 * @uses bp_core_current_time()
@@ -285,7 +285,7 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Maybe disable activity stream comments on select actions
 	 *
-	 * @since bbPress (r3399)
+	 * @since IdeaBoard (r3399)
 	 * @global BP_Activity_Template $activities_template
 	 * @param boolean $can_comment
 	 * @uses bp_get_activity_action_name()
@@ -322,7 +322,7 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Maybe link directly to topics and replies in activity stream entries
 	 *
-	 * @since bbPress (r3399)
+	 * @since IdeaBoard (r3399)
 	 * @param string $link
 	 * @param mixed $activity_object
 	 * @return string The link to the activity stream item
@@ -346,13 +346,13 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Append forum options to activity filter select box
 	 *
-	 * @since bbPress (r3653)
+	 * @since IdeaBoard (r3653)
 	 */
 	function activity_filter_options() {
 	?>
 
-		<option value="<?php echo $this->topic_create; ?>"><?php esc_html_e( 'Topics',  'bbpress' ); ?></option>
-		<option value="<?php echo $this->reply_create; ?>"><?php esc_html_e( 'Replies', 'bbpress' ); ?></option>
+		<option value="<?php echo $this->topic_create; ?>"><?php esc_html_e( 'Topics',  'ideaboard' ); ?></option>
+		<option value="<?php echo $this->reply_create; ?>"><?php esc_html_e( 'Replies', 'ideaboard' ); ?></option>
 
 	<?php
 	}
@@ -362,7 +362,7 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Record an activity stream entry when a topic is created or updated
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @param int $topic_id
 	 * @param int $forum_id
 	 * @param array $anonymous_data
@@ -417,7 +417,7 @@ class BBP_BuddyPress_Activity {
 		$forum_link      = '<a href="' . $forum_permalink . '">' . $forum_title . '</a>';
 
 		// Activity action & text
-		$activity_text    = sprintf( esc_html__( '%1$s started the topic %2$s in the forum %3$s', 'bbpress' ), $user_link, $topic_link, $forum_link );
+		$activity_text    = sprintf( esc_html__( '%1$s started the topic %2$s in the forum %3$s', 'ideaboard' ), $user_link, $topic_link, $forum_link );
 		$activity_action  = apply_filters( 'bbp_activity_topic_create',         $activity_text, $user_id,   $topic_id,   $forum_id );
 		$activity_content = apply_filters( 'bbp_activity_topic_create_excerpt', $topic_content                                     );
 
@@ -501,7 +501,7 @@ class BBP_BuddyPress_Activity {
 	/**
 	 * Record an activity stream entry when a reply is created
 	 *
-	 * @since bbPress (r3395)
+	 * @since IdeaBoard (r3395)
 	 * @param int $topic_id
 	 * @param int $forum_id
 	 * @param array $anonymous_data
@@ -562,7 +562,7 @@ class BBP_BuddyPress_Activity {
 		$forum_link      = '<a href="' . $forum_permalink . '">' . $forum_title . '</a>';
 
 		// Activity action & text
-		$activity_text    = sprintf( esc_html__( '%1$s replied to the topic %2$s in the forum %3$s', 'bbpress' ), $user_link, $topic_link, $forum_link );
+		$activity_text    = sprintf( esc_html__( '%1$s replied to the topic %2$s in the forum %3$s', 'ideaboard' ), $user_link, $topic_link, $forum_link );
 		$activity_action  = apply_filters( 'bbp_activity_reply_create',         $activity_text, $user_id, $reply_id,  $topic_id );
 		$activity_content = apply_filters( 'bbp_activity_reply_create_excerpt', $reply_content                                  );
 

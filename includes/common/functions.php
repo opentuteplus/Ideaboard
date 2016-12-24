@@ -1,12 +1,12 @@
 <?php
 
 /**
- * bbPress Common Functions
+ * IdeaBoard Common Functions
  *
  * Common functions are ones that are used by more than one component, like
  * forums, topics, replies, users, topic tags, etc...
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Functions
  */
 
@@ -16,9 +16,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /** Formatting ****************************************************************/
 
 /**
- * A bbPress specific method of formatting numeric values
+ * A IdeaBoard specific method of formatting numeric values
  *
- * @since bbPress (r2486)
+ * @since IdeaBoard (r2486)
  *
  * @param string $number Number to format
  * @param string $decimals Optional. Display decimals
@@ -36,9 +36,9 @@ function bbp_number_format( $number = 0, $decimals = false, $dec_point = '.', $t
 }
 
 /**
- * A bbPress specific method of formatting numeric values
+ * A IdeaBoard specific method of formatting numeric values
  *
- * @since bbPress (r3857)
+ * @since IdeaBoard (r3857)
  *
  * @param string $number Number to format
  * @param string $decimals Optional. Display decimals
@@ -58,7 +58,7 @@ function bbp_number_format_i18n( $number = 0, $decimals = false ) {
 /**
  * Convert time supplied from database query into specified date format.
  *
- * @since bbPress (r2455)
+ * @since IdeaBoard (r2455)
  *
  * @param int|object $post Optional. Default is global post object. A post_id or
  *                          post object
@@ -80,7 +80,7 @@ function bbp_convert_date( $time, $d = 'U', $translate = false ) {
 /**
  * Output formatted time to display human readable time difference.
  *
- * @since bbPress (r2544)
+ * @since IdeaBoard (r2544)
  *
  * @param string $older_date Unix timestamp from which the difference begins.
  * @param string $newer_date Optional. Unix timestamp from which the
@@ -94,7 +94,7 @@ function bbp_time_since( $older_date, $newer_date = false, $gmt = false ) {
 	/**
 	 * Return formatted time to display human readable time difference.
 	 *
-	 * @since bbPress (r2544)
+	 * @since IdeaBoard (r2544)
 	 *
 	 * @param string $older_date Unix timestamp from which the difference begins.
 	 * @param string $newer_date Optional. Unix timestamp from which the
@@ -109,19 +109,19 @@ function bbp_time_since( $older_date, $newer_date = false, $gmt = false ) {
 	function bbp_get_time_since( $older_date, $newer_date = false, $gmt = false ) {
 
 		// Setup the strings
-		$unknown_text   = apply_filters( 'bbp_core_time_since_unknown_text',   __( 'sometime',  'bbpress' ) );
-		$right_now_text = apply_filters( 'bbp_core_time_since_right_now_text', __( 'right now', 'bbpress' ) );
-		$ago_text       = apply_filters( 'bbp_core_time_since_ago_text',       __( '%s ago',    'bbpress' ) );
+		$unknown_text   = apply_filters( 'bbp_core_time_since_unknown_text',   __( 'sometime',  'ideaboard' ) );
+		$right_now_text = apply_filters( 'bbp_core_time_since_right_now_text', __( 'right now', 'ideaboard' ) );
+		$ago_text       = apply_filters( 'bbp_core_time_since_ago_text',       __( '%s ago',    'ideaboard' ) );
 
 		// array of time period chunks
 		$chunks = array(
-			array( 60 * 60 * 24 * 365 , __( 'year',   'bbpress' ), __( 'years',   'bbpress' ) ),
-			array( 60 * 60 * 24 * 30 ,  __( 'month',  'bbpress' ), __( 'months',  'bbpress' ) ),
-			array( 60 * 60 * 24 * 7,    __( 'week',   'bbpress' ), __( 'weeks',   'bbpress' ) ),
-			array( 60 * 60 * 24 ,       __( 'day',    'bbpress' ), __( 'days',    'bbpress' ) ),
-			array( 60 * 60 ,            __( 'hour',   'bbpress' ), __( 'hours',   'bbpress' ) ),
-			array( 60 ,                 __( 'minute', 'bbpress' ), __( 'minutes', 'bbpress' ) ),
-			array( 1,                   __( 'second', 'bbpress' ), __( 'seconds', 'bbpress' ) )
+			array( 60 * 60 * 24 * 365 , __( 'year',   'ideaboard' ), __( 'years',   'ideaboard' ) ),
+			array( 60 * 60 * 24 * 30 ,  __( 'month',  'ideaboard' ), __( 'months',  'ideaboard' ) ),
+			array( 60 * 60 * 24 * 7,    __( 'week',   'ideaboard' ), __( 'weeks',   'ideaboard' ) ),
+			array( 60 * 60 * 24 ,       __( 'day',    'ideaboard' ), __( 'days',    'ideaboard' ) ),
+			array( 60 * 60 ,            __( 'hour',   'ideaboard' ), __( 'hours',   'ideaboard' ) ),
+			array( 60 ,                 __( 'minute', 'ideaboard' ), __( 'minutes', 'ideaboard' ) ),
+			array( 1,                   __( 'second', 'ideaboard' ), __( 'seconds', 'ideaboard' ) )
 		);
 
 		if ( !empty( $older_date ) && !is_numeric( $older_date ) ) {
@@ -176,7 +176,7 @@ function bbp_time_since( $older_date, $newer_date = false, $gmt = false ) {
 
 					// Add to output var
 					if ( 0 != $count2 ) {
-						$output .= ( 1 == $count2 ) ? _x( ',', 'Separator in time since', 'bbpress' ) . ' 1 '. $name2 : _x( ',', 'Separator in time since', 'bbpress' ) . ' ' . $count2 . ' ' . $chunks[$i + 1][2];
+						$output .= ( 1 == $count2 ) ? _x( ',', 'Separator in time since', 'ideaboard' ) . ' 1 '. $name2 : _x( ',', 'Separator in time since', 'ideaboard' ) . ' ' . $count2 . ' ' . $chunks[$i + 1][2];
 					}
 				}
 
@@ -203,7 +203,7 @@ function bbp_time_since( $older_date, $newer_date = false, $gmt = false ) {
  *  - Removing periods from the end of the string
  *  - Trimming again
  *
- * @since bbPress (r2782)
+ * @since IdeaBoard (r2782)
  *
  * @param int $topic_id Optional. Topic id
  * @return string Status of topic
@@ -233,7 +233,7 @@ function bbp_format_revision_reason( $reason = '' ) {
 /**
  * Return the unescaped redirect_to request value
  *
- * @bbPress (r4655)
+ * @IdeaBoard (r4655)
  *
  * @return string The URL to redirect to, if set
  */
@@ -246,7 +246,7 @@ function bbp_get_redirect_to() {
 /**
  * Append 'view=all' to query string if it's already there from referer
  *
- * @since bbPress (r3325)
+ * @since IdeaBoard (r3325)
  *
  * @param string $original_link Original Link to be modified
  * @param bool $force Override bbp_get_view_all() check
@@ -270,7 +270,7 @@ function bbp_add_view_all( $original_link = '', $force = false ) {
 /**
  * Remove 'view=all' from query string
  *
- * @since bbPress (r3325)
+ * @since IdeaBoard (r3325)
  *
  * @param string $original_link Original Link to be modified
  * @uses current_user_can() To check if the current user can moderate
@@ -285,7 +285,7 @@ function bbp_remove_view_all( $original_link = '' ) {
 /**
  * If current user can and is vewing all topics/replies
  *
- * @since bbPress (r3325)
+ * @since IdeaBoard (r3325)
  *
  * @uses current_user_can() To check if the current user can moderate
  * @uses apply_filters() Calls 'bbp_get_view_all' with the link and original link
@@ -299,7 +299,7 @@ function bbp_get_view_all( $cap = 'moderate' ) {
 /**
  * Assist pagination by returning correct page number
  *
- * @since bbPress (r2628)
+ * @since IdeaBoard (r2628)
  *
  * @uses get_query_var() To get the 'paged' value
  * @return int Current page number
@@ -331,7 +331,7 @@ function bbp_get_paged() {
  * edits it, the post_author field is set to the logged in user's id. This
  * function fixes that.
  *
- * @since bbPress (r2734)
+ * @since IdeaBoard (r2734)
  *
  * @param array $data Post data
  * @param array $postarr Original post array (includes post id)
@@ -366,7 +366,7 @@ function bbp_fix_post_author( $data = array(), $postarr = array() ) {
 /**
  * Check the date against the _bbp_edit_lock setting.
  *
- * @since bbPress (r3133)
+ * @since IdeaBoard (r3133)
  *
  * @param string $post_date_gmt
  *
@@ -408,7 +408,7 @@ function bbp_past_edit_lock( $post_date_gmt ) {
 /**
  * Get the forum statistics
  *
- * @since bbPress (r2769)
+ * @since IdeaBoard (r2769)
  *
  * @param mixed $args Optional. The function supports these arguments (all
  *                     default to true):
@@ -509,9 +509,9 @@ function bbp_get_statistics( $args = '' ) {
 			$topic_count_hidden = $topics['private'] + $topics['spammed'] + $topics['trashed'];
 
 			// Generate the hidden topic count's title attribute
-			$topic_titles[] = !empty( $topics['private'] ) ? sprintf( __( 'Private: %s', 'bbpress' ), number_format_i18n( $topics['private'] ) ) : '';
-			$topic_titles[] = !empty( $topics['spammed'] ) ? sprintf( __( 'Spammed: %s', 'bbpress' ), number_format_i18n( $topics['spammed'] ) ) : '';
-			$topic_titles[] = !empty( $topics['trashed'] ) ? sprintf( __( 'Trashed: %s', 'bbpress' ), number_format_i18n( $topics['trashed'] ) ) : '';
+			$topic_titles[] = !empty( $topics['private'] ) ? sprintf( __( 'Private: %s', 'ideaboard' ), number_format_i18n( $topics['private'] ) ) : '';
+			$topic_titles[] = !empty( $topics['spammed'] ) ? sprintf( __( 'Spammed: %s', 'ideaboard' ), number_format_i18n( $topics['spammed'] ) ) : '';
+			$topic_titles[] = !empty( $topics['trashed'] ) ? sprintf( __( 'Trashed: %s', 'ideaboard' ), number_format_i18n( $topics['trashed'] ) ) : '';
 
 			// Compile the hidden topic title
 			$hidden_topic_title = implode( ' | ', array_filter( $topic_titles ) );
@@ -541,9 +541,9 @@ function bbp_get_statistics( $args = '' ) {
 			$reply_count_hidden = $replies['private'] + $replies['spammed'] + $replies['trashed'];
 
 			// Generate the hidden topic count's title attribute
-			$reply_titles[] = !empty( $replies['private'] ) ? sprintf( __( 'Private: %s', 'bbpress' ), number_format_i18n( $replies['private'] ) ) : '';
-			$reply_titles[] = !empty( $replies['spammed'] ) ? sprintf( __( 'Spammed: %s', 'bbpress' ), number_format_i18n( $replies['spammed'] ) ) : '';
-			$reply_titles[] = !empty( $replies['trashed'] ) ? sprintf( __( 'Trashed: %s', 'bbpress' ), number_format_i18n( $replies['trashed'] ) ) : '';
+			$reply_titles[] = !empty( $replies['private'] ) ? sprintf( __( 'Private: %s', 'ideaboard' ), number_format_i18n( $replies['private'] ) ) : '';
+			$reply_titles[] = !empty( $replies['spammed'] ) ? sprintf( __( 'Spammed: %s', 'ideaboard' ), number_format_i18n( $replies['spammed'] ) ) : '';
+			$reply_titles[] = !empty( $replies['trashed'] ) ? sprintf( __( 'Trashed: %s', 'ideaboard' ), number_format_i18n( $replies['trashed'] ) ) : '';
 
 			// Compile the hidden replies title
 			$hidden_reply_title = implode( ' | ', array_filter( $reply_titles ) );
@@ -595,9 +595,9 @@ function bbp_get_statistics( $args = '' ) {
  * Note that bbp_pre_anonymous_filters() is responsible for sanitizing each
  * of the filtered core anonymous values here.
  *
- * If there are any errors, those are directly added to {@link bbPress:errors}
+ * If there are any errors, those are directly added to {@link IdeaBoard:errors}
  *
- * @since bbPress (r2734)
+ * @since IdeaBoard (r2734)
  *
  * @param mixed $args Optional. If no args are there, then $_POST values are
  *                     used.
@@ -621,11 +621,11 @@ function bbp_filter_anonymous_post_data( $args = '' ) {
 	// Filter variables and add errors if necessary
 	$r['bbp_anonymous_name'] = apply_filters( 'bbp_pre_anonymous_post_author_name',  $r['bbp_anonymous_name']  );
 	if ( empty( $r['bbp_anonymous_name'] ) )
-		bbp_add_error( 'bbp_anonymous_name',  __( '<strong>ERROR</strong>: Invalid author name submitted!',   'bbpress' ) );
+		bbp_add_error( 'bbp_anonymous_name',  __( '<strong>ERROR</strong>: Invalid author name submitted!',   'ideaboard' ) );
 
 	$r['bbp_anonymous_email'] = apply_filters( 'bbp_pre_anonymous_post_author_email', $r['bbp_anonymous_email'] );
 	if ( empty( $r['bbp_anonymous_email'] ) )
-		bbp_add_error( 'bbp_anonymous_email', __( '<strong>ERROR</strong>: Invalid email address submitted!', 'bbpress' ) );
+		bbp_add_error( 'bbp_anonymous_email', __( '<strong>ERROR</strong>: Invalid email address submitted!', 'ideaboard' ) );
 
 	// Website is optional
 	$r['bbp_anonymous_website'] = apply_filters( 'bbp_pre_anonymous_post_author_website', $r['bbp_anonymous_website'] );
@@ -642,7 +642,7 @@ function bbp_filter_anonymous_post_data( $args = '' ) {
  *
  * Check to make sure that a user is not making a duplicate post
  *
- * @since bbPress (r2763)
+ * @since IdeaBoard (r2763)
  *
  * @param array $post_data Contains information about the comment
  * @uses current_user_can() To check if the current user can throttle
@@ -689,7 +689,7 @@ function bbp_check_for_duplicate( $post_data = array() ) {
 
 	// Unslash $r to pass through $wpdb->prepare()
 	//
-	// @see: http://bbpress.trac.wordpress.org/ticket/2185/
+	// @see: http://ideaboard.trac.wordpress.org/ticket/2185/
 	// @see: http://core.trac.wordpress.org/changeset/23973/
 	$r = function_exists( 'wp_unslash' ) ? wp_unslash( $r ) : stripslashes_deep( $r );
 
@@ -713,7 +713,7 @@ function bbp_check_for_duplicate( $post_data = array() ) {
  * Check to make sure that a user is not making too many posts in a short amount
  * of time.
  *
- * @since bbPress (r2734)
+ * @since IdeaBoard (r2734)
  *
  * @param false|array $anonymous_data Optional - if it's an anonymous post. Do
  *                                     not supply if supplying $author_id.
@@ -762,7 +762,7 @@ function bbp_check_for_flood( $anonymous_data = false, $author_id = 0 ) {
 /**
  * Checks topics and replies against the discussion moderation of blocked keys
  *
- * @since bbPress (r3581)
+ * @since IdeaBoard (r3581)
  *
  * @param array $anonymous_data Anonymous user data
  * @param int $author_id Topic or reply author ID
@@ -881,7 +881,7 @@ function bbp_check_for_moderation( $anonymous_data = false, $author_id = 0, $tit
 /**
  * Checks topics and replies against the discussion blacklist of blocked keys
  *
- * @since bbPress (r3446)
+ * @since IdeaBoard (r3446)
  *
  * @param array $anonymous_data Anonymous user data
  * @param int $author_id Topic or reply author ID
@@ -992,11 +992,11 @@ function bbp_check_for_blacklist( $anonymous_data = false, $author_id = 0, $titl
  * WordPress core. Previously, we used `get_home_url()` to use already validated
  * user input, but it was causing issues in some installations.
  *
- * @since bbPress (r5409)
+ * @since IdeaBoard (r5409)
  *
  * @see  wp_mail
  * @see  wp_notify_postauthor
- * @link https://bbpress.trac.wordpress.org/ticket/2618
+ * @link https://ideaboard.trac.wordpress.org/ticket/2618
  *
  * @return string
  */
@@ -1014,13 +1014,13 @@ function bbp_get_do_not_reply_address() {
  * Gets new post's ID and check if there are subscribed users to that topic, and
  * if there are, send notifications
  *
- * Note: in bbPress 2.6, we've moved away from 1 email per subscriber to 1 email
+ * Note: in IdeaBoard 2.6, we've moved away from 1 email per subscriber to 1 email
  * with everyone BCC'd. This may have negative repercussions for email services
  * that limit the number of addresses in a BCC field (often to around 500.) In
  * those cases, we recommend unhooking this function and creating your own
  * custom emailer script.
  *
- * @since bbPress (r5413)
+ * @since IdeaBoard (r5413)
  *
  * @param int $reply_id ID of the newly made reply
  * @param int $topic_id ID of the topic of the reply
@@ -1106,7 +1106,7 @@ Post Link: %3$s
 
 You are receiving this email because you subscribed to a forum topic.
 
-Login and visit the topic to unsubscribe from these emails.', 'bbpress' ),
+Login and visit the topic to unsubscribe from these emails.', 'ideaboard' ),
 
 		$reply_author_name,
 		$reply_content,
@@ -1178,13 +1178,13 @@ Login and visit the topic to unsubscribe from these emails.', 'bbpress' ),
  * Gets new post's ID and check if there are subscribed users to that forum, and
  * if there are, send notifications
  *
- * Note: in bbPress 2.6, we've moved away from 1 email per subscriber to 1 email
+ * Note: in IdeaBoard 2.6, we've moved away from 1 email per subscriber to 1 email
  * with everyone BCC'd. This may have negative repercussions for email services
  * that limit the number of addresses in a BCC field (often to around 500.) In
  * those cases, we recommend unhooking this function and creating your own
  * custom emailer script.
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $topic_id ID of the newly made reply
  * @param int $forum_id ID of the forum for the topic
@@ -1225,7 +1225,7 @@ function bbp_notify_forum_subscribers( $topic_id = 0, $forum_id = 0, $anonymous_
 	/**
 	 * Necessary for backwards compatibility
 	 *
-	 * @see https://bbpress.trac.wordpress.org/ticket/2620
+	 * @see https://ideaboard.trac.wordpress.org/ticket/2620
 	 */
 	$user_id  = 0;
 
@@ -1263,7 +1263,7 @@ Topic Link: %3$s
 
 You are receiving this email because you subscribed to a forum.
 
-Login and visit the topic to unsubscribe from these emails.', 'bbpress' ),
+Login and visit the topic to unsubscribe from these emails.', 'ideaboard' ),
 
 		$topic_author_name,
 		$topic_content,
@@ -1334,8 +1334,8 @@ Login and visit the topic to unsubscribe from these emails.', 'bbpress' ),
  *
  * This function is deprecated. Please use: bbp_notify_topic_subscribers()
  *
- * @since bbPress (r2668)
- * @deprecated bbPress (r5412)
+ * @since IdeaBoard (r2668)
+ * @deprecated IdeaBoard (r5412)
  *
  * @param int $reply_id ID of the newly made reply
  * @param int $topic_id ID of the topic of the reply
@@ -1386,12 +1386,12 @@ function bbp_logout_url( $url = '', $redirect_to = '' ) {
 /**
  * Merge user defined arguments into defaults array.
  *
- * This function is used throughout bbPress to allow for either a string or array
+ * This function is used throughout IdeaBoard to allow for either a string or array
  * to be merged into another array. It is identical to wp_parse_args() except
  * it allows for arguments to be passively or aggressively filtered using the
  * optional $filter_key parameter.
  *
- * @since bbPress (r3839)
+ * @since IdeaBoard (r3839)
  *
  * @param string|array $args Value to merge with $defaults
  * @param array $defaults Array that serves as the defaults.
@@ -1431,7 +1431,7 @@ function bbp_parse_args( $args, $defaults = array(), $filter_key = '' ) {
 /**
  * Adds ability to include or exclude specific post_parent ID's
  *
- * @since bbPress (r2996)
+ * @since IdeaBoard (r2996)
  *
  * @global DB $wpdb
  * @global WP $wp
@@ -1494,7 +1494,7 @@ function bbp_get_public_child_last_id( $parent_id = 0, $post_type = 'post' ) {
 	$cache_id = 'bbp_parent_' . $parent_id . '_type_' . $post_type . '_child_last_id';
 
 	// Check for cache and set if needed
-	$child_id = wp_cache_get( $cache_id, 'bbpress_posts' );
+	$child_id = wp_cache_get( $cache_id, 'ideaboard_posts' );
 	if ( false === $child_id ) {
 		$post_status = array( bbp_get_public_status_id() );
 
@@ -1507,7 +1507,7 @@ function bbp_get_public_child_last_id( $parent_id = 0, $post_type = 'post' ) {
 		$post_status = "'" . implode( "', '", $post_status ) . "'";
 
 		$child_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_parent = %d AND post_status IN ( {$post_status} ) AND post_type = '%s' ORDER BY ID DESC LIMIT 1;", $parent_id, $post_type ) );
-		wp_cache_set( $cache_id, $child_id, 'bbpress_posts' );
+		wp_cache_set( $cache_id, $child_id, 'ideaboard_posts' );
 	}
 
 	// Filter and return
@@ -1539,7 +1539,7 @@ function bbp_get_public_child_count( $parent_id = 0, $post_type = 'post' ) {
 	$cache_id    = 'bbp_parent_' . $parent_id . '_type_' . $post_type . '_child_count';
 
 	// Check for cache and set if needed
-	$child_count = wp_cache_get( $cache_id, 'bbpress_posts' );
+	$child_count = wp_cache_get( $cache_id, 'ideaboard_posts' );
 	if ( false === $child_count ) {
 		$post_status = array( bbp_get_public_status_id() );
 
@@ -1552,7 +1552,7 @@ function bbp_get_public_child_count( $parent_id = 0, $post_type = 'post' ) {
 		$post_status = "'" . implode( "', '", $post_status ) . "'";
 
 		$child_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_parent = %d AND post_status IN ( {$post_status} ) AND post_type = '%s';", $parent_id, $post_type ) );
-		wp_cache_set( $cache_id, $child_count, 'bbpress_posts' );
+		wp_cache_set( $cache_id, $child_count, 'ideaboard_posts' );
 	}
 
 	// Filter and return
@@ -1584,7 +1584,7 @@ function bbp_get_public_child_ids( $parent_id = 0, $post_type = 'post' ) {
 	$cache_id  = 'bbp_parent_public_' . $parent_id . '_type_' . $post_type . '_child_ids';
 
 	// Check for cache and set if needed
-	$child_ids = wp_cache_get( $cache_id, 'bbpress_posts' );
+	$child_ids = wp_cache_get( $cache_id, 'ideaboard_posts' );
 	if ( false === $child_ids ) {
 		$post_status = array( bbp_get_public_status_id() );
 
@@ -1597,7 +1597,7 @@ function bbp_get_public_child_ids( $parent_id = 0, $post_type = 'post' ) {
 		$post_status = "'" . implode( "', '", $post_status ) . "'";
 
 		$child_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_parent = %d AND post_status IN ( {$post_status} ) AND post_type = '%s' ORDER BY ID DESC;", $parent_id, $post_type ) );
-		wp_cache_set( $cache_id, $child_ids, 'bbpress_posts' );
+		wp_cache_set( $cache_id, $child_ids, 'ideaboard_posts' );
 	}
 
 	// Filter and return
@@ -1629,7 +1629,7 @@ function bbp_get_all_child_ids( $parent_id = 0, $post_type = 'post' ) {
 	$cache_id  = 'bbp_parent_all_' . $parent_id . '_type_' . $post_type . '_child_ids';
 
 	// Check for cache and set if needed
-	$child_ids = wp_cache_get( $cache_id, 'bbpress_posts' );
+	$child_ids = wp_cache_get( $cache_id, 'ideaboard_posts' );
 	if ( false === $child_ids ) {
 		$post_status = array( bbp_get_public_status_id() );
 
@@ -1660,7 +1660,7 @@ function bbp_get_all_child_ids( $parent_id = 0, $post_type = 'post' ) {
 		$post_status = "'" . implode( "', '", $post_status ) . "'";
 
 		$child_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_parent = %d AND post_status IN ( {$post_status} ) AND post_type = '%s' ORDER BY ID DESC;", $parent_id, $post_type ) );
-		wp_cache_set( $cache_id, $child_ids, 'bbpress_posts' );
+		wp_cache_set( $cache_id, $child_ids, 'ideaboard_posts' );
 	}
 
 	// Filter and return
@@ -1674,7 +1674,7 @@ function bbp_get_all_child_ids( $parent_id = 0, $post_type = 'post' ) {
  *
  * Used most frequently when editing a forum/topic/reply
  *
- * @since bbPress (r3694)
+ * @since IdeaBoard (r3694)
  *
  * @global WP_Query $post
  * @param string $field Name of the key
@@ -1697,7 +1697,7 @@ function bbp_get_global_post_field( $field = 'ID', $context = 'edit' ) {
  *
  * To avoid security exploits within the theme.
  *
- * @since bbPress (r4022)
+ * @since IdeaBoard (r4022)
  *
  * @uses do_action() Calls 'bbp_check_referer' on $action.
  * @param string $action Action nonce
@@ -1758,9 +1758,9 @@ function bbp_verify_nonce_request( $action = '', $query_arg = '_wpnonce' ) {
 /**
  * This function is hooked into the WordPress 'request' action and is
  * responsible for sniffing out the query vars and serving up RSS2 feeds if
- * the stars align and the user has requested a feed of any bbPress type.
+ * the stars align and the user has requested a feed of any IdeaBoard type.
  *
- * @since bbPress (r3171)
+ * @since IdeaBoard (r3171)
  *
  * @param array $query_vars
  * @return array
@@ -1786,7 +1786,7 @@ function bbp_request_feed_trap( $query_vars = array() ) {
 			// Cast query vars as array outside of foreach loop
 			$qv_array = (array) $query_vars['post_type'];
 
-			// Check if this query is for a bbPress post type
+			// Check if this query is for a IdeaBoard post type
 			foreach ( $post_types as $bbp_pt ) {
 			    if ( in_array( $bbp_pt, $qv_array, true ) ) {
 				    $post_type = $bbp_pt;
@@ -1794,7 +1794,7 @@ function bbp_request_feed_trap( $query_vars = array() ) {
 			    }
 			}
 
-			// Looking at a bbPress post type
+			// Looking at a IdeaBoard post type
 			if ( ! empty( $post_type ) ) {
 
 				// Supported select query vars
@@ -1814,7 +1814,7 @@ function bbp_request_feed_trap( $query_vars = array() ) {
 				// Remove any empties
 				$select_query_vars = array_filter( $select_query_vars );
 
-				// What bbPress post type are we looking for feeds on?
+				// What IdeaBoard post type are we looking for feeds on?
 				switch ( $post_type ) {
 
 					// Forum
@@ -1982,7 +1982,7 @@ function bbp_request_feed_trap( $query_vars = array() ) {
 /**
  * Used to guess if page exists at requested path
  *
- * @since bbPress (r3304)
+ * @since IdeaBoard (r3304)
  *
  * @uses get_option() To see if pretty permalinks are enabled
  * @uses get_page_by_path() To see if page exists at path
@@ -2012,7 +2012,7 @@ function bbp_get_page_by_path( $path = '' ) {
  *
  * Used primarily with topics/replies inside hidden forums.
  *
- * @since bbPress (r3051)
+ * @since IdeaBoard (r3051)
  *
  * @global WP_Query $wp_query
  * @uses WP_Query::set_404()
@@ -2021,7 +2021,7 @@ function bbp_set_404() {
 	global $wp_query;
 
 	if ( ! isset( $wp_query ) ) {
-		_doing_it_wrong( __FUNCTION__, __( 'Conditional query tags do not work before the query is run. Before then, they always return false.', 'bbpress' ), '3.1' );
+		_doing_it_wrong( __FUNCTION__, __( 'Conditional query tags do not work before the query is run. Before then, they always return false.', 'ideaboard' ), '3.1' );
 		return false;
 	}
 

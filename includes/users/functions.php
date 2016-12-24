@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress User Functions
+ * IdeaBoard User Functions
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Functions
  */
 
@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Redirect back to $url when attempting to use the login page
  *
- * @since bbPress (r2815)
+ * @since IdeaBoard (r2815)
  *
  * @param string $url The url
  * @param string $raw_url Raw url
@@ -44,7 +44,7 @@ function bbp_redirect_login( $url = '', $raw_url = '', $user = '' ) {
 /**
  * Is an anonymous topic/reply being made?
  *
- * @since bbPress (r2688)
+ * @since IdeaBoard (r2688)
  *
  * @uses is_user_logged_in() Is the user logged in?
  * @uses bbp_allow_anonymous() Is anonymous posting allowed?
@@ -64,7 +64,7 @@ function bbp_is_anonymous() {
 /**
  * Echoes the values for current poster (uses WP comment cookies)
  *
- * @since bbPress (r2734)
+ * @since IdeaBoard (r2734)
  *
  * @param string $key Which value to echo?
  * @uses bbp_get_current_anonymous_user_data() To get the current anonymous user
@@ -77,7 +77,7 @@ function bbp_current_anonymous_user_data( $key = '' ) {
 	/**
 	 * Get the cookies for current poster (uses WP comment cookies).
 	 *
-	 * @since bbPress (r2734)
+	 * @since IdeaBoard (r2734)
 	 *
 	 * @param string $key Optional. Which value to get? If not given, then
 	 *                     an array is returned.
@@ -110,7 +110,7 @@ function bbp_current_anonymous_user_data( $key = '' ) {
 /**
  * Set the cookies for current poster (uses WP comment cookies)
  *
- * @since bbPress (r2734)
+ * @since IdeaBoard (r2734)
  *
  * @param array $anonymous_data With keys 'bbp_anonymous_name',
  *                               'bbp_anonymous_email', 'bbp_anonymous_website'.
@@ -134,7 +134,7 @@ function bbp_set_current_anonymous_user_data( $anonymous_data = array() ) {
 /**
  * Get the poster IP address
  *
- * @since bbPress (r3120)
+ * @since IdeaBoard (r3120)
  *
  * @return string
  */
@@ -147,7 +147,7 @@ function bbp_current_author_ip() {
 /**
  * Get the poster user agent
  *
- * @since bbPress (r3446)
+ * @since IdeaBoard (r3446)
  *
  * @return string
  */
@@ -162,7 +162,7 @@ function bbp_current_author_ua() {
 /**
  * Return the raw database count of topics by a user
  *
- * @since bbPress (r3633)
+ * @since IdeaBoard (r3633)
  * @global WPDB $wpdb
  * @uses bbp_get_user_id()
  * @uses get_posts_by_author_sql()
@@ -186,7 +186,7 @@ function bbp_get_user_topic_count_raw( $user_id = 0 ) {
 /**
  * Return the raw database count of replies by a user
  *
- * @since bbPress (r3633)
+ * @since IdeaBoard (r3633)
  * @global WPDB $wpdb
  * @uses bbp_get_user_id()
  * @uses get_posts_by_author_sql()
@@ -212,7 +212,7 @@ function bbp_get_user_reply_count_raw( $user_id = 0 ) {
 /**
  * Get the users who have made the topic favorite
  *
- * @since bbPress (r2658)
+ * @since IdeaBoard (r2658)
  *
  * @param int $topic_id Optional. Topic id
  * @uses wpdb::get_col() To execute our query and get the column back
@@ -228,10 +228,10 @@ function bbp_get_topic_favoriters( $topic_id = 0 ) {
 	global $wpdb;
 
 	$key   = $wpdb->prefix . '_bbp_favorites';
-	$users = wp_cache_get( 'bbp_get_topic_favoriters_' . $topic_id, 'bbpress_users' );
+	$users = wp_cache_get( 'bbp_get_topic_favoriters_' . $topic_id, 'ideaboard_users' );
 	if ( false === $users ) {
 		$users = $wpdb->get_col( "SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = '{$key}' and FIND_IN_SET('{$topic_id}', meta_value) > 0" );
-		wp_cache_set( 'bbp_get_topic_favoriters_' . $topic_id, $users, 'bbpress_users' );
+		wp_cache_set( 'bbp_get_topic_favoriters_' . $topic_id, $users, 'ideaboard_users' );
 	}
 
 	return apply_filters( 'bbp_get_topic_favoriters', $users );
@@ -240,7 +240,7 @@ function bbp_get_topic_favoriters( $topic_id = 0 ) {
 /**
  * Get a user's favorite topics
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_favorites_topic_ids() To get the user's favorites
@@ -268,7 +268,7 @@ function bbp_get_user_favorites( $user_id = 0 ) {
 /**
  * Get a user's favorite topics' ids
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_id() To get the user id
@@ -291,7 +291,7 @@ function bbp_get_user_favorites_topic_ids( $user_id = 0 ) {
 /**
  * Check if a topic is in user's favorites or not
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -340,7 +340,7 @@ function bbp_is_user_favorite( $user_id = 0, $topic_id = 0 ) {
 /**
  * Add a topic to user's favorites
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -372,7 +372,7 @@ function bbp_add_user_favorite( $user_id = 0, $topic_id = 0 ) {
 /**
  * Remove a topic from user's favorites
  *
- * @since bbPress (r2652)
+ * @since IdeaBoard (r2652)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -416,7 +416,7 @@ function bbp_remove_user_favorite( $user_id, $topic_id ) {
  * @uses bbp_get_user_id() To get the user id
  * @uses bbp_verify_nonce_request() To verify the nonce and check the request
  * @uses current_user_can() To check if the current user can edit the user
- * @uses bbPress:errors:add() To log the error messages
+ * @uses IdeaBoard:errors:add() To log the error messages
  * @uses bbp_is_user_favorite() To check if the topic is in user's favorites
  * @uses bbp_remove_user_favorite() To remove the user favorite
  * @uses bbp_add_user_favorite() To add the user favorite
@@ -452,15 +452,15 @@ function bbp_favorites_handler( $action = '' ) {
 
 	// Check for empty topic
 	if ( empty( $topic_id ) ) {
-		bbp_add_error( 'bbp_favorite_topic_id', __( '<strong>ERROR</strong>: No topic was found! Which topic are you marking/unmarking as favorite?', 'bbpress' ) );
+		bbp_add_error( 'bbp_favorite_topic_id', __( '<strong>ERROR</strong>: No topic was found! Which topic are you marking/unmarking as favorite?', 'ideaboard' ) );
 
 	// Check nonce
 	} elseif ( ! bbp_verify_nonce_request( 'toggle-favorite_' . $topic_id ) ) {
-		bbp_add_error( 'bbp_favorite_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_favorite_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 
 	// Check current user's ability to edit the user
 	} elseif ( !current_user_can( 'edit_user', $user_id ) ) {
-		bbp_add_error( 'bbp_favorite_permissions', __( '<strong>ERROR</strong>: You don\'t have the permission to edit favorites of that user!', 'bbpress' ) );
+		bbp_add_error( 'bbp_favorite_permissions', __( '<strong>ERROR</strong>: You don\'t have the permission to edit favorites of that user!', 'ideaboard' ) );
 	}
 
 	// Bail if errors
@@ -503,9 +503,9 @@ function bbp_favorites_handler( $action = '' ) {
 
 	// Fail! Handle errors
 	} elseif ( true === $is_favorite && 'bbp_favorite_remove' === $action ) {
-		bbp_add_error( 'bbp_favorite_remove', __( '<strong>ERROR</strong>: There was a problem removing that topic from favorites!', 'bbpress' ) );
+		bbp_add_error( 'bbp_favorite_remove', __( '<strong>ERROR</strong>: There was a problem removing that topic from favorites!', 'ideaboard' ) );
 	} elseif ( false === $is_favorite && 'bbp_favorite_add' === $action ) {
-		bbp_add_error( 'bbp_favorite_add',    __( '<strong>ERROR</strong>: There was a problem favoriting that topic!', 'bbpress' ) );
+		bbp_add_error( 'bbp_favorite_add',    __( '<strong>ERROR</strong>: There was a problem favoriting that topic!', 'ideaboard' ) );
 	}
 }
 
@@ -514,7 +514,7 @@ function bbp_favorites_handler( $action = '' ) {
 /**
  * Get the users who have subscribed to the forum
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $forum_id Optional. forum id
  * @uses wpdb::get_col() To execute our query and get the column back
@@ -529,10 +529,10 @@ function bbp_get_forum_subscribers( $forum_id = 0 ) {
 	global $wpdb;
 
 	$key   = $wpdb->prefix . '_bbp_forum_subscriptions';
-	$users = wp_cache_get( 'bbp_get_forum_subscribers_' . $forum_id, 'bbpress_users' );
+	$users = wp_cache_get( 'bbp_get_forum_subscribers_' . $forum_id, 'ideaboard_users' );
 	if ( false === $users ) {
 		$users = $wpdb->get_col( "SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = '{$key}' and FIND_IN_SET('{$forum_id}', meta_value) > 0" );
-		wp_cache_set( 'bbp_get_forum_subscribers_' . $forum_id, $users, 'bbpress_users' );
+		wp_cache_set( 'bbp_get_forum_subscribers_' . $forum_id, $users, 'ideaboard_users' );
 	}
 
 	return apply_filters( 'bbp_get_forum_subscribers', $users );
@@ -541,7 +541,7 @@ function bbp_get_forum_subscribers( $forum_id = 0 ) {
 /**
  * Get the users who have subscribed to the topic
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
  * @param int $topic_id Optional. Topic id
  * @uses wpdb::get_col() To execute our query and get the column back
@@ -556,10 +556,10 @@ function bbp_get_topic_subscribers( $topic_id = 0 ) {
 	global $wpdb;
 
 	$key   = $wpdb->prefix . '_bbp_subscriptions';
-	$users = wp_cache_get( 'bbp_get_topic_subscribers_' . $topic_id, 'bbpress_users' );
+	$users = wp_cache_get( 'bbp_get_topic_subscribers_' . $topic_id, 'ideaboard_users' );
 	if ( false === $users ) {
 		$users = $wpdb->get_col( "SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = '{$key}' and FIND_IN_SET('{$topic_id}', meta_value) > 0" );
-		wp_cache_set( 'bbp_get_topic_subscribers_' . $topic_id, $users, 'bbpress_users' );
+		wp_cache_set( 'bbp_get_topic_subscribers_' . $topic_id, $users, 'ideaboard_users' );
 	}
 
 	return apply_filters( 'bbp_get_topic_subscribers', $users );
@@ -568,9 +568,9 @@ function bbp_get_topic_subscribers( $topic_id = 0 ) {
 /**
  * Get a user's subscribed topics
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
- * @deprecated since bbPress (r5156)
+ * @deprecated since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_topic_subscriptions() To get the user's subscriptions
@@ -585,7 +585,7 @@ function bbp_get_user_subscriptions( $user_id = 0 ) {
 /**
  * Get a user's subscribed topics
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_subscribed_topic_ids() To get the user's subscriptions
@@ -616,7 +616,7 @@ function bbp_get_user_topic_subscriptions( $user_id = 0 ) {
 /**
  * Get a user's subscribed forums
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_subscribed_forum_ids() To get the user's subscriptions
@@ -647,7 +647,7 @@ function bbp_get_user_forum_subscriptions( $user_id = 0 ) {
 /**
  * Get a user's subscribed forum ids
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_id() To get the user id
@@ -670,7 +670,7 @@ function bbp_get_user_subscribed_forum_ids( $user_id = 0 ) {
 /**
  * Get a user's subscribed topics' ids
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_id() To get the user id
@@ -693,7 +693,7 @@ function bbp_get_user_subscribed_topic_ids( $user_id = 0 ) {
 /**
  * Check if a topic or forum is in user's subscription list or not
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $forum_id Optional. Topic id
@@ -747,7 +747,7 @@ function bbp_is_user_subscribed( $user_id = 0, $object_id = 0 ) {
 /**
  * Check if a forum is in user's subscription list or not
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $forum_id Optional. Topic id
@@ -804,7 +804,7 @@ function bbp_is_user_subscribed_to_forum( $user_id = 0, $forum_id = 0, $subscrib
 /**
  * Check if a topic is in user's subscription list or not
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -861,7 +861,7 @@ function bbp_is_user_subscribed_to_topic( $user_id = 0, $topic_id = 0, $subscrib
 /**
  * Add a topic to user's subscriptions
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -907,7 +907,7 @@ function bbp_add_user_subscription( $user_id = 0, $object_id = 0 ) {
 /**
  * Add a forum to user's subscriptions
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $forum_id Optional. forum id
@@ -933,7 +933,7 @@ function bbp_add_user_forum_subscription( $user_id = 0, $forum_id = 0 ) {
 		$subscriptions   = implode( ',', wp_parse_id_list( array_filter( $subscriptions ) ) );
 		update_user_option( $user_id, '_bbp_forum_subscriptions', $subscriptions );
 
-		wp_cache_delete( 'bbp_get_forum_subscribers_' . $forum_id, 'bbpress_users' );
+		wp_cache_delete( 'bbp_get_forum_subscribers_' . $forum_id, 'ideaboard_users' );
 	}
 
 	do_action( 'bbp_add_user_forum_subscription', $user_id, $forum_id );
@@ -944,7 +944,7 @@ function bbp_add_user_forum_subscription( $user_id = 0, $forum_id = 0 ) {
 /**
  * Add a topic to user's subscriptions
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -970,7 +970,7 @@ function bbp_add_user_topic_subscription( $user_id = 0, $topic_id = 0 ) {
 		$subscriptions   = implode( ',', wp_parse_id_list( array_filter( $subscriptions ) ) );
 		update_user_option( $user_id, '_bbp_subscriptions', $subscriptions );
 
-		wp_cache_delete( 'bbp_get_topic_subscribers_' . $topic_id, 'bbpress_users' );
+		wp_cache_delete( 'bbp_get_topic_subscribers_' . $topic_id, 'ideaboard_users' );
 	}
 
 	do_action( 'bbp_add_user_topic_subscription', $user_id, $topic_id );
@@ -981,7 +981,7 @@ function bbp_add_user_topic_subscription( $user_id = 0, $topic_id = 0 ) {
 /**
  * Remove a topic from user's subscriptions
  *
- * @since bbPress (r2668)
+ * @since IdeaBoard (r2668)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -1027,7 +1027,7 @@ function bbp_remove_user_subscription( $user_id = 0, $object_id = 0 ) {
 /**
  * Remove a forum from user's subscriptions
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $forum_id Optional. forum id
@@ -1064,7 +1064,7 @@ function bbp_remove_user_forum_subscription( $user_id, $forum_id ) {
 		delete_user_option( $user_id, '_bbp_forum_subscriptions' );
 	}
 
-	wp_cache_delete( 'bbp_get_forum_subscribers_' . $forum_id, 'bbpress_users' );
+	wp_cache_delete( 'bbp_get_forum_subscribers_' . $forum_id, 'ideaboard_users' );
 
 	do_action( 'bbp_remove_user_forum_subscription', $user_id, $forum_id );
 
@@ -1074,7 +1074,7 @@ function bbp_remove_user_forum_subscription( $user_id, $forum_id ) {
 /**
  * Remove a topic from user's subscriptions
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param int $user_id Optional. User id
  * @param int $topic_id Optional. Topic id
@@ -1111,7 +1111,7 @@ function bbp_remove_user_topic_subscription( $user_id, $topic_id ) {
 		delete_user_option( $user_id, '_bbp_subscriptions' );
 	}
 
-	wp_cache_delete( 'bbp_get_topic_subscribers_' . $topic_id, 'bbpress_users' );
+	wp_cache_delete( 'bbp_get_topic_subscribers_' . $topic_id, 'ideaboard_users' );
 
 	do_action( 'bbp_remove_user_topic_subscription', $user_id, $topic_id );
 
@@ -1121,14 +1121,14 @@ function bbp_remove_user_topic_subscription( $user_id, $topic_id ) {
 /**
  * Handles the front end subscribing and unsubscribing forums
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @param string $action The requested action to compare this function to
  * @uses bbp_is_subscriptions_active() To check if the subscriptions are active
  * @uses bbp_get_user_id() To get the user id
  * @uses bbp_verify_nonce_request() To verify the nonce and check the request
  * @uses current_user_can() To check if the current user can edit the user
- * @uses bbPress:errors:add() To log the error messages
+ * @uses IdeaBoard:errors:add() To log the error messages
  * @uses bbp_is_user_subscribed() To check if the forum is in user's
  *                                 subscriptions
  * @uses bbp_remove_user_subscription() To remove the user subscription
@@ -1167,15 +1167,15 @@ function bbp_forum_subscriptions_handler( $action = '' ) {
 
 	// Check for empty forum
 	if ( empty( $forum_id ) ) {
-		bbp_add_error( 'bbp_subscription_forum_id', __( '<strong>ERROR</strong>: No forum was found! Which forum are you subscribing/unsubscribing to?', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscription_forum_id', __( '<strong>ERROR</strong>: No forum was found! Which forum are you subscribing/unsubscribing to?', 'ideaboard' ) );
 
 	// Check nonce
 	} elseif ( ! bbp_verify_nonce_request( 'toggle-subscription_' . $forum_id ) ) {
-		bbp_add_error( 'bbp_subscription_forum_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscription_forum_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 
 	// Check current user's ability to edit the user
 	} elseif ( !current_user_can( 'edit_user', $user_id ) ) {
-		bbp_add_error( 'bbp_subscription_permissions', __( '<strong>ERROR</strong>: You don\'t have the permission to edit favorites of that user!', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscription_permissions', __( '<strong>ERROR</strong>: You don\'t have the permission to edit favorites of that user!', 'ideaboard' ) );
 	}
 
 	// Bail if we have errors
@@ -1220,9 +1220,9 @@ function bbp_forum_subscriptions_handler( $action = '' ) {
 
 	// Fail! Handle errors
 	} elseif ( true === $is_subscription && 'bbp_unsubscribe' === $action ) {
-		bbp_add_error( 'bbp_unsubscribe', __( '<strong>ERROR</strong>: There was a problem unsubscribing from that forum!', 'bbpress' ) );
+		bbp_add_error( 'bbp_unsubscribe', __( '<strong>ERROR</strong>: There was a problem unsubscribing from that forum!', 'ideaboard' ) );
 	} elseif ( false === $is_subscription && 'bbp_subscribe' === $action ) {
-		bbp_add_error( 'bbp_subscribe',    __( '<strong>ERROR</strong>: There was a problem subscribing to that forum!', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscribe',    __( '<strong>ERROR</strong>: There was a problem subscribing to that forum!', 'ideaboard' ) );
 	}
 }
 
@@ -1234,7 +1234,7 @@ function bbp_forum_subscriptions_handler( $action = '' ) {
  * @uses bbp_get_user_id() To get the user id
  * @uses bbp_verify_nonce_request() To verify the nonce and check the request
  * @uses current_user_can() To check if the current user can edit the user
- * @uses bbPress:errors:add() To log the error messages
+ * @uses IdeaBoard:errors:add() To log the error messages
  * @uses bbp_is_user_subscribed() To check if the topic is in user's
  *                                 subscriptions
  * @uses bbp_remove_user_subscription() To remove the user subscription
@@ -1273,15 +1273,15 @@ function bbp_subscriptions_handler( $action = '' ) {
 
 	// Check for empty topic
 	if ( empty( $topic_id ) ) {
-		bbp_add_error( 'bbp_subscription_topic_id', __( '<strong>ERROR</strong>: No topic was found! Which topic are you subscribing/unsubscribing to?', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscription_topic_id', __( '<strong>ERROR</strong>: No topic was found! Which topic are you subscribing/unsubscribing to?', 'ideaboard' ) );
 
 	// Check nonce
 	} elseif ( ! bbp_verify_nonce_request( 'toggle-subscription_' . $topic_id ) ) {
-		bbp_add_error( 'bbp_subscription_topic_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscription_topic_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 
 	// Check current user's ability to edit the user
 	} elseif ( !current_user_can( 'edit_user', $user_id ) ) {
-		bbp_add_error( 'bbp_subscription_permissions', __( '<strong>ERROR</strong>: You don\'t have the permission to edit favorites of that user!', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscription_permissions', __( '<strong>ERROR</strong>: You don\'t have the permission to edit favorites of that user!', 'ideaboard' ) );
 	}
 
 	// Bail if we have errors
@@ -1326,9 +1326,9 @@ function bbp_subscriptions_handler( $action = '' ) {
 
 	// Fail! Handle errors
 	} elseif ( true === $is_subscription && 'bbp_unsubscribe' === $action ) {
-		bbp_add_error( 'bbp_unsubscribe', __( '<strong>ERROR</strong>: There was a problem unsubscribing from that topic!', 'bbpress' ) );
+		bbp_add_error( 'bbp_unsubscribe', __( '<strong>ERROR</strong>: There was a problem unsubscribing from that topic!', 'ideaboard' ) );
 	} elseif ( false === $is_subscription && 'bbp_subscribe' === $action ) {
-		bbp_add_error( 'bbp_subscribe',    __( '<strong>ERROR</strong>: There was a problem subscribing to that topic!', 'bbpress' ) );
+		bbp_add_error( 'bbp_subscribe',    __( '<strong>ERROR</strong>: There was a problem subscribing to that topic!', 'ideaboard' ) );
 	}
 }
 
@@ -1404,13 +1404,13 @@ function bbp_edit_user_handler( $action = '' ) {
 
 	// Nonce check
 	if ( ! bbp_verify_nonce_request( 'update-user_' . $user_id ) ) {
-		bbp_add_error( 'bbp_update_user_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_update_user_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
 	// Cap check
 	if ( ! current_user_can( 'edit_user', $user_id ) ) {
-		bbp_add_error( 'bbp_update_user_capability', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'bbpress' ) );
+		bbp_add_error( 'bbp_update_user_capability', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
@@ -1428,7 +1428,7 @@ function bbp_edit_user_handler( $action = '' ) {
 
 	// Error(s) editng the user, so copy them into the global
 	if ( is_wp_error( $edit_user ) ) {
-		bbpress()->errors = $edit_user;
+		ideaboard()->errors = $edit_user;
 
 	// Successful edit to redirect
 	} elseif ( is_integer( $edit_user ) ) {
@@ -1453,7 +1453,7 @@ function bbp_edit_user_handler( $action = '' ) {
  * output actions if they don't want any unexpected junk to appear there, and
  * also avoids needing to pollute the templates with additional logic and actions.
  *
- * @since bbPress (r4273)
+ * @since IdeaBoard (r4273)
  *
  * @uses bbp_is_user_home_edit() To switch the action fired
  * @uses get_userdata() To get the current user's data
@@ -1470,7 +1470,7 @@ function bbp_user_edit_after() {
 /**
  * Get the topics that a user created
  *
- * @since bbPress (r2660)
+ * @since IdeaBoard (r2660)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_id() To get the topic id
@@ -1495,7 +1495,7 @@ function bbp_get_user_topics_started( $user_id = 0 ) {
 /**
  * Get the replies that a user created
  *
- * @since bbPress (r4225)
+ * @since IdeaBoard (r4225)
  *
  * @param int $user_id Optional. User id
  * @uses bbp_get_user_id() To get the topic id
@@ -1522,7 +1522,7 @@ function bbp_get_user_replies_created( $user_id = 0 ) {
 /**
  * Get the total number of users on the forums
  *
- * @since bbPress (r2769)
+ * @since IdeaBoard (r2769)
  * @uses count_users() To execute our query and get the var back
  * @uses apply_filters() Calls 'bbp_get_total_users' with number of users
  * @return int Total number of users
@@ -1542,7 +1542,7 @@ function bbp_get_total_users() {
  * met. We assume a user cannot perform this task, and look for ways they can
  * earn the ability to access this template.
  *
- * @since bbPress (r3605)
+ * @since IdeaBoard (r3605)
  *
  * @uses bbp_is_topic_edit()
  * @uses current_user_can()
@@ -1582,12 +1582,12 @@ function bbp_check_user_edit() {
 /**
  * Check if a user is blocked, or cannot spectate the forums.
  *
- * @since bbPress (r2996)
+ * @since IdeaBoard (r2996)
  *
  * @uses is_user_logged_in() To check if user is logged in
  * @uses bbp_is_user_keymaster() To check if user is a keymaster
  * @uses current_user_can() To check if the current user can spectate
- * @uses is_bbpress() To check if in a bbPress section of the site
+ * @uses is_ideaboard() To check if in a IdeaBoard section of the site
  * @uses bbp_set_404() To set a 404 status
  */
 function bbp_forum_enforce_blocked() {
@@ -1597,8 +1597,8 @@ function bbp_forum_enforce_blocked() {
 		return;
 	}
 
-	// Set 404 if in bbPress and user cannot spectate
-	if ( is_bbpress() && ! current_user_can( 'spectate' ) ) {
+	// Set 404 if in IdeaBoard and user cannot spectate
+	if ( is_ideaboard() && ! current_user_can( 'spectate' ) ) {
 		bbp_set_404();
 	}
 }
@@ -1609,18 +1609,18 @@ function bbp_forum_enforce_blocked() {
  * Sanitize displayed user data, when viewing and editing any user.
  *
  * This somewhat monolithic function handles the escaping and sanitization of
- * user data for a bbPress profile. There are two reasons this all happers here:
+ * user data for a IdeaBoard profile. There are two reasons this all happers here:
  *
- * 1. bbPress took a similar approach to WordPress, and funnels all user profile
+ * 1. IdeaBoard took a similar approach to WordPress, and funnels all user profile
  *    data through a central helper. This eventually calls sanitize_user_field()
  *    which applies a few context based filters, which some third party plugins
- *    might be relying on bbPress to play nicely with.
+ *    might be relying on IdeaBoard to play nicely with.
  *
- * 2. Early versions of bbPress 2.x templates did not escape this data meaning
+ * 2. Early versions of IdeaBoard 2.x templates did not escape this data meaning
  *    a backwards compatible approach like this one was necessary to protect
  *    existing installations that may have custom template parts.
  *
- * @since bbPress (r5368)
+ * @since IdeaBoard (r5368)
  *
  * @param string $value
  * @param string $field
@@ -1677,7 +1677,7 @@ function bbp_sanitize_displayed_user_field( $value = '', $field = '', $context =
 /**
  * Convert passwords from previous platfrom encryption to WordPress encryption.
  *
- * @since bbPress (r3813)
+ * @since IdeaBoard (r3813)
  * @global WPDB $wpdb
  */
 function bbp_user_maybe_convert_pass() {
@@ -1695,14 +1695,14 @@ function bbp_user_maybe_convert_pass() {
 		return;
 
 	// Setup admin (to include converter)
-	require_once( bbpress()->includes_dir . 'admin/admin.php' );
+	require_once( ideaboard()->includes_dir . 'admin/admin.php' );
 
 	// Create the admin object
 	bbp_admin();
 
 	// Convert password
-	require_once( bbpress()->admin->admin_dir . 'converter.php' );
-	require_once( bbpress()->admin->admin_dir . 'converters/' . $row->meta_value . '.php' );
+	require_once( ideaboard()->admin->admin_dir . 'converter.php' );
+	require_once( ideaboard()->admin->admin_dir . 'converters/' . $row->meta_value . '.php' );
 
 	// Create the converter
 	$converter = bbp_new_converter( $row->meta_value );

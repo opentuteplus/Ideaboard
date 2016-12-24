@@ -3,7 +3,7 @@
 /**
  * Edit handler for topics
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Theme
  */
 

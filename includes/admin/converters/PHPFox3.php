@@ -3,8 +3,8 @@
 /**
  * Implementation of PHPFox v3.x Forum converter.
  *
- * @since bbPress (r5146)
- * @link Codex Docs http://codex.bbpress.org/import-forums/phpfox
+ * @since IdeaBoard (r5146)
+ * @link Codex Docs http://codex.ideaboard.org/import-forums/phpfox
  */
 class PHPFox3 extends BBP_Converter_Base {
 
@@ -646,7 +646,7 @@ class PHPFox3 extends BBP_Converter_Base {
 	 * @return string Prefixed topic title, or empty string
 	 */
 	public function callback_reply_title( $title = '' ) {
-		$title = !empty( $title ) ? __( 'Re: ', 'bbpress' ) . html_entity_decode( $title ) : '';
+		$title = !empty( $title ) ? __( 'Re: ', 'ideaboard' ) . html_entity_decode( $title ) : '';
 		return $title;
 	}
 }

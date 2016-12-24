@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Options
+ * IdeaBoard Options
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Options
  */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * 
  * These option
  *
- * @since bbPress (r3421)
+ * @since IdeaBoard (r3421)
  * @return array Filtered option names and values
  */
 function bbp_get_default_options() {
@@ -25,7 +25,7 @@ function bbp_get_default_options() {
 
 		/** DB Version ********************************************************/
 
-		'_bbp_db_version'           => bbpress()->db_version,
+		'_bbp_db_version'           => ideaboard()->db_version,
 
 		/** Settings **********************************************************/
 
@@ -113,10 +113,10 @@ function bbp_get_default_options() {
 /**
  * Add default options
  *
- * Hooked to bbp_activate, it is only called once when bbPress is activated.
+ * Hooked to bbp_activate, it is only called once when IdeaBoard is activated.
  * This is non-destructive, so existing settings will not be overridden.
  *
- * @since bbPress (r3421)
+ * @since IdeaBoard (r3421)
  * @uses bbp_get_default_options() To get default options
  * @uses add_option() Adds default options
  * @uses do_action() Calls 'bbp_add_options'
@@ -134,10 +134,10 @@ function bbp_add_options() {
 /**
  * Delete default options
  *
- * Hooked to bbp_uninstall, it is only called once when bbPress is uninstalled.
+ * Hooked to bbp_uninstall, it is only called once when IdeaBoard is uninstalled.
  * This is destructive, so existing settings will be destroyed.
  *
- * @since bbPress (r3421)
+ * @since IdeaBoard (r3421)
  * @uses bbp_get_default_options() To get default options
  * @uses delete_option() Removes default options
  * @uses do_action() Calls 'bbp_delete_options'
@@ -153,17 +153,17 @@ function bbp_delete_options() {
 }
 
 /**
- * Add filters to each bbPress option and allow them to be overloaded from
+ * Add filters to each IdeaBoard option and allow them to be overloaded from
  * inside the $bbp->options array.
  *
- * @since bbPress (r3451)
+ * @since IdeaBoard (r3451)
  * @uses bbp_get_default_options() To get default options
  * @uses add_filter() To add filters to 'pre_option_{$key}'
  * @uses do_action() Calls 'bbp_add_option_filters'
  */
 function bbp_setup_option_filters() {
 
-	// Add filters to each bbPress option
+	// Add filters to each IdeaBoard option
 	foreach ( array_keys( bbp_get_default_options() ) as $key )
 		add_filter( 'pre_option_' . $key, 'bbp_pre_get_option' );
 
@@ -175,7 +175,7 @@ function bbp_setup_option_filters() {
  * Filter default options and allow them to be overloaded from inside the
  * $bbp->options array.
  *
- * @since bbPress (r3451)
+ * @since IdeaBoard (r3451)
  * @param bool $value Optional. Default value false
  * @return mixed false if not overloaded, mixed if set
  */
@@ -185,8 +185,8 @@ function bbp_pre_get_option( $value = '' ) {
 	$option = str_replace( 'pre_option_', '', current_filter() );
 
 	// Check the options global for preset value
-	if ( isset( bbpress()->options[$option] ) )
-		$value = bbpress()->options[$option];
+	if ( isset( ideaboard()->options[$option] ) )
+		$value = ideaboard()->options[$option];
 
 	// Always return a value, even if false
 	return $value;
@@ -197,7 +197,7 @@ function bbp_pre_get_option( $value = '' ) {
 /**
  * Checks if favorites feature is enabled.
  *
- * @since bbPress (r2658)
+ * @since IdeaBoard (r2658)
  * @param $default bool Optional.Default value true
  * @uses get_option() To get the favorites option
  * @return bool Is favorites enabled or not
@@ -209,7 +209,7 @@ function bbp_is_favorites_active( $default = 1 ) {
 /**
  * Checks if subscription feature is enabled.
  *
- * @since bbPress (r2658)
+ * @since IdeaBoard (r2658)
  * @param $default bool Optional.Default value true
  * @uses get_option() To get the subscriptions option
  * @return bool Is subscription enabled or not
@@ -221,7 +221,7 @@ function bbp_is_subscriptions_active( $default = 1 ) {
 /**
  * Are topic tags allowed
  *
- * @since bbPress (r4097)
+ * @since IdeaBoard (r4097)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the allow tags
  * @return bool Are tags allowed?
@@ -233,7 +233,7 @@ function bbp_allow_topic_tags( $default = 1 ) {
 /**
  * Is forum-wide searching allowed
  *
- * @since bbPress (r4970)
+ * @since IdeaBoard (r4970)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the forum-wide search setting
  * @return bool Is forum-wide searching allowed?
@@ -245,7 +245,7 @@ function bbp_allow_search( $default = 1 ) {
 /**
  * Are replies threaded
  *
- * @since bbPress (r4944)
+ * @since IdeaBoard (r4944)
  *
  * @param bool $default Optional. Default value true
  * @uses apply_filters() Calls 'bbp_thread_replies' with the calculated value and
@@ -264,7 +264,7 @@ function bbp_thread_replies() {
 /**
  * Are threaded replies allowed
  *
- * @since bbPress (r4964)
+ * @since IdeaBoard (r4964)
  * @param $default bool Optional. Default value false
  * @uses get_option() To get the threaded replies setting
  * @return bool Are threaded replies allowed?
@@ -276,7 +276,7 @@ function bbp_allow_threaded_replies( $default = 0 ) {
 /**
  * Maximum reply thread depth
  *
- * @since bbPress (r4944)
+ * @since IdeaBoard (r4944)
  *
  * @param int $default Thread replies depth
  * @uses apply_filters() Calls 'bbp_thread_replies_depth' with the option value and
@@ -291,7 +291,7 @@ function bbp_thread_replies_depth( $default = 2 ) {
 /**
  * Are topic and reply revisions allowed
  *
- * @since bbPress (r3412)
+ * @since IdeaBoard (r3412)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the allow revisions
  * @return bool Are revisions allowed?
@@ -303,7 +303,7 @@ function bbp_allow_revisions( $default = 1 ) {
 /**
  * Is the anonymous posting allowed?
  *
- * @since bbPress (r2659)
+ * @since IdeaBoard (r2659)
  * @param $default bool Optional. Default value
  * @uses get_option() To get the allow anonymous option
  * @return bool Is anonymous posting allowed?
@@ -315,7 +315,7 @@ function bbp_allow_anonymous( $default = 0 ) {
 /**
  * Is this forum available to all users on all sites in this installation?
  *
- * @since bbPress (r3378)
+ * @since IdeaBoard (r3378)
  * @param $default bool Optional. Default value false
  * @uses get_option() To get the global access option
  * @return bool Is global access allowed?
@@ -327,7 +327,7 @@ function bbp_allow_global_access( $default = 1 ) {
 /**
  * Is this forum available to all users on all sites in this installation?
  *
- * @since bbPress (r4294)
+ * @since IdeaBoard (r4294)
  * @param $default string Optional. Default value empty
  * @uses get_option() To get the default forums role option
  * @return string The default forums user role
@@ -339,7 +339,7 @@ function bbp_get_default_role( $default = 'bbp_participant' ) {
 /**
  * Use the WordPress editor if available
  *
- * @since bbPress (r3386)
+ * @since IdeaBoard (r3386)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the WP editor option
  * @return bool Use WP editor?
@@ -351,7 +351,7 @@ function bbp_use_wp_editor( $default = 1 ) {
 /**
  * Use WordPress's oEmbed API
  *
- * @since bbPress (r3752)
+ * @since IdeaBoard (r3752)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the oEmbed option
  * @return bool Use oEmbed?
@@ -363,7 +363,7 @@ function bbp_use_autoembed( $default = 1 ) {
 /**
  * Get the current theme package ID
  *
- * @since bbPress (r3829)
+ * @since IdeaBoard (r3829)
  * @param $default string Optional. Default value 'default'
  * @uses get_option() To get the subtheme option
  * @return string ID of the subtheme
@@ -375,7 +375,7 @@ function bbp_get_theme_package_id( $default = 'default' ) {
 /**
  * Output the maximum length of a title
  *
- * @since bbPress (r3246)
+ * @since IdeaBoard (r3246)
  * @param $default bool Optional. Default value 80
  */
 function bbp_title_max_length( $default = 80 ) {
@@ -384,7 +384,7 @@ function bbp_title_max_length( $default = 80 ) {
 	/**
 	 * Return the maximum length of a title
 	 *
-	 * @since bbPress (r3246)
+	 * @since IdeaBoard (r3246)
 	 * @param $default bool Optional. Default value 80
 	 * @uses get_option() To get the maximum title length
 	 * @return int Is anonymous posting allowed?
@@ -396,7 +396,7 @@ function bbp_title_max_length( $default = 80 ) {
 /**
  * Output the grop forums root parent forum id
  *
- * @since bbPress (r3575)
+ * @since IdeaBoard (r3575)
  * @param $default int Optional. Default value
  */
 function bbp_group_forums_root_id( $default = 0 ) {
@@ -405,7 +405,7 @@ function bbp_group_forums_root_id( $default = 0 ) {
 	/**
 	 * Return the grop forums root parent forum id
 	 *
-	 * @since bbPress (r3575)
+	 * @since IdeaBoard (r3575)
 	 * @param $default bool Optional. Default value 0
 	 * @uses get_option() To get the root group forum ID
 	 * @return int The post ID for the root forum
@@ -417,7 +417,7 @@ function bbp_group_forums_root_id( $default = 0 ) {
 /**
  * Checks if BuddyPress Group Forums are enabled
  *
- * @since bbPress (r3575)
+ * @since IdeaBoard (r3575)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the group forums option
  * @return bool Is group forums enabled or not
@@ -429,7 +429,7 @@ function bbp_is_group_forums_active( $default = 1 ) {
 /**
  * Checks if Akismet is enabled
  *
- * @since bbPress (r3575)
+ * @since IdeaBoard (r3575)
  * @param $default bool Optional. Default value true
  * @uses get_option() To get the Akismet option
  * @return bool Is Akismet enabled or not
@@ -441,7 +441,7 @@ function bbp_is_akismet_active( $default = 1 ) {
 /**
  * Integrate settings into existing WordPress pages
  *
- * @since bbPress (r4932)
+ * @since IdeaBoard (r4932)
  * @param $default bool Optional. Default value false
  * @uses get_option() To get the admin integration setting
  * @return bool To deeply integrate settings, or not
@@ -455,7 +455,7 @@ function bbp_settings_integration( $default = 0 ) {
 /**
  * Return the root slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_root_slug( $default = 'forums' ) {
@@ -465,7 +465,7 @@ function bbp_get_root_slug( $default = 'forums' ) {
 /**
  * Are we including the root slug in front of forum pages?
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return bool
  */
 function bbp_include_root_slug( $default = 1 ) {
@@ -475,7 +475,7 @@ function bbp_include_root_slug( $default = 1 ) {
 /**
  * Return the search slug
  *
- * @since bbPress (r4932)
+ * @since IdeaBoard (r4932)
  *
  * @return string
  */
@@ -486,7 +486,7 @@ function bbp_show_on_root( $default = 'forums' ) {
 /**
  * Maybe return the root slug, based on whether or not it's included in the url
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_maybe_get_root_slug() {
@@ -501,7 +501,7 @@ function bbp_maybe_get_root_slug() {
 /**
  * Return the single forum slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_forum_slug( $default = 'forum' ) {;
@@ -511,7 +511,7 @@ function bbp_get_forum_slug( $default = 'forum' ) {;
 /**
  * Return the topic archive slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_topic_archive_slug( $default = 'topics' ) {
@@ -521,7 +521,7 @@ function bbp_get_topic_archive_slug( $default = 'topics' ) {
 /**
  * Return the reply archive slug
  *
- * @since bbPress (r4925)
+ * @since IdeaBoard (r4925)
  * @return string
  */
 function bbp_get_reply_archive_slug( $default = 'replies' ) {
@@ -531,7 +531,7 @@ function bbp_get_reply_archive_slug( $default = 'replies' ) {
 /**
  * Return the single topic slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_topic_slug( $default = 'topic' ) {
@@ -541,7 +541,7 @@ function bbp_get_topic_slug( $default = 'topic' ) {
 /**
  * Return the topic-tag taxonomy slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_topic_tag_tax_slug( $default = 'topic-tag' ) {
@@ -551,7 +551,7 @@ function bbp_get_topic_tag_tax_slug( $default = 'topic-tag' ) {
 /**
  * Return the single reply slug (used mostly for editing)
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_reply_slug( $default = 'reply' ) {
@@ -561,7 +561,7 @@ function bbp_get_reply_slug( $default = 'reply' ) {
 /**
  * Return the single user slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_user_slug( $default = 'user' ) {
@@ -571,7 +571,7 @@ function bbp_get_user_slug( $default = 'user' ) {
 /**
  * Return the single user favorites slug
  *
- * @since bbPress (r4187)
+ * @since IdeaBoard (r4187)
  * @return string
  */
 function bbp_get_user_favorites_slug( $default = 'favorites' ) {
@@ -581,7 +581,7 @@ function bbp_get_user_favorites_slug( $default = 'favorites' ) {
 /**
  * Return the single user subscriptions slug
  *
- * @since bbPress (r4187)
+ * @since IdeaBoard (r4187)
  * @return string
  */
 function bbp_get_user_subscriptions_slug( $default = 'subscriptions' ) {
@@ -591,7 +591,7 @@ function bbp_get_user_subscriptions_slug( $default = 'subscriptions' ) {
 /**
  * Return the topic view slug
  *
- * @since bbPress (r3759)
+ * @since IdeaBoard (r3759)
  * @return string
  */
 function bbp_get_view_slug( $default = 'view' ) {
@@ -601,7 +601,7 @@ function bbp_get_view_slug( $default = 'view' ) {
 /**
  * Return the search slug
  *
- * @since bbPress (r4579)
+ * @since IdeaBoard (r4579)
  *
  * @return string
  */
@@ -614,7 +614,7 @@ function bbp_get_search_slug( $default = 'search' ) {
 /**
  * Checks if there is a previous BuddyPress Forum configuration
  *
- * @since bbPress (r3790)
+ * @since IdeaBoard (r3790)
  * @param $default string Optional. Default empty string
  * @uses get_option() To get the old bb-config.php location
  * @return string The location of the bb-config.php file, if any

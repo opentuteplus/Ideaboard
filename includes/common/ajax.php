@@ -1,12 +1,12 @@
 <?php
 
 /**
- * bbPress Common AJAX Functions
+ * IdeaBoard Common AJAX Functions
  *
  * Common AJAX functions are ones that are used to setup and/or use during
- * bbPress specific, theme-side  AJAX requests.
+ * IdeaBoard specific, theme-side  AJAX requests.
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Ajax
  */
 
@@ -14,9 +14,9 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Output the URL to use for theme-side bbPress AJAX requests
+ * Output the URL to use for theme-side IdeaBoard AJAX requests
  *
- * @since bbPress (r4543)
+ * @since IdeaBoard (r4543)
  *
  * @uses bbp_get_ajax_url() To get the URL to use for AJAX requests
  */
@@ -24,9 +24,9 @@ function bbp_ajax_url() {
 	echo esc_url( bbp_get_ajax_url() );
 }
 	/**
-	 * Return the URL to use for theme-side bbPress AJAX requests
+	 * Return the URL to use for theme-side IdeaBoard AJAX requests
 	 *
-	 * @since bbPress (r4543)
+	 * @since IdeaBoard (r4543)
 	 *
 	 * @global WP $wp
 	 * @return string
@@ -41,9 +41,9 @@ function bbp_ajax_url() {
 	}
 
 /**
- * Is this a bbPress AJAX request?
+ * Is this a IdeaBoard AJAX request?
  *
- * @since bbPress (r4543)
+ * @since IdeaBoard (r4543)
  *
  * @return bool Looking for bbp-ajax
  */
@@ -52,12 +52,12 @@ function bbp_is_ajax() {
 }
 
 /**
- * Hooked to the 'bbp_template_redirect' action, this is bbPress's custom
+ * Hooked to the 'bbp_template_redirect' action, this is IdeaBoard's custom
  * theme-side ajax handler.
  *
- * @since bbPress (r4543)
+ * @since IdeaBoard (r4543)
  *
- * @return If not a bbPress ajax request
+ * @return If not a IdeaBoard ajax request
  */
 function bbp_do_ajax() {
 
@@ -74,7 +74,7 @@ function bbp_do_ajax() {
 	// Disable content sniffing in browsers that support it
 	send_nosniff_header();
 
-	// Perform custom bbPress ajax
+	// Perform custom IdeaBoard ajax
 	do_action( 'bbp_ajax_' . $_REQUEST['action'] );
 
 	// All done
@@ -84,7 +84,7 @@ function bbp_do_ajax() {
 /**
  * Helper method to return JSON response for the ajax calls
  *
- * @since bbPress (r4542)
+ * @since IdeaBoard (r4542)
  *
  * @param bool $success
  * @param string $content

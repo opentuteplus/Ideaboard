@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Updater
+ * IdeaBoard Updater
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage Updater
  */
 
@@ -13,10 +13,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * If there is no raw DB version, this is the first installation
  *
- * @since bbPress (r3764)
+ * @since IdeaBoard (r3764)
  *
  * @uses get_option()
- * @uses bbp_get_db_version() To get bbPress's database version
+ * @uses bbp_get_db_version() To get IdeaBoard's database version
  * @return bool True if update, False if not
  */
 function bbp_is_install() {
@@ -24,12 +24,12 @@ function bbp_is_install() {
 }
 
 /**
- * Compare the bbPress version to the DB version to determine if updating
+ * Compare the IdeaBoard version to the DB version to determine if updating
  *
- * @since bbPress (r3421)
+ * @since IdeaBoard (r3421)
  *
  * @uses get_option()
- * @uses bbp_get_db_version() To get bbPress's database version
+ * @uses bbp_get_db_version() To get IdeaBoard's database version
  * @return bool True if update, False if not
  */
 function bbp_is_update() {
@@ -40,19 +40,19 @@ function bbp_is_update() {
 }
 
 /**
- * Determine if bbPress is being activated
+ * Determine if IdeaBoard is being activated
  *
- * Note that this function currently is not used in bbPress core and is here
- * for third party plugins to use to check for bbPress activation.
+ * Note that this function currently is not used in IdeaBoard core and is here
+ * for third party plugins to use to check for IdeaBoard activation.
  *
- * @since bbPress (r3421)
+ * @since IdeaBoard (r3421)
  *
- * @return bool True if activating bbPress, false if not
+ * @return bool True if activating IdeaBoard, false if not
  */
 function bbp_is_activation( $basename = '' ) {
 	global $pagenow;
 
-	$bbp    = bbpress();
+	$bbp    = ideaboard();
 	$action = false;
 
 	// Bail if not in admin/plugins
@@ -88,20 +88,20 @@ function bbp_is_activation( $basename = '' ) {
 		return false;
 	}
 
-	// Is bbPress being activated?
+	// Is IdeaBoard being activated?
 	return in_array( $basename, $plugins );
 }
 
 /**
- * Determine if bbPress is being deactivated
+ * Determine if IdeaBoard is being deactivated
  *
- * @since bbPress (r3421)
- * @return bool True if deactivating bbPress, false if not
+ * @since IdeaBoard (r3421)
+ * @return bool True if deactivating IdeaBoard, false if not
  */
 function bbp_is_deactivation( $basename = '' ) {
 	global $pagenow;
 
-	$bbp    = bbpress();
+	$bbp    = ideaboard();
 	$action = false;
 
 	// Bail if not in admin/plugins
@@ -137,25 +137,25 @@ function bbp_is_deactivation( $basename = '' ) {
 		return false;
 	}
 
-	// Is bbPress being deactivated?
+	// Is IdeaBoard being deactivated?
 	return in_array( $basename, $plugins );
 }
 
 /**
  * Update the DB to the latest version
  *
- * @since bbPress (r3421)
+ * @since IdeaBoard (r3421)
  * @uses update_option()
- * @uses bbp_get_db_version() To get bbPress's database version
+ * @uses bbp_get_db_version() To get IdeaBoard's database version
  */
 function bbp_version_bump() {
 	update_option( '_bbp_db_version', bbp_get_db_version() );
 }
 
 /**
- * Setup the bbPress updater
+ * Setup the IdeaBoard updater
  *
- * @since bbPress (r3419)
+ * @since IdeaBoard (r3419)
  *
  * @uses bbp_version_updater()
  * @uses bbp_version_bump()
@@ -174,7 +174,7 @@ function bbp_setup_updater() {
 /**
  * Create a default forum, topic, and reply
  *
- * @since bbPress (r3767)
+ * @since IdeaBoard (r3767)
  * @param array $args Array of arguments to override default values
  */
 function bbp_create_initial_content( $args = array() ) {
@@ -183,12 +183,12 @@ function bbp_create_initial_content( $args = array() ) {
 	$r = bbp_parse_args( $args, array(
 		'forum_parent'  => 0,
 		'forum_status'  => 'publish',
-		'forum_title'   => __( 'General',                                  'bbpress' ),
-		'forum_content' => __( 'General chit-chat',                        'bbpress' ),
-		'topic_title'   => __( 'Hello World!',                             'bbpress' ),
-		'topic_content' => __( 'I am the first topic in your new forums.', 'bbpress' ),
-		'reply_title'   => __( 'Re: Hello World!',                         'bbpress' ),
-		'reply_content' => __( 'Oh, and this is what a reply looks like.', 'bbpress' ),
+		'forum_title'   => __( 'General',                                  'ideaboard' ),
+		'forum_content' => __( 'General chit-chat',                        'ideaboard' ),
+		'topic_title'   => __( 'Hello World!',                             'ideaboard' ),
+		'topic_content' => __( 'I am the first topic in your new forums.', 'ideaboard' ),
+		'reply_title'   => __( 'Re: Hello World!',                         'ideaboard' ),
+		'reply_content' => __( 'Oh, and this is what a reply looks like.', 'ideaboard' ),
 	), 'create_initial_content' );
 
 	// Create the initial forum
@@ -230,13 +230,13 @@ function bbp_create_initial_content( $args = array() ) {
 }
 
 /**
- * bbPress's version updater looks at what the current database version is, and
+ * IdeaBoard's version updater looks at what the current database version is, and
  * runs whatever other code is needed.
  *
  * This is most-often used when the data schema changes, but should also be used
- * to correct issues with bbPress meta-data silently on software update.
+ * to correct issues with IdeaBoard meta-data silently on software update.
  *
- * @since bbPress (r4104)
+ * @since IdeaBoard (r4104)
  */
 function bbp_version_updater() {
 
@@ -258,7 +258,7 @@ function bbp_version_updater() {
 		/**
 		 * Repair private and hidden forum data
 		 *
-		 * @link http://bbpress.trac.wordpress.org/ticket/1891
+		 * @link http://ideaboard.trac.wordpress.org/ticket/1891
 		 */
 		bbp_admin_repair_forum_visibility();
 	}
@@ -295,11 +295,11 @@ function bbp_version_updater() {
 }
 
 /**
- * Redirect user to bbPress's What's New page on activation
+ * Redirect user to IdeaBoard's What's New page on activation
  *
- * @since bbPress (r4389)
+ * @since IdeaBoard (r4389)
  *
- * @internal Used internally to redirect bbPress to the about page on activation
+ * @internal Used internally to redirect IdeaBoard to the about page on activation
  *
  * @uses is_network_admin() To bail if being network activated
  * @uses set_transient() To drop the activation transient for 30 seconds
@@ -318,10 +318,10 @@ function bbp_add_activation_redirect() {
 
 /**
  * Hooked to the 'bbp_activate' action, this helper function automatically makes
- * the current user a Key Master in the forums if they just activated bbPress,
+ * the current user a Key Master in the forums if they just activated IdeaBoard,
  * regardless of the bbp_allow_global_access() setting.
  *
- * @since bbPress (r4910)
+ * @since IdeaBoard (r4910)
  *
  * @internal Used to internally make the current user a keymaster on activation
  *

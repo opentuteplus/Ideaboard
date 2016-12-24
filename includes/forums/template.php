@@ -1,9 +1,9 @@
 <?php
 
 /**
- * bbPress Forum Template Tags
+ * IdeaBoard Forum Template Tags
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage TemplateTags
  */
 
@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
  * Output the unique id of the custom post type for forums
  *
- * @since bbPress (r2857)
+ * @since IdeaBoard (r2857)
  * @uses bbp_get_forum_post_type() To get the forum post type
  */
 function bbp_forum_post_type() {
@@ -24,48 +24,48 @@ function bbp_forum_post_type() {
 	/**
 	 * Return the unique id of the custom post type for forums
 	 *
-	 * @since bbPress (r2857)
+	 * @since IdeaBoard (r2857)
 	 *
 	 * @uses apply_filters() Calls 'bbp_get_forum_post_type' with the forum
 	 *                        post type id
 	 * @return string The unique forum post type id
 	 */
 	function bbp_get_forum_post_type() {
-		return apply_filters( 'bbp_get_forum_post_type', bbpress()->forum_post_type );
+		return apply_filters( 'bbp_get_forum_post_type', ideaboard()->forum_post_type );
 	}
 
 
 /**
  * Return array of labels used by the forum post type
  *
- * @since bbPress (r5129)
+ * @since IdeaBoard (r5129)
  *
  * @return array
  */
 function bbp_get_forum_post_type_labels() {
 	return apply_filters( 'bbp_get_forum_post_type_labels', array(
-		'name'               => __( 'Forums',                   'bbpress' ),
-		'menu_name'          => __( 'Forums',                   'bbpress' ),
-		'singular_name'      => __( 'Forum',                    'bbpress' ),
-		'all_items'          => __( 'All Forums',               'bbpress' ),
-		'add_new'            => __( 'New Forum',                'bbpress' ),
-		'add_new_item'       => __( 'Create New Forum',         'bbpress' ),
-		'edit'               => __( 'Edit',                     'bbpress' ),
-		'edit_item'          => __( 'Edit Forum',               'bbpress' ),
-		'new_item'           => __( 'New Forum',                'bbpress' ),
-		'view'               => __( 'View Forum',               'bbpress' ),
-		'view_item'          => __( 'View Forum',               'bbpress' ),
-		'search_items'       => __( 'Search Forums',            'bbpress' ),
-		'not_found'          => __( 'No forums found',          'bbpress' ),
-		'not_found_in_trash' => __( 'No forums found in Trash', 'bbpress' ),
-		'parent_item_colon'  => __( 'Parent Forum:',            'bbpress' )
+		'name'               => __( 'Forums',                   'ideaboard' ),
+		'menu_name'          => __( 'Forums',                   'ideaboard' ),
+		'singular_name'      => __( 'Forum',                    'ideaboard' ),
+		'all_items'          => __( 'All Forums',               'ideaboard' ),
+		'add_new'            => __( 'New Forum',                'ideaboard' ),
+		'add_new_item'       => __( 'Create New Forum',         'ideaboard' ),
+		'edit'               => __( 'Edit',                     'ideaboard' ),
+		'edit_item'          => __( 'Edit Forum',               'ideaboard' ),
+		'new_item'           => __( 'New Forum',                'ideaboard' ),
+		'view'               => __( 'View Forum',               'ideaboard' ),
+		'view_item'          => __( 'View Forum',               'ideaboard' ),
+		'search_items'       => __( 'Search Forums',            'ideaboard' ),
+		'not_found'          => __( 'No forums found',          'ideaboard' ),
+		'not_found_in_trash' => __( 'No forums found in Trash', 'ideaboard' ),
+		'parent_item_colon'  => __( 'Parent Forum:',            'ideaboard' )
 	) );
 }
 
 /**
  * Return array of forum post type rewrite settings
  *
- * @since bbPress (r5129)
+ * @since IdeaBoard (r5129)
  *
  * @return array
  */
@@ -79,7 +79,7 @@ function bbp_get_forum_post_type_rewrite() {
 /**
  * Return array of features the forum post type supports
  *
- * @since bbPress (r5129)
+ * @since IdeaBoard (r5129)
  *
  * @return array
  */
@@ -98,7 +98,7 @@ function bbp_get_forum_post_type_supports() {
  *
  * WordPress makes this easy for us.
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param mixed $args All the arguments supported by {@link WP_Query}
  * @uses WP_Query To make query and get the forums
@@ -139,7 +139,7 @@ function bbp_has_forums( $args = '' ) {
 	), 'has_forums' );
 
 	// Run the query
-	$bbp              = bbpress();
+	$bbp              = ideaboard();
 	$bbp->forum_query = new WP_Query( $bbp_f );
 
 	return apply_filters( 'bbp_has_forums', $bbp->forum_query->have_posts(), $bbp->forum_query );
@@ -148,16 +148,16 @@ function bbp_has_forums( $args = '' ) {
 /**
  * Whether there are more forums available in the loop
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
- * @uses bbPress:forum_query::have_posts() To check if there are more forums
+ * @uses IdeaBoard:forum_query::have_posts() To check if there are more forums
  *                                          available
  * @return object Forum information
  */
 function bbp_forums() {
 
 	// Put into variable to check against next
-	$have_posts = bbpress()->forum_query->have_posts();
+	$have_posts = ideaboard()->forum_query->have_posts();
 
 	// Reset the post data when finished
 	if ( empty( $have_posts ) )
@@ -169,13 +169,13 @@ function bbp_forums() {
 /**
  * Loads up the current forum in the loop
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
- * @uses bbPress:forum_query::the_post() To get the current forum
+ * @uses IdeaBoard:forum_query::the_post() To get the current forum
  * @return object Forum information
  */
 function bbp_the_forum() {
-	return bbpress()->forum_query->the_post();
+	return ideaboard()->forum_query->the_post();
 }
 
 /** Forum *********************************************************************/
@@ -183,7 +183,7 @@ function bbp_the_forum() {
 /**
  * Output forum id
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param $forum_id Optional. Used to check emptiness
  * @uses bbp_get_forum_id() To get the forum id
@@ -194,11 +194,11 @@ function bbp_forum_id( $forum_id = 0 ) {
 	/**
 	 * Return the forum id
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param $forum_id Optional. Used to check emptiness
-	 * @uses bbPress::forum_query::in_the_loop To check if we're in the loop
-	 * @uses bbPress::forum_query::post::ID To get the forum id
+	 * @uses IdeaBoard::forum_query::in_the_loop To check if we're in the loop
+	 * @uses IdeaBoard::forum_query::post::ID To get the forum id
 	 * @uses WP_Query::post::ID To get the forum id
 	 * @uses bbp_is_forum() To check if the search result is a forum
 	 * @uses bbp_is_single_forum() To check if it's a forum page
@@ -212,7 +212,7 @@ function bbp_forum_id( $forum_id = 0 ) {
 	function bbp_get_forum_id( $forum_id = 0 ) {
 		global $wp_query;
 
-		$bbp = bbpress();
+		$bbp = ideaboard();
 
 		// Easy empty checking
 		if ( !empty( $forum_id ) && is_numeric( $forum_id ) ) {
@@ -249,7 +249,7 @@ function bbp_forum_id( $forum_id = 0 ) {
 /**
  * Gets a forum
  *
- * @since bbPress (r2787)
+ * @since IdeaBoard (r2787)
  *
  * @param int|object $forum forum id or forum object
  * @param string $output Optional. OBJECT, ARRAY_A, or ARRAY_N. Default = OBJECT
@@ -294,7 +294,7 @@ function bbp_get_forum( $forum, $output = OBJECT, $filter = 'raw' ) {
 /**
  * Output the link to the forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_permalink() To get the permalink
@@ -305,7 +305,7 @@ function bbp_forum_permalink( $forum_id = 0 ) {
 	/**
 	 * Return the link to the forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @param $string $redirect_to Optional. Pass a redirect value for use with
@@ -334,7 +334,7 @@ function bbp_forum_permalink( $forum_id = 0 ) {
 /**
  * Output the title of the forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_title() To get the forum title
@@ -345,7 +345,7 @@ function bbp_forum_title( $forum_id = 0 ) {
 	/**
 	 * Return the title of the forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -363,7 +363,7 @@ function bbp_forum_title( $forum_id = 0 ) {
 /**
  * Output the forum archive title
  *
- * @since bbPress (r3249)
+ * @since IdeaBoard (r3249)
  *
  * @param string $title Default text to use as title
  */
@@ -373,7 +373,7 @@ function bbp_forum_archive_title( $title = '' ) {
 	/**
 	 * Return the forum archive title
 	 *
-	 * @since bbPress (r3249)
+	 * @since IdeaBoard (r3249)
 	 *
 	 * @param string $title Default text to use as title
 	 *
@@ -409,7 +409,7 @@ function bbp_forum_archive_title( $title = '' ) {
 /**
  * Output the content of the forum
  *
- * @since bbPress (r2780)
+ * @since IdeaBoard (r2780)
  *
  * @param int $forum_id Optional. Topic id
  * @uses bbp_get_forum_content() To get the forum content
@@ -420,7 +420,7 @@ function bbp_forum_content( $forum_id = 0 ) {
 	/**
 	 * Return the content of the forum
 	 *
-	 * @since bbPress (r2780)
+	 * @since IdeaBoard (r2780)
 	 *
 	 * @param int $forum_id Optional. Topic id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -446,7 +446,7 @@ function bbp_forum_content( $forum_id = 0 ) {
 /**
  * Allow forum rows to have adminstrative actions
  *
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  * @uses do_action()
  * @todo Links and filter
  */
@@ -457,7 +457,7 @@ function bbp_forum_row_actions() {
 /**
  * Output the forums last active ID
  *
- * @since bbPress (r2860)
+ * @since IdeaBoard (r2860)
  *
  * @uses bbp_get_forum_last_active_id() To get the forum's last active id
  * @param int $forum_id Optional. Forum id
@@ -468,7 +468,7 @@ function bbp_forum_last_active_id( $forum_id = 0 ) {
 	/**
 	 * Return the forums last active ID
 	 *
-	 * @since bbPress (r2860)
+	 * @since IdeaBoard (r2860)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -487,7 +487,7 @@ function bbp_forum_last_active_id( $forum_id = 0 ) {
 /**
  * Output the forums last update date/time (aka freshness)
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @uses bbp_get_forum_last_active_time() To get the forum freshness
  * @param int $forum_id Optional. Forum id
@@ -498,7 +498,7 @@ function bbp_forum_last_active_time( $forum_id = 0 ) {
 	/**
 	 * Return the forums last update date/time (aka freshness)
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -542,7 +542,7 @@ function bbp_forum_last_active_time( $forum_id = 0 ) {
  *
  * Outputs a complete link with attributes and content.
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_freshness_link() To get the forum freshness link
@@ -555,7 +555,7 @@ function bbp_forum_freshness_link( $forum_id = 0) {
 	 *
 	 * Returns a complete link with attributes and content.
 	 *
-	 * @since bbPress (r2625)
+	 * @since IdeaBoard (r2625)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -598,7 +598,7 @@ function bbp_forum_freshness_link( $forum_id = 0) {
 		if ( !empty( $time_since ) && !empty( $link_url ) )
 			$anchor = '<a href="' . esc_url( $link_url ) . '" title="' . esc_attr( $title ) . '">' . esc_html( $time_since ) . '</a>';
 		else
-			$anchor = esc_html__( 'No Topics', 'bbpress' );
+			$anchor = esc_html__( 'No Topics', 'ideaboard' );
 
 		return apply_filters( 'bbp_get_forum_freshness_link', $anchor, $forum_id, $time_since, $link_url, $title, $active_id );
 	}
@@ -606,7 +606,7 @@ function bbp_forum_freshness_link( $forum_id = 0) {
 /**
  * Output parent ID of a forum, if exists
  *
- * @since bbPress (r3675)
+ * @since IdeaBoard (r3675)
  *
  * @param int $forum_id Forum ID
  * @uses bbp_get_forum_parent_id() To get the forum's parent ID
@@ -617,7 +617,7 @@ function bbp_forum_parent_id( $forum_id = 0 ) {
 	/**
 	 * Return ID of forum parent, if exists
 	 *
-	 * @since bbPress (r3675)
+	 * @since IdeaBoard (r3675)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -635,7 +635,7 @@ function bbp_forum_parent_id( $forum_id = 0 ) {
 /**
  * Return array of parent forums
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_id() To get the forum id
@@ -662,7 +662,7 @@ function bbp_get_forum_ancestors( $forum_id = 0 ) {
 /**
  * Return subforums of given forum
  *
- * @since bbPress (r2747)
+ * @since IdeaBoard (r2747)
  *
  * @param mixed $args All the arguments supported by {@link WP_Query}
  * @uses bbp_get_forum_id() To get the forum id
@@ -807,7 +807,7 @@ function bbp_list_forums( $args = '' ) {
 /**
  * Output the forum subscription link
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @uses bbp_get_forum_subscription_link()
  */
@@ -820,7 +820,7 @@ function bbp_forum_subscription_link( $args = array() ) {
 	 *
 	 * A custom wrapper for bbp_get_user_subscribe_link()
 	 *
-	 * @since bbPress (r5156)
+	 * @since IdeaBoard (r5156)
 	 *
 	 * @uses bbp_parse_args()
 	 * @uses bbp_get_user_subscribe_link()
@@ -837,12 +837,12 @@ function bbp_forum_subscription_link( $args = array() ) {
 			'user_id'     => 0,
 			'before'      => '',
 			'after'       => '',
-			'subscribe'   => __( 'Subscribe',   'bbpress' ),
-			'unsubscribe' => __( 'Unsubscribe', 'bbpress' )
+			'subscribe'   => __( 'Subscribe',   'ideaboard' ),
+			'unsubscribe' => __( 'Unsubscribe', 'ideaboard' )
 		), 'get_forum_subscribe_link' );
 
 		// No link for categories until we support subscription hierarchy
-		// @see http://bbpress.trac.wordpress.org/ticket/2475
+		// @see http://ideaboard.trac.wordpress.org/ticket/2475
 		if ( ! bbp_is_forum_category() ) {
 			$retval = bbp_get_user_subscribe_link( $r );
 		}
@@ -855,7 +855,7 @@ function bbp_forum_subscription_link( $args = array() ) {
 /**
  * Output the forum's last topic id
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @uses bbp_get_forum_last_topic_id() To get the forum's last topic id
  * @param int $forum_id Optional. Forum id
@@ -866,7 +866,7 @@ function bbp_forum_last_topic_id( $forum_id = 0 ) {
 	/**
 	 * Return the forum's last topic id
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -885,7 +885,7 @@ function bbp_forum_last_topic_id( $forum_id = 0 ) {
 /**
  * Output the title of the last topic inside a forum
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_topic_title() To get the forum's last topic's title
@@ -896,7 +896,7 @@ function bbp_forum_last_topic_title( $forum_id = 0 ) {
 	/**
 	 * Return the title of the last topic inside a forum
 	 *
-	 * @since bbPress (r2625)
+	 * @since IdeaBoard (r2625)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -917,7 +917,7 @@ function bbp_forum_last_topic_title( $forum_id = 0 ) {
 /**
  * Output the link to the last topic in a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_topic_permalink() To get the forum's last topic's
@@ -929,7 +929,7 @@ function bbp_forum_last_topic_permalink( $forum_id = 0 ) {
 	/**
 	 * Return the link to the last topic in a forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -947,7 +947,7 @@ function bbp_forum_last_topic_permalink( $forum_id = 0 ) {
 /**
  * Return the author ID of the last topic of a forum
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_id() To get the forum id
@@ -966,7 +966,7 @@ function bbp_get_forum_last_topic_author_id( $forum_id = 0 ) {
 /**
  * Output link to author of last topic of forum
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_topic_author_link() To get the forum's last topic's
@@ -978,7 +978,7 @@ function bbp_forum_last_topic_author_link( $forum_id = 0 ) {
 	/**
 	 * Return link to author of last topic of forum
 	 *
-	 * @since bbPress (r2625)
+	 * @since IdeaBoard (r2625)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1001,7 +1001,7 @@ function bbp_forum_last_topic_author_link( $forum_id = 0 ) {
 /**
  * Output the forums last reply id
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @uses bbp_get_forum_last_reply_id() To get the forum's last reply id
  * @param int $forum_id Optional. Forum id
@@ -1012,7 +1012,7 @@ function bbp_forum_last_reply_id( $forum_id = 0 ) {
 	/**
 	 * Return the forums last reply id
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1060,7 +1060,7 @@ function bbp_forum_last_reply_title( $forum_id = 0 ) {
 /**
  * Output the link to the last reply in a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_reply_permalink() To get the forum last reply link
@@ -1071,7 +1071,7 @@ function bbp_forum_last_reply_permalink( $forum_id = 0 ) {
 	/**
 	 * Return the link to the last reply in a forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1089,7 +1089,7 @@ function bbp_forum_last_reply_permalink( $forum_id = 0 ) {
 /**
  * Output the url to the last reply in a forum
  *
- * @since bbPress (r2683)
+ * @since IdeaBoard (r2683)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_reply_url() To get the forum last reply url
@@ -1100,7 +1100,7 @@ function bbp_forum_last_reply_url( $forum_id = 0 ) {
 	/**
 	 * Return the url to the last reply in a forum
 	 *
-	 * @since bbPress (r2683)
+	 * @since IdeaBoard (r2683)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1137,7 +1137,7 @@ function bbp_forum_last_reply_url( $forum_id = 0 ) {
 /**
  * Output author ID of last reply of forum
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_reply_author_id() To get the forum's last reply
@@ -1149,7 +1149,7 @@ function bbp_forum_last_reply_author_id( $forum_id = 0 ) {
 	/**
 	 * Return author ID of last reply of forum
 	 *
-	 * @since bbPress (r2625)
+	 * @since IdeaBoard (r2625)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1169,7 +1169,7 @@ function bbp_forum_last_reply_author_id( $forum_id = 0 ) {
 /**
  * Output link to author of last reply of forum
  *
- * @since bbPress (r2625)
+ * @since IdeaBoard (r2625)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_last_reply_author_link() To get the forum's last reply's
@@ -1181,7 +1181,7 @@ function bbp_forum_last_reply_author_link( $forum_id = 0 ) {
 	/**
 	 * Return link to author of last reply of forum
 	 *
-	 * @since bbPress (r2625)
+	 * @since IdeaBoard (r2625)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1205,7 +1205,7 @@ function bbp_forum_last_reply_author_link( $forum_id = 0 ) {
 /**
  * Output the topics link of the forum
  *
- * @since bbPress (r2883)
+ * @since IdeaBoard (r2883)
  *
  * @param int $forum_id Optional. Topic id
  * @uses bbp_get_forum_topics_link() To get the forum topics link
@@ -1217,7 +1217,7 @@ function bbp_forum_topics_link( $forum_id = 0 ) {
 	/**
 	 * Return the topics link of the forum
 	 *
-	 * @since bbPress (r2883)
+	 * @since IdeaBoard (r2883)
 	 *
 	 * @param int $forum_id Optional. Topic id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1235,7 +1235,7 @@ function bbp_forum_topics_link( $forum_id = 0 ) {
 	function bbp_get_forum_topics_link( $forum_id = 0 ) {
 		$forum    = bbp_get_forum( $forum_id );
 		$forum_id = $forum->ID;
-		$topics   = sprintf( _n( '%s topic', '%s topics', bbp_get_forum_topic_count( $forum_id, true, false ), 'bbpress' ), bbp_get_forum_topic_count( $forum_id ) );
+		$topics   = sprintf( _n( '%s topic', '%s topics', bbp_get_forum_topic_count( $forum_id, true, false ), 'ideaboard' ), bbp_get_forum_topic_count( $forum_id ) );
 		$retval   = '';
 
 		// First link never has view=all
@@ -1251,7 +1251,7 @@ function bbp_forum_topics_link( $forum_id = 0 ) {
 		if ( !empty( $deleted ) && current_user_can( 'edit_others_topics' ) ) {
 
 			// Extra text
-			$extra = sprintf( __( ' (+ %d hidden)', 'bbpress' ), $deleted );
+			$extra = sprintf( __( ' (+ %d hidden)', 'ideaboard' ), $deleted );
 
 			// No link
 			if ( bbp_get_view_all() ) {
@@ -1269,7 +1269,7 @@ function bbp_forum_topics_link( $forum_id = 0 ) {
 /**
  * Output total sub-forum count of a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id to check
  * @param boolean $integer Optional. Whether or not to format the result
@@ -1281,7 +1281,7 @@ function bbp_forum_subforum_count( $forum_id = 0, $integer = false ) {
 	/**
 	 * Return total subforum count of a forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @param boolean $integer Optional. Whether or not to format the result
@@ -1302,7 +1302,7 @@ function bbp_forum_subforum_count( $forum_id = 0, $integer = false ) {
 /**
  * Output total topic count of a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id
  * @param bool $total_count Optional. To get the total count or normal count?
@@ -1315,7 +1315,7 @@ function bbp_forum_topic_count( $forum_id = 0, $total_count = true, $integer = f
 	/**
 	 * Return total topic count of a forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @param bool $total_count Optional. To get the total count or normal
@@ -1339,7 +1339,7 @@ function bbp_forum_topic_count( $forum_id = 0, $total_count = true, $integer = f
 /**
  * Output total reply count of a forum
  *
- * @since bbPress (r2464)
+ * @since IdeaBoard (r2464)
  *
  * @param int $forum_id Optional. Forum id
  * @param bool $total_count Optional. To get the total count or normal count?
@@ -1352,7 +1352,7 @@ function bbp_forum_reply_count( $forum_id = 0, $total_count = true, $integer = f
 	/**
 	 * Return total post count of a forum
 	 *
-	 * @since bbPress (r2464)
+	 * @since IdeaBoard (r2464)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @param bool $total_count Optional. To get the total count or normal
@@ -1376,7 +1376,7 @@ function bbp_forum_reply_count( $forum_id = 0, $total_count = true, $integer = f
 /**
  * Output total post count of a forum
  *
- * @since bbPress (r2954)
+ * @since IdeaBoard (r2954)
  *
  * @param int $forum_id Optional. Forum id
  * @param bool $total_count Optional. To get the total count or normal count?
@@ -1389,7 +1389,7 @@ function bbp_forum_post_count( $forum_id = 0, $total_count = true, $integer = fa
 	/**
 	 * Return total post count of a forum
 	 *
-	 * @since bbPress (r2954)
+	 * @since IdeaBoard (r2954)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @param bool $total_count Optional. To get the total count or normal
@@ -1416,7 +1416,7 @@ function bbp_forum_post_count( $forum_id = 0, $total_count = true, $integer = fa
  * Output total hidden topic count of a forum (hidden includes trashed and
  * spammed topics)
  *
- * @since bbPress (r2883)
+ * @since IdeaBoard (r2883)
  *
  * @param int $forum_id Optional. Topic id
  * @param boolean $integer Optional. Whether or not to format the result
@@ -1429,7 +1429,7 @@ function bbp_forum_topic_count_hidden( $forum_id = 0, $integer = false ) {
 	 * Return total hidden topic count of a forum (hidden includes trashed
 	 * and spammed topics)
 	 *
-	 * @since bbPress (r2883)
+	 * @since IdeaBoard (r2883)
 	 *
 	 * @param int $forum_id Optional. Topic id
 	 * @param boolean $integer Optional. Whether or not to format the result
@@ -1450,7 +1450,7 @@ function bbp_forum_topic_count_hidden( $forum_id = 0, $integer = false ) {
 /**
  * Output the status of the forum
  *
- * @since bbPress (r2667)
+ * @since IdeaBoard (r2667)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_status() To get the forum status
@@ -1461,7 +1461,7 @@ function bbp_forum_status( $forum_id = 0 ) {
 	/**
 	 * Return the status of the forum
 	 *
-	 * @since bbPress (r2667)
+	 * @since IdeaBoard (r2667)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1482,7 +1482,7 @@ function bbp_forum_status( $forum_id = 0 ) {
 /**
  * Output the visibility of the forum
  *
- * @since bbPress (r2997)
+ * @since IdeaBoard (r2997)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_visibility() To get the forum visibility
@@ -1493,7 +1493,7 @@ function bbp_forum_visibility( $forum_id = 0 ) {
 	/**
 	 * Return the visibility of the forum
 	 *
-	 * @since bbPress (r2997)
+	 * @since IdeaBoard (r2997)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1511,7 +1511,7 @@ function bbp_forum_visibility( $forum_id = 0 ) {
 /**
  * Output the type of the forum
  *
- * @since bbPress (r3563)
+ * @since IdeaBoard (r3563)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_type() To get the forum type
@@ -1522,7 +1522,7 @@ function bbp_forum_type( $forum_id = 0 ) {
 	/**
 	 * Return the type of forum (category/forum/etc...)
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses get_post_meta() To get the forum category meta
@@ -1540,7 +1540,7 @@ function bbp_forum_type( $forum_id = 0 ) {
 /**
  * Is the forum a category?
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_type() To get the forum type
@@ -1557,7 +1557,7 @@ function bbp_is_forum_category( $forum_id = 0 ) {
 /**
  * Is the forum open?
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  * @param int $forum_id Optional. Forum id
  *
  * @param int $forum_id Optional. Forum id
@@ -1571,7 +1571,7 @@ function bbp_is_forum_open( $forum_id = 0 ) {
 	/**
 	 * Is the forum closed?
 	 *
-	 * @since bbPress (r2746)
+	 * @since IdeaBoard (r2746)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @param bool $check_ancestors Check if the ancestors are closed (only
@@ -1603,7 +1603,7 @@ function bbp_is_forum_open( $forum_id = 0 ) {
 /**
  * Is the forum public?
  *
- * @since bbPress (r2997)
+ * @since IdeaBoard (r2997)
  *
  * @param int $forum_id Optional. Forum id
  * @param bool $check_ancestors Check if the ancestors are public (only if
@@ -1639,7 +1639,7 @@ function bbp_is_forum_public( $forum_id = 0, $check_ancestors = true ) {
 /**
  * Is the forum private?
  *
- * @since bbPress (r2746)
+ * @since IdeaBoard (r2746)
  *
  * @param int $forum_id Optional. Forum id
  * @param bool $check_ancestors Check if the ancestors are private (only if
@@ -1675,7 +1675,7 @@ function bbp_is_forum_private( $forum_id = 0, $check_ancestors = true ) {
 /**
  * Is the forum hidden?
  *
- * @since bbPress (r2997)
+ * @since IdeaBoard (r2997)
  *
  * @param int $forum_id Optional. Forum id
  * @param bool $check_ancestors Check if the ancestors are private (only if
@@ -1711,7 +1711,7 @@ function bbp_is_forum_hidden( $forum_id = 0, $check_ancestors = true ) {
 /**
  * Output the author of the forum
  *
- * @since bbPress (r3675)
+ * @since IdeaBoard (r3675)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_author() To get the forum author
@@ -1722,7 +1722,7 @@ function bbp_forum_author_display_name( $forum_id = 0 ) {
 	/**
 	 * Return the author of the forum
 	 *
-	 * @since bbPress (r3675)
+	 * @since IdeaBoard (r3675)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1742,7 +1742,7 @@ function bbp_forum_author_display_name( $forum_id = 0 ) {
 /**
  * Output the author ID of the forum
  *
- * @since bbPress (r3675)
+ * @since IdeaBoard (r3675)
  *
  * @param int $forum_id Optional. Forum id
  * @uses bbp_get_forum_author_id() To get the forum author id
@@ -1753,7 +1753,7 @@ function bbp_forum_author_id( $forum_id = 0 ) {
 	/**
 	 * Return the author ID of the forum
 	 *
-	 * @since bbPress (r3675)
+	 * @since IdeaBoard (r3675)
 	 *
 	 * @param int $forum_id Optional. Forum id
 	 * @uses bbp_get_forum_id() To get the forum id
@@ -1772,7 +1772,7 @@ function bbp_forum_author_id( $forum_id = 0 ) {
 /**
  * Replace forum meta details for users that cannot view them.
  *
- * @since bbPress (r3162)
+ * @since IdeaBoard (r3162)
  *
  * @param string $retval
  * @param int $forum_id
@@ -1792,7 +1792,7 @@ function bbp_suppress_private_forum_meta( $retval, $forum_id ) {
 /**
  * Replace forum author details for users that cannot view them.
  *
- * @since bbPress (r3162)
+ * @since IdeaBoard (r3162)
  *
  * @param string $retval
  * @param int $forum_id
@@ -1849,7 +1849,7 @@ function bbp_suppress_private_author_link( $author_link, $args ) {
 /**
  * Output the row class of a forum
  *
- * @since bbPress (r2667)
+ * @since IdeaBoard (r2667)
  *
  * @param int $forum_id Optional. Forum ID.
  * @param array Extra classes you can pass when calling this function
@@ -1861,7 +1861,7 @@ function bbp_forum_class( $forum_id = 0, $classes = array() ) {
 	/**
 	 * Return the row class of a forum
 	 *
-	 * @since bbPress (r2667)
+	 * @since IdeaBoard (r2667)
 	 *
 	 * @param int $forum_id Optional. Forum ID
 	 * @param array Extra classes you can pass when calling this function
@@ -1875,7 +1875,7 @@ function bbp_forum_class( $forum_id = 0, $classes = array() ) {
 	 * @return string Row class of the forum
 	 */
 	function bbp_get_forum_class( $forum_id = 0, $classes = array() ) {
-		$bbp       = bbpress();
+		$bbp       = ideaboard();
 		$forum_id  = bbp_get_forum_id( $forum_id );
 		$count     = isset( $bbp->forum_query->current_post ) ? $bbp->forum_query->current_post : 1;
 		$classes   = (array) $classes;
@@ -1906,7 +1906,7 @@ function bbp_forum_class( $forum_id = 0, $classes = array() ) {
  * Output a fancy description of the current forum, including total topics,
  * total replies, and last activity.
  *
- * @since bbPress (r2860)
+ * @since IdeaBoard (r2860)
  *
  * @param array $args Arguments passed to alter output
  * @uses bbp_get_single_forum_description() Return the eventual output
@@ -1918,7 +1918,7 @@ function bbp_single_forum_description( $args = '' ) {
 	 * Return a fancy description of the current forum, including total
 	 * topics, total replies, and last activity.
 	 *
-	 * @since bbPress (r2860)
+	 * @since IdeaBoard (r2860)
 	 *
 	 * @param mixed $args This function supports these arguments:
 	 *  - forum_id: Forum id
@@ -1962,7 +1962,7 @@ function bbp_single_forum_description( $args = '' ) {
 
 		// Has replies
 		if ( !empty( $reply_count ) ) {
-			$reply_text = sprintf( _n( '%s reply', '%s replies', $rc_int, 'bbpress' ), $reply_count );
+			$reply_text = sprintf( _n( '%s reply', '%s replies', $rc_int, 'ideaboard' ), $reply_count );
 		}
 
 		// Forum has active data
@@ -1973,7 +1973,7 @@ function bbp_single_forum_description( $args = '' ) {
 
 		// Forum has no last active data
 		} else {
-			$topic_text      = sprintf( _n( '%s topic', '%s topics', $tc_int, 'bbpress' ), $topic_count );
+			$topic_text      = sprintf( _n( '%s topic', '%s topics', $tc_int, 'ideaboard' ), $topic_count );
 		}
 
 		// Forum has active data
@@ -1982,17 +1982,17 @@ function bbp_single_forum_description( $args = '' ) {
 			if ( !empty( $reply_count ) ) {
 
 				if ( bbp_is_forum_category( $forum_id ) ) {
-					$retstr = sprintf( esc_html__( 'This category contains %1$s and %2$s, and was last updated by %3$s %4$s.', 'bbpress' ), $topic_text, $reply_text, $last_updated_by, $time_since );
+					$retstr = sprintf( esc_html__( 'This category contains %1$s and %2$s, and was last updated by %3$s %4$s.', 'ideaboard' ), $topic_text, $reply_text, $last_updated_by, $time_since );
 				} else {
-					$retstr = sprintf( esc_html__( 'This forum contains %1$s and %2$s, and was last updated by %3$s %4$s.',    'bbpress' ), $topic_text, $reply_text, $last_updated_by, $time_since );
+					$retstr = sprintf( esc_html__( 'This forum contains %1$s and %2$s, and was last updated by %3$s %4$s.',    'ideaboard' ), $topic_text, $reply_text, $last_updated_by, $time_since );
 				}
 
 			} else {
 
 				if ( bbp_is_forum_category( $forum_id ) ) {
-					$retstr = sprintf( esc_html__( 'This category contains %1$s, and was last updated by %2$s %3$s.', 'bbpress' ), $topic_text, $last_updated_by, $time_since );
+					$retstr = sprintf( esc_html__( 'This category contains %1$s, and was last updated by %2$s %3$s.', 'ideaboard' ), $topic_text, $last_updated_by, $time_since );
 				} else {
-					$retstr = sprintf( esc_html__( 'This forum contains %1$s, and was last updated by %2$s %3$s.',    'bbpress' ), $topic_text, $last_updated_by, $time_since );
+					$retstr = sprintf( esc_html__( 'This forum contains %1$s, and was last updated by %2$s %3$s.',    'ideaboard' ), $topic_text, $last_updated_by, $time_since );
 				}
 			}
 
@@ -2002,9 +2002,9 @@ function bbp_single_forum_description( $args = '' ) {
 			if ( !empty( $reply_count ) ) {
 
 				if ( bbp_is_forum_category( $forum_id ) ) {
-					$retstr = sprintf( esc_html__( 'This category contains %1$s and %2$s.', 'bbpress' ), $topic_text, $reply_text );
+					$retstr = sprintf( esc_html__( 'This category contains %1$s and %2$s.', 'ideaboard' ), $topic_text, $reply_text );
 				} else {
-					$retstr = sprintf( esc_html__( 'This forum contains %1$s and %2$s.',    'bbpress' ), $topic_text, $reply_text );
+					$retstr = sprintf( esc_html__( 'This forum contains %1$s and %2$s.',    'ideaboard' ), $topic_text, $reply_text );
 				}
 
 			} else {
@@ -2012,13 +2012,13 @@ function bbp_single_forum_description( $args = '' ) {
 				if ( !empty( $topic_count ) ) {
 
 					if ( bbp_is_forum_category( $forum_id ) ) {
-						$retstr = sprintf( esc_html__( 'This category contains %1$s.', 'bbpress' ), $topic_text );
+						$retstr = sprintf( esc_html__( 'This category contains %1$s.', 'ideaboard' ), $topic_text );
 					} else {
-						$retstr = sprintf( esc_html__( 'This forum contains %1$s.',    'bbpress' ), $topic_text );
+						$retstr = sprintf( esc_html__( 'This forum contains %1$s.',    'ideaboard' ), $topic_text );
 					}
 
 				} else {
-					$retstr = esc_html__( 'This forum is empty.', 'bbpress' );
+					$retstr = esc_html__( 'This forum is empty.', 'ideaboard' );
 				}
 			}
 		}
@@ -2041,7 +2041,7 @@ function bbp_single_forum_description( $args = '' ) {
 /**
  * Output the value of forum title field
  *
- * @since bbPress (r3551)
+ * @since IdeaBoard (r3551)
  *
  * @uses bbp_get_form_forum_title() To get the value of forum title field
  */
@@ -2051,7 +2051,7 @@ function bbp_form_forum_title() {
 	/**
 	 * Return the value of forum title field
 	 *
-	 * @since bbPress (r3551)
+	 * @since IdeaBoard (r3551)
 	 *
 	 * @uses bbp_is_forum_edit() To check if it's forum edit page
 	 * @uses apply_filters() Calls 'bbp_get_form_forum_title' with the title
@@ -2078,7 +2078,7 @@ function bbp_form_forum_title() {
 /**
  * Output the value of forum content field
  *
- * @since bbPress (r3551)
+ * @since IdeaBoard (r3551)
  *
  * @uses bbp_get_form_forum_content() To get value of forum content field
  */
@@ -2088,7 +2088,7 @@ function bbp_form_forum_content() {
 	/**
 	 * Return the value of forum content field
 	 *
-	 * @since bbPress (r3551)
+	 * @since IdeaBoard (r3551)
 	 *
 	 * @uses bbp_is_forum_edit() To check if it's the forum edit page
 	 * @uses apply_filters() Calls 'bbp_get_form_forum_content' with the content
@@ -2115,7 +2115,7 @@ function bbp_form_forum_content() {
 /**
  * Output value of forum parent
  *
- * @since bbPress (r3551)
+ * @since IdeaBoard (r3551)
  *
  * @uses bbp_get_form_forum_parent() To get the topic's forum id
  */
@@ -2125,7 +2125,7 @@ function bbp_form_forum_parent() {
 	/**
 	 * Return value of forum parent
 	 *
-	 * @since bbPress (r3551)
+	 * @since IdeaBoard (r3551)
 	 *
 	 * @uses bbp_is_topic_edit() To check if it's the topic edit page
 	 * @uses bbp_get_forum_parent_id() To get the topic forum id
@@ -2153,7 +2153,7 @@ function bbp_form_forum_parent() {
 /**
  * Output value of forum type
  *
- * @since bbPress (r3563)
+ * @since IdeaBoard (r3563)
  *
  * @uses bbp_get_form_forum_type() To get the topic's forum id
  */
@@ -2163,7 +2163,7 @@ function bbp_form_forum_type() {
 	/**
 	 * Return value of forum type
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 *
 	 * @uses bbp_is_topic_edit() To check if it's the topic edit page
 	 * @uses bbp_get_forum_type_id() To get the topic forum id
@@ -2191,7 +2191,7 @@ function bbp_form_forum_type() {
 /**
  * Output value of forum visibility
  *
- * @since bbPress (r3563)
+ * @since IdeaBoard (r3563)
  *
  * @uses bbp_get_form_forum_visibility() To get the topic's forum id
  */
@@ -2201,7 +2201,7 @@ function bbp_form_forum_visibility() {
 	/**
 	 * Return value of forum visibility
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 *
 	 * @uses bbp_is_topic_edit() To check if it's the topic edit page
 	 * @uses bbp_get_forum_visibility_id() To get the topic forum id
@@ -2220,7 +2220,7 @@ function bbp_form_forum_visibility() {
 
 		// No data
 		} else {
-			$forum_visibility = bbpress()->public_status_id;
+			$forum_visibility = ideaboard()->public_status_id;
 		}
 
 		return apply_filters( 'bbp_get_form_forum_visibility', esc_attr( $forum_visibility ) );
@@ -2229,7 +2229,7 @@ function bbp_form_forum_visibility() {
 /**
  * Output checked value of forum subscription
  *
- * @since bbPress (r5156)
+ * @since IdeaBoard (r5156)
  *
  * @uses bbp_get_form_forum_subscribed() To get the subscribed checkbox value
  */
@@ -2239,7 +2239,7 @@ function bbp_form_forum_subscribed() {
 	/**
 	 * Return checked value of forum subscription
 	 *
-	 * @since bbPress (r5156)
+	 * @since IdeaBoard (r5156)
 	 *
 	 * @uses bbp_is_forum_edit() To check if it's the forum edit page
 	 * @uses bbp_get_global_post_field() To get current post author
@@ -2291,7 +2291,7 @@ function bbp_form_forum_subscribed() {
 /**
  * Output value forum type dropdown
  *
- * @since bbPress (r3563)
+ * @since IdeaBoard (r3563)
  *
  * @param int $forum_id The forum id to use
  * @uses bbp_get_form_forum_type() To get the topic's forum id
@@ -2302,7 +2302,7 @@ function bbp_form_forum_type_dropdown( $args = '' ) {
 	/**
 	 * Return the forum type dropdown
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 *
 	 * @param int $forum_id The forum id to use
 	 * @uses bbp_is_topic_edit() To check if it's the topic edit page
@@ -2375,7 +2375,7 @@ function bbp_form_forum_type_dropdown( $args = '' ) {
 /**
  * Output value forum status dropdown
  *
- * @since bbPress (r3563)
+ * @since IdeaBoard (r3563)
  *
  * @param int $forum_id The forum id to use
  * @uses bbp_get_form_forum_status() To get the topic's forum id
@@ -2386,7 +2386,7 @@ function bbp_form_forum_status_dropdown( $args = '' ) {
 	/**
 	 * Return the forum status dropdown
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 *
 	 * @param int $forum_id The forum id to use
 	 * @uses bbp_is_topic_edit() To check if it's the topic edit page
@@ -2459,7 +2459,7 @@ function bbp_form_forum_status_dropdown( $args = '' ) {
 /**
  * Output value forum visibility dropdown
  *
- * @since bbPress (r3563)
+ * @since IdeaBoard (r3563)
  *
  * @param int $forum_id The forum id to use
  * @uses bbp_get_form_forum_visibility() To get the topic's forum id
@@ -2470,7 +2470,7 @@ function bbp_form_forum_visibility_dropdown( $args = '' ) {
 	/**
 	 * Return the forum visibility dropdown
 	 *
-	 * @since bbPress (r3563)
+	 * @since IdeaBoard (r3563)
 	 *
 	 * @param int $forum_id The forum id to use
 	 * @uses bbp_is_topic_edit() To check if it's the topic edit page
@@ -2545,7 +2545,7 @@ function bbp_form_forum_visibility_dropdown( $args = '' ) {
 /**
  * Output the link for the forum feed
  *
- * @since bbPress (r3172)
+ * @since IdeaBoard (r3172)
  *
  * @param type $forum_id Optional. Forum ID.
  *
@@ -2557,7 +2557,7 @@ function bbp_forum_topics_feed_link( $forum_id = 0 ) {
 	/**
 	 * Retrieve the link for the forum feed
 	 *
-	 * @since bbPress (r3172)
+	 * @since IdeaBoard (r3172)
 	 *
 	 * @param int $forum_id Optional. Forum ID.
 	 *
@@ -2598,7 +2598,7 @@ function bbp_forum_topics_feed_link( $forum_id = 0 ) {
 				) ) );
 			}
 
-			$link = '<a href="' . esc_url( $url ) . '" class="bbp-forum-rss-link topics"><span>' . esc_attr__( 'Topics', 'bbpress' ) . '</span></a>';
+			$link = '<a href="' . esc_url( $url ) . '" class="bbp-forum-rss-link topics"><span>' . esc_attr__( 'Topics', 'ideaboard' ) . '</span></a>';
 		}
 
 		return apply_filters( 'bbp_get_forum_topics_feed_link', $link, $url, $forum_id );
@@ -2607,7 +2607,7 @@ function bbp_forum_topics_feed_link( $forum_id = 0 ) {
 /**
  * Output the link for the forum replies feed
  *
- * @since bbPress (r3172)
+ * @since IdeaBoard (r3172)
  *
  * @param type $forum_id Optional. Forum ID.
  *
@@ -2619,7 +2619,7 @@ function bbp_forum_replies_feed_link( $forum_id = 0 ) {
 	/**
 	 * Retrieve the link for the forum replies feed
 	 *
-	 * @since bbPress (r3172)
+	 * @since IdeaBoard (r3172)
 	 *
 	 * @param int $forum_id Optional. Forum ID.
 	 *
@@ -2662,7 +2662,7 @@ function bbp_forum_replies_feed_link( $forum_id = 0 ) {
 				) ) );
 			}
 
-			$link = '<a href="' . esc_url( $url ) . '" class="bbp-forum-rss-link replies"><span>' . esc_html__( 'Replies', 'bbpress' ) . '</span></a>';
+			$link = '<a href="' . esc_url( $url ) . '" class="bbp-forum-rss-link replies"><span>' . esc_html__( 'Replies', 'ideaboard' ) . '</span></a>';
 		}
 
 		return apply_filters( 'bbp_get_forum_replies_feed_link', $link, $url, $forum_id );

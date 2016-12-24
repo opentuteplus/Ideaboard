@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Main bbPress BuddyPress Class
+ * Main IdeaBoard BuddyPress Class
  *
- * @package bbPress
+ * @package IdeaBoard
  * @subpackage BuddyPress
- * @todo maybe move to BuddyPress Forums once bbPress 1.1 can be removed
+ * @todo maybe move to BuddyPress Forums once IdeaBoard 1.1 can be removed
  */
 
 // Exit if accessed directly
@@ -14,18 +14,18 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /** BuddyPress Helpers ********************************************************/
 
 /**
- * Return bbPress's component name/ID ('forums' by default)
+ * Return IdeaBoard's component name/ID ('forums' by default)
  *
  * This is used primarily for Notifications integration.
  *
- * @since bbPress (r5232)
+ * @since IdeaBoard (r5232)
  * @return string
  */
 function bbp_get_component_name() {
 
 	// Use existing ID
-	if ( !empty( bbpress()->extend->buddypress->id ) ) {
-		$retval = bbpress()->extend->buddypress->id;
+	if ( !empty( ideaboard()->extend->buddypress->id ) ) {
+		$retval = ideaboard()->extend->buddypress->id;
 
 	// Use default
 	} else {
@@ -36,9 +36,9 @@ function bbp_get_component_name() {
 }
 
 /**
- * Filter the current bbPress user ID with the current BuddyPress user ID
+ * Filter the current IdeaBoard user ID with the current BuddyPress user ID
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @param int $user_id
  * @param bool $displayed_user_fallback
@@ -72,9 +72,9 @@ function bbp_filter_user_id( $user_id = 0, $displayed_user_fallback = true, $cur
 add_filter( 'bbp_get_user_id', 'bbp_filter_user_id', 10, 3 );
 
 /**
- * Filter the bbPress is_single_user function with BuddyPress eqivalent
+ * Filter the IdeaBoard is_single_user function with BuddyPress eqivalent
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @param bool $is Optional. Default false
  * @return bool True if viewing single user, false if not
@@ -88,9 +88,9 @@ function bbp_filter_is_single_user( $is = false ) {
 add_filter( 'bbp_is_single_user', 'bbp_filter_is_single_user', 10, 1 );
 
 /**
- * Filter the bbPress is_user_home function with BuddyPress eqivalent
+ * Filter the IdeaBoard is_user_home function with BuddyPress eqivalent
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @param bool $is Optional. Default false
  * @return bool True if viewing single user, false if not
@@ -106,7 +106,7 @@ add_filter( 'bbp_is_user_home', 'bbp_filter_is_user_home', 10, 1 );
 /**
  * Add the topic title to the <title> if viewing a single group forum topic
  *
- * @since bbPress (r5161)
+ * @since IdeaBoard (r5161)
  *
  * @param string $new_title The title to filter
  * @param string $old_title (Not used)
@@ -142,9 +142,9 @@ add_action( 'bp_modify_page_title', 'bbp_filter_modify_page_title', 10, 3 );
 /** BuddyPress Screens ********************************************************/
 
 /**
- * Hook bbPress topics template into plugins template
+ * Hook IdeaBoard topics template into plugins template
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses add_action() To add the content hook
  * @uses bp_core_load_template() To load the plugins template
@@ -155,9 +155,9 @@ function bbp_member_forums_screen_topics() {
 }
 
 /**
- * Hook bbPress replies template into plugins template
+ * Hook IdeaBoard replies template into plugins template
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses add_action() To add the content hook
  * @uses bp_core_load_template() To load the plugins template
@@ -168,9 +168,9 @@ function bbp_member_forums_screen_replies() {
 }
 
 /**
- * Hook bbPress favorites template into plugins template
+ * Hook IdeaBoard favorites template into plugins template
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses add_action() To add the content hook
  * @uses bp_core_load_template() To load the plugins template
@@ -181,9 +181,9 @@ function bbp_member_forums_screen_favorites() {
 }
 
 /**
- * Hook bbPress subscriptions template into plugins template
+ * Hook IdeaBoard subscriptions template into plugins template
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses add_action() To add the content hook
  * @uses bp_core_load_template() To load the plugins template
@@ -198,14 +198,14 @@ function bbp_member_forums_screen_subscriptions() {
 /**
  * Get the topics created template part
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses bbp_get_template_part()s
  */
 function bbp_member_forums_topics_content() {
 ?>
 
-	<div id="bbpress-forums">
+	<div id="ideaboard-forums">
 
 		<?php bbp_get_template_part( 'user', 'topics-created' ); ?>
 
@@ -217,14 +217,14 @@ function bbp_member_forums_topics_content() {
 /**
  * Get the topics replied to template part
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses bbp_get_template_part()
  */
 function bbp_member_forums_replies_content() {
 ?>
 
-	<div id="bbpress-forums">
+	<div id="ideaboard-forums">
 
 		<?php bbp_get_template_part( 'user', 'replies-created' ); ?>
 
@@ -236,14 +236,14 @@ function bbp_member_forums_replies_content() {
 /**
  * Get the topics favorited template part
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses bbp_get_template_part()
  */
 function bbp_member_forums_favorites_content() {
 ?>
 
-	<div id="bbpress-forums">
+	<div id="ideaboard-forums">
 
 		<?php bbp_get_template_part( 'user', 'favorites' ); ?>
 
@@ -255,14 +255,14 @@ function bbp_member_forums_favorites_content() {
 /**
  * Get the topics subscribed template part
  *
- * @since bbPress (r3552)
+ * @since IdeaBoard (r3552)
  *
  * @uses bbp_get_template_part()
  */
 function bbp_member_forums_subscriptions_content() {
 ?>
 
-	<div id="bbpress-forums">
+	<div id="ideaboard-forums">
 
 		<?php bbp_get_template_part( 'user', 'subscriptions' ); ?>
 
@@ -284,7 +284,7 @@ function bbp_member_forums_subscriptions_content() {
  * Get forum ID's for a group
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_get_group_forum_ids( $group_id = 0 ) {
 
@@ -313,7 +313,7 @@ function bbp_get_group_forum_ids( $group_id = 0 ) {
  * Get group ID's for a forum
  *
  * @param type $forum_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_get_forum_group_ids( $forum_id = 0 ) {
 
@@ -342,7 +342,7 @@ function bbp_get_forum_group_ids( $forum_id = 0 ) {
  * Get forum ID's for a group
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_update_group_forum_ids( $group_id = 0, $forum_ids = array() ) {
 
@@ -361,7 +361,7 @@ function bbp_update_group_forum_ids( $group_id = 0, $forum_ids = array() ) {
  * Update group ID's for a forum
  *
  * @param type $forum_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_update_forum_group_ids( $forum_id = 0, $group_ids = array() ) {
 	$forum_id = bbp_get_forum_id( $forum_id );
@@ -377,7 +377,7 @@ function bbp_update_forum_group_ids( $forum_id = 0, $group_ids = array() ) {
  * Add a group to a forum
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_add_group_id_to_forum( $forum_id = 0, $group_id = 0 ) {
 
@@ -402,7 +402,7 @@ function bbp_add_group_id_to_forum( $forum_id = 0, $group_id = 0 ) {
  * Remove a forum from a group
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_add_forum_id_to_group( $group_id = 0, $forum_id = 0 ) {
 
@@ -427,7 +427,7 @@ function bbp_add_forum_id_to_group( $group_id = 0, $forum_id = 0 ) {
  * Remove a group from a forum
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_remove_group_id_from_forum( $forum_id = 0, $group_id = 0 ) {
 
@@ -452,7 +452,7 @@ function bbp_remove_group_id_from_forum( $forum_id = 0, $group_id = 0 ) {
  * Remove a forum from a group
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_remove_forum_id_from_group( $group_id = 0, $forum_id = 0 ) {
 
@@ -477,7 +477,7 @@ function bbp_remove_forum_id_from_group( $group_id = 0, $forum_id = 0 ) {
  * Remove a group from aall forums
  *
  * @param type $group_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_remove_group_id_from_all_forums( $group_id = 0 ) {
 
@@ -498,7 +498,7 @@ function bbp_remove_group_id_from_all_forums( $group_id = 0 ) {
  * Remove a forum from all groups
  *
  * @param type $forum_id
- * @since bbPress (r3653)
+ * @since IdeaBoard (r3653)
  */
 function bbp_remove_forum_id_from_all_groups( $forum_id = 0 ) {
 
@@ -515,7 +515,7 @@ function bbp_remove_forum_id_from_all_groups( $forum_id = 0 ) {
 /**
  * Return true if a forum is a group forum
  *
- * @since bbPress (r4571)
+ * @since IdeaBoard (r4571)
  *
  * @param int $forum_id
  * @uses bbp_get_forum_id() To get the forum id
@@ -542,11 +542,11 @@ function bbp_is_forum_group_forum( $forum_id = 0 ) {
 /**
  * Is the current user an admin of the current group
  *
- * @since bbPress (r4632)
+ * @since IdeaBoard (r4632)
  *
  * @uses is_user_logged_in()
  * @uses bp_is_group()
- * @uses bbpress()
+ * @uses ideaboard()
  * @uses get_current_user_id()
  * @uses bp_get_current_group_id()
  * @uses groups_is_user_admin()
@@ -558,7 +558,7 @@ function bbp_group_is_admin() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Set the global if not set
 	if ( ! isset( $bbp->current_user->is_group_admin ) )
@@ -571,11 +571,11 @@ function bbp_group_is_admin() {
 /**
  * Is the current user a moderator of the current group
  *
- * @since bbPress (r4632)
+ * @since IdeaBoard (r4632)
  *
  * @uses is_user_logged_in()
  * @uses bp_is_group()
- * @uses bbpress()
+ * @uses ideaboard()
  * @uses get_current_user_id()
  * @uses bp_get_current_group_id()
  * @uses groups_is_user_admin()
@@ -587,7 +587,7 @@ function bbp_group_is_mod() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Set the global if not set
 	if ( ! isset( $bbp->current_user->is_group_mod ) )
@@ -600,11 +600,11 @@ function bbp_group_is_mod() {
 /**
  * Is the current user a member of the current group
  *
- * @since bbPress (r4632)
+ * @since IdeaBoard (r4632)
  *
  * @uses is_user_logged_in()
  * @uses bp_is_group()
- * @uses bbpress()
+ * @uses ideaboard()
  * @uses get_current_user_id()
  * @uses bp_get_current_group_id()
  * @uses groups_is_user_admin()
@@ -616,7 +616,7 @@ function bbp_group_is_member() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Set the global if not set
 	if ( ! isset( $bbp->current_user->is_group_member ) )
@@ -629,11 +629,11 @@ function bbp_group_is_member() {
 /**
  * Is the current user banned from the current group
  *
- * @since bbPress (r4632)
+ * @since IdeaBoard (r4632)
  *
  * @uses is_user_logged_in()
  * @uses bp_is_group()
- * @uses bbpress()
+ * @uses ideaboard()
  * @uses get_current_user_id()
  * @uses bp_get_current_group_id()
  * @uses groups_is_user_admin()
@@ -645,7 +645,7 @@ function bbp_group_is_banned() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Set the global if not set
 	if ( ! isset( $bbp->current_user->is_group_banned ) )
@@ -658,11 +658,11 @@ function bbp_group_is_banned() {
 /**
  * Is the current user the creator of the current group
  *
- * @since bbPress (r4632)
+ * @since IdeaBoard (r4632)
  *
  * @uses is_user_logged_in()
  * @uses bp_is_group()
- * @uses bbpress()
+ * @uses ideaboard()
  * @uses get_current_user_id()
  * @uses bp_get_current_group_id()
  * @uses groups_is_user_admin()
@@ -674,7 +674,7 @@ function bbp_group_is_creator() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = bbpress();
+	$bbp = ideaboard();
 
 	// Set the global if not set
 	if ( ! isset( $bbp->current_user->is_group_creator ) )
