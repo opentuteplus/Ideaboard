@@ -13,16 +13,16 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Main BBP_Converter Class
+ * Main IdeaBoard_Converter Class
  */
-class BBP_Converter {
+class IdeaBoard_Converter {
 
 	/**
 	 * The main IdeaBoard Converter loader
 	 *
 	 * @since IdeaBoard (r3813)
-	 * @uses BBP_Converter::includes() Include the required files
-	 * @uses BBP_Converter::setup_actions() Setup the actions
+	 * @uses IdeaBoard_Converter::includes() Include the required files
+	 * @uses IdeaBoard_Converter::setup_actions() Setup the actions
 	 */
 	public function __construct() {
 
@@ -575,7 +575,7 @@ class BBP_Converter {
  *
  * @since IdeaBoard (r3813)
  */
-abstract class BBP_Converter_Base {
+abstract class IdeaBoard_Converter_Base {
 
 	/**
 	 * @var array() This is the field mapping array to process.

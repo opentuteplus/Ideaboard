@@ -13,7 +13,7 @@
  * There are a few common places that additional actions can currently be found
  *
  *  - IdeaBoard: In {@link IdeaBoard::setup_actions()} in ideaboard.php
- *  - Admin: More in {@link BBP_Admin::setup_actions()} in admin.php
+ *  - Admin: More in {@link IdeaBoard_Admin::setup_actions()} in admin.php
  *
  * @see /core/filters.php
  */
@@ -128,13 +128,13 @@ add_action( 'bp_include', 'ideaboard_setup_buddypress', 10 ); // Social network 
 add_action( 'ideaboard_after_setup_theme', 'ideaboard_load_theme_functions', 10 );
 
 // Widgets
-add_action( 'ideaboard_widgets_init', array( 'BBP_Login_Widget',   'register_widget' ), 10 );
-add_action( 'ideaboard_widgets_init', array( 'BBP_Views_Widget',   'register_widget' ), 10 );
-add_action( 'ideaboard_widgets_init', array( 'BBP_Search_Widget',  'register_widget' ), 10 );
-add_action( 'ideaboard_widgets_init', array( 'BBP_Forums_Widget',  'register_widget' ), 10 );
-add_action( 'ideaboard_widgets_init', array( 'BBP_Topics_Widget',  'register_widget' ), 10 );
-add_action( 'ideaboard_widgets_init', array( 'BBP_Replies_Widget', 'register_widget' ), 10 );
-add_action( 'ideaboard_widgets_init', array( 'BBP_Stats_Widget',   'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Login_Widget',   'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Views_Widget',   'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Search_Widget',  'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Forums_Widget',  'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Topics_Widget',  'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Replies_Widget', 'register_widget' ), 10 );
+add_action( 'ideaboard_widgets_init', array( 'IdeaBoard_Stats_Widget',   'register_widget' ), 10 );
 
 // Notices (loaded after ideaboard_init for translations)
 add_action( 'ideaboard_head',             'ideaboard_login_notices'    );

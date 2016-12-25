@@ -702,10 +702,10 @@ final class IdeaBoard {
 	 *
 	 * @since IdeaBoard (r3031)
 	 *
-	 * @uses BBP_Shortcodes
+	 * @uses IdeaBoard_Shortcodes
 	 */
 	public function register_shortcodes() {
-		$this->shortcodes = new BBP_Shortcodes();
+		$this->shortcodes = new IdeaBoard_Shortcodes();
 	}
 
 	/**

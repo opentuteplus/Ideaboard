@@ -21,7 +21,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @uses WP_Widget
  */
-class BBP_Login_Widget extends WP_Widget {
+class IdeaBoard_Login_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard Login Widget
@@ -50,7 +50,7 @@ class BBP_Login_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Login_Widget' );
+		register_widget( 'IdeaBoard_Login_Widget' );
 	}
 
 	/**
@@ -173,8 +173,8 @@ class BBP_Login_Widget extends WP_Widget {
 	 * @since IdeaBoard (r2827)
 	 *
 	 * @param $instance Instance
-	 * @uses BBP_Login_Widget::get_field_id() To output the field id
-	 * @uses BBP_Login_Widget::get_field_name() To output the field name
+	 * @uses IdeaBoard_Login_Widget::get_field_id() To output the field id
+	 * @uses IdeaBoard_Login_Widget::get_field_name() To output the field name
 	 */
 	public function form( $instance = array() ) {
 
@@ -225,7 +225,7 @@ class BBP_Login_Widget extends WP_Widget {
  *
  * @uses WP_Widget
  */
-class BBP_Views_Widget extends WP_Widget {
+class IdeaBoard_Views_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard View Widget
@@ -254,7 +254,7 @@ class BBP_Views_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Views_Widget' );
+		register_widget( 'IdeaBoard_Views_Widget' );
 	}
 
 	/**
@@ -325,8 +325,8 @@ class BBP_Views_Widget extends WP_Widget {
 	 * @since IdeaBoard (r3020)
 	 *
 	 * @param $instance Instance
-	 * @uses BBP_Views_Widget::get_field_id() To output the field id
-	 * @uses BBP_Views_Widget::get_field_name() To output the field name
+	 * @uses IdeaBoard_Views_Widget::get_field_id() To output the field id
+	 * @uses IdeaBoard_Views_Widget::get_field_name() To output the field name
 	 */
 	public function form( $instance = array() ) {
 
@@ -366,7 +366,7 @@ class BBP_Views_Widget extends WP_Widget {
  *
  * @uses WP_Widget
  */
-class BBP_Search_Widget extends WP_Widget {
+class IdeaBoard_Search_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard Search Widget
@@ -395,7 +395,7 @@ class BBP_Search_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Search_Widget' );
+		register_widget( 'IdeaBoard_Search_Widget' );
 	}
 
 	/**
@@ -453,8 +453,8 @@ class BBP_Search_Widget extends WP_Widget {
 	 * @since IdeaBoard (r4579)
 	 *
 	 * @param $instance Instance
-	 * @uses BBP_Search_Widget::get_field_id() To output the field id
-	 * @uses BBP_Search_Widget::get_field_name() To output the field name
+	 * @uses IdeaBoard_Search_Widget::get_field_id() To output the field id
+	 * @uses IdeaBoard_Search_Widget::get_field_name() To output the field name
 	 */
 	public function form( $instance ) {
 
@@ -494,7 +494,7 @@ class BBP_Search_Widget extends WP_Widget {
  *
  * @uses WP_Widget
  */
-class BBP_Forums_Widget extends WP_Widget {
+class IdeaBoard_Forums_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard Forum Widget
@@ -523,7 +523,7 @@ class BBP_Forums_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Forums_Widget' );
+		register_widget( 'IdeaBoard_Forums_Widget' );
 	}
 
 	/**
@@ -622,8 +622,8 @@ class BBP_Forums_Widget extends WP_Widget {
 	 * @since IdeaBoard (r2653)
 	 *
 	 * @param $instance Instance
-	 * @uses BBP_Forums_Widget::get_field_id() To output the field id
-	 * @uses BBP_Forums_Widget::get_field_name() To output the field name
+	 * @uses IdeaBoard_Forums_Widget::get_field_id() To output the field id
+	 * @uses IdeaBoard_Forums_Widget::get_field_name() To output the field name
 	 */
 	public function form( $instance ) {
 
@@ -674,7 +674,7 @@ class BBP_Forums_Widget extends WP_Widget {
  *
  * @uses WP_Widget
  */
-class BBP_Topics_Widget extends WP_Widget {
+class IdeaBoard_Topics_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard Topic Widget
@@ -703,7 +703,7 @@ class BBP_Topics_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Topics_Widget' );
+		register_widget( 'IdeaBoard_Topics_Widget' );
 	}
 
 	/**
@@ -865,8 +865,8 @@ class BBP_Topics_Widget extends WP_Widget {
 	 * @since IdeaBoard (r2653)
 	 *
 	 * @param $instance Instance
-	 * @uses BBP_Topics_Widget::get_field_id() To output the field id
-	 * @uses BBP_Topics_Widget::get_field_name() To output the field name
+	 * @uses IdeaBoard_Topics_Widget::get_field_id() To output the field id
+	 * @uses IdeaBoard_Topics_Widget::get_field_name() To output the field name
 	 */
 	public function form( $instance = array() ) {
 
@@ -930,7 +930,7 @@ class BBP_Topics_Widget extends WP_Widget {
  *
  * @uses WP_Widget
  */
-class BBP_Stats_Widget extends WP_Widget {
+class IdeaBoard_Stats_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard Stats Widget
@@ -959,7 +959,7 @@ class BBP_Stats_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Stats_Widget' );
+		register_widget( 'IdeaBoard_Stats_Widget' );
 	}
 
 	/**
@@ -1060,7 +1060,7 @@ class BBP_Stats_Widget extends WP_Widget {
  *
  * @uses WP_Widget
  */
-class BBP_Replies_Widget extends WP_Widget {
+class IdeaBoard_Replies_Widget extends WP_Widget {
 
 	/**
 	 * IdeaBoard Replies Widget
@@ -1089,7 +1089,7 @@ class BBP_Replies_Widget extends WP_Widget {
 	 * @uses register_widget()
 	 */
 	public static function register_widget() {
-		register_widget( 'BBP_Replies_Widget' );
+		register_widget( 'IdeaBoard_Replies_Widget' );
 	}
 
 	/**
@@ -1223,8 +1223,8 @@ class BBP_Replies_Widget extends WP_Widget {
 	 * @since IdeaBoard (r2653)
 	 *
 	 * @param $instance Instance
-	 * @uses BBP_Replies_Widget::get_field_id() To output the field id
-	 * @uses BBP_Replies_Widget::get_field_name() To output the field name
+	 * @uses IdeaBoard_Replies_Widget::get_field_id() To output the field id
+	 * @uses IdeaBoard_Replies_Widget::get_field_name() To output the field name
 	 */
 	public function form( $instance = array() ) {
 

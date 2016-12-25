@@ -6,7 +6,7 @@
  * @since IdeaBoard (r4689)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/phpbb
  */
-class phpBB extends BBP_Converter_Base {
+class phpBB extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5139)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/aef
  */
-class AEF extends BBP_Converter_Base {
+class AEF extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

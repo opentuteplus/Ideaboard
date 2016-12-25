@@ -4,7 +4,7 @@
  * Functions of IdeaBoard's Default theme
  *
  * @package IdeaBoard
- * @subpackage BBP_Theme_Compat
+ * @subpackage IdeaBoard_Theme_Compat
  * @since IdeaBoard (r3732)
  */
 
@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 /** Theme Setup ***************************************************************/
 
-if ( !class_exists( 'BBP_Default' ) ) :
+if ( !class_exists( 'IdeaBoard_Default' ) ) :
 
 /**
  * Loads IdeaBoard Default Theme functionality
@@ -25,14 +25,14 @@ if ( !class_exists( 'BBP_Default' ) ) :
  * can copy these files into your theme without needing to merge anything
  * together; IdeaBoard should safely handle the rest.
  *
- * See @link BBP_Theme_Compat() for more.
+ * See @link IdeaBoard_Theme_Compat() for more.
  *
  * @since IdeaBoard (r3732)
  *
  * @package IdeaBoard
- * @subpackage BBP_Theme_Compat
+ * @subpackage IdeaBoard_Theme_Compat
  */
-class BBP_Default extends BBP_Theme_Compat {
+class IdeaBoard_Default extends IdeaBoard_Theme_Compat {
 
 	/** Functions *************************************************************/
 
@@ -41,8 +41,8 @@ class BBP_Default extends BBP_Theme_Compat {
 	 *
 	 * @since IdeaBoard (r3732)
 	 *
-	 * @uses BBP_Default::setup_globals()
-	 * @uses BBP_Default::setup_actions()
+	 * @uses IdeaBoard_Default::setup_globals()
+	 * @uses IdeaBoard_Default::setup_actions()
 	 */
 	public function __construct( $properties = array() ) {
 
@@ -466,5 +466,5 @@ class BBP_Default extends BBP_Theme_Compat {
 		ideaboard_ajax_response( true, ideaboard_get_user_subscribe_link( $attrs, $user_id, false ), 200 );
 	}
 }
-new BBP_Default();
+new IdeaBoard_Default();
 endif;

@@ -15,7 +15,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Forums_Group_Extension' ) && class_exists( 'BP_Group_Extension' ) ) :
+if ( !class_exists( 'IdeaBoard_Forums_Group_Extension' ) && class_exists( 'BP_Group_Extension' ) ) :
 /**
  * Loads Group Extension for Forums Component
  *
@@ -25,7 +25,7 @@ if ( !class_exists( 'BBP_Forums_Group_Extension' ) && class_exists( 'BP_Group_Ex
  * @subpackage BuddyPress
  * @todo Everything
  */
-class BBP_Forums_Group_Extension extends BP_Group_Extension {
+class IdeaBoard_Forums_Group_Extension extends BP_Group_Extension {
 
 	/** Methods ***************************************************************/
 
@@ -429,7 +429,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * @since IdeaBoard (r4814)
 	 *
 	 * @uses add_meta_box
-	 * @uses BBP_Forums_Group_Extension::group_admin_ui_display_metabox() To display the edit screen
+	 * @uses IdeaBoard_Forums_Group_Extension::group_admin_ui_display_metabox() To display the edit screen
 	 */
 	public function group_admin_ui_edit_screen() {
 		add_meta_box(
@@ -449,7 +449,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @param object $item (group object)
 	 * @uses add_meta_box
-	 * @uses BBP_Forums_Group_Extension::edit_screen() To get the html
+	 * @uses IdeaBoard_Forums_Group_Extension::edit_screen() To get the html
 	 */
 	public function group_admin_ui_display_metabox( $item ) {
 		$this->edit_screen( $item );
@@ -640,7 +640,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @param int $group_id The group ID
 	 * @uses ideaboard_get_group_forum_ids()
-	 * @uses BBP_Forums_Group_Extension::remove_forum()
+	 * @uses IdeaBoard_Forums_Group_Extension::remove_forum()
 	 */
 	public function disconnect_forum_from_group( $group_id = 0 ) {
 
@@ -1370,7 +1370,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @since IdeaBoard (r4396)
 	 *
-	 * @param array $args Arguments from BBP_BuddyPress_Activity::record_activity()
+	 * @param array $args Arguments from IdeaBoard_BuddyPress_Activity::record_activity()
 	 * @uses groups_get_current_group() To see if we're posting from a BP group
 	 *
 	 * @return array

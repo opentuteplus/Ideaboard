@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Users_Admin' ) ) :
+if ( !class_exists( 'IdeaBoard_Users_Admin' ) ) :
 /**
  * Loads IdeaBoard users admin area
  *
@@ -18,15 +18,15 @@ if ( !class_exists( 'BBP_Users_Admin' ) ) :
  * @subpackage Administration
  * @since IdeaBoard (r2464)
  */
-class BBP_Users_Admin {
+class IdeaBoard_Users_Admin {
 
 	/**
 	 * The IdeaBoard users admin loader
 	 *
 	 * @since IdeaBoard (r2515)
 	 *
-	 * @uses BBP_Users_Admin::setup_globals() Setup the globals needed
-	 * @uses BBP_Users_Admin::setup_actions() Setup the hooks and actions
+	 * @uses IdeaBoard_Users_Admin::setup_globals() Setup the globals needed
+	 * @uses IdeaBoard_Users_Admin::setup_actions() Setup the hooks and actions
 	 */
 	public function __construct() {
 		$this->setup_actions();
@@ -251,5 +251,5 @@ class BBP_Users_Admin {
 		return $retval;
 	}
 }
-new BBP_Users_Admin();
+new IdeaBoard_Users_Admin();
 endif; // class exists

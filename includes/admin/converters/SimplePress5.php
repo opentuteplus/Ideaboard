@@ -6,7 +6,7 @@
  * @since IdeaBoard (r4638)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/simplepress/
  */
-class SimplePress5 extends BBP_Converter_Base {
+class SimplePress5 extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

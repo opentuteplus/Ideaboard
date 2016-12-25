@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5145)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/xenforo
  */
-class XenForo extends BBP_Converter_Base {
+class XenForo extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main constructor

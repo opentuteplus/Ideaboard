@@ -2212,7 +2212,7 @@ function ideaboard_list_replies( $args = array() ) {
 	), 'list_replies' );
 
 	// Get replies to loop through in $_replies
-	$walker = new BBP_Walker_Reply;
+	$walker = new IdeaBoard_Walker_Reply;
 	$walker->paged_walk( ideaboard()->reply_query->posts, $r['max_depth'], $r['page'], $r['per_page'], $r );
 
 	ideaboard()->max_num_pages            = $walker->max_pages;

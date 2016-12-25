@@ -20,7 +20,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Forums_Component' ) ) :
+if ( !class_exists( 'IdeaBoard_Forums_Component' ) ) :
 /**
  * Loads Forums Component
  *
@@ -29,7 +29,7 @@ if ( !class_exists( 'BBP_Forums_Component' ) ) :
  * @package IdeaBoard
  * @subpackage BuddyPress
  */
-class BBP_Forums_Component extends BP_Component {
+class IdeaBoard_Forums_Component extends BP_Component {
 
 	/**
 	 * Start the forums component creation process
@@ -133,16 +133,16 @@ class BBP_Forums_Component extends BP_Component {
 	public function setup_components() {
 
 		// Always load the members component
-		ideaboard()->extend->buddypress->members = new BBP_BuddyPress_Members;
+		ideaboard()->extend->buddypress->members = new IdeaBoard_BuddyPress_Members;
 
 		// Create new activity class
 		if ( bp_is_active( 'activity' ) ) {
-			ideaboard()->extend->buddypress->activity = new BBP_BuddyPress_Activity;
+			ideaboard()->extend->buddypress->activity = new IdeaBoard_BuddyPress_Activity;
 		}
 
 		// Register the group extension only if groups are active
 		if ( ideaboard_is_group_forums_active() && bp_is_active( 'groups' ) ) {
-			bp_register_group_extension( 'BBP_Forums_Group_Extension' );
+			bp_register_group_extension( 'IdeaBoard_Forums_Group_Extension' );
 		}
 	}
 

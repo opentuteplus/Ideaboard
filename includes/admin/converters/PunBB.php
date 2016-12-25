@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5153)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/punbb
  */
-class PunBB extends BBP_Converter_Base {
+class PunBB extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

@@ -6,7 +6,7 @@
  * @since IdeaBoard (r4689)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/custom-import
  */
-class Example extends BBP_Converter_Base {
+class Example extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

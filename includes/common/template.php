@@ -1342,7 +1342,7 @@ function ideaboard_dropdown( $args = '' ) {
 	 *  - posts_per_page: Retrieve all forums/topics. Defaults to -1 to get
 	 *                     all posts
 	 *  - walker: Which walker to use? Defaults to
-	 *             {@link BBP_Walker_Dropdown}
+	 *             {@link IdeaBoard_Walker_Dropdown}
 	 *  - select_id: ID of the select box. Defaults to 'ideaboard_forum_id'
 	 *  - tab: Tabindex value. False or integer
 	 *  - options_only: Show only <options>? No <select>?
@@ -1350,7 +1350,7 @@ function ideaboard_dropdown( $args = '' ) {
 	 *  - disable_categories: Disable forum categories and closed forums?
 	 *                         Defaults to true. Only for forums and when
 	 *                         the category option is displayed.
-	 * @uses BBP_Walker_Dropdown() As the default walker to generate the
+	 * @uses IdeaBoard_Walker_Dropdown() As the default walker to generate the
 	 *                              dropdown
 	 * @uses current_user_can() To check if the current user can read
 	 *                           private forums
@@ -1388,7 +1388,7 @@ function ideaboard_dropdown( $args = '' ) {
 		), 'get_dropdown' );
 
 		if ( empty( $r['walker'] ) ) {
-			$r['walker']            = new BBP_Walker_Dropdown();
+			$r['walker']            = new IdeaBoard_Walker_Dropdown();
 			$r['walker']->tree_type = $r['post_type'];
 		}
 

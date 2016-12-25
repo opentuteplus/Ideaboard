@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5141)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/phorum
  */
-class Phorum extends BBP_Converter_Base {
+class Phorum extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

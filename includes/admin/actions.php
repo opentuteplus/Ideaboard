@@ -13,7 +13,7 @@
  * There are a few common places that additional actions can currently be found
  *
  *  - IdeaBoard: In {@link IdeaBoard::setup_actions()} in ideaboard.php
- *  - Admin: More in {@link BBP_Admin::setup_actions()} in admin.php
+ *  - Admin: More in {@link IdeaBoard_Admin::setup_actions()} in admin.php
  *
  * @see ideaboard-core-actions.php
  * @see ideaboard-core-filters.php

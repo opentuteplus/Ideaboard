@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Akismet' ) ) :
+if ( !class_exists( 'IdeaBoard_Akismet' ) ) :
 /**
  * Loads Akismet extension
  *
@@ -19,7 +19,7 @@ if ( !class_exists( 'BBP_Akismet' ) ) :
  * @package IdeaBoard
  * @subpackage Akismet
  */
-class BBP_Akismet {
+class IdeaBoard_Akismet {
 
 	/**
 	 * The main IdeaBoard Akismet loader
@@ -88,8 +88,8 @@ class BBP_Akismet {
 	 * @uses ideaboard_get_topic_permalink() To get the permalink of the topic
 	 * @uses ideaboard_get_reply_url() To get the permalink of the reply
 	 * @uses ideaboard_current_author_ip() To get the IP address of the current user
-	 * @uses BBP_Akismet::maybe_spam() To check if post is spam
-	 * @uses BBP_Akismet::get_user_roles() To get the role(s) of the current user
+	 * @uses IdeaBoard_Akismet::maybe_spam() To check if post is spam
+	 * @uses IdeaBoard_Akismet::get_user_roles() To get the role(s) of the current user
 	 * @uses do_action() To call the 'ideaboard_akismet_spam_caught' hook
 	 * @uses add_filter() To call the 'ideaboard_new_reply_pre_set_terms' hook
 	 *
@@ -213,9 +213,9 @@ class BBP_Akismet {
 	 * @uses get_post_meta() To get the post meta
 	 * @uses ideaboard_get_user_profile_url() To get a user's profile url
 	 * @uses get_permalink() To get the permalink of the post_parent
-	 * @uses BBP_Akismet::get_user_roles() To get the role(s) of the post_author
+	 * @uses IdeaBoard_Akismet::get_user_roles() To get the role(s) of the post_author
 	 * @uses ideaboard_current_author_ip() To get the IP address of the current user
-	 * @uses BBP_Akismet::maybe_spam() To submit the post as ham or spam
+	 * @uses IdeaBoard_Akismet::maybe_spam() To submit the post as ham or spam
 	 * @uses update_post_meta() To update the post meta with some Akismet data
 	 * @uses do_action() To call the 'ideaboard_akismet_submit_spam_post' and 'ideaboard_akismet_submit_ham_post' hooks
 	 *
@@ -423,7 +423,7 @@ class BBP_Akismet {
 	 * @uses get_userdata() To get the user data
 	 * @uses ideaboard_filter_anonymous_user_data() To get anonymous user data
 	 * @uses update_post_meta() To update post meta with Akismet data
-	 * @uses BBP_Akismet::update_post_history() To update post Akismet history
+	 * @uses IdeaBoard_Akismet::update_post_history() To update post Akismet history
 	 */
 	public function update_post_meta( $post_id = 0, $_post = false ) {
 
@@ -442,7 +442,7 @@ class BBP_Akismet {
 			$as_submitted = $this->last_post['ideaboard_post_as_submitted'];
 
 		// wp_insert_post() might be called in other contexts. Ensure this is
-		// the same topic/reply as was checked by BBP_Akismet::check_post()
+		// the same topic/reply as was checked by IdeaBoard_Akismet::check_post()
 		if ( is_object( $_post ) && !empty( $this->last_post ) && is_array( $as_submitted ) ) {
 
 			// Get user data

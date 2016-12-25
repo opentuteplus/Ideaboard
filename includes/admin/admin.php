@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Admin' ) ) :
+if ( !class_exists( 'IdeaBoard_Admin' ) ) :
 /**
  * Loads IdeaBoard plugin admin area
  *
@@ -18,7 +18,7 @@ if ( !class_exists( 'BBP_Admin' ) ) :
  * @subpackage Administration
  * @since IdeaBoard (r2464)
  */
-class BBP_Admin {
+class IdeaBoard_Admin {
 
 	/** Directory *************************************************************/
 
@@ -75,9 +75,9 @@ class BBP_Admin {
 	 *
 	 * @since IdeaBoard (r2515)
 	 *
-	 * @uses BBP_Admin::setup_globals() Setup the globals needed
-	 * @uses BBP_Admin::includes() Include the required files
-	 * @uses BBP_Admin::setup_actions() Setup the hooks and actions
+	 * @uses IdeaBoard_Admin::setup_globals() Setup the globals needed
+	 * @uses IdeaBoard_Admin::includes() Include the required files
+	 * @uses IdeaBoard_Admin::setup_actions() Setup the hooks and actions
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -1110,10 +1110,10 @@ endif; // class_exists check
  *
  * @since IdeaBoard (r2596)
  *
- * @uses BBP_Admin
+ * @uses IdeaBoard_Admin
  */
 function ideaboard_admin() {
-	ideaboard()->admin = new BBP_Admin();
+	ideaboard()->admin = new IdeaBoard_Admin();
 
-	ideaboard()->admin->converter = new BBP_Converter();
+	ideaboard()->admin->converter = new IdeaBoard_Converter();
 }

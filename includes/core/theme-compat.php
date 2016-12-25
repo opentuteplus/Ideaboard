@@ -28,12 +28,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * Theme Compatibility base class
  *
  * This is only intended to be extended, and is included here as a basic guide
- * for future Theme Packs to use. @link BBP_Twenty_Ten is a good example of
+ * for future Theme Packs to use. @link IdeaBoard_Twenty_Ten is a good example of
  * extending this class, as is @link ideaboard_setup_theme_compat()
  *
  * @since IdeaBoard (r3506)
  */
-class BBP_Theme_Compat {
+class IdeaBoard_Theme_Compat {
 
 	/**
 	 * Should be like:
@@ -90,13 +90,13 @@ class BBP_Theme_Compat {
  * Setup the default theme compat theme
  *
  * @since IdeaBoard (r3311)
- * @param BBP_Theme_Compat $theme
+ * @param IdeaBoard_Theme_Compat $theme
  */
 function ideaboard_setup_theme_compat( $theme = '' ) {
 	$ideaboard = ideaboard();
 
 	// Make sure theme package is available, set to default if not
-	if ( ! isset( $ideaboard->theme_compat->packages[$theme] ) || ! is_a( $ideaboard->theme_compat->packages[$theme], 'BBP_Theme_Compat' ) ) {
+	if ( ! isset( $ideaboard->theme_compat->packages[$theme] ) || ! is_a( $ideaboard->theme_compat->packages[$theme], 'IdeaBoard_Theme_Compat' ) ) {
 		$theme = 'default';
 	}
 
@@ -269,12 +269,12 @@ function ideaboard_is_theme_compat_original_template( $template = '' ) {
  */
 function ideaboard_register_theme_package( $theme = array(), $override = true ) {
 
-	// Create new BBP_Theme_Compat object from the $theme array
+	// Create new IdeaBoard_Theme_Compat object from the $theme array
 	if ( is_array( $theme ) )
-		$theme = new BBP_Theme_Compat( $theme );
+		$theme = new IdeaBoard_Theme_Compat( $theme );
 
 	// Bail if $theme isn't a proper object
-	if ( ! is_a( $theme, 'BBP_Theme_Compat' ) )
+	if ( ! is_a( $theme, 'IdeaBoard_Theme_Compat' ) )
 		return;
 
 	// Load up IdeaBoard
@@ -457,7 +457,7 @@ function ideaboard_template_include_theme_compat( $template = '' ) {
 	$ideaboard_shortcodes = ideaboard()->shortcodes;
 
 	// Bail if shortcodes are unset somehow
-	if ( !is_a( $ideaboard_shortcodes, 'BBP_Shortcodes' ) )
+	if ( !is_a( $ideaboard_shortcodes, 'IdeaBoard_Shortcodes' ) )
 		return $template;
 
 	/** Users *************************************************************/

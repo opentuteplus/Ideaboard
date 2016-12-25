@@ -1708,7 +1708,7 @@ function ideaboard_user_maybe_convert_pass() {
 	$converter = ideaboard_new_converter( $row->meta_value );
 
 	// Try to call the conversion method
-	if ( is_a( $converter, 'BBP_Converter_Base' ) && method_exists( $converter, 'callback_pass' ) ) {
+	if ( is_a( $converter, 'IdeaBoard_Converter_Base' ) && method_exists( $converter, 'callback_pass' ) ) {
 		$converter->callback_pass( $username, $_POST['pwd'] );
 	}
 }

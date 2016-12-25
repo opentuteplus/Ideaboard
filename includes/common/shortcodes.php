@@ -10,13 +10,13 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Shortcodes' ) ) :
+if ( !class_exists( 'IdeaBoard_Shortcodes' ) ) :
 /**
  * IdeaBoard Shortcode Class
  *
  * @since IdeaBoard (r3031)
  */
-class BBP_Shortcodes {
+class IdeaBoard_Shortcodes {
 
 	/** Vars ******************************************************************/
 
@@ -165,7 +165,7 @@ class BBP_Shortcodes {
 	 *
 	 * @since IdeaBoard( r3079)
 	 *
-	 * @uses BBP_Shortcodes::unset_globals() Cleans up global values
+	 * @uses IdeaBoard_Shortcodes::unset_globals() Cleans up global values
 	 * @return string Contents of output buffer.
 	 */
 	private function end() {

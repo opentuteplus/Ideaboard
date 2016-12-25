@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5138)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/fluxbb
  */
-class FluxBB extends BBP_Converter_Base {
+class FluxBB extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5189)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/smf
  */
-class SMF extends BBP_Converter_Base {
+class SMF extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5146)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/phpfox
  */
-class PHPFox3 extends BBP_Converter_Base {
+class PHPFox3 extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

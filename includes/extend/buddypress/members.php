@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Forums_Members' ) ) :
+if ( !class_exists( 'IdeaBoard_Forums_Members' ) ) :
 /**
  * Member profile modifications
  *
@@ -19,7 +19,7 @@ if ( !class_exists( 'BBP_Forums_Members' ) ) :
  * @package IdeaBoard
  * @subpackage BuddyPress
  */
-class BBP_BuddyPress_Members {
+class IdeaBoard_BuddyPress_Members {
 
 	/**
 	 * Main constructor for modifying IdeaBoard profile links

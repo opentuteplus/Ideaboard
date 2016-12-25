@@ -248,7 +248,7 @@ function ideaboard_has_replies( $args = '' ) {
 
 		// Figure out total pages
 		if ( true === $r['hierarchical'] ) {
-			$walker      = new BBP_Walker_Reply;
+			$walker      = new IdeaBoard_Walker_Reply;
 			$total_pages = ceil( (int) $walker->get_number_of_root_elements( $ideaboard->reply_query->posts ) / (int) $replies_per_page );
 		} else {
 			$total_pages = ceil( (int) $ideaboard->reply_query->found_posts / (int) $replies_per_page );
@@ -2335,7 +2335,7 @@ function ideaboard_topic_pagination_count() {
 		// We are threading replies
 		if ( ideaboard_thread_replies() && ideaboard_is_single_topic() ) {
 			return;
-			$walker  = new BBP_Walker_Reply;
+			$walker  = new IdeaBoard_Walker_Reply;
 			$threads = (int) $walker->get_number_of_root_elements( $ideaboard->reply_query->posts );
 
 			// Adjust for topic

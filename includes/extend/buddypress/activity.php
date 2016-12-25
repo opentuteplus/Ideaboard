@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_BuddyPress_Activity' ) ) :
+if ( !class_exists( 'IdeaBoard_BuddyPress_Activity' ) ) :
 /**
  * Loads BuddyPress Activity extension
  *
@@ -19,7 +19,7 @@ if ( !class_exists( 'BBP_BuddyPress_Activity' ) ) :
  * @package IdeaBoard
  * @subpackage BuddyPress
  */
-class BBP_BuddyPress_Activity {
+class IdeaBoard_BuddyPress_Activity {
 
 	/** Variables *************************************************************/
 

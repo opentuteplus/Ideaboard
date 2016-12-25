@@ -32,7 +32,7 @@ function ideaboard_setup_akismet() {
 	require( ideaboard()->includes_dir . 'extend/akismet.php' );
 
 	// Instantiate Akismet for IdeaBoard
-	ideaboard()->extend->akismet = new BBP_Akismet();
+	ideaboard()->extend->akismet = new IdeaBoard_Akismet();
 }
 
 /**
@@ -65,5 +65,5 @@ function ideaboard_setup_buddypress() {
 	require( ideaboard()->includes_dir . 'extend/buddypress/loader.php' );
 
 	// Instantiate BuddyPress for IdeaBoard
-	ideaboard()->extend->buddypress = new BBP_Forums_Component();
+	ideaboard()->extend->buddypress = new IdeaBoard_Forums_Component();
 }

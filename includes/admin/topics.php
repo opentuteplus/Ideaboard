@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Topics_Admin' ) ) :
+if ( !class_exists( 'IdeaBoard_Topics_Admin' ) ) :
 /**
  * Loads IdeaBoard topics admin area
  *
@@ -18,7 +18,7 @@ if ( !class_exists( 'BBP_Topics_Admin' ) ) :
  * @subpackage Administration
  * @since IdeaBoard (r2464)
  */
-class BBP_Topics_Admin {
+class IdeaBoard_Topics_Admin {
 
 	/** Variables *************************************************************/
 
@@ -34,9 +34,9 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2515)
 	 *
-	 * @uses BBP_Topics_Admin::setup_globals() Setup the globals needed
-	 * @uses BBP_Topics_Admin::setup_actions() Setup the hooks and actions
-	 * @uses BBP_Topics_Admin::setup_help() Setup the help text
+	 * @uses IdeaBoard_Topics_Admin::setup_globals() Setup the globals needed
+	 * @uses IdeaBoard_Topics_Admin::setup_actions() Setup the hooks and actions
+	 * @uses IdeaBoard_Topics_Admin::setup_help() Setup the help text
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -539,7 +539,7 @@ class BBP_Topics_Admin {
 	 * Toggle topic notices
 	 *
 	 * Display the success/error notices from
-	 * {@link BBP_Admin::toggle_topic()}
+	 * {@link IdeaBoard_Admin::toggle_topic()}
 	 *
 	 * @since IdeaBoard (r2727)
 	 *
@@ -966,8 +966,8 @@ endif; // class_exists check
  *
  * @since IdeaBoard (r2596)
  *
- * @uses BBP_Forums_Admin
+ * @uses IdeaBoard_Forums_Admin
  */
 function ideaboard_admin_topics() {
-	ideaboard()->admin->topics = new BBP_Topics_Admin();
+	ideaboard()->admin->topics = new IdeaBoard_Topics_Admin();
 }

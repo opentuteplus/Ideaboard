@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Replies_Admin' ) ) :
+if ( !class_exists( 'IdeaBoard_Replies_Admin' ) ) :
 /**
  * Loads IdeaBoard replies admin area
  *
@@ -18,7 +18,7 @@ if ( !class_exists( 'BBP_Replies_Admin' ) ) :
  * @subpackage Administration
  * @since IdeaBoard (r2464)
  */
-class BBP_Replies_Admin {
+class IdeaBoard_Replies_Admin {
 
 	/** Variables *************************************************************/
 
@@ -34,9 +34,9 @@ class BBP_Replies_Admin {
 	 *
 	 * @since IdeaBoard (r2515)
 	 *
-	 * @uses BBP_Replies_Admin::setup_globals() Setup the globals needed
-	 * @uses BBP_Replies_Admin::setup_actions() Setup the hooks and actions
-	 * @uses BBP_Replies_Admin::setup_actions() Setup the help text
+	 * @uses IdeaBoard_Replies_Admin::setup_globals() Setup the globals needed
+	 * @uses IdeaBoard_Replies_Admin::setup_actions() Setup the hooks and actions
+	 * @uses IdeaBoard_Replies_Admin::setup_actions() Setup the help text
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -496,7 +496,7 @@ class BBP_Replies_Admin {
 	 * Toggle reply notices
 	 *
 	 * Display the success/error notices from
-	 * {@link BBP_Admin::toggle_reply()}
+	 * {@link IdeaBoard_Admin::toggle_reply()}
 	 *
 	 * @since IdeaBoard (r2740)
 	 *
@@ -896,8 +896,8 @@ endif; // class_exists check
  *
  * @since IdeaBoard (r2596)
  *
- * @uses BBP_Replies_Admin
+ * @uses IdeaBoard_Replies_Admin
  */
 function ideaboard_admin_replies() {
-	ideaboard()->admin->replies = new BBP_Replies_Admin();
+	ideaboard()->admin->replies = new IdeaBoard_Replies_Admin();
 }

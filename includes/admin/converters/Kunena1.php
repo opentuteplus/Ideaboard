@@ -6,7 +6,7 @@
  * @since IdeaBoard (r5144)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/kunena/
  */
-class Kunena1 extends BBP_Converter_Base {
+class Kunena1 extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main Constructor

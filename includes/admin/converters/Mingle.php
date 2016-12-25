@@ -6,7 +6,7 @@
  * @since IdeaBoard (r4691)
  * @link Codex Docs http://codex.ideaboard.org/import-forums/mingle
  */
-class Mingle extends BBP_Converter_Base {
+class Mingle extends IdeaBoard_Converter_Base {
 
 	/**
 	 * Main constructor

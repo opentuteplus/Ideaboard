@@ -30,7 +30,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @package IdeaBoard
  * @subpackage Cache
  */
-class BBP_Skip_Children {
+class IdeaBoard_Skip_Children {
 
 	/**
 	 * @var int Post ID being updated
@@ -117,7 +117,7 @@ class BBP_Skip_Children {
 		wp_suspend_cache_invalidation( $this->original_cache_invalidation );
 	}
 }
-new BBP_Skip_Children();
+new IdeaBoard_Skip_Children();
 
 /** General *******************************************************************/
 

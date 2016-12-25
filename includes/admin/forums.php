@@ -10,7 +10,7 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if ( !class_exists( 'BBP_Forums_Admin' ) ) :
+if ( !class_exists( 'IdeaBoard_Forums_Admin' ) ) :
 /**
  * Loads IdeaBoard forums admin area
  *
@@ -18,7 +18,7 @@ if ( !class_exists( 'BBP_Forums_Admin' ) ) :
  * @subpackage Administration
  * @since IdeaBoard (r2464)
  */
-class BBP_Forums_Admin {
+class IdeaBoard_Forums_Admin {
 
 	/** Variables *************************************************************/
 
@@ -34,9 +34,9 @@ class BBP_Forums_Admin {
 	 *
 	 * @since IdeaBoard (r2515)
 	 *
-	 * @uses BBP_Forums_Admin::setup_globals() Setup the globals needed
-	 * @uses BBP_Forums_Admin::setup_actions() Setup the hooks and actions
-	 * @uses BBP_Forums_Admin::setup_help() Setup the help text
+	 * @uses IdeaBoard_Forums_Admin::setup_globals() Setup the globals needed
+	 * @uses IdeaBoard_Forums_Admin::setup_actions() Setup the hooks and actions
+	 * @uses IdeaBoard_Forums_Admin::setup_help() Setup the help text
 	 */
 	public function __construct() {
 		$this->setup_globals();
@@ -576,8 +576,8 @@ endif; // class_exists check
  *
  * @since IdeaBoard (r2596)
  *
- * @uses BBP_Forums_Admin
+ * @uses IdeaBoard_Forums_Admin
  */
 function ideaboard_admin_forums() {
-	ideaboard()->admin->forums = new BBP_Forums_Admin();
+	ideaboard()->admin->forums = new IdeaBoard_Forums_Admin();
 }
