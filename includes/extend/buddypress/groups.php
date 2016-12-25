@@ -82,10 +82,10 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	private function setup_actions() {
 
 		// Possibly redirect
-		add_action( 'bbp_template_redirect',         array( $this, 'redirect_canonical'              ) );
+		add_action( 'ideaboard_template_redirect',         array( $this, 'redirect_canonical'              ) );
 
 		// Remove group forum cap map when view is done
-		add_action( 'bbp_after_group_forum_display', array( $this, 'remove_group_forum_meta_cap_map' ) );
+		add_action( 'ideaboard_after_group_forum_display', array( $this, 'remove_group_forum_meta_cap_map' ) );
 
 		// IdeaBoard needs to listen to BuddyPress group deletion.
 		add_action( 'groups_before_delete_group',    array( $this, 'disconnect_forum_from_group'     ) );
@@ -108,20 +108,20 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	private function setup_filters() {
 
 		// Group forum pagination
-		add_filter( 'bbp_topic_pagination',      array( $this, 'topic_pagination'   ) );
-		add_filter( 'bbp_replies_pagination',    array( $this, 'replies_pagination' ) );
+		add_filter( 'ideaboard_topic_pagination',      array( $this, 'topic_pagination'   ) );
+		add_filter( 'ideaboard_replies_pagination',    array( $this, 'replies_pagination' ) );
 
 		// Tweak the redirect field
-		add_filter( 'bbp_new_topic_redirect_to', array( $this, 'new_topic_redirect_to'        ), 10, 3 );
-		add_filter( 'bbp_new_reply_redirect_to', array( $this, 'new_reply_redirect_to'        ), 10, 3 );
+		add_filter( 'ideaboard_new_topic_redirect_to', array( $this, 'new_topic_redirect_to'        ), 10, 3 );
+		add_filter( 'ideaboard_new_reply_redirect_to', array( $this, 'new_reply_redirect_to'        ), 10, 3 );
 
 		// Map forum/topic/replys permalinks to their groups
-		add_filter( 'bbp_get_forum_permalink',   array( $this, 'map_forum_permalink_to_group' ), 10, 2 );
-		add_filter( 'bbp_get_topic_permalink',   array( $this, 'map_topic_permalink_to_group' ), 10, 2 );
-		add_filter( 'bbp_get_reply_permalink',   array( $this, 'map_reply_permalink_to_group' ), 10, 2 );
+		add_filter( 'ideaboard_get_forum_permalink',   array( $this, 'map_forum_permalink_to_group' ), 10, 2 );
+		add_filter( 'ideaboard_get_topic_permalink',   array( $this, 'map_topic_permalink_to_group' ), 10, 2 );
+		add_filter( 'ideaboard_get_reply_permalink',   array( $this, 'map_reply_permalink_to_group' ), 10, 2 );
 
 		// Map reply edit links to their groups
-		add_filter( 'bbp_get_reply_edit_url',    array( $this, 'map_reply_edit_url_to_group'  ), 10, 2 );
+		add_filter( 'ideaboard_get_reply_edit_url',    array( $this, 'map_reply_edit_url_to_group'  ), 10, 2 );
 
 		// Map assorted template function permalinks
 		add_filter( 'post_link',                 array( $this, 'post_link'                    ), 10, 2 );
@@ -129,7 +129,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		add_filter( 'post_type_link',            array( $this, 'post_type_link'               ), 10, 2 );
 
 		// Map group forum activity items to groups
-		add_filter( 'bbp_before_record_activity_parse_args', array( $this, 'map_activity_to_group' ) );
+		add_filter( 'ideaboard_before_record_activity_parse_args', array( $this, 'map_activity_to_group' ) );
 
 		/** Caps **************************************************************/
 
@@ -137,11 +137,11 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		if ( bp_is_single_item() && bp_is_groups_component() && bp_is_current_action( 'forum' ) ) {
 
 			// Allow group member to view private/hidden forums
-			add_filter( 'bbp_map_meta_caps', array( $this, 'map_group_forum_meta_caps' ), 10, 4 );
+			add_filter( 'ideaboard_map_meta_caps', array( $this, 'map_group_forum_meta_caps' ), 10, 4 );
 
 			// Group member permissions to view the topic and reply forms
-			add_filter( 'bbp_current_user_can_access_create_topic_form', array( $this, 'form_permissions' ) );
-			add_filter( 'bbp_current_user_can_access_create_reply_form', array( $this, 'form_permissions' ) );
+			add_filter( 'ideaboard_current_user_can_access_create_topic_form', array( $this, 'form_permissions' ) );
+			add_filter( 'ideaboard_current_user_can_access_create_reply_form', array( $this, 'form_permissions' ) );
 		}
 	}
 
@@ -155,17 +155,17 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	public function display( $group_id = null ) {
 
 		// Prevent Topic Parent from appearing
-		add_action( 'bbp_theme_before_topic_form_forum', array( $this, 'ob_start'     ) );
-		add_action( 'bbp_theme_after_topic_form_forum',  array( $this, 'ob_end_clean' ) );
-		add_action( 'bbp_theme_after_topic_form_forum',  array( $this, 'topic_parent' ) );
+		add_action( 'ideaboard_theme_before_topic_form_forum', array( $this, 'ob_start'     ) );
+		add_action( 'ideaboard_theme_after_topic_form_forum',  array( $this, 'ob_end_clean' ) );
+		add_action( 'ideaboard_theme_after_topic_form_forum',  array( $this, 'topic_parent' ) );
 
 		// Prevent Forum Parent from appearing
-		add_action( 'bbp_theme_before_forum_form_parent', array( $this, 'ob_start'     ) );
-		add_action( 'bbp_theme_after_forum_form_parent',  array( $this, 'ob_end_clean' ) );
-		add_action( 'bbp_theme_after_forum_form_parent',  array( $this, 'forum_parent' ) );
+		add_action( 'ideaboard_theme_before_forum_form_parent', array( $this, 'ob_start'     ) );
+		add_action( 'ideaboard_theme_after_forum_form_parent',  array( $this, 'ob_end_clean' ) );
+		add_action( 'ideaboard_theme_after_forum_form_parent',  array( $this, 'forum_parent' ) );
 
 		// Hide breadcrumb
-		add_filter( 'bbp_no_breadcrumb', '__return_true' );
+		add_filter( 'ideaboard_no_breadcrumb', '__return_true' );
 
 		$this->display_forums( 0 );
 	}
@@ -211,7 +211,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			case 'publish_topics'      :
 			case 'read_hidden_forums'  :
 			case 'read_private_forums' :
-				if ( bbp_group_is_member() || bbp_group_is_mod() || bbp_group_is_admin() ) {
+				if ( ideaboard_group_is_member() || ideaboard_group_is_mod() || ideaboard_group_is_admin() ) {
 					$caps = array( 'participate' );
 				}
 				break;
@@ -223,7 +223,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			case 'view_trash'   :
 			case 'edit_others_replies' :
 			case 'edit_others_topics'  :
-				if ( bbp_group_is_mod() || bbp_group_is_admin() ) {
+				if ( ideaboard_group_is_mod() || ideaboard_group_is_admin() ) {
 					$caps = array( 'participate' );
 				}
 				break;
@@ -231,13 +231,13 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			// If user is a group admin, allow them to delete topics and replies.
 			case 'delete_topic' :
 			case 'delete_reply' :
-				if ( bbp_group_is_admin() ) {
+				if ( ideaboard_group_is_admin() ) {
 					$caps = array( 'participate' );
 				}
 				break;
 		}
 
-		return apply_filters( 'bbp_map_group_forum_topic_meta_caps', $caps, $cap, $user_id, $args );
+		return apply_filters( 'ideaboard_map_group_forum_topic_meta_caps', $caps, $cap, $user_id, $args );
 	}
 
 	/**
@@ -246,7 +246,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * @since IdeaBoard (r4434)
 	 */
 	public function remove_group_forum_meta_cap_map() {
-		remove_filter( 'bbp_map_meta_caps', array( $this, 'map_group_forum_meta_caps' ), 99, 4 );
+		remove_filter( 'ideaboard_map_meta_caps', array( $this, 'map_group_forum_meta_caps' ), 99, 4 );
 	}
 
 	/** Edit ******************************************************************/
@@ -257,12 +257,12 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * @since IdeaBoard (r3563)
 	 * @param object $group (the group to edit if in Group Admin UI)
 	 * @uses is_admin() To check if we're in the Group Admin UI
-	 * @uses bbp_get_template_part()
+	 * @uses ideaboard_get_template_part()
 	 */
 	public function edit_screen( $group = false ) {
 		$forum_id  = 0;
 		$group_id  = empty( $group->id ) ? bp_get_new_group_id() : $group->id ;
-		$forum_ids = bbp_get_group_forum_ids( $group_id );
+		$forum_ids = ideaboard_get_group_forum_ids( $group_id );
 
 		// Get the first forum ID
 		if ( !empty( $forum_ids ) ) {
@@ -286,12 +286,12 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 				<p class="description"><?php esc_html_e( 'Saying no will not delete existing forum content.', 'ideaboard' ); ?></p>
 			</div>
 
-			<?php if ( bbp_is_user_keymaster() ) : ?>
+			<?php if ( ideaboard_is_user_keymaster() ) : ?>
 				<div class="field-group">
-					<label for="bbp_group_forum_id"><?php esc_html_e( 'Group Forum:', 'ideaboard' ); ?></label>
+					<label for="ideaboard_group_forum_id"><?php esc_html_e( 'Group Forum:', 'ideaboard' ); ?></label>
 					<?php
-						bbp_dropdown( array(
-							'select_id' => 'bbp_group_forum_id',
+						ideaboard_dropdown( array(
+							'select_id' => 'ideaboard_group_forum_id',
 							'show_none' => __( '(No Forum)', 'ideaboard' ),
 							'selected'  => $forum_id
 						) );
@@ -321,13 +321,13 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @since IdeaBoard (r3465)
 	 * @param int $group_id (to handle Group Admin UI hook bp_group_admin_edit_after )
-	 * @uses bbp_new_forum_handler() To check for forum creation
-	 * @uses bbp_edit_forum_handler() To check for forum edit
+	 * @uses ideaboard_new_forum_handler() To check for forum creation
+	 * @uses ideaboard_edit_forum_handler() To check for forum edit
 	 */
 	public function edit_screen_save( $group_id = 0 ) {
 
 		// Bail if not a POST action
-		if ( ! bbp_is_post_request() )
+		if ( ! ideaboard_is_post_request() )
 			return;
 
 		// Admin Nonce check
@@ -335,8 +335,8 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			check_admin_referer( 'groups_edit_save_' . $this->slug, 'forum_group_admin_ui' );
 
 		// Theme-side Nonce check
-		} elseif ( ! bbp_verify_nonce_request( 'groups_edit_save_' . $this->slug ) ) {
-			bbp_add_error( 'bbp_edit_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+		} elseif ( ! ideaboard_verify_nonce_request( 'groups_edit_save_' . $this->slug ) ) {
+			ideaboard_add_error( 'ideaboard_edit_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 			return;
  		}
 
@@ -345,12 +345,12 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		$group_id   = !empty( $group_id ) ? $group_id : bp_get_current_group_id();
 
 		// Keymasters have the ability to reconfigure forums
-		if ( bbp_is_user_keymaster() ) {
-			$forum_ids = ! empty( $_POST['bbp_group_forum_id'] ) ? (array) (int) $_POST['bbp_group_forum_id'] : array();
+		if ( ideaboard_is_user_keymaster() ) {
+			$forum_ids = ! empty( $_POST['ideaboard_group_forum_id'] ) ? (array) (int) $_POST['ideaboard_group_forum_id'] : array();
 
 		// Use the existing forum IDs
 		} else {
-			$forum_ids = array_values( bbp_get_group_forum_ids( $group_id ) );
+			$forum_ids = array_values( ideaboard_get_group_forum_ids( $group_id ) );
 		}
 
 		// Normalize group forum relationships now
@@ -360,7 +360,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			foreach ( $forum_ids as $forum_id ) {
 
 				// Look for forum
-				$forum = bbp_get_forum( $forum_id );
+				$forum = ideaboard_get_forum( $forum_id );
 
 				// No forum exists, so break the relationship
 				if ( empty( $forum ) ) {
@@ -374,8 +374,8 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		}
 
 		// Update the group ID and forum ID relationships
-		bbp_update_group_forum_ids( $group_id, (array) $forum_ids );
-		bbp_update_forum_group_ids( $forum_id, (array) $group_id  );
+		ideaboard_update_group_forum_ids( $group_id, (array) $forum_ids );
+		ideaboard_update_forum_group_ids( $forum_id, (array) $group_id  );
 
 		// Update the group forum setting
 		$group = $this->toggle_group_forum( $group_id, $edit_forum );
@@ -386,20 +386,20 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			// Set the default forum status
 			switch ( $group->status ) {
 				case 'hidden'  :
-					$status = bbp_get_hidden_status_id();
+					$status = ideaboard_get_hidden_status_id();
 					break;
 				case 'private' :
-					$status = bbp_get_private_status_id();
+					$status = ideaboard_get_private_status_id();
 					break;
 				case 'public'  :
 				default        :
-					$status = bbp_get_public_status_id();
+					$status = ideaboard_get_public_status_id();
 					break;
 			}
 
 			// Create the initial forum
-			$forum_id = bbp_insert_forum( array(
-				'post_parent'  => bbp_get_group_forums_root_id(),
+			$forum_id = ideaboard_insert_forum( array(
+				'post_parent'  => ideaboard_get_group_forums_root_id(),
 				'post_title'   => $group->name,
 				'post_content' => $group->description,
 				'post_status'  => $status
@@ -494,8 +494,8 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	public function create_screen_save( $group_id = 0 ) {
 
 		// Nonce check
-		if ( ! bbp_verify_nonce_request( 'groups_create_save_' . $this->slug ) ) {
-			bbp_add_error( 'bbp_create_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+		if ( ! ideaboard_verify_nonce_request( 'groups_create_save_' . $this->slug ) ) {
+			ideaboard_add_error( 'ideaboard_create_group_forum_screen_save', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 			return;
 		}
 
@@ -506,7 +506,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 
 		$create_forum = !empty( $_POST['bbp-create-group-forum'] ) ? true : false;
 		$forum_id     = 0;
-		$forum_ids    = bbp_get_group_forum_ids( $group_id );
+		$forum_ids    = ideaboard_get_group_forum_ids( $group_id );
 
 		if ( !empty( $forum_ids ) )
 			$forum_id = (int) is_array( $forum_ids ) ? $forum_ids[0] : $forum_ids;
@@ -522,20 +522,20 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 				// Set the default forum status
 				switch ( bp_get_new_group_status() ) {
 					case 'hidden'  :
-						$status = bbp_get_hidden_status_id();
+						$status = ideaboard_get_hidden_status_id();
 						break;
 					case 'private' :
-						$status = bbp_get_private_status_id();
+						$status = ideaboard_get_private_status_id();
 						break;
 					case 'public'  :
 					default        :
-						$status = bbp_get_public_status_id();
+						$status = ideaboard_get_public_status_id();
 						break;
 				}
 
 				// Create the initial forum
-				$forum_id = bbp_insert_forum( array(
-					'post_parent'  => bbp_get_group_forums_root_id(),
+				$forum_id = ideaboard_insert_forum( array(
+					'post_parent'  => ideaboard_get_group_forums_root_id(),
 					'post_title'   => bp_get_new_group_name(),
 					'post_content' => bp_get_new_group_description(),
 					'post_status'  => $status
@@ -545,7 +545,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 				$this->new_forum( array( 'forum_id' => $forum_id ) );
 
 				// Update forum active
-				groups_update_groupmeta( bp_get_new_group_id(), '_bbp_forum_enabled_' . $forum_id, true );
+				groups_update_groupmeta( bp_get_new_group_id(), '_ideaboard_forum_enabled_' . $forum_id, true );
 
 				// Toggle forum on
 				$this->toggle_group_forum( bp_get_new_group_id(), true );
@@ -561,7 +561,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 
 					// Delete meta values
 					groups_delete_groupmeta( bp_get_new_group_id(), 'forum_id' );
-					groups_delete_groupmeta( bp_get_new_group_id(), '_bbp_forum_enabled_' . $forum_id );
+					groups_delete_groupmeta( bp_get_new_group_id(), '_ideaboard_forum_enabled_' . $forum_id );
 
 					// Toggle forum off
 					$this->toggle_group_forum( bp_get_new_group_id(), false );
@@ -590,10 +590,10 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @since IdeaBoard (r3653)
 	 * @param type $forum_args
-	 * @uses bbp_get_forum_id()
+	 * @uses ideaboard_get_forum_id()
 	 * @uses bp_get_current_group_id()
-	 * @uses bbp_add_forum_id_to_group()
-	 * @uses bbp_add_group_id_to_forum()
+	 * @uses ideaboard_add_forum_id_to_group()
+	 * @uses ideaboard_add_group_id_to_forum()
 	 * @return if no forum_id is available
 	 */
 	public function new_forum( $forum_args = array() ) {
@@ -603,11 +603,11 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			return;
 
 		// Validate forum_id
-		$forum_id = bbp_get_forum_id( $forum_args['forum_id'] );
+		$forum_id = ideaboard_get_forum_id( $forum_args['forum_id'] );
 		$group_id = !empty( $forum_args['group_id'] ) ? $forum_args['group_id'] : bp_get_current_group_id();
 
-		bbp_add_forum_id_to_group( $group_id, $forum_id );
-		bbp_add_group_id_to_forum( $forum_id, $group_id );
+		ideaboard_add_forum_id_to_group( $group_id, $forum_id );
+		ideaboard_add_group_id_to_forum( $forum_id, $group_id );
 	}
 
 	/**
@@ -615,10 +615,10 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @since IdeaBoard (r3653)
 	 * @param type $forum_args
-	 * @uses bbp_get_forum_id()
+	 * @uses ideaboard_get_forum_id()
 	 * @uses bp_get_current_group_id()
-	 * @uses bbp_add_forum_id_to_group()
-	 * @uses bbp_add_group_id_to_forum()
+	 * @uses ideaboard_add_forum_id_to_group()
+	 * @uses ideaboard_add_group_id_to_forum()
 	 * @return if no forum_id is available
 	 */
 	public function remove_forum( $forum_args = array() ) {
@@ -628,18 +628,18 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			return;
 
 		// Validate forum_id
-		$forum_id = bbp_get_forum_id( $forum_args['forum_id'] );
+		$forum_id = ideaboard_get_forum_id( $forum_args['forum_id'] );
 		$group_id = !empty( $forum_args['group_id'] ) ? $forum_args['group_id'] : bp_get_current_group_id();
 
-		bbp_remove_forum_id_from_group( $group_id, $forum_id );
-		bbp_remove_group_id_from_forum( $forum_id, $group_id );
+		ideaboard_remove_forum_id_from_group( $group_id, $forum_id );
+		ideaboard_remove_group_id_from_forum( $forum_id, $group_id );
 	}
 
 	/**
 	 * Listening to BuddyPress Group deletion to remove the forum
 	 *
 	 * @param int $group_id The group ID
-	 * @uses bbp_get_group_forum_ids()
+	 * @uses ideaboard_get_group_forum_ids()
 	 * @uses BBP_Forums_Group_Extension::remove_forum()
 	 */
 	public function disconnect_forum_from_group( $group_id = 0 ) {
@@ -650,7 +650,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		}
 
 		// Get the forums for the current group
-		$forum_ids = bbp_get_group_forum_ids( $group_id );
+		$forum_ids = ideaboard_get_group_forum_ids( $group_id );
 
 		// Use the first forum ID
 		if ( empty( $forum_ids ) )
@@ -695,7 +695,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		}
 
 		// Update IdeaBoard' internal private and forum ID variables
-		bbp_repair_forum_visibility();
+		ideaboard_repair_forum_visibility();
 
 		// Return the group
 		return $group;
@@ -711,15 +711,15 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @since IdeaBoard (r3653)
 	 * @uses bp_get_current_group_id()
-	 * @uses bbp_get_group_forum_ids()
-	 * @uses bbp_has_forums()
-	 * @uses bbp_get_template_part()
+	 * @uses ideaboard_get_group_forum_ids()
+	 * @uses ideaboard_has_forums()
+	 * @uses ideaboard_get_template_part()
 	 */
 	public function display_forums( $offset = 0 ) {
 		global $wp_query;
 
 		// Allow actions immediately before group forum output
-		do_action( 'bbp_before_group_forum_display' );
+		do_action( 'ideaboard_before_group_forum_display' );
 
 		// Load up IdeaBoard once
 		$bbp = ideaboard();
@@ -728,11 +728,11 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 
 		// Forum data
 		$forum_action = bp_action_variable( $offset );
-		$forum_ids    = bbp_get_group_forum_ids( bp_get_current_group_id() );
+		$forum_ids    = ideaboard_get_group_forum_ids( bp_get_current_group_id() );
 		$forum_id     = array_shift( $forum_ids );
 
 		// Always load up the group forum
-		bbp_has_forums( array(
+		ideaboard_has_forums( array(
 			'p'           => $forum_id,
 			'post_parent' => null
 		) );
@@ -741,7 +741,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		$bbp->current_forum_id = $forum_id;
 
 		// Assume forum query
-		bbp_set_query_name( 'bbp_single_forum' ); ?>
+		ideaboard_set_query_name( 'ideaboard_single_forum' ); ?>
 
 		<div id="ideaboard-forums">
 
@@ -753,20 +753,20 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 				case 'page' :
 
 					// Strip the super stickies from topic query
-					add_filter( 'bbp_get_super_stickies', array( $this, 'no_super_stickies'  ), 10, 1 );
+					add_filter( 'ideaboard_get_super_stickies', array( $this, 'no_super_stickies'  ), 10, 1 );
 
 					// Unset the super sticky option on topic form
-					add_filter( 'bbp_get_topic_types',    array( $this, 'unset_super_sticky' ), 10, 1 );
+					add_filter( 'ideaboard_get_topic_types',    array( $this, 'unset_super_sticky' ), 10, 1 );
 
 					// Query forums and show them if they exist
-					if ( bbp_forums() ) :
+					if ( ideaboard_forums() ) :
 
 						// Setup the forum
-						bbp_the_forum(); ?>
+						ideaboard_the_forum(); ?>
 
-						<h3><?php bbp_forum_title(); ?></h3>
+						<h3><?php ideaboard_forum_title(); ?></h3>
 
-						<?php bbp_get_template_part( 'content', 'single-forum' );
+						<?php ideaboard_get_template_part( 'content', 'single-forum' );
 
 					// No forums found
 					else : ?>
@@ -784,64 +784,64 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 				case $this->topic_slug :
 
 					// hide the 'to front' admin links
-					add_filter( 'bbp_get_topic_stick_link', array( $this, 'hide_super_sticky_admin_link' ), 10, 2 );
+					add_filter( 'ideaboard_get_topic_stick_link', array( $this, 'hide_super_sticky_admin_link' ), 10, 2 );
 
 					// Get the topic
-					bbp_has_topics( array(
+					ideaboard_has_topics( array(
 						'name'           => bp_action_variable( $offset + 1 ),
 						'posts_per_page' => 1,
 						'show_stickies'  => false
 					) );
 
 					// If no topic, 404
-					if ( ! bbp_topics() ) {
-						bp_do_404( bbp_get_forum_permalink( $forum_id ) ); ?>
-						<h3><?php bbp_forum_title(); ?></h3>
-						<?php bbp_get_template_part( 'feedback', 'no-topics' );
+					if ( ! ideaboard_topics() ) {
+						bp_do_404( ideaboard_get_forum_permalink( $forum_id ) ); ?>
+						<h3><?php ideaboard_forum_title(); ?></h3>
+						<?php ideaboard_get_template_part( 'feedback', 'no-topics' );
 						return;
 					}
 
 					// Setup the topic
-					bbp_the_topic(); ?>
+					ideaboard_the_topic(); ?>
 
-					<h3><?php bbp_topic_title(); ?></h3>
+					<h3><?php ideaboard_topic_title(); ?></h3>
 
 					<?php
 
 					// Topic edit
-					if ( bp_action_variable( $offset + 2 ) === bbp_get_edit_rewrite_id() ) :
+					if ( bp_action_variable( $offset + 2 ) === ideaboard_get_edit_rewrite_id() ) :
 
 						// Unset the super sticky link on edit topic template
-						add_filter( 'bbp_get_topic_types', array( $this, 'unset_super_sticky' ), 10, 1 );
+						add_filter( 'ideaboard_get_topic_types', array( $this, 'unset_super_sticky' ), 10, 1 );
 
 						// Set the edit switches
-						$wp_query->bbp_is_edit       = true;
-						$wp_query->bbp_is_topic_edit = true;
+						$wp_query->ideaboard_is_edit       = true;
+						$wp_query->ideaboard_is_topic_edit = true;
 
 						// Setup the global forum ID
 						$bbp->current_topic_id       = get_the_ID();
 
 						// Merge
 						if ( !empty( $_GET['action'] ) && 'merge' === $_GET['action'] ) :
-							bbp_set_query_name( 'bbp_topic_merge' );
-							bbp_get_template_part( 'form', 'topic-merge' );
+							ideaboard_set_query_name( 'ideaboard_topic_merge' );
+							ideaboard_get_template_part( 'form', 'topic-merge' );
 
 						// Split
 						elseif ( !empty( $_GET['action'] ) && 'split' === $_GET['action'] ) :
-							bbp_set_query_name( 'bbp_topic_split' );
-							bbp_get_template_part( 'form', 'topic-split' );
+							ideaboard_set_query_name( 'ideaboard_topic_split' );
+							ideaboard_get_template_part( 'form', 'topic-split' );
 
 						// Edit
 						else :
-							bbp_set_query_name( 'bbp_topic_form' );
-							bbp_get_template_part( 'form', 'topic' );
+							ideaboard_set_query_name( 'ideaboard_topic_form' );
+							ideaboard_get_template_part( 'form', 'topic' );
 
 						endif;
 
 					// Single Topic
 					else:
-						bbp_set_query_name( 'bbp_single_topic' );
-						bbp_get_template_part( 'content', 'single-topic' );
+						ideaboard_set_query_name( 'ideaboard_single_topic' );
+						ideaboard_get_template_part( 'content', 'single-topic' );
 					endif;
 					break;
 
@@ -850,42 +850,42 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 				case $this->reply_slug :
 
 					// Get the reply
-					bbp_has_replies( array(
+					ideaboard_has_replies( array(
 						'name'           => bp_action_variable( $offset + 1 ),
 						'posts_per_page' => 1
 					) );
 
 					// If no topic, 404
-					if ( ! bbp_replies() ) {
-						bp_do_404( bbp_get_forum_permalink( $forum_id ) ); ?>
-						<h3><?php bbp_forum_title(); ?></h3>
-						<?php bbp_get_template_part( 'feedback', 'no-replies' );
+					if ( ! ideaboard_replies() ) {
+						bp_do_404( ideaboard_get_forum_permalink( $forum_id ) ); ?>
+						<h3><?php ideaboard_forum_title(); ?></h3>
+						<?php ideaboard_get_template_part( 'feedback', 'no-replies' );
 						return;
 					}
 
 					// Setup the reply
-					bbp_the_reply(); ?>
+					ideaboard_the_reply(); ?>
 
-					<h3><?php bbp_reply_title(); ?></h3>
+					<h3><?php ideaboard_reply_title(); ?></h3>
 
-					<?php if ( bp_action_variable( $offset + 2 ) === bbp_get_edit_rewrite_id() ) :
+					<?php if ( bp_action_variable( $offset + 2 ) === ideaboard_get_edit_rewrite_id() ) :
 
 						// Set the edit switches
-						$wp_query->bbp_is_edit       = true;
-						$wp_query->bbp_is_reply_edit = true;
+						$wp_query->ideaboard_is_edit       = true;
+						$wp_query->ideaboard_is_reply_edit = true;
 
 						// Setup the global reply ID
 						$bbp->current_reply_id       = get_the_ID();
 
 						// Move
 						if ( !empty( $_GET['action'] ) && ( 'move' === $_GET['action'] ) ) :
-							bbp_set_query_name( 'bbp_reply_move' );
-							bbp_get_template_part( 'form', 'reply-move' );
+							ideaboard_set_query_name( 'ideaboard_reply_move' );
+							ideaboard_get_template_part( 'form', 'reply-move' );
 
 						// Edit
 						else :
-							bbp_set_query_name( 'bbp_reply_form' );
-							bbp_get_template_part( 'form', 'reply' );
+							ideaboard_set_query_name( 'ideaboard_reply_form' );
+							ideaboard_get_template_part( 'form', 'reply' );
 						endif;
 					endif;
 					break;
@@ -899,7 +899,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		<?php
 
 		// Allow actions immediately after group forum output
-		do_action( 'bbp_after_group_forum_display' );
+		do_action( 'ideaboard_after_group_forum_display' );
 	}
 
 	/** Super sticky filters ***************************************************/
@@ -960,7 +960,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 */
 	public function new_topic_redirect_to( $redirect_url = '', $redirect_to = '', $topic_id = 0 ) {
 		if ( bp_is_group() ) {
-			$topic        = bbp_get_topic( $topic_id );
+			$topic        = ideaboard_get_topic( $topic_id );
 			$topic_hash   = '#post-' . $topic_id;
 			$redirect_url = trailingslashit( bp_get_group_permalink( groups_get_current_group() ) ) . trailingslashit( $this->slug ) . trailingslashit( $this->topic_slug ) . trailingslashit( $topic->post_name ) . $topic_hash;
 		}
@@ -977,10 +977,10 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		global $wp_rewrite;
 
 		if ( bp_is_group() ) {
-			$topic_id       = bbp_get_reply_topic_id( $reply_id );
-			$topic          = bbp_get_topic( $topic_id );
-			$reply_position = bbp_get_reply_position( $reply_id, $topic_id );
-			$reply_page     = ceil( (int) $reply_position / (int) bbp_get_replies_per_page() );
+			$topic_id       = ideaboard_get_reply_topic_id( $reply_id );
+			$topic          = ideaboard_get_topic( $topic_id );
+			$reply_position = ideaboard_get_reply_position( $reply_id, $topic_id );
+			$reply_page     = ceil( (int) $reply_position / (int) ideaboard_get_replies_per_page() );
 			$reply_hash     = '#post-' . $reply_id;
 			$topic_url      = trailingslashit( bp_get_group_permalink( groups_get_current_group() ) ) . trailingslashit( $this->slug ) . trailingslashit( $this->topic_slug ) . trailingslashit( $topic->post_name );
 
@@ -994,8 +994,8 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			}
 
 			// Add topic view query arg back to end if it is set
-			if ( bbp_get_view_all() ) {
-				$redirect_url = bbp_add_view_all( $redirect_url );
+			if ( ideaboard_get_view_all() ) {
+				$redirect_url = ideaboard_add_view_all( $redirect_url );
 			}
 		}
 
@@ -1029,18 +1029,18 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	public function forum_parent() {
 	?>
 
-		<input type="hidden" name="bbp_forum_parent_id" id="bbp_forum_parent_id" value="<?php bbp_group_forums_root_id(); ?>" />
+		<input type="hidden" name="ideaboard_forum_parent_id" id="ideaboard_forum_parent_id" value="<?php ideaboard_group_forums_root_id(); ?>" />
 
 	<?php
 	}
 
 	public function topic_parent() {
 
-		$forum_ids = bbp_get_group_forum_ids( bp_get_current_group_id() ); ?>
+		$forum_ids = ideaboard_get_group_forum_ids( bp_get_current_group_id() ); ?>
 
 		<p>
-			<label for="bbp_forum_id"><?php esc_html_e( 'Forum:', 'ideaboard' ); ?></label><br />
-			<?php bbp_dropdown( array( 'include' => $forum_ids, 'selected' => bbp_get_form_topic_forum() ) ); ?>
+			<label for="ideaboard_forum_id"><?php esc_html_e( 'Forum:', 'ideaboard' ); ?></label><br />
+			<?php ideaboard_dropdown( array( 'include' => $forum_ids, 'selected' => ideaboard_get_form_topic_forum() ) ); ?>
 		</p>
 
 	<?php
@@ -1054,9 +1054,9 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * @param bool $retval Are we allowed to view the reply form?
 	 * @uses bp_is_group() To determine if we're on a group page
 	 * @uses is_user_logged_in() To determine if a user is logged in.
-	 * @uses bbp_is_user_keymaster() Is the current user a keymaster?
-	 * @uses bbp_group_is_member() Is the current user a member of the group?
-	 * @uses bbp_group_is_user_banned() Is the current user banned from the group?
+	 * @uses ideaboard_is_user_keymaster() Is the current user a keymaster?
+	 * @uses ideaboard_group_is_member() Is the current user a member of the group?
+	 * @uses ideaboard_group_is_user_banned() Is the current user banned from the group?
 	 *
 	 * @return bool
 	 */
@@ -1072,15 +1072,15 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			return $retval;
 
 		// Keymasters can always pass go
-		} elseif ( bbp_is_user_keymaster() ) {
+		} elseif ( ideaboard_is_user_keymaster() ) {
 			$retval = true;
 
 		// Non-members cannot see forms
-		} elseif ( ! bbp_group_is_member() ) {
+		} elseif ( ! ideaboard_group_is_member() ) {
 			$retval = false;
 
 		// Banned users cannot see forms
-		} elseif ( bbp_group_is_banned() ) {
+		} elseif ( ideaboard_group_is_banned() ) {
 			$retval = false;
 		}
 
@@ -1117,14 +1117,14 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @param int $post_id
 	 * @uses get_post()
-	 * @uses bbp_is_reply()
-	 * @uses bbp_get_reply_topic_id()
-	 * @uses bbp_get_reply_forum_id()
-	 * @uses bbp_is_topic()
-	 * @uses bbp_get_topic_forum_id()
-	 * @uses bbp_is_forum()
+	 * @uses ideaboard_is_reply()
+	 * @uses ideaboard_get_reply_topic_id()
+	 * @uses ideaboard_get_reply_forum_id()
+	 * @uses ideaboard_is_topic()
+	 * @uses ideaboard_get_topic_forum_id()
+	 * @uses ideaboard_is_forum()
 	 * @uses get_post_field()
-	 * @uses bbp_get_forum_group_ids()
+	 * @uses ideaboard_get_forum_group_ids()
 	 * @uses groups_get_group()
 	 * @uses bp_get_group_admin_permalink()
 	 * @uses bp_get_group_permalink()
@@ -1136,21 +1136,21 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		switch ( get_post_type( $post_id ) ) {
 
 			// Reply
-			case bbp_get_reply_post_type() :
-				$topic_id = bbp_get_reply_topic_id( $post_id );
-				$forum_id = bbp_get_reply_forum_id( $post_id );
+			case ideaboard_get_reply_post_type() :
+				$topic_id = ideaboard_get_reply_topic_id( $post_id );
+				$forum_id = ideaboard_get_reply_forum_id( $post_id );
 				$url_end  = trailingslashit( $this->reply_slug ) . get_post_field( 'post_name', $post_id );
 				break;
 
 			// Topic
-			case bbp_get_topic_post_type() :
+			case ideaboard_get_topic_post_type() :
 				$topic_id = $post_id;
-				$forum_id = bbp_get_topic_forum_id( $post_id );
+				$forum_id = ideaboard_get_topic_forum_id( $post_id );
 				$url_end  = trailingslashit( $this->topic_slug ) . get_post_field( 'post_name', $post_id );
 				break;
 
 			// Forum
-			case bbp_get_forum_post_type() :
+			case ideaboard_get_forum_post_type() :
 				$forum_id = $post_id;
 				$url_end  = ''; //get_post_field( 'post_name', $post_id );
 				break;
@@ -1162,7 +1162,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		}
 
 		// Get group ID's for this forum
-		$group_ids = bbp_get_forum_group_ids( $forum_id );
+		$group_ids = ideaboard_get_forum_group_ids( $forum_id );
 
 		// Bail if the post isn't associated with a group
 		if ( empty( $group_ids ) )
@@ -1217,7 +1217,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 * @return string
 	 */
 	public function map_reply_permalink_to_group( $url, $reply_id ) {
-		return $this->maybe_map_permalink_to_group( bbp_get_reply_topic_id( $reply_id ), $url );
+		return $this->maybe_map_permalink_to_group( ideaboard_get_reply_topic_id( $reply_id ), $url );
 	}
 
 	/**
@@ -1282,12 +1282,12 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @param array $args
 	 * @global $wp_rewrite
-	 * @uses bbp_get_forum_id()
+	 * @uses ideaboard_get_forum_id()
 	 * @uses maybe_map_permalink_to_group
 	 * @return array
  	 */
 	public function topic_pagination( $args ) {
-		$new = $this->maybe_map_permalink_to_group( bbp_get_forum_id() );
+		$new = $this->maybe_map_permalink_to_group( ideaboard_get_forum_id() );
 
 		if ( empty( $new ) )
 			return $args;
@@ -1304,12 +1304,12 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	 *
 	 * @param array $args
 	 * @global $wp_rewrite
-	 * @uses bbp_get_topic_id()
+	 * @uses ideaboard_get_topic_id()
 	 * @uses maybe_map_permalink_to_group
 	 * @return array
 	 */
 	public function replies_pagination( $args ) {
-		$new = $this->maybe_map_permalink_to_group( bbp_get_topic_id() );
+		$new = $this->maybe_map_permalink_to_group( ideaboard_get_topic_id() );
 		if ( empty( $new ) )
 			return $args;
 
@@ -1329,16 +1329,16 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 	public function redirect_canonical() {
 
 		// Viewing a single forum
-		if ( bbp_is_single_forum() ) {
+		if ( ideaboard_is_single_forum() ) {
 			$forum_id  = get_the_ID();
-			$group_ids = bbp_get_forum_group_ids( $forum_id );
+			$group_ids = ideaboard_get_forum_group_ids( $forum_id );
 
 		// Viewing a single topic
-		} elseif ( bbp_is_single_topic() ) {
+		} elseif ( ideaboard_is_single_topic() ) {
 			$topic_id  = get_the_ID();
 			$slug      = get_post_field( 'post_name', $topic_id );
-			$forum_id  = bbp_get_topic_forum_id( $topic_id );
-			$group_ids = bbp_get_forum_group_ids( $forum_id );
+			$forum_id  = ideaboard_get_topic_forum_id( $topic_id );
+			$group_ids = ideaboard_get_forum_group_ids( $forum_id );
 
 		// Not a forum or topic
 		} else {
@@ -1356,7 +1356,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		$redirect_to = trailingslashit( $group_link . $this->slug );
 
 		// Add topic slug to URL
-		if ( bbp_is_single_topic() ) {
+		if ( ideaboard_is_single_topic() ) {
 			$redirect_to  = trailingslashit( $redirect_to . $this->topic_slug . '/' . $slug );
 		}
 

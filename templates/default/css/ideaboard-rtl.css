@@ -247,8 +247,8 @@ fieldset div.avatar {
 /* =BuddyPress Activity Streams
 -------------------------------------------------------------- */
 
-.activity-list li.bbp_topic_create .activity-content .activity-inner,
-.activity-list li.bbp_reply_create .activity-content .activity-inner {
+.activity-list li.ideaboard_topic_create .activity-content .activity-inner,
+.activity-list li.ideaboard_reply_create .activity-content .activity-inner {
     border-right: 2px solid #eaeaea;
     padding-right: 10px;
     margin-right: 5px;

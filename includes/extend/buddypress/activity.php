@@ -106,17 +106,17 @@ class BBP_BuddyPress_Activity {
 		$this->component    = 'ideaboard';
 
 		// Forums
-		$this->forum_create = 'bbp_forum_create';
+		$this->forum_create = 'ideaboard_forum_create';
 
 		// Topics
-		$this->topic_create = 'bbp_topic_create';
-		$this->topic_edit   = 'bbp_topic_edit';
-		$this->topic_close  = 'bbp_topic_close';
-		$this->topic_open   = 'bbp_topic_open';
+		$this->topic_create = 'ideaboard_topic_create';
+		$this->topic_edit   = 'ideaboard_topic_edit';
+		$this->topic_close  = 'ideaboard_topic_close';
+		$this->topic_open   = 'ideaboard_topic_open';
 
 		// Replies
-		$this->reply_create = 'bbp_reply_create';
-		$this->reply_edit   = 'bbp_reply_edit';
+		$this->reply_create = 'ideaboard_reply_create';
+		$this->reply_edit   = 'ideaboard_reply_edit';
 	}
 
 	/**
@@ -133,16 +133,16 @@ class BBP_BuddyPress_Activity {
 		add_action( 'bp_register_activity_actions',      array( $this, 'register_activity_actions' )        );
 
 		// Hook into topic and reply creation
-		add_action( 'bbp_new_topic',                     array( $this, 'topic_create'              ), 10, 4 );
-		add_action( 'bbp_new_reply',                     array( $this, 'reply_create'              ), 10, 5 );
+		add_action( 'ideaboard_new_topic',                     array( $this, 'topic_create'              ), 10, 4 );
+		add_action( 'ideaboard_new_reply',                     array( $this, 'reply_create'              ), 10, 5 );
 
 		// Hook into topic and reply status changes
 		add_action( 'edit_post',                         array( $this, 'topic_update'              ), 10, 2 );
 		add_action( 'edit_post',                         array( $this, 'reply_update'              ), 10, 2 );
 
 		// Hook into topic and reply deletion
-		add_action( 'bbp_delete_topic',                  array( $this, 'topic_delete'              ), 10, 1 );
-		add_action( 'bbp_delete_reply',                  array( $this, 'reply_delete'              ), 10, 1 );
+		add_action( 'ideaboard_delete_topic',                  array( $this, 'topic_delete'              ), 10, 1 );
+		add_action( 'ideaboard_delete_reply',                  array( $this, 'reply_delete'              ), 10, 1 );
 
 		// Append forum filters in site wide activity streams
 		add_action( 'bp_activity_filter_options',        array( $this, 'activity_filter_options'   ), 10    );
@@ -178,7 +178,7 @@ class BBP_BuddyPress_Activity {
 	 * @since IdeaBoard (r3902)
 	 */
 	private function fully_loaded() {
-		do_action_ref_array( 'bbp_buddypress_activity_loaded', array( $this ) );
+		do_action_ref_array( 'ideaboard_buddypress_activity_loaded', array( $this ) );
 	}
 
 	/** Methods ***************************************************************/
@@ -201,9 +201,9 @@ class BBP_BuddyPress_Activity {
 	 *
 	 * @since IdeaBoard (r3395)
 	 * @param type $args Array of arguments for bp_activity_add()
-	 * @uses bbp_get_current_user_id()
+	 * @uses ideaboard_get_current_user_id()
 	 * @uses bp_core_current_time()
-	 * @uses bbp_parse_args()
+	 * @uses ideaboard_parse_args()
 	 * @uses aplly_filters()
 	 * @uses bp_activity_add()
 	 * @return type Activity ID if successful, false if not
@@ -211,9 +211,9 @@ class BBP_BuddyPress_Activity {
 	private function record_activity( $args = array() ) {
 
 		// Default activity args
-		$activity = bbp_parse_args( $args, array(
+		$activity = ideaboard_parse_args( $args, array(
 			'id'                => null,
-			'user_id'           => bbp_get_current_user_id(),
+			'user_id'           => ideaboard_get_current_user_id(),
 			'type'              => '',
 			'action'            => '',
 			'item_id'           => '',
@@ -234,9 +234,9 @@ class BBP_BuddyPress_Activity {
 	 *
 	 * @since IdeaBoard (r3395)
 	 * @param type $args Array of arguments for bp_activity_add()
-	 * @uses bbp_get_current_user_id()
+	 * @uses ideaboard_get_current_user_id()
 	 * @uses bp_core_current_time()
-	 * @uses bbp_parse_args()
+	 * @uses ideaboard_parse_args()
 	 * @uses aplly_filters()
 	 * @uses bp_activity_add()
 	 * @return type Activity ID if successful, false if not
@@ -244,7 +244,7 @@ class BBP_BuddyPress_Activity {
 	public function delete_activity( $args = '' ) {
 
 		// Default activity args
-		$activity = bbp_parse_args( $args, array(
+		$activity = ideaboard_parse_args( $args, array(
 			'item_id'           => false,
 			'component'         => $this->component,
 			'type'              => false,
@@ -267,7 +267,7 @@ class BBP_BuddyPress_Activity {
 	private static function get_activity_id( $post_id = 0 ) {
 
 		// Try to get the activity ID of the post
-		$activity_id = (int) get_post_meta( $post_id, '_bbp_activity_id', true );
+		$activity_id = (int) get_post_meta( $post_id, '_ideaboard_activity_id', true );
 
 		// Bail if no activity ID is in post meta
 		if ( empty( $activity_id ) )
@@ -367,14 +367,14 @@ class BBP_BuddyPress_Activity {
 	 * @param int $forum_id
 	 * @param array $anonymous_data
 	 * @param int $topic_author_id
-	 * @uses bbp_get_topic_id()
-	 * @uses bbp_get_forum_id()
-	 * @uses bbp_get_user_profile_link()
-	 * @uses bbp_get_topic_permalink()
-	 * @uses bbp_get_topic_title()
-	 * @uses bbp_get_topic_content()
-	 * @uses bbp_get_forum_permalink()
-	 * @uses bbp_get_forum_title()
+	 * @uses ideaboard_get_topic_id()
+	 * @uses ideaboard_get_forum_id()
+	 * @uses ideaboard_get_user_profile_link()
+	 * @uses ideaboard_get_topic_permalink()
+	 * @uses ideaboard_get_topic_title()
+	 * @uses ideaboard_get_topic_content()
+	 * @uses ideaboard_get_forum_permalink()
+	 * @uses ideaboard_get_forum_title()
 	 * @uses bp_create_excerpt()
 	 * @uses apply_filters()
 	 * @return Bail early if topic is by anonymous user
@@ -386,40 +386,40 @@ class BBP_BuddyPress_Activity {
 			return;
 
 		// Bail if site is private
-		if ( !bbp_is_site_public() )
+		if ( !ideaboard_is_site_public() )
 			return;
 
 		// Validate activity data
 		$user_id  = (int) $topic_author_id;
-		$topic_id = bbp_get_topic_id( $topic_id );
-		$forum_id = bbp_get_forum_id( $forum_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
+		$forum_id = ideaboard_get_forum_id( $forum_id );
 
 		// Bail if user is not active
-		if ( bbp_is_user_inactive( $user_id ) )
+		if ( ideaboard_is_user_inactive( $user_id ) )
 			return;
 
 		// Bail if topic is not published
-		if ( !bbp_is_topic_published( $topic_id ) )
+		if ( !ideaboard_is_topic_published( $topic_id ) )
 			return;
 
 		// User link for topic author
-		$user_link = bbp_get_user_profile_link( $user_id  );
+		$user_link = ideaboard_get_user_profile_link( $user_id  );
 
 		// Topic
-		$topic_permalink = bbp_get_topic_permalink( $topic_id );
+		$topic_permalink = ideaboard_get_topic_permalink( $topic_id );
 		$topic_title     = get_post_field( 'post_title',   $topic_id, 'raw' );
 		$topic_content   = get_post_field( 'post_content', $topic_id, 'raw' );
 		$topic_link      = '<a href="' . $topic_permalink . '">' . $topic_title . '</a>';
 
 		// Forum
-		$forum_permalink = bbp_get_forum_permalink( $forum_id );
+		$forum_permalink = ideaboard_get_forum_permalink( $forum_id );
 		$forum_title     = get_post_field( 'post_title', $forum_id, 'raw' );
 		$forum_link      = '<a href="' . $forum_permalink . '">' . $forum_title . '</a>';
 
 		// Activity action & text
 		$activity_text    = sprintf( esc_html__( '%1$s started the topic %2$s in the forum %3$s', 'ideaboard' ), $user_link, $topic_link, $forum_link );
-		$activity_action  = apply_filters( 'bbp_activity_topic_create',         $activity_text, $user_id,   $topic_id,   $forum_id );
-		$activity_content = apply_filters( 'bbp_activity_topic_create_excerpt', $topic_content                                     );
+		$activity_action  = apply_filters( 'ideaboard_activity_topic_create',         $activity_text, $user_id,   $topic_id,   $forum_id );
+		$activity_content = apply_filters( 'ideaboard_activity_topic_create_excerpt', $topic_content                                     );
 
 		// Compile and record the activity stream results
 		$activity_id = $this->record_activity( array(
@@ -432,12 +432,12 @@ class BBP_BuddyPress_Activity {
 			'item_id'           => $topic_id,
 			'secondary_item_id' => $forum_id,
 			'recorded_time'     => get_post_time( 'Y-m-d H:i:s', true, $topic_id ),
-			'hide_sitewide'     => ! bbp_is_forum_public( $forum_id, false )
+			'hide_sitewide'     => ! ideaboard_is_forum_public( $forum_id, false )
 		) );
 
 		// Add the activity entry ID as a meta value to the topic
 		if ( !empty( $activity_id ) ) {
-			update_post_meta( $topic_id, '_bbp_activity_id', $activity_id );
+			update_post_meta( $topic_id, '_ideaboard_activity_id', $activity_id );
 		}
 	}
 
@@ -462,33 +462,33 @@ class BBP_BuddyPress_Activity {
 	 * @param int $post_id
 	 * @param obj $post
 	 * @uses get_post_type()
-	 * @uses bbp_get_topic_post_type()
-	 * @uses bbp_get_topic_id()
-	 * @uses bbp_is_topic_anonymous()
-	 * @uses bbp_get_public_status_id()
-	 * @uses bbp_get_closed_status_id()
-	 * @uses bbp_get_topic_forum_id()
-	 * @uses bbp_get_topic_author_id()
+	 * @uses ideaboard_get_topic_post_type()
+	 * @uses ideaboard_get_topic_id()
+	 * @uses ideaboard_is_topic_anonymous()
+	 * @uses ideaboard_get_public_status_id()
+	 * @uses ideaboard_get_closed_status_id()
+	 * @uses ideaboard_get_topic_forum_id()
+	 * @uses ideaboard_get_topic_author_id()
 	 * @return Bail early if not a topic, or topic is by anonymous user
 	 */
 	public function topic_update( $topic_id = 0, $post = null ) {
 
 		// Bail early if not a topic
-		if ( get_post_type( $post ) !== bbp_get_topic_post_type() )
+		if ( get_post_type( $post ) !== ideaboard_get_topic_post_type() )
 			return;
 
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 
 		// Bail early if topic is by anonymous user
-		if ( bbp_is_topic_anonymous( $topic_id ) )
+		if ( ideaboard_is_topic_anonymous( $topic_id ) )
 			return;
 
 		// Action based on new status
-		if ( in_array( $post->post_status, array( bbp_get_public_status_id(), bbp_get_closed_status_id() ) ) ) {
+		if ( in_array( $post->post_status, array( ideaboard_get_public_status_id(), ideaboard_get_closed_status_id() ) ) ) {
 
 			// Validate topic data
-			$forum_id        = bbp_get_topic_forum_id( $topic_id );
-			$topic_author_id = bbp_get_topic_author_id( $topic_id );
+			$forum_id        = ideaboard_get_topic_forum_id( $topic_id );
+			$topic_author_id = ideaboard_get_topic_author_id( $topic_id );
 
 			$this->topic_create( $topic_id, $forum_id, array(), $topic_author_id );
 		} else {
@@ -506,16 +506,16 @@ class BBP_BuddyPress_Activity {
 	 * @param int $forum_id
 	 * @param array $anonymous_data
 	 * @param int $topic_author_id
-	 * @uses bbp_get_reply_id()
-	 * @uses bbp_get_topic_id()
-	 * @uses bbp_get_forum_id()
-	 * @uses bbp_get_user_profile_link()
-	 * @uses bbp_get_reply_url()
-	 * @uses bbp_get_reply_content()
-	 * @uses bbp_get_topic_permalink()
-	 * @uses bbp_get_topic_title()
-	 * @uses bbp_get_forum_permalink()
-	 * @uses bbp_get_forum_title()
+	 * @uses ideaboard_get_reply_id()
+	 * @uses ideaboard_get_topic_id()
+	 * @uses ideaboard_get_forum_id()
+	 * @uses ideaboard_get_user_profile_link()
+	 * @uses ideaboard_get_reply_url()
+	 * @uses ideaboard_get_reply_content()
+	 * @uses ideaboard_get_topic_permalink()
+	 * @uses ideaboard_get_topic_title()
+	 * @uses ideaboard_get_forum_permalink()
+	 * @uses ideaboard_get_forum_title()
 	 * @uses bp_create_excerpt()
 	 * @uses apply_filters()
 	 * @return Bail early if topic is by anonywous user
@@ -527,44 +527,44 @@ class BBP_BuddyPress_Activity {
 			return;
 
 		// Bail if site is private
-		if ( !bbp_is_site_public() )
+		if ( !ideaboard_is_site_public() )
 			return;
 
 		// Validate activity data
 		$user_id  = (int) $reply_author_id;
-		$reply_id = bbp_get_reply_id( $reply_id );
-		$topic_id = bbp_get_topic_id( $topic_id );
-		$forum_id = bbp_get_forum_id( $forum_id );
+		$reply_id = ideaboard_get_reply_id( $reply_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
+		$forum_id = ideaboard_get_forum_id( $forum_id );
 
 		// Bail if user is not active
-		if ( bbp_is_user_inactive( $user_id ) )
+		if ( ideaboard_is_user_inactive( $user_id ) )
 			return;
 
 		// Bail if reply is not published
-		if ( !bbp_is_reply_published( $reply_id ) )
+		if ( !ideaboard_is_reply_published( $reply_id ) )
 			return;
 
 		// Setup links for activity stream
-		$user_link = bbp_get_user_profile_link( $user_id  );
+		$user_link = ideaboard_get_user_profile_link( $user_id  );
 
 		// Reply
-		$reply_url     = bbp_get_reply_url( $reply_id );
+		$reply_url     = ideaboard_get_reply_url( $reply_id );
 		$reply_content = get_post_field( 'post_content', $reply_id, 'raw' );
 
 		// Topic
-		$topic_permalink = bbp_get_topic_permalink( $topic_id );
+		$topic_permalink = ideaboard_get_topic_permalink( $topic_id );
 		$topic_title     = get_post_field( 'post_title', $topic_id, 'raw' );
 		$topic_link      = '<a href="' . $topic_permalink . '">' . $topic_title . '</a>';
 
 		// Forum
-		$forum_permalink = bbp_get_forum_permalink( $forum_id );
+		$forum_permalink = ideaboard_get_forum_permalink( $forum_id );
 		$forum_title     = get_post_field( 'post_title', $forum_id, 'raw' );
 		$forum_link      = '<a href="' . $forum_permalink . '">' . $forum_title . '</a>';
 
 		// Activity action & text
 		$activity_text    = sprintf( esc_html__( '%1$s replied to the topic %2$s in the forum %3$s', 'ideaboard' ), $user_link, $topic_link, $forum_link );
-		$activity_action  = apply_filters( 'bbp_activity_reply_create',         $activity_text, $user_id, $reply_id,  $topic_id );
-		$activity_content = apply_filters( 'bbp_activity_reply_create_excerpt', $reply_content                                  );
+		$activity_action  = apply_filters( 'ideaboard_activity_reply_create',         $activity_text, $user_id, $reply_id,  $topic_id );
+		$activity_content = apply_filters( 'ideaboard_activity_reply_create_excerpt', $reply_content                                  );
 
 		// Compile and record the activity stream results
 		$activity_id = $this->record_activity( array(
@@ -577,12 +577,12 @@ class BBP_BuddyPress_Activity {
 			'item_id'           => $reply_id,
 			'secondary_item_id' => $topic_id,
 			'recorded_time'     => get_post_time( 'Y-m-d H:i:s', true, $reply_id ),
-			'hide_sitewide'     => ! bbp_is_forum_public( $forum_id, false )
+			'hide_sitewide'     => ! ideaboard_is_forum_public( $forum_id, false )
 		) );
 
 		// Add the activity entry ID as a meta value to the reply
 		if ( !empty( $activity_id ) ) {
-			update_post_meta( $reply_id, '_bbp_activity_id', $activity_id );
+			update_post_meta( $reply_id, '_ideaboard_activity_id', $activity_id );
 		}
 	}
 
@@ -608,35 +608,35 @@ class BBP_BuddyPress_Activity {
 	 * @param int $post_id
 	 * @param obj $post
 	 * @uses get_post_type()
-	 * @uses bbp_get_reply_post_type()
-	 * @uses bbp_get_reply_id()
-	 * @uses bbp_is_reply_anonymous()
-	 * @uses bbp_get_public_status_id()
-	 * @uses bbp_get_closed_status_id()
-	 * @uses bbp_get_reply_topic_id()
-	 * @uses bbp_get_reply_forum_id()
-	 * @uses bbp_get_reply_author_id()
+	 * @uses ideaboard_get_reply_post_type()
+	 * @uses ideaboard_get_reply_id()
+	 * @uses ideaboard_is_reply_anonymous()
+	 * @uses ideaboard_get_public_status_id()
+	 * @uses ideaboard_get_closed_status_id()
+	 * @uses ideaboard_get_reply_topic_id()
+	 * @uses ideaboard_get_reply_forum_id()
+	 * @uses ideaboard_get_reply_author_id()
 	 * @return Bail early if not a reply, or reply is by anonymous user
 	 */
 	public function reply_update( $reply_id, $post ) {
 
 		// Bail early if not a reply
-		if ( get_post_type( $post ) !== bbp_get_reply_post_type() )
+		if ( get_post_type( $post ) !== ideaboard_get_reply_post_type() )
 			return;
 
-		$reply_id = bbp_get_reply_id( $reply_id );
+		$reply_id = ideaboard_get_reply_id( $reply_id );
 
 		// Bail early if reply is by anonymous user
-		if ( bbp_is_reply_anonymous( $reply_id ) )
+		if ( ideaboard_is_reply_anonymous( $reply_id ) )
 			return;
 
 		// Action based on new status
-		if ( bbp_get_public_status_id() === $post->post_status ) {
+		if ( ideaboard_get_public_status_id() === $post->post_status ) {
 
 			// Validate reply data
-			$topic_id        = bbp_get_reply_topic_id( $reply_id );
-			$forum_id        = bbp_get_reply_forum_id( $reply_id );
-			$reply_author_id = bbp_get_reply_author_id( $reply_id );
+			$topic_id        = ideaboard_get_reply_topic_id( $reply_id );
+			$forum_id        = ideaboard_get_reply_forum_id( $reply_id );
+			$reply_author_id = ideaboard_get_reply_author_id( $reply_id );
 
 			$this->reply_create( $reply_id, $topic_id, $forum_id, array(), $reply_author_id );
 		} else {

@@ -24,30 +24,30 @@
  *
  * @since IdeaBoard (r2509)
  * @uses register_uninstall_hook() To register our own uninstall hook
- * @uses do_action() Calls 'bbp_activation' hook
+ * @uses do_action() Calls 'ideaboard_activation' hook
  */
-function bbp_activation() {
-	do_action( 'bbp_activation' );
+function ideaboard_activation() {
+	do_action( 'ideaboard_activation' );
 }
 
 /**
  * Runs on IdeaBoard deactivation
  *
  * @since IdeaBoard (r2509)
- * @uses do_action() Calls 'bbp_deactivation' hook
+ * @uses do_action() Calls 'ideaboard_deactivation' hook
  */
-function bbp_deactivation() {
-	do_action( 'bbp_deactivation' );
+function ideaboard_deactivation() {
+	do_action( 'ideaboard_deactivation' );
 }
 
 /**
  * Runs when uninstalling IdeaBoard
  *
  * @since IdeaBoard (r2509)
- * @uses do_action() Calls 'bbp_uninstall' hook
+ * @uses do_action() Calls 'ideaboard_uninstall' hook
  */
-function bbp_uninstall() {
-	do_action( 'bbp_uninstall' );
+function ideaboard_uninstall() {
+	do_action( 'ideaboard_uninstall' );
 }
 
 /** Main Actions **************************************************************/
@@ -56,80 +56,80 @@ function bbp_uninstall() {
  * Main action responsible for constants, globals, and includes
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_loaded'
+ * @uses do_action() Calls 'ideaboard_loaded'
  */
-function bbp_loaded() {
-	do_action( 'bbp_loaded' );
+function ideaboard_loaded() {
+	do_action( 'ideaboard_loaded' );
 }
 
 /**
  * Setup constants
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_constants'
+ * @uses do_action() Calls 'ideaboard_constants'
  */
-function bbp_constants() {
-	do_action( 'bbp_constants' );
+function ideaboard_constants() {
+	do_action( 'ideaboard_constants' );
 }
 
 /**
  * Setup globals BEFORE includes
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_boot_strap_globals'
+ * @uses do_action() Calls 'ideaboard_boot_strap_globals'
  */
-function bbp_boot_strap_globals() {
-	do_action( 'bbp_boot_strap_globals' );
+function ideaboard_boot_strap_globals() {
+	do_action( 'ideaboard_boot_strap_globals' );
 }
 
 /**
  * Include files
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_includes'
+ * @uses do_action() Calls 'ideaboard_includes'
  */
-function bbp_includes() {
-	do_action( 'bbp_includes' );
+function ideaboard_includes() {
+	do_action( 'ideaboard_includes' );
 }
 
 /**
  * Setup globals AFTER includes
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_setup_globals'
+ * @uses do_action() Calls 'ideaboard_setup_globals'
  */
-function bbp_setup_globals() {
-	do_action( 'bbp_setup_globals' );
+function ideaboard_setup_globals() {
+	do_action( 'ideaboard_setup_globals' );
 }
 
 /**
  * Register any objects before anything is initialized
  *
  * @since IdeaBoard (r4180)
- * @uses do_action() Calls 'bbp_register'
+ * @uses do_action() Calls 'ideaboard_register'
  */
-function bbp_register() {
-	do_action( 'bbp_register' );
+function ideaboard_register() {
+	do_action( 'ideaboard_register' );
 }
 
 /**
  * Initialize any code after everything has been loaded
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_init'
+ * @uses do_action() Calls 'ideaboard_init'
  */
-function bbp_init() {
-	do_action( 'bbp_init' );
+function ideaboard_init() {
+	do_action( 'ideaboard_init' );
 }
 
 /**
  * Initialize widgets
  *
  * @since IdeaBoard (r3389)
- * @uses do_action() Calls 'bbp_widgets_init'
+ * @uses do_action() Calls 'ideaboard_widgets_init'
  */
-function bbp_widgets_init() {
-	do_action( 'bbp_widgets_init' );
+function ideaboard_widgets_init() {
+	do_action( 'ideaboard_widgets_init' );
 }
 
 /**
@@ -139,20 +139,20 @@ function bbp_widgets_init() {
  *
  * @param WP_Roles $wp_roles The main WordPress roles global
  *
- * @uses do_action() Calls 'bbp_roles_init'
+ * @uses do_action() Calls 'ideaboard_roles_init'
  */
-function bbp_roles_init( $wp_roles = null ) {
-	do_action( 'bbp_roles_init', $wp_roles );
+function ideaboard_roles_init( $wp_roles = null ) {
+	do_action( 'ideaboard_roles_init', $wp_roles );
 }
 
 /**
  * Setup the currently logged-in user
  *
  * @since IdeaBoard (r2695)
- * @uses do_action() Calls 'bbp_setup_current_user'
+ * @uses do_action() Calls 'ideaboard_setup_current_user'
  */
-function bbp_setup_current_user() {
-	do_action( 'bbp_setup_current_user' );
+function ideaboard_setup_current_user() {
+	do_action( 'ideaboard_setup_current_user' );
 }
 
 /** Supplemental Actions ******************************************************/
@@ -161,110 +161,110 @@ function bbp_setup_current_user() {
  * Load translations for current language
  *
  * @since IdeaBoard (r2599)
- * @uses do_action() Calls 'bbp_load_textdomain'
+ * @uses do_action() Calls 'ideaboard_load_textdomain'
  */
-function bbp_load_textdomain() {
-	do_action( 'bbp_load_textdomain' );
+function ideaboard_load_textdomain() {
+	do_action( 'ideaboard_load_textdomain' );
 }
 
 /**
  * Setup the post types
  *
  * @since IdeaBoard (r2464)
- * @uses do_action() Calls 'bbp_register_post_type'
+ * @uses do_action() Calls 'ideaboard_register_post_type'
  */
-function bbp_register_post_types() {
-	do_action( 'bbp_register_post_types' );
+function ideaboard_register_post_types() {
+	do_action( 'ideaboard_register_post_types' );
 }
 
 /**
  * Setup the post statuses
  *
  * @since IdeaBoard (r2727)
- * @uses do_action() Calls 'bbp_register_post_statuses'
+ * @uses do_action() Calls 'ideaboard_register_post_statuses'
  */
-function bbp_register_post_statuses() {
-	do_action( 'bbp_register_post_statuses' );
+function ideaboard_register_post_statuses() {
+	do_action( 'ideaboard_register_post_statuses' );
 }
 
 /**
  * Register the built in IdeaBoard taxonomies
  *
  * @since IdeaBoard (r2464)
- * @uses do_action() Calls 'bbp_register_taxonomies'
+ * @uses do_action() Calls 'ideaboard_register_taxonomies'
  */
-function bbp_register_taxonomies() {
-	do_action( 'bbp_register_taxonomies' );
+function ideaboard_register_taxonomies() {
+	do_action( 'ideaboard_register_taxonomies' );
 }
 
 /**
  * Register the default IdeaBoard views
  *
  * @since IdeaBoard (r2789)
- * @uses do_action() Calls 'bbp_register_views'
+ * @uses do_action() Calls 'ideaboard_register_views'
  */
-function bbp_register_views() {
-	do_action( 'bbp_register_views' );
+function ideaboard_register_views() {
+	do_action( 'ideaboard_register_views' );
 }
 
 /**
  * Register the default IdeaBoard shortcodes
  *
  * @since IdeaBoard (r4211)
- * @uses do_action() Calls 'bbp_register_shortcodes'
+ * @uses do_action() Calls 'ideaboard_register_shortcodes'
  */
-function bbp_register_shortcodes() {
-	do_action( 'bbp_register_shortcodes' );
+function ideaboard_register_shortcodes() {
+	do_action( 'ideaboard_register_shortcodes' );
 }
 
 /**
  * Enqueue IdeaBoard specific CSS and JS
  *
  * @since IdeaBoard (r3373)
- * @uses do_action() Calls 'bbp_enqueue_scripts'
+ * @uses do_action() Calls 'ideaboard_enqueue_scripts'
  */
-function bbp_enqueue_scripts() {
-	do_action( 'bbp_enqueue_scripts' );
+function ideaboard_enqueue_scripts() {
+	do_action( 'ideaboard_enqueue_scripts' );
 }
 
 /**
  * Add the IdeaBoard-specific rewrite tags
  *
  * @since IdeaBoard (r2753)
- * @uses do_action() Calls 'bbp_add_rewrite_tags'
+ * @uses do_action() Calls 'ideaboard_add_rewrite_tags'
  */
-function bbp_add_rewrite_tags() {
-	do_action( 'bbp_add_rewrite_tags' );
+function ideaboard_add_rewrite_tags() {
+	do_action( 'ideaboard_add_rewrite_tags' );
 }
 
 /**
  * Add the IdeaBoard-specific rewrite rules
  *
  * @since IdeaBoard (r4918)
- * @uses do_action() Calls 'bbp_add_rewrite_rules'
+ * @uses do_action() Calls 'ideaboard_add_rewrite_rules'
  */
-function bbp_add_rewrite_rules() {
-	do_action( 'bbp_add_rewrite_rules' );
+function ideaboard_add_rewrite_rules() {
+	do_action( 'ideaboard_add_rewrite_rules' );
 }
 
 /**
  * Add the IdeaBoard-specific permalink structures
  *
  * @since IdeaBoard (r4918)
- * @uses do_action() Calls 'bbp_add_permastructs'
+ * @uses do_action() Calls 'ideaboard_add_permastructs'
  */
-function bbp_add_permastructs() {
-	do_action( 'bbp_add_permastructs' );
+function ideaboard_add_permastructs() {
+	do_action( 'ideaboard_add_permastructs' );
 }
 
 /**
  * Add the IdeaBoard-specific login forum action
  *
  * @since IdeaBoard (r2753)
- * @uses do_action() Calls 'bbp_login_form_login'
+ * @uses do_action() Calls 'ideaboard_login_form_login'
  */
-function bbp_login_form_login() {
-	do_action( 'bbp_login_form_login' );
+function ideaboard_login_form_login() {
+	do_action( 'ideaboard_login_form_login' );
 }
 
 /** User Actions **************************************************************/
@@ -276,10 +276,10 @@ function bbp_login_form_login() {
  *
  * @param int $user_id ID of user being edited
  * @param array $old_user_data The old, unmodified user data
- * @uses do_action() Calls 'bbp_profile_update'
+ * @uses do_action() Calls 'ideaboard_profile_update'
  */
-function bbp_profile_update( $user_id = 0, $old_user_data = array() ) {
-	do_action( 'bbp_profile_update', $user_id, $old_user_data );
+function ideaboard_profile_update( $user_id = 0, $old_user_data = array() ) {
+	do_action( 'ideaboard_profile_update', $user_id, $old_user_data );
 }
 
 /**
@@ -287,10 +287,10 @@ function bbp_profile_update( $user_id = 0, $old_user_data = array() ) {
  *
  * @since IdeaBoard (r4304)
  * @param int $user_id ID of user being edited
- * @uses do_action() Calls 'bbp_user_register'
+ * @uses do_action() Calls 'ideaboard_user_register'
  */
-function bbp_user_register( $user_id = 0 ) {
-	do_action( 'bbp_user_register', $user_id );
+function ideaboard_user_register( $user_id = 0 ) {
+	do_action( 'ideaboard_user_register', $user_id );
 }
 
 /** Final Action **************************************************************/
@@ -299,10 +299,10 @@ function bbp_user_register( $user_id = 0 ) {
  * IdeaBoard has loaded and initialized everything, and is okay to go
  *
  * @since IdeaBoard (r2618)
- * @uses do_action() Calls 'bbp_ready'
+ * @uses do_action() Calls 'ideaboard_ready'
  */
-function bbp_ready() {
-	do_action( 'bbp_ready' );
+function ideaboard_ready() {
+	do_action( 'ideaboard_ready' );
 }
 
 /** Theme Permissions *********************************************************/
@@ -314,8 +314,8 @@ function bbp_ready() {
  * @since IdeaBoard (r3605)
  * @uses do_action()
  */
-function bbp_template_redirect() {
-	do_action( 'bbp_template_redirect' );
+function ideaboard_template_redirect() {
+	do_action( 'ideaboard_template_redirect' );
 }
 
 /** Theme Helpers *************************************************************/
@@ -326,8 +326,8 @@ function bbp_template_redirect() {
  * @since IdeaBoard (r3829)
  * @uses do_action()
  */
-function bbp_register_theme_packages() {
-	do_action( 'bbp_register_theme_packages' );
+function ideaboard_register_theme_packages() {
+	do_action( 'ideaboard_register_theme_packages' );
 }
 
 /**
@@ -336,8 +336,8 @@ function bbp_register_theme_packages() {
  * @since IdeaBoard (r3732)
  * @uses do_action()
  */
-function bbp_setup_theme() {
-	do_action( 'bbp_setup_theme' );
+function ideaboard_setup_theme() {
+	do_action( 'ideaboard_setup_theme' );
 }
 
 /**
@@ -346,8 +346,8 @@ function bbp_setup_theme() {
  * @since IdeaBoard (r3732)
  * @uses do_action()
  */
-function bbp_after_setup_theme() {
-	do_action( 'bbp_after_setup_theme' );
+function ideaboard_after_setup_theme() {
+	do_action( 'ideaboard_after_setup_theme' );
 }
 
 /**
@@ -356,10 +356,10 @@ function bbp_after_setup_theme() {
  * @since IdeaBoard (r4550)
  * @uses do_action()
  */
-function bbp_post_request() {
+function ideaboard_post_request() {
 
 	// Bail if not a POST action
-	if ( ! bbp_is_post_request() )
+	if ( ! ideaboard_is_post_request() )
 		return;
 
 	// Bail if no action
@@ -368,10 +368,10 @@ function bbp_post_request() {
 
 	// This dynamic action is probably the one you want to use. It narrows down
 	// the scope of the 'action' without needing to check it in your function.
-	do_action( 'bbp_post_request_' . $_POST['action'] );
+	do_action( 'ideaboard_post_request_' . $_POST['action'] );
 
 	// Use this static action if you don't mind checking the 'action' yourself.
-	do_action( 'bbp_post_request',   $_POST['action'] );
+	do_action( 'ideaboard_post_request',   $_POST['action'] );
 }
 
 /**
@@ -380,10 +380,10 @@ function bbp_post_request() {
  * @since IdeaBoard (r4550)
  * @uses do_action()
  */
-function bbp_get_request() {
+function ideaboard_get_request() {
 
 	// Bail if not a POST action
-	if ( ! bbp_is_get_request() )
+	if ( ! ideaboard_is_get_request() )
 		return;
 
 	// Bail if no action
@@ -392,10 +392,10 @@ function bbp_get_request() {
 
 	// This dynamic action is probably the one you want to use. It narrows down
 	// the scope of the 'action' without needing to check it in your function.
-	do_action( 'bbp_get_request_' . $_GET['action'] );
+	do_action( 'ideaboard_get_request_' . $_GET['action'] );
 
 	// Use this static action if you don't mind checking the 'action' yourself.
-	do_action( 'bbp_get_request',   $_GET['action'] );
+	do_action( 'ideaboard_get_request',   $_GET['action'] );
 }
 
 /** Filters *******************************************************************/
@@ -408,8 +408,8 @@ function bbp_get_request() {
  * @param string $locale
  * @param string $domain
  */
-function bbp_plugin_locale( $locale = '', $domain = '' ) {
-	return apply_filters( 'bbp_plugin_locale', $locale, $domain );
+function ideaboard_plugin_locale( $locale = '', $domain = '' ) {
+	return apply_filters( 'ideaboard_plugin_locale', $locale, $domain );
 }
 
 /**
@@ -419,8 +419,8 @@ function bbp_plugin_locale( $locale = '', $domain = '' ) {
  * @param array $query_vars
  * @return array
  */
-function bbp_request( $query_vars = array() ) {
-	return apply_filters( 'bbp_request', $query_vars );
+function ideaboard_request( $query_vars = array() ) {
+	return apply_filters( 'ideaboard_request', $query_vars );
 }
 
 /**
@@ -432,8 +432,8 @@ function bbp_request( $query_vars = array() ) {
  * @param string $template
  * @return string Template file to use
  */
-function bbp_template_include( $template = '' ) {
-	return apply_filters( 'bbp_template_include', $template );
+function ideaboard_template_include( $template = '' ) {
+	return apply_filters( 'ideaboard_template_include', $template );
 }
 
 /**
@@ -442,20 +442,20 @@ function bbp_template_include( $template = '' ) {
  * @since IdeaBoard (r2688)
  * @deprecated since IdeaBoard (r4918)
  * @param WP_Rewrite $wp_rewrite
- * @uses do_action() Calls 'bbp_generate_rewrite_rules' with {@link WP_Rewrite}
+ * @uses do_action() Calls 'ideaboard_generate_rewrite_rules' with {@link WP_Rewrite}
  */
-function bbp_generate_rewrite_rules( $wp_rewrite ) {
-	do_action_ref_array( 'bbp_generate_rewrite_rules', array( &$wp_rewrite ) );
+function ideaboard_generate_rewrite_rules( $wp_rewrite ) {
+	do_action_ref_array( 'ideaboard_generate_rewrite_rules', array( &$wp_rewrite ) );
 }
 
 /**
  * Filter the allowed themes list for IdeaBoard specific themes
  *
  * @since IdeaBoard (r2944)
- * @uses apply_filters() Calls 'bbp_allowed_themes' with the allowed themes list
+ * @uses apply_filters() Calls 'ideaboard_allowed_themes' with the allowed themes list
  */
-function bbp_allowed_themes( $themes ) {
-	return apply_filters( 'bbp_allowed_themes', $themes );
+function ideaboard_allowed_themes( $themes ) {
+	return apply_filters( 'ideaboard_allowed_themes', $themes );
 }
 
 /**
@@ -468,6 +468,6 @@ function bbp_allowed_themes( $themes ) {
  * @param int $user_id User id
  * @param mixed $args Arguments
  */
-function bbp_map_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
-	return apply_filters( 'bbp_map_meta_caps', $caps, $cap, $user_id, $args );
+function ideaboard_map_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
+	return apply_filters( 'ideaboard_map_meta_caps', $caps, $cap, $user_id, $args );
 }

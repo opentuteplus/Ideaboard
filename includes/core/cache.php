@@ -68,7 +68,7 @@ class BBP_Skip_Children {
 	public function pre_post_update( $post_id = 0 ) {
 
 		// Bail if post ID is not a IdeaBoard post type
-		if ( empty( $post_id ) || ! bbp_is_custom_post_type( $post_id ) )
+		if ( empty( $post_id ) || ! ideaboard_is_custom_post_type( $post_id ) )
 			return;
 
 		// Store the $post_id
@@ -128,10 +128,10 @@ new BBP_Skip_Children();
  *
  * @since IdeaBoard (r4040)
  *
- * @uses do_action() Calls 'bbp_clean_post_cache' on $id
+ * @uses do_action() Calls 'ideaboard_clean_post_cache' on $id
  * @param object|int $_post The post object or ID to remove from the cache
  */
-function bbp_clean_post_cache( $_post = '' ) {
+function ideaboard_clean_post_cache( $_post = '' ) {
 
 	// Bail if no post
 	$_post = get_post( $_post );
@@ -143,26 +143,26 @@ function bbp_clean_post_cache( $_post = '' ) {
 
 	clean_object_term_cache( $_post->ID, $_post->post_type );
 
-	do_action( 'bbp_clean_post_cache', $_post->ID, $_post );
+	do_action( 'ideaboard_clean_post_cache', $_post->ID, $_post );
 
 	// Child query types to clean
 	$post_types = array(
-		bbp_get_topic_post_type(),
-		bbp_get_forum_post_type(),
-		bbp_get_reply_post_type()
+		ideaboard_get_topic_post_type(),
+		ideaboard_get_forum_post_type(),
+		ideaboard_get_reply_post_type()
 	);
 
 	// Loop through query types and clean caches
 	foreach ( $post_types as $post_type ) {
-		wp_cache_delete( 'bbp_get_forum_'     . $_post->ID . '_reply_id',                              'ideaboard_posts' );
-		wp_cache_delete( 'bbp_parent_'        . $_post->ID . '_type_' . $post_type . '_child_last_id', 'ideaboard_posts' );
-		wp_cache_delete( 'bbp_parent_'        . $_post->ID . '_type_' . $post_type . '_child_count',   'ideaboard_posts' );
-		wp_cache_delete( 'bbp_parent_public_' . $_post->ID . '_type_' . $post_type . '_child_ids',     'ideaboard_posts' );
-		wp_cache_delete( 'bbp_parent_all_'    . $_post->ID . '_type_' . $post_type . '_child_ids',     'ideaboard_posts' );
+		wp_cache_delete( 'ideaboard_get_forum_'     . $_post->ID . '_reply_id',                              'ideaboard_posts' );
+		wp_cache_delete( 'ideaboard_parent_'        . $_post->ID . '_type_' . $post_type . '_child_last_id', 'ideaboard_posts' );
+		wp_cache_delete( 'ideaboard_parent_'        . $_post->ID . '_type_' . $post_type . '_child_count',   'ideaboard_posts' );
+		wp_cache_delete( 'ideaboard_parent_public_' . $_post->ID . '_type_' . $post_type . '_child_ids',     'ideaboard_posts' );
+		wp_cache_delete( 'ideaboard_parent_all_'    . $_post->ID . '_type_' . $post_type . '_child_ids',     'ideaboard_posts' );
 	}
 
 	// Invalidate parent caches
 	if ( ! empty( $_post->post_parent ) ) {
-		bbp_clean_post_cache( $_post->post_parent );
+		ideaboard_clean_post_cache( $_post->post_parent );
 	}
 }

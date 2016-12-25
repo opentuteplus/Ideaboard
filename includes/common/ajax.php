@@ -18,10 +18,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @since IdeaBoard (r4543)
  *
- * @uses bbp_get_ajax_url() To get the URL to use for AJAX requests
+ * @uses ideaboard_get_ajax_url() To get the URL to use for AJAX requests
  */
-function bbp_ajax_url() {
-	echo esc_url( bbp_get_ajax_url() );
+function ideaboard_ajax_url() {
+	echo esc_url( ideaboard_get_ajax_url() );
 }
 	/**
 	 * Return the URL to use for theme-side IdeaBoard AJAX requests
@@ -31,13 +31,13 @@ function bbp_ajax_url() {
 	 * @global WP $wp
 	 * @return string
 	 */
-	function bbp_get_ajax_url() {
+	function ideaboard_get_ajax_url() {
 		global $wp;
 
 		$base_url = home_url( trailingslashit( $wp->request ), ( is_ssl() ? 'https' : 'http' ) );
 		$ajaxurl  = add_query_arg( array( 'bbp-ajax' => 'true' ), $base_url );
 
-		return apply_filters( 'bbp_get_ajax_url', $ajaxurl );
+		return apply_filters( 'ideaboard_get_ajax_url', $ajaxurl );
 	}
 
 /**
@@ -47,22 +47,22 @@ function bbp_ajax_url() {
  *
  * @return bool Looking for bbp-ajax
  */
-function bbp_is_ajax() {
+function ideaboard_is_ajax() {
 	return (bool) ( ( isset( $_GET['bbp-ajax'] ) || isset( $_POST['bbp-ajax'] ) ) && ! empty( $_REQUEST['action'] ) );
 }
 
 /**
- * Hooked to the 'bbp_template_redirect' action, this is IdeaBoard's custom
+ * Hooked to the 'ideaboard_template_redirect' action, this is IdeaBoard's custom
  * theme-side ajax handler.
  *
  * @since IdeaBoard (r4543)
  *
  * @return If not a IdeaBoard ajax request
  */
-function bbp_do_ajax() {
+function ideaboard_do_ajax() {
 
 	// Bail if not an ajax request
-	if ( ! bbp_is_ajax() )
+	if ( ! ideaboard_is_ajax() )
 		return;
 
 	// Set WordPress core ajax constant
@@ -75,7 +75,7 @@ function bbp_do_ajax() {
 	send_nosniff_header();
 
 	// Perform custom IdeaBoard ajax
-	do_action( 'bbp_ajax_' . $_REQUEST['action'] );
+	do_action( 'ideaboard_ajax_' . $_REQUEST['action'] );
 
 	// All done
 	die( '0' );
@@ -90,7 +90,7 @@ function bbp_do_ajax() {
  * @param string $content
  * @param array $extras
  */
-function bbp_ajax_response( $success = false, $content = '', $status = -1, $extras = array() ) {
+function ideaboard_ajax_response( $success = false, $content = '', $status = -1, $extras = array() ) {
 
 	// Set status to 200 if setting response as successful
 	if ( ( true === $success ) && ( -1 === $status ) )

@@ -21,7 +21,7 @@
  * @uses apply_filters() Filter mapped results
  * @return array Actual capabilities for meta capability
  */
-function bbp_map_primary_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
+function ideaboard_map_primary_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
 
 	// What capability is being checked?
 	switch ( $cap ) {
@@ -30,7 +30,7 @@ function bbp_map_primary_meta_caps( $caps = array(), $cap = '', $user_id = 0, $a
 		case 'moderate'    :
 
 			// Do not allow inactive users
-			if ( bbp_is_user_inactive( $user_id ) ) {
+			if ( ideaboard_is_user_inactive( $user_id ) ) {
 				$caps = array( 'do_not_allow' );
 
 			// Moderators are always participants
@@ -41,7 +41,7 @@ function bbp_map_primary_meta_caps( $caps = array(), $cap = '', $user_id = 0, $a
 			break;
 	}
 
-	return apply_filters( 'bbp_map_primary_meta_caps', $caps, $cap, $user_id, $args );
+	return apply_filters( 'ideaboard_map_primary_meta_caps', $caps, $cap, $user_id, $args );
 }
 
 /**
@@ -50,22 +50,22 @@ function bbp_map_primary_meta_caps( $caps = array(), $cap = '', $user_id = 0, $a
  * @since IdeaBoard (r3860)
  *
  * @param int $user_id
- * @uses bbp_get_user_id() To get the user id
+ * @uses ideaboard_get_user_id() To get the user id
  * @uses get_userdata() To get the user data
- * @uses apply_filters() Calls 'bbp_set_user_role' with the role and user id
+ * @uses apply_filters() Calls 'ideaboard_set_user_role' with the role and user id
  * @return string
  */
-function bbp_set_user_role( $user_id = 0, $new_role = '' ) {
+function ideaboard_set_user_role( $user_id = 0, $new_role = '' ) {
 
 	// Validate user id
-	$user_id = bbp_get_user_id( $user_id, false, false );
+	$user_id = ideaboard_get_user_id( $user_id, false, false );
 	$user    = get_userdata( $user_id );
 
 	// User exists
 	if ( !empty( $user ) ) {
 
 		// Get users forum role
-		$role = bbp_get_user_role( $user_id );
+		$role = ideaboard_get_user_role( $user_id );
 
 		// User already has this role so no new role is set
 		if ( $new_role === $role ) {
@@ -83,7 +83,7 @@ function bbp_set_user_role( $user_id = 0, $new_role = '' ) {
 			if ( !empty( $new_role ) ) {
 
 				// Make sure IdeaBoard roles are added
-				bbp_add_forums_roles();
+				ideaboard_add_forums_roles();
 
 				$user->add_role( $new_role );
 			}
@@ -94,7 +94,7 @@ function bbp_set_user_role( $user_id = 0, $new_role = '' ) {
 		$new_role = false;
 	}
 
-	return apply_filters( 'bbp_set_user_role', $new_role, $user_id, $user );
+	return apply_filters( 'ideaboard_set_user_role', $new_role, $user_id, $user );
 }
 
 /**
@@ -103,15 +103,15 @@ function bbp_set_user_role( $user_id = 0, $new_role = '' ) {
  * @since IdeaBoard (r3860)
  *
  * @param int $user_id
- * @uses bbp_get_user_id() To get the user id
+ * @uses ideaboard_get_user_id() To get the user id
  * @uses get_userdata() To get the user data
- * @uses apply_filters() Calls 'bbp_get_user_role' with the role and user id
+ * @uses apply_filters() Calls 'ideaboard_get_user_role' with the role and user id
  * @return string
  */
-function bbp_get_user_role( $user_id = 0 ) {
+function ideaboard_get_user_role( $user_id = 0 ) {
 
 	// Validate user id
-	$user_id = bbp_get_user_id( $user_id );
+	$user_id = ideaboard_get_user_id( $user_id );
 	$user    = get_userdata( $user_id );
 	$role    = false;
 
@@ -121,7 +121,7 @@ function bbp_get_user_role( $user_id = 0 ) {
 		// Look for a IdeaBoard role
 		$roles = array_intersect(
 			array_values( $user->roles ),
-			array_keys( bbp_get_dynamic_roles() )
+			array_keys( ideaboard_get_dynamic_roles() )
 		);
 
 		// If there's a role in the array, use the first one. This isn't very
@@ -132,7 +132,7 @@ function bbp_get_user_role( $user_id = 0 ) {
 		}
 	}
 
-	return apply_filters( 'bbp_get_user_role', $role, $user_id, $user );
+	return apply_filters( 'ideaboard_get_user_role', $role, $user_id, $user );
 }
 
 /**
@@ -141,18 +141,18 @@ function bbp_get_user_role( $user_id = 0 ) {
  * @since IdeaBoard (r4446)
  *
  * @param int $user_id
- * @uses bbp_get_user_id() To get the user id
+ * @uses ideaboard_get_user_id() To get the user id
  * @uses get_userdata() To get the user data
- * @uses apply_filters() Calls 'bbp_get_user_blog_role' with the role and user id
+ * @uses apply_filters() Calls 'ideaboard_get_user_blog_role' with the role and user id
  * @return string
  */
-function bbp_get_user_blog_role( $user_id = 0 ) {
+function ideaboard_get_user_blog_role( $user_id = 0 ) {
 
 	// Add IdeaBoard roles (returns $wp_roles global)
-	bbp_add_forums_roles();
+	ideaboard_add_forums_roles();
 
 	// Validate user id
-	$user_id = bbp_get_user_id( $user_id );
+	$user_id = ideaboard_get_user_id( $user_id );
 	$user    = get_userdata( $user_id );
 	$role    = false;
 
@@ -162,7 +162,7 @@ function bbp_get_user_blog_role( $user_id = 0 ) {
 		// Look for a non IdeaBoard role
 		$roles     = array_intersect(
 			array_values( $user->roles ),
-			array_keys( bbp_get_blog_roles() )
+			array_keys( ideaboard_get_blog_roles() )
 		);
 
 		// If there's a role in the array, use the first one. This isn't very
@@ -173,20 +173,20 @@ function bbp_get_user_blog_role( $user_id = 0 ) {
 		}
 	}
 
-	return apply_filters( 'bbp_get_user_blog_role', $role, $user_id, $user );
+	return apply_filters( 'ideaboard_get_user_blog_role', $role, $user_id, $user );
 }
 
 /**
- * Helper function hooked to 'bbp_profile_update' action to save or
+ * Helper function hooked to 'ideaboard_profile_update' action to save or
  * update user roles and capabilities.
  *
  * @since IdeaBoard (r4235)
  *
  * @param int $user_id
- * @uses bbp_reset_user_caps() to reset caps
- * @usse bbp_save_user_caps() to save caps
+ * @uses ideaboard_reset_user_caps() to reset caps
+ * @usse ideaboard_save_user_caps() to save caps
  */
-function bbp_profile_update_role( $user_id = 0 ) {
+function ideaboard_profile_update_role( $user_id = 0 ) {
 
 	// Bail if no user ID was passed
 	if ( empty( $user_id ) )
@@ -198,14 +198,14 @@ function bbp_profile_update_role( $user_id = 0 ) {
 
 	// Fromus role we want the user to have
 	$new_role    = sanitize_text_field( $_POST['bbp-forums-role'] );
-	$forums_role = bbp_get_user_role( $user_id );
+	$forums_role = ideaboard_get_user_role( $user_id );
 
 	// Bail if no role change
 	if ( $new_role === $forums_role )
 		return;
 
 	// Bail if trying to set their own role
-	if ( bbp_is_user_home_edit() )
+	if ( ideaboard_is_user_home_edit() )
 		return;
 	
 	// Bail if current user cannot promote the passing user
@@ -213,7 +213,7 @@ function bbp_profile_update_role( $user_id = 0 ) {
 		return;
 
 	// Set the new forums role
-	bbp_set_user_role( $user_id, $new_role );
+	ideaboard_set_user_role( $user_id, $new_role );
 }
 
 /**
@@ -225,21 +225,21 @@ function bbp_profile_update_role( $user_id = 0 ) {
  * @since IdeaBoard (r3380)
  *
  * @uses is_user_logged_in() To bail if user is not logged in
- * @uses bbp_get_user_role() To bail if user already has a role
- * @uses bbp_is_user_inactive() To bail if user is inactive
- * @uses bbp_allow_global_access() To know whether to save role to database
- * @uses bbp_get_user_role_map() To get the WP to BBP role map array
- * @uses bbp_get_default_role() To get the site's default forums role
+ * @uses ideaboard_get_user_role() To bail if user already has a role
+ * @uses ideaboard_is_user_inactive() To bail if user is inactive
+ * @uses ideaboard_allow_global_access() To know whether to save role to database
+ * @uses ideaboard_get_user_role_map() To get the WP to BBP role map array
+ * @uses ideaboard_get_default_role() To get the site's default forums role
  * @uses get_option()
  *
  * @return If not multisite, not global, or user is deleted/spammed
  */
-function bbp_set_current_user_default_role() {
+function ideaboard_set_current_user_default_role() {
 
 	/** Sanity ****************************************************************/
 
 	// Bail if deactivating IdeaBoard
-	if ( bbp_is_deactivation() )
+	if ( ideaboard_is_deactivation() )
 		return;
 
 	// Catch all, to prevent premature user initialization
@@ -251,14 +251,14 @@ function bbp_set_current_user_default_role() {
 		return;
 
 	// Get the current user ID
-	$user_id = bbp_get_current_user_id();
+	$user_id = ideaboard_get_current_user_id();
 
 	// Bail if user already has a forums role
-	if ( bbp_get_user_role( $user_id ) )
+	if ( ideaboard_get_user_role( $user_id ) )
 		return;
 
 	// Bail if user is marked as spam or is deleted
-	if ( bbp_is_user_inactive( $user_id ) )
+	if ( ideaboard_is_user_inactive( $user_id ) )
 		return;
 
 	/** Ready *****************************************************************/
@@ -267,13 +267,13 @@ function bbp_set_current_user_default_role() {
 	$bbp         = ideaboard();
 
 	// Get whether or not to add a role to the user account
-	$add_to_site = bbp_allow_global_access();
+	$add_to_site = ideaboard_allow_global_access();
 
 	// Get the current user's WordPress role. Set to empty string if none found.
-	$user_role   = bbp_get_user_blog_role( $user_id );
+	$user_role   = ideaboard_get_user_blog_role( $user_id );
 
 	// Get the role map
-	$role_map    = bbp_get_user_role_map();
+	$role_map    = ideaboard_get_user_role_map();
 
 	/** Forum Role ************************************************************/
 
@@ -283,7 +283,7 @@ function bbp_set_current_user_default_role() {
 
 	// Use the default role
 	} else {
-		$new_role = bbp_get_default_role();
+		$new_role = ideaboard_get_default_role();
 	}
 
 	/** Add or Map ************************************************************/
@@ -292,7 +292,7 @@ function bbp_set_current_user_default_role() {
 	if ( true === $add_to_site ) {
 
 		// Make sure IdeaBoard roles are added
-		bbp_add_forums_roles();
+		ideaboard_add_forums_roles();
 
 		$bbp->current_user->add_role( $new_role );
 
@@ -312,14 +312,14 @@ function bbp_set_current_user_default_role() {
  *
  * @return array Filtered array of WordPress roles to IdeaBoard roles
  */
-function bbp_get_user_role_map() {
+function ideaboard_get_user_role_map() {
 
 	// Get the default role once here
-	$default_role = bbp_get_default_role();
+	$default_role = ideaboard_get_default_role();
 
 	// Return filtered results, forcing admins to keymasters.
-	return (array) apply_filters( 'bbp_get_user_role_map', array (
-		'administrator' => bbp_get_keymaster_role(),
+	return (array) apply_filters( 'ideaboard_get_user_role_map', array (
+		'administrator' => ideaboard_get_keymaster_role(),
 		'editor'        => $default_role,
 		'author'        => $default_role,
 		'contributor'   => $default_role,
@@ -337,11 +337,11 @@ function bbp_get_user_role_map() {
  * @param int $user_id int The ID for the user.
  * @return bool True if spammer, False if not.
  */
-function bbp_is_user_spammer( $user_id = 0 ) {
+function ideaboard_is_user_spammer( $user_id = 0 ) {
 
 	// Default to current user
 	if ( empty( $user_id ) && is_user_logged_in() )
-		$user_id = bbp_get_current_user_id();
+		$user_id = ideaboard_get_current_user_id();
 
 	// No user to check
 	if ( empty( $user_id ) )
@@ -362,7 +362,7 @@ function bbp_is_user_spammer( $user_id = 0 ) {
 		$is_spammer = true;
 	}
 
-	return (bool) apply_filters( 'bbp_core_is_user_spammer', $is_spammer );
+	return (bool) apply_filters( 'ideaboard_core_is_user_spammer', $is_spammer );
 }
 
 /**
@@ -373,34 +373,34 @@ function bbp_is_user_spammer( $user_id = 0 ) {
  * @global WPDB $wpdb
  * @param int $user_id Optional. User ID to spam. Defaults to displayed user.
 
- * @uses bbp_is_single_user()
- * @uses bbp_is_user_home()
- * @uses bbp_get_displayed_user_id()
- * @uses bbp_is_user_keymaster()
+ * @uses ideaboard_is_single_user()
+ * @uses ideaboard_is_user_home()
+ * @uses ideaboard_get_displayed_user_id()
+ * @uses ideaboard_is_user_keymaster()
  * @uses get_blogs_of_user()
  * @uses get_current_blog_id()
- * @uses bbp_get_topic_post_type()
- * @uses bbp_get_reply_post_type()
+ * @uses ideaboard_get_topic_post_type()
+ * @uses ideaboard_get_reply_post_type()
  * @uses switch_to_blog()
  * @uses get_post_type()
- * @uses bbp_spam_topic()
- * @uses bbp_spam_reply()
+ * @uses ideaboard_spam_topic()
+ * @uses ideaboard_spam_reply()
  * @uses restore_current_blog()
  *
  * @return If no user ID passed
  */
-function bbp_make_spam_user( $user_id = 0 ) {
+function ideaboard_make_spam_user( $user_id = 0 ) {
 
 	// Use displayed user if it's not yourself
-	if ( empty( $user_id ) && bbp_is_single_user() && !bbp_is_user_home() )
-		$user_id = bbp_get_displayed_user_id();
+	if ( empty( $user_id ) && ideaboard_is_single_user() && !ideaboard_is_user_home() )
+		$user_id = ideaboard_get_displayed_user_id();
 
 	// Bail if no user ID
 	if ( empty( $user_id ) )
 		return false;
 
 	// Bail if user ID is keymaster
-	if ( bbp_is_user_keymaster( $user_id ) )
+	if ( ideaboard_is_user_keymaster( $user_id ) )
 		return false;
 
 	// Arm the torpedos
@@ -414,7 +414,7 @@ function bbp_make_spam_user( $user_id = 0 ) {
 		$blogs[$wpdb->blogid] = array();
 
 	// Make array of post types to mark as spam
-	$post_types  = array( bbp_get_topic_post_type(), bbp_get_reply_post_type() );
+	$post_types  = array( ideaboard_get_topic_post_type(), ideaboard_get_reply_post_type() );
 	$post_types  = "'" . implode( "', '", $post_types ) . "'";
 
 	// Loop through blogs and remove their posts
@@ -424,7 +424,7 @@ function bbp_make_spam_user( $user_id = 0 ) {
 		switch_to_blog( $blog_id );
 
 		// Get topics and replies
-		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_author = %d AND post_status = '%s' AND post_type IN ( {$post_types} )", $user_id, bbp_get_public_status_id() ) );
+		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_author = %d AND post_status = '%s' AND post_type IN ( {$post_types} )", $user_id, ideaboard_get_public_status_id() ) );
 
 		// Loop through posts and spam them
 		if ( !empty( $posts ) ) {
@@ -434,12 +434,12 @@ function bbp_make_spam_user( $user_id = 0 ) {
 				// correct one based on the post type
 				switch ( get_post_type( $post_id ) ) {
 
-					case bbp_get_topic_post_type() :
-						bbp_spam_topic( $post_id );
+					case ideaboard_get_topic_post_type() :
+						ideaboard_spam_topic( $post_id );
 						break;
 
-					case bbp_get_reply_post_type() :
-						bbp_spam_reply( $post_id );
+					case ideaboard_get_reply_post_type() :
+						ideaboard_spam_reply( $post_id );
 						break;
 				}
 			}
@@ -461,33 +461,33 @@ function bbp_make_spam_user( $user_id = 0 ) {
  * @global WPDB $wpdb
  * @param int $user_id Optional. User ID to unspam. Defaults to displayed user.
  *
- * @uses bbp_is_single_user()
- * @uses bbp_is_user_home()
- * @uses bbp_get_displayed_user_id()
- * @uses bbp_is_user_keymaster()
+ * @uses ideaboard_is_single_user()
+ * @uses ideaboard_is_user_home()
+ * @uses ideaboard_get_displayed_user_id()
+ * @uses ideaboard_is_user_keymaster()
  * @uses get_blogs_of_user()
- * @uses bbp_get_topic_post_type()
- * @uses bbp_get_reply_post_type()
+ * @uses ideaboard_get_topic_post_type()
+ * @uses ideaboard_get_reply_post_type()
  * @uses switch_to_blog()
  * @uses get_post_type()
- * @uses bbp_unspam_topic()
- * @uses bbp_unspam_reply()
+ * @uses ideaboard_unspam_topic()
+ * @uses ideaboard_unspam_reply()
  * @uses restore_current_blog()
  *
  * @return If no user ID passed
  */
-function bbp_make_ham_user( $user_id = 0 ) {
+function ideaboard_make_ham_user( $user_id = 0 ) {
 
 	// Use displayed user if it's not yourself
-	if ( empty( $user_id ) && bbp_is_single_user() && !bbp_is_user_home() )
-		$user_id = bbp_get_displayed_user_id();
+	if ( empty( $user_id ) && ideaboard_is_single_user() && !ideaboard_is_user_home() )
+		$user_id = ideaboard_get_displayed_user_id();
 
 	// Bail if no user ID
 	if ( empty( $user_id ) )
 		return false;
 
 	// Bail if user ID is keymaster
-	if ( bbp_is_user_keymaster( $user_id ) )
+	if ( ideaboard_is_user_keymaster( $user_id ) )
 		return false;
 
 	// Arm the torpedos
@@ -501,7 +501,7 @@ function bbp_make_ham_user( $user_id = 0 ) {
 		$blogs[$wpdb->blogid] = array();
 
 	// Make array of post types to mark as spam
-	$post_types = array( bbp_get_topic_post_type(), bbp_get_reply_post_type() );
+	$post_types = array( ideaboard_get_topic_post_type(), ideaboard_get_reply_post_type() );
 	$post_types = "'" . implode( "', '", $post_types ) . "'";
 
 	// Loop through blogs and remove their posts
@@ -511,7 +511,7 @@ function bbp_make_ham_user( $user_id = 0 ) {
 		switch_to_blog( $blog_id );
 
 		// Get topics and replies
-		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_author = %d AND post_status = '%s' AND post_type IN ( {$post_types} )", $user_id, bbp_get_spam_status_id() ) );
+		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_author = %d AND post_status = '%s' AND post_type IN ( {$post_types} )", $user_id, ideaboard_get_spam_status_id() ) );
 
 		// Loop through posts and spam them
 		if ( !empty( $posts ) ) {
@@ -521,12 +521,12 @@ function bbp_make_ham_user( $user_id = 0 ) {
 				// correct one based on the post type
 				switch ( get_post_type( $post_id ) ) {
 
-					case bbp_get_topic_post_type() :
-						bbp_unspam_topic( $post_id );
+					case ideaboard_get_topic_post_type() :
+						ideaboard_unspam_topic( $post_id );
 						break;
 
-					case bbp_get_reply_post_type() :
-						bbp_unspam_reply( $post_id );
+					case ideaboard_get_reply_post_type() :
+						ideaboard_unspam_reply( $post_id );
 						break;
 				}
 			}
@@ -548,11 +548,11 @@ function bbp_make_ham_user( $user_id = 0 ) {
  * @param int $user_id int The ID for the user.
  * @return bool True if deleted, False if not.
  */
-function bbp_is_user_deleted( $user_id = 0 ) {
+function ideaboard_is_user_deleted( $user_id = 0 ) {
 
 	// Default to current user
 	if ( empty( $user_id ) && is_user_logged_in() )
-		$user_id = bbp_get_current_user_id();
+		$user_id = ideaboard_get_current_user_id();
 
 	// No user to check
 	if ( empty( $user_id ) )
@@ -573,7 +573,7 @@ function bbp_is_user_deleted( $user_id = 0 ) {
 		$is_deleted = true;
 	}
 
-	return (bool) apply_filters( 'bbp_core_is_user_deleted', $is_deleted );
+	return (bool) apply_filters( 'ideaboard_core_is_user_deleted', $is_deleted );
 }
 
 /**
@@ -582,29 +582,29 @@ function bbp_is_user_deleted( $user_id = 0 ) {
  * @since IdeaBoard (r3502)
  *
  * @uses is_user_logged_in() To check if user is logged in
- * @uses bbp_get_displayed_user_id() To get current user ID
- * @uses bbp_is_user_spammer() To check if user is spammer
- * @uses bbp_is_user_deleted() To check if user is deleted
+ * @uses ideaboard_get_displayed_user_id() To get current user ID
+ * @uses ideaboard_is_user_spammer() To check if user is spammer
+ * @uses ideaboard_is_user_deleted() To check if user is deleted
  *
  * @param int $user_id The user ID to check
  * @return bool True if public, false if not
  */
-function bbp_is_user_active( $user_id = 0 ) {
+function ideaboard_is_user_active( $user_id = 0 ) {
 
 	// Default to current user
 	if ( empty( $user_id ) && is_user_logged_in() )
-		$user_id = bbp_get_current_user_id();
+		$user_id = ideaboard_get_current_user_id();
 
 	// No user to check
 	if ( empty( $user_id ) )
 		return false;
 
 	// Check spam
-	if ( bbp_is_user_spammer( $user_id ) )
+	if ( ideaboard_is_user_spammer( $user_id ) )
 		return false;
 
 	// Check deleted
-	if ( bbp_is_user_deleted( $user_id ) )
+	if ( ideaboard_is_user_deleted( $user_id ) )
 		return false;
 
 	// Assume true if not spam or deleted
@@ -617,24 +617,24 @@ function bbp_is_user_active( $user_id = 0 ) {
  * @since IdeaBoard (r3502)
  *
  * @uses is_user_logged_in() To check if user is logged in
- * @uses bbp_get_displayed_user_id() To get current user ID
- * @uses bbp_is_user_active() To check if user is active
+ * @uses ideaboard_get_displayed_user_id() To get current user ID
+ * @uses ideaboard_is_user_active() To check if user is active
  *
  * @param int $user_id The user ID to check. Defaults to current user ID
  * @return bool True if inactive, false if active
  */
-function bbp_is_user_inactive( $user_id = 0 ) {
+function ideaboard_is_user_inactive( $user_id = 0 ) {
 
 	// Default to current user
 	if ( empty( $user_id ) && is_user_logged_in() )
-		$user_id = bbp_get_current_user_id();
+		$user_id = ideaboard_get_current_user_id();
 
 	// No user to check
 	if ( empty( $user_id ) )
 		return false;
 
 	// Return the inverse of active
-	return !bbp_is_user_active( $user_id );
+	return !ideaboard_is_user_active( $user_id );
 }
 
 /**
@@ -645,13 +645,13 @@ function bbp_is_user_inactive( $user_id = 0 ) {
  * @param int $user_id 
  * @return bool True if keymaster, false if not
  */
-function bbp_is_user_keymaster( $user_id = 0 ) {
+function ideaboard_is_user_keymaster( $user_id = 0 ) {
 
 	// Default to current user ID if none is passed
-	$_user_id = (int) ! empty( $user_id ) ? $user_id : bbp_get_current_user_id();
+	$_user_id = (int) ! empty( $user_id ) ? $user_id : ideaboard_get_current_user_id();
 
 	// Filter and return
-	return (bool) apply_filters( 'bbp_is_user_keymaster', user_can( $_user_id, 'keep_gate' ), $_user_id, $user_id );
+	return (bool) apply_filters( 'ideaboard_is_user_keymaster', user_can( $_user_id, 'keep_gate' ), $_user_id, $user_id );
 }
 
 /**
@@ -662,21 +662,21 @@ function bbp_is_user_keymaster( $user_id = 0 ) {
  * @param int $user_id User ID to check
  * @param int $blog_id Blog ID to check
  *
- * @uses bbp_get_user_id() To verify the user ID
+ * @uses ideaboard_get_user_id() To verify the user ID
  * @uses get_userdata() To get the user's data
- * @uses bbp_is_user_keymaster() To determine if user can see inactive users
- * @uses bbp_is_user_inactive() To check if user is spammer or deleted
+ * @uses ideaboard_is_user_keymaster() To determine if user can see inactive users
+ * @uses ideaboard_is_user_inactive() To check if user is spammer or deleted
  * @uses apply_filters() To allow override of this functions result
  *
  * @return boolean Whether or not the user has a profile on this blog_id
  */
-function bbp_user_has_profile( $user_id = 0 ) {
+function ideaboard_user_has_profile( $user_id = 0 ) {
 
 	// Assume every user has a profile
 	$retval  = true;
 
 	// Validate user ID, default to displayed or current user
-	$user_id = bbp_get_user_id( $user_id, true, true );
+	$user_id = ideaboard_get_user_id( $user_id, true, true );
 
 	// Try to get this user's data
 	$user    = get_userdata( $user_id );
@@ -686,10 +686,10 @@ function bbp_user_has_profile( $user_id = 0 ) {
 		$retval = false;
 
 	// User is inactive, and current user is not a keymaster
-	} elseif ( ! bbp_is_user_keymaster() && bbp_is_user_inactive( $user->ID ) ) {
+	} elseif ( ! ideaboard_is_user_keymaster() && ideaboard_is_user_inactive( $user->ID ) ) {
 		$retval = false;
 	}
 
 	// Filter and return
-	return (bool) apply_filters( 'bbp_show_user_profile', $retval, $user_id );
+	return (bool) apply_filters( 'ideaboard_show_user_profile', $retval, $user_id );
 }

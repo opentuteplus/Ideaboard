@@ -21,8 +21,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @return array Associative array of allowed tags and attributes
  */
-function bbp_kses_allowed_tags() {
-	return apply_filters( 'bbp_kses_allowed_tags', array(
+function ideaboard_kses_allowed_tags() {
+	return apply_filters( 'ideaboard_kses_allowed_tags', array(
 
 		// Links
 		'a' => array(
@@ -74,8 +74,8 @@ function bbp_kses_allowed_tags() {
  * @param string $data Content to filter, expected to be escaped with slashes
  * @return string Filtered content
  */
-function bbp_filter_kses( $data = '' ) {
-	return addslashes( wp_kses( stripslashes( $data ), bbp_kses_allowed_tags() ) );
+function ideaboard_filter_kses( $data = '' ) {
+	return addslashes( wp_kses( stripslashes( $data ), ideaboard_kses_allowed_tags() ) );
 }
 
 /**
@@ -86,8 +86,8 @@ function bbp_filter_kses( $data = '' ) {
  * @param string $data Content to filter, expected to not be escaped
  * @return string Filtered content
  */
-function bbp_kses_data( $data = '' ) {
-	return wp_kses( $data , bbp_kses_allowed_tags() );
+function ideaboard_kses_data( $data = '' ) {
+	return wp_kses( $data , ideaboard_kses_allowed_tags() );
 }
 
 /** Formatting ****************************************************************/
@@ -100,10 +100,10 @@ function bbp_kses_data( $data = '' ) {
  * @param string $content Topic and reply content
  * @return string Partially encodedd content
  */
-function bbp_code_trick( $content = '' ) {
+function ideaboard_code_trick( $content = '' ) {
 	$content = str_replace( array( "\r\n", "\r" ), "\n", $content );
-	$content = preg_replace_callback( "|(`)(.*?)`|",      'bbp_encode_callback', $content );
-	$content = preg_replace_callback( "!(^|\n)`(.*?)`!s", 'bbp_encode_callback', $content );
+	$content = preg_replace_callback( "|(`)(.*?)`|",      'ideaboard_encode_callback', $content );
+	$content = preg_replace_callback( "!(^|\n)`(.*?)`!s", 'ideaboard_encode_callback', $content );
 
 	return $content;
 }
@@ -117,11 +117,11 @@ function bbp_code_trick( $content = '' ) {
  * @param string $content Topic and reply content
  * @return string Partially encodedd content
  */
-function bbp_code_trick_reverse( $content = '' ) {
+function ideaboard_code_trick_reverse( $content = '' ) {
 
 	// Setup variables
 	$openers = array( '<p>', '<br />' );
-	$content = preg_replace_callback( "!(<pre><code>|<code>)(.*?)(</code></pre>|</code>)!s", 'bbp_decode_callback', $content );
+	$content = preg_replace_callback( "!(<pre><code>|<code>)(.*?)(</code></pre>|</code>)!s", 'ideaboard_decode_callback', $content );
 
 	// Do the do
 	$content = str_replace( $openers,       '',       $content );
@@ -141,12 +141,12 @@ function bbp_code_trick_reverse( $content = '' ) {
  * @param string $content Topic and reply content
  * @return string Partially encodedd content
  */
-function bbp_encode_bad( $content = '' ) {
+function ideaboard_encode_bad( $content = '' ) {
 
 	// Setup variables
 	$content = _wp_specialchars( $content, ENT_NOQUOTES );
 	$content = preg_split( '@(`[^`]*`)@m', $content, -1, PREG_SPLIT_NO_EMPTY + PREG_SPLIT_DELIM_CAPTURE );
-	$allowed = bbp_kses_allowed_tags();
+	$allowed = ideaboard_kses_allowed_tags();
 	$empty   = array(
 		'br'    => true,
 		'hr'    => true,
@@ -164,9 +164,9 @@ function bbp_encode_bad( $content = '' ) {
 
 		// Which walker to use based on the tag and arguments
 		if ( isset( $empty[$tag] ) ) {
-			array_walk( $content, 'bbp_encode_empty_callback',  $preg );
+			array_walk( $content, 'ideaboard_encode_empty_callback',  $preg );
 		} else {
-			array_walk( $content, 'bbp_encode_normal_callback', $preg );
+			array_walk( $content, 'ideaboard_encode_normal_callback', $preg );
 		}
 	}
 
@@ -184,7 +184,7 @@ function bbp_encode_bad( $content = '' ) {
  * @param array $matches
  * @return string
  */
-function bbp_encode_callback( $matches = array() ) {
+function ideaboard_encode_callback( $matches = array() ) {
 
 	// Trim inline code, not pre blocks (to prevent removing indentation)
 	if ( "`" === $matches[1] ) {
@@ -221,7 +221,7 @@ function bbp_encode_callback( $matches = array() ) {
  * @todo Experiment with _wp_specialchars()
  * @return string
  */
-function bbp_decode_callback( $matches = array() ) {
+function ideaboard_decode_callback( $matches = array() ) {
 
 	// Setup variables
 	$trans_table = array_flip( get_html_translation_table( HTML_ENTITIES ) );
@@ -246,12 +246,12 @@ function bbp_decode_callback( $matches = array() ) {
  *
  * @since IdeaBoard (r4641)
  *
- * @internal Used by bbp_encode_bad()
+ * @internal Used by ideaboard_encode_bad()
  * @param string $content
  * @param string $key Not used
  * @param string $preg
  */
-function bbp_encode_empty_callback( &$content = '', $key = '', $preg = '' ) {
+function ideaboard_encode_empty_callback( &$content = '', $key = '', $preg = '' ) {
 	if ( strpos( $content, '`' ) !== 0 ) {
 		$content = preg_replace( "|&lt;({$preg})\s*?/*?&gt;|i", '<$1 />', $content );
 	}
@@ -262,12 +262,12 @@ function bbp_encode_empty_callback( &$content = '', $key = '', $preg = '' ) {
  *
  * @since IdeaBoard (r4641)
  *
- * @internal Used by bbp_encode_bad()
+ * @internal Used by ideaboard_encode_bad()
  * @param type $content
  * @param type $key
  * @param type $preg
  */
-function bbp_encode_normal_callback( &$content = '', $key = '', $preg = '') {
+function ideaboard_encode_normal_callback( &$content = '', $key = '', $preg = '') {
 	if ( strpos( $content, '`' ) !== 0 ) {
 		$content = preg_replace( "|&lt;(/?{$preg})&gt;|i", '<$1>', $content );
 	}
@@ -282,8 +282,8 @@ function bbp_encode_normal_callback( &$content = '', $key = '', $preg = '') {
  * @param string $text Post text
  * @return string $text Text with rel=nofollow added to any links
  */
-function bbp_rel_nofollow( $text = '' ) {
-	return preg_replace_callback( '|<a (.+?)>|i', 'bbp_rel_nofollow_callback', $text );
+function ideaboard_rel_nofollow( $text = '' ) {
+	return preg_replace_callback( '|<a (.+?)>|i', 'ideaboard_rel_nofollow_callback', $text );
 }
 
 /**
@@ -293,7 +293,7 @@ function bbp_rel_nofollow( $text = '' ) {
  * @param array $matches
  * @return string $text Link with rel=nofollow added
  */
-function bbp_rel_nofollow_callback( $matches = array() ) {
+function ideaboard_rel_nofollow_callback( $matches = array() ) {
 	$text = $matches[1];
 	$text = str_replace( array( ' rel="nofollow"', " rel='nofollow'" ), '', $text );
 	return "<a $text rel=\"nofollow\">";
@@ -315,7 +315,7 @@ function bbp_rel_nofollow_callback( $matches = array() ) {
  * @param string $text Content to convert URIs.
  * @return string Content with converted URIs.
  */
-function bbp_make_clickable( $text ) {
+function ideaboard_make_clickable( $text ) {
 	$r               = '';
 	$textarr         = preg_split( '/(<[^<>]+>)/', $text, -1, PREG_SPLIT_DELIM_CAPTURE ); // split out HTML tags
 	$nested_code_pre = 0; // Keep track of how many levels link is nested inside <pre> or <code>
@@ -340,12 +340,12 @@ function bbp_make_clickable( $text ) {
 				if ( 2101 < strlen( $chunk ) ) {
 					$r .= $chunk; // Too big, no whitespace: bail.
 				} else {
-					$r .= bbp_make_clickable( $chunk );
+					$r .= ideaboard_make_clickable( $chunk );
 				}
 			}
 		} else {
 			$ret = " {$piece} "; // Pad with whitespace to simplify the regexes
-			$ret = apply_filters( 'bbp_make_clickable', $ret );
+			$ret = apply_filters( 'ideaboard_make_clickable', $ret );
 			$ret = substr( $ret, 1, -1 ); // Remove our whitespace padding.
 			$r .= $ret;
 		}
@@ -363,7 +363,7 @@ function bbp_make_clickable( $text ) {
  * @param  string $text
  * @return string
  */
-function bbp_make_urls_clickable( $text = '' ) {
+function ideaboard_make_urls_clickable( $text = '' ) {
 	$url_clickable = '~
 		([\\s(<.,;:!?])                                # 1: Leading whitespace, or punctuation
 		(                                              # 2: URL
@@ -393,7 +393,7 @@ function bbp_make_urls_clickable( $text = '' ) {
  * @param  string $text
  * @return string
  */
-function bbp_make_ftps_clickable( $text = '' ) {
+function ideaboard_make_ftps_clickable( $text = '' ) {
 	return preg_replace_callback( '#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', '_make_web_ftp_clickable_cb', $text );
 }
 
@@ -407,7 +407,7 @@ function bbp_make_ftps_clickable( $text = '' ) {
  * @param  string $text
  * @return string
  */
-function bbp_make_emails_clickable( $text = '' ) {
+function ideaboard_make_emails_clickable( $text = '' ) {
 	return preg_replace_callback( '#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', '_make_email_clickable_cb', $text );
 }
 
@@ -421,8 +421,8 @@ function bbp_make_emails_clickable( $text = '' ) {
  * @param  string $text
  * @return string
  */
-function bbp_make_mentions_clickable( $text = '' ) {
-	return preg_replace_callback( '#([\s>])@([0-9a-zA-Z-_]+)#i', 'bbp_make_mentions_clickable_callback', $text );
+function ideaboard_make_mentions_clickable( $text = '' ) {
+	return preg_replace_callback( '#([\s>])@([0-9a-zA-Z-_]+)#i', 'ideaboard_make_mentions_clickable_callback', $text );
 }
 
 /**
@@ -434,16 +434,16 @@ function bbp_make_mentions_clickable( $text = '' ) {
  *
  * @return string HTML A tag with link to user profile.
  */
-function bbp_make_mentions_clickable_callback( $matches = array() ) {
+function ideaboard_make_mentions_clickable_callback( $matches = array() ) {
 
 	// Get user; bail if not found
 	$user = get_user_by( 'slug', $matches[2] );
-	if ( empty( $user ) || bbp_is_user_inactive( $user->ID ) ) {
+	if ( empty( $user ) || ideaboard_is_user_inactive( $user->ID ) ) {
 		return $matches[0];
 	}
 
 	// Create the link to the user's profile
-	$url    = bbp_get_user_profile_url( $user->ID );
+	$url    = ideaboard_get_user_profile_url( $user->ID );
 	$anchor = '<a href="%1$s" rel="nofollow">@%2$s</a>';
 	$link   = sprintf( $anchor, esc_url( $url ), esc_html( $user->user_nicename ) );
 

@@ -16,10 +16,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * Output the IdeaBoard version
  *
  * @since IdeaBoard (r3468)
- * @uses bbp_get_version() To get the IdeaBoard version
+ * @uses ideaboard_get_version() To get the IdeaBoard version
  */
-function bbp_version() {
-	echo bbp_get_version();
+function ideaboard_version() {
+	echo ideaboard_get_version();
 }
 	/**
 	 * Return the IdeaBoard version
@@ -27,7 +27,7 @@ function bbp_version() {
 	 * @since IdeaBoard (r3468)
 	 * @retrun string The IdeaBoard version
 	 */
-	function bbp_get_version() {
+	function ideaboard_get_version() {
 		return ideaboard()->version;
 	}
 
@@ -35,10 +35,10 @@ function bbp_version() {
  * Output the IdeaBoard database version
  *
  * @since IdeaBoard (r3468)
- * @uses bbp_get_version() To get the IdeaBoard version
+ * @uses ideaboard_get_version() To get the IdeaBoard version
  */
-function bbp_db_version() {
-	echo bbp_get_db_version();
+function ideaboard_db_version() {
+	echo ideaboard_get_db_version();
 }
 	/**
 	 * Return the IdeaBoard database version
@@ -46,7 +46,7 @@ function bbp_db_version() {
 	 * @since IdeaBoard (r3468)
 	 * @retrun string The IdeaBoard version
 	 */
-	function bbp_get_db_version() {
+	function ideaboard_get_db_version() {
 		return ideaboard()->db_version;
 	}
 
@@ -54,10 +54,10 @@ function bbp_db_version() {
  * Output the IdeaBoard database version directly from the database
  *
  * @since IdeaBoard (r3468)
- * @uses bbp_get_version() To get the current IdeaBoard version
+ * @uses ideaboard_get_version() To get the current IdeaBoard version
  */
-function bbp_db_version_raw() {
-	echo bbp_get_db_version_raw();
+function ideaboard_db_version_raw() {
+	echo ideaboard_get_db_version_raw();
 }
 	/**
 	 * Return the IdeaBoard database version directly from the database
@@ -65,8 +65,8 @@ function bbp_db_version_raw() {
 	 * @since IdeaBoard (r3468)
 	 * @retrun string The current IdeaBoard version
 	 */
-	function bbp_get_db_version_raw() {
-		return get_option( '_bbp_db_version', '' );
+	function ideaboard_get_db_version_raw() {
+		return get_option( '_ideaboard_db_version', '' );
 	}
 
 /** Post Meta *****************************************************************/
@@ -79,13 +79,13 @@ function bbp_db_version_raw() {
  * @param int $post_id The post to update
  * @param int $forum_id The forum
  */
-function bbp_update_forum_id( $post_id, $forum_id ) {
+function ideaboard_update_forum_id( $post_id, $forum_id ) {
 
 	// Allow the forum ID to be updated 'just in time' before save
-	$forum_id = apply_filters( 'bbp_update_forum_id', $forum_id, $post_id );
+	$forum_id = apply_filters( 'ideaboard_update_forum_id', $forum_id, $post_id );
 
 	// Update the post meta forum ID
-	update_post_meta( $post_id, '_bbp_forum_id', (int) $forum_id );
+	update_post_meta( $post_id, '_ideaboard_forum_id', (int) $forum_id );
 }
 
 /**
@@ -96,13 +96,13 @@ function bbp_update_forum_id( $post_id, $forum_id ) {
  * @param int $post_id The post to update
  * @param int $forum_id The forum
  */
-function bbp_update_topic_id( $post_id, $topic_id ) {
+function ideaboard_update_topic_id( $post_id, $topic_id ) {
 
 	// Allow the topic ID to be updated 'just in time' before save
-	$topic_id = apply_filters( 'bbp_update_topic_id', $topic_id, $post_id );
+	$topic_id = apply_filters( 'ideaboard_update_topic_id', $topic_id, $post_id );
 
 	// Update the post meta topic ID
-	update_post_meta( $post_id, '_bbp_topic_id', (int) $topic_id );
+	update_post_meta( $post_id, '_ideaboard_topic_id', (int) $topic_id );
 }
 
 /**
@@ -113,13 +113,13 @@ function bbp_update_topic_id( $post_id, $topic_id ) {
  * @param int $post_id The post to update
  * @param int $forum_id The forum
  */
-function bbp_update_reply_id( $post_id, $reply_id ) {
+function ideaboard_update_reply_id( $post_id, $reply_id ) {
 
 	// Allow the reply ID to be updated 'just in time' before save
-	$reply_id = apply_filters( 'bbp_update_reply_id', $reply_id, $post_id );
+	$reply_id = apply_filters( 'ideaboard_update_reply_id', $reply_id, $post_id );
 
 	// Update the post meta reply ID
-	update_post_meta( $post_id, '_bbp_reply_id',(int) $reply_id );
+	update_post_meta( $post_id, '_ideaboard_reply_id',(int) $reply_id );
 }
 
 /** Views *********************************************************************/
@@ -133,7 +133,7 @@ function bbp_update_reply_id( $post_id, $reply_id ) {
  *
  * @return array Views
  */
-function bbp_get_views() {
+function ideaboard_get_views() {
 	return ideaboard()->views;
 }
 
@@ -146,14 +146,14 @@ function bbp_get_views() {
  *
  * @param string $view View name
  * @param string $title View title
- * @param mixed $query_args {@link bbp_has_topics()} arguments.
+ * @param mixed $query_args {@link ideaboard_has_topics()} arguments.
  * @param bool $feed Have a feed for the view? Defaults to true. NOT IMPLEMENTED
  * @param string $capability Capability that the current user must have
  * @uses sanitize_title() To sanitize the view name
  * @uses esc_html() To sanitize the view title
  * @return array The just registered (but processed) view
  */
-function bbp_register_view( $view, $title, $query_args = '', $feed = true, $capability = '' ) {
+function ideaboard_register_view( $view, $title, $query_args = '', $feed = true, $capability = '' ) {
 
 	// Bail if user does not have capability
 	if ( ! empty( $capability ) && ! current_user_can( $capability ) )
@@ -166,7 +166,7 @@ function bbp_register_view( $view, $title, $query_args = '', $feed = true, $capa
 	if ( empty( $view ) || empty( $title ) )
 		return false;
 
-	$query_args = bbp_parse_args( $query_args, '', 'register_view' );
+	$query_args = ideaboard_parse_args( $query_args, '', 'register_view' );
 
 	// Set show_stickies to false if it wasn't supplied
 	if ( !isset( $query_args['show_stickies'] ) )
@@ -190,7 +190,7 @@ function bbp_register_view( $view, $title, $query_args = '', $feed = true, $capa
  * @uses sanitize_title() To sanitize the view name
  * @return bool False if the view doesn't exist, true on success
  */
-function bbp_deregister_view( $view ) {
+function ideaboard_deregister_view( $view ) {
 	$bbp  = ideaboard();
 	$view = sanitize_title( $view );
 
@@ -208,27 +208,27 @@ function bbp_deregister_view( $view ) {
  * @since IdeaBoard (r2789)
  *
  * @param string $view Optional. View id
- * @param mixed $new_args New arguments. See {@link bbp_has_topics()}
- * @uses bbp_get_view_id() To get the view id
- * @uses bbp_get_view_query_args() To get the view query args
+ * @param mixed $new_args New arguments. See {@link ideaboard_has_topics()}
+ * @uses ideaboard_get_view_id() To get the view id
+ * @uses ideaboard_get_view_query_args() To get the view query args
  * @uses sanitize_title() To sanitize the view name
- * @uses bbp_has_topics() To make the topics query
+ * @uses ideaboard_has_topics() To make the topics query
  * @return bool False if the view doesn't exist, otherwise if topics are there
  */
-function bbp_view_query( $view = '', $new_args = '' ) {
+function ideaboard_view_query( $view = '', $new_args = '' ) {
 
-	$view = bbp_get_view_id( $view );
+	$view = ideaboard_get_view_id( $view );
 	if ( empty( $view ) )
 		return false;
 
-	$query_args = bbp_get_view_query_args( $view );
+	$query_args = ideaboard_get_view_query_args( $view );
 
 	if ( !empty( $new_args ) ) {
-		$new_args   = bbp_parse_args( $new_args, '', 'view_query' );
+		$new_args   = ideaboard_parse_args( $new_args, '', 'view_query' );
 		$query_args = array_merge( $query_args, $new_args );
 	}
 
-	return bbp_has_topics( $query_args );
+	return ideaboard_has_topics( $query_args );
 }
 
 /**
@@ -237,14 +237,14 @@ function bbp_view_query( $view = '', $new_args = '' ) {
  * @since IdeaBoard (r2789)
  *
  * @param string $view View name
- * @uses bbp_get_view_id() To get the view id
+ * @uses ideaboard_get_view_id() To get the view id
  * @return array Query arguments
  */
-function bbp_get_view_query_args( $view ) {
-	$view   = bbp_get_view_id( $view );
+function ideaboard_get_view_query_args( $view ) {
+	$view   = ideaboard_get_view_id( $view );
 	$retval = !empty( $view ) ? ideaboard()->views[$view]['query'] : false;
 
-	return apply_filters( 'bbp_get_view_query_args', $retval, $view );
+	return apply_filters( 'ideaboard_get_view_query_args', $retval, $view );
 }
 
 /** Errors ********************************************************************/
@@ -261,7 +261,7 @@ function bbp_get_view_query_args( $view ) {
  * @param string $message Translated error message
  * @param string $data Any additional data passed with the error message
  */
-function bbp_add_error( $code = '', $message = '', $data = '' ) {
+function ideaboard_add_error( $code = '', $message = '', $data = '' ) {
 	ideaboard()->errors->add( $code, $message, $data );
 }
 
@@ -275,10 +275,10 @@ function bbp_add_error( $code = '', $message = '', $data = '' ) {
  * @uses is_wp_error()
  * @usese WP_Error::get_error_codes()
  */
-function bbp_has_errors() {
+function ideaboard_has_errors() {
 	$has_errors = ideaboard()->errors->get_error_codes() ? true : false;
 
-	return apply_filters( 'bbp_has_errors', $has_errors, ideaboard()->errors );
+	return apply_filters( 'ideaboard_has_errors', $has_errors, ideaboard()->errors );
 }
 
 /** Mentions ******************************************************************/
@@ -290,25 +290,25 @@ function bbp_has_errors() {
  * anywhere mentions might be used.
  *
  * @since IdeaBoard (r4997)
- * @deprecated 2.6.0 bbp_make_clickable()
+ * @deprecated 2.6.0 ideaboard_make_clickable()
  *
  * @return string Pattern to match usernames with
  */
-function bbp_find_mentions_pattern() {
-	return apply_filters( 'bbp_find_mentions_pattern', '/[@]+([A-Za-z0-9-_\.@]+)\b/' );
+function ideaboard_find_mentions_pattern() {
+	return apply_filters( 'ideaboard_find_mentions_pattern', '/[@]+([A-Za-z0-9-_\.@]+)\b/' );
 }
 
 /**
  * Searches through the content to locate usernames, designated by an @ sign.
  *
  * @since IdeaBoard (r4323)
- * @deprecated 2.6.0 bbp_make_clickable()
+ * @deprecated 2.6.0 ideaboard_make_clickable()
  *
  * @param string $content The content
  * @return bool|array $usernames Existing usernames. False if no matches.
  */
-function bbp_find_mentions( $content = '' ) {
-	$pattern   = bbp_find_mentions_pattern();
+function ideaboard_find_mentions( $content = '' ) {
+	$pattern   = ideaboard_find_mentions_pattern();
 	preg_match_all( $pattern, $content, $usernames );
 	$usernames = array_unique( array_filter( $usernames[1] ) );
 
@@ -317,22 +317,22 @@ function bbp_find_mentions( $content = '' ) {
 		$usernames = false;
 	}
 
-	return apply_filters( 'bbp_find_mentions', $usernames, $pattern, $content );
+	return apply_filters( 'ideaboard_find_mentions', $usernames, $pattern, $content );
 }
 
 /**
  * Finds and links @-mentioned users in the content
  *
  * @since IdeaBoard (r4323)
- * @deprecated 2.6.0 bbp_make_clickable()
+ * @deprecated 2.6.0 ideaboard_make_clickable()
  *
- * @uses bbp_find_mentions() To get usernames in content areas
+ * @uses ideaboard_find_mentions() To get usernames in content areas
  * @return string $content Content filtered for mentions
  */
-function bbp_mention_filter( $content = '' ) {
+function ideaboard_mention_filter( $content = '' ) {
 
 	// Get Usernames and bail if none exist
-	$usernames = bbp_find_mentions( $content );
+	$usernames = ideaboard_find_mentions( $content );
 	if ( empty( $usernames ) )
 		return $content;
 
@@ -341,11 +341,11 @@ function bbp_mention_filter( $content = '' ) {
 
 		// Skip if username does not exist or user is not active
 		$user = get_user_by( 'slug', $username );
-		if ( empty( $user->ID ) || bbp_is_user_inactive( $user->ID ) )
+		if ( empty( $user->ID ) || ideaboard_is_user_inactive( $user->ID ) )
 			continue;
 
 		// Replace name in content
-		$content = preg_replace( '/(@' . $username . '\b)/', sprintf( '<a href="%1$s" rel="nofollow">@%2$s</a>', bbp_get_user_profile_url( $user->ID ), $username ), $content );
+		$content = preg_replace( '/(@' . $username . '\b)/', sprintf( '<a href="%1$s" rel="nofollow">@%2$s</a>', ideaboard_get_user_profile_url( $user->ID ), $username ), $content );
 	}
 
 	// Return modified content
@@ -361,7 +361,7 @@ function bbp_mention_filter( $content = '' ) {
  *
  * @return string
  */
-function bbp_get_public_status_id() {
+function ideaboard_get_public_status_id() {
 	return ideaboard()->public_status_id;
 }
 
@@ -372,7 +372,7 @@ function bbp_get_public_status_id() {
  *
  * @return string
  */
-function bbp_get_pending_status_id() {
+function ideaboard_get_pending_status_id() {
 	return ideaboard()->pending_status_id;
 }
 
@@ -383,7 +383,7 @@ function bbp_get_pending_status_id() {
  *
  * @return string
  */
-function bbp_get_private_status_id() {
+function ideaboard_get_private_status_id() {
 	return ideaboard()->private_status_id;
 }
 
@@ -394,7 +394,7 @@ function bbp_get_private_status_id() {
  *
  * @return string
  */
-function bbp_get_hidden_status_id() {
+function ideaboard_get_hidden_status_id() {
 	return ideaboard()->hidden_status_id;
 }
 
@@ -405,7 +405,7 @@ function bbp_get_hidden_status_id() {
  *
  * @return string
  */
-function bbp_get_closed_status_id() {
+function ideaboard_get_closed_status_id() {
 	return ideaboard()->closed_status_id;
 }
 
@@ -416,7 +416,7 @@ function bbp_get_closed_status_id() {
  *
  * @return string
  */
-function bbp_get_spam_status_id() {
+function ideaboard_get_spam_status_id() {
 	return ideaboard()->spam_status_id;
 }
 
@@ -427,7 +427,7 @@ function bbp_get_spam_status_id() {
  *
  * @return string
  */
-function bbp_get_trash_status_id() {
+function ideaboard_get_trash_status_id() {
 	return ideaboard()->trash_status_id;
 }
 
@@ -438,7 +438,7 @@ function bbp_get_trash_status_id() {
  *
  * @return string
  */
-function bbp_get_orphan_status_id() {
+function ideaboard_get_orphan_status_id() {
 	return ideaboard()->orphan_status_id;
 }
 
@@ -450,7 +450,7 @@ function bbp_get_orphan_status_id() {
  * @since IdeaBoard (r3762)
  * @return string
  */
-function bbp_get_user_rewrite_id() {
+function ideaboard_get_user_rewrite_id() {
 	return ideaboard()->user_id;
 }
 
@@ -460,7 +460,7 @@ function bbp_get_user_rewrite_id() {
  * @since IdeaBoard (r3762)
  * @return string
  */
-function bbp_get_edit_rewrite_id() {
+function ideaboard_get_edit_rewrite_id() {
 	return ideaboard()->edit_id;
 }
 
@@ -471,7 +471,7 @@ function bbp_get_edit_rewrite_id() {
  *
  * @return string
  */
-function bbp_get_search_rewrite_id() {
+function ideaboard_get_search_rewrite_id() {
 	return ideaboard()->search_id;
 }
 
@@ -481,7 +481,7 @@ function bbp_get_search_rewrite_id() {
  * @since IdeaBoard (r4321)
  * @return string
  */
-function bbp_get_user_topics_rewrite_id() {
+function ideaboard_get_user_topics_rewrite_id() {
 	return ideaboard()->tops_id;
 }
 
@@ -491,7 +491,7 @@ function bbp_get_user_topics_rewrite_id() {
  * @since IdeaBoard (r4321)
  * @return string
  */
-function bbp_get_user_replies_rewrite_id() {
+function ideaboard_get_user_replies_rewrite_id() {
 	return ideaboard()->reps_id;
 }
 
@@ -501,7 +501,7 @@ function bbp_get_user_replies_rewrite_id() {
  * @since IdeaBoard (r4181)
  * @return string
  */
-function bbp_get_user_favorites_rewrite_id() {
+function ideaboard_get_user_favorites_rewrite_id() {
 	return ideaboard()->favs_id;
 }
 
@@ -511,7 +511,7 @@ function bbp_get_user_favorites_rewrite_id() {
  * @since IdeaBoard (r4181)
  * @return string
  */
-function bbp_get_user_subscriptions_rewrite_id() {
+function ideaboard_get_user_subscriptions_rewrite_id() {
 	return ideaboard()->subs_id;
 }
 
@@ -521,7 +521,7 @@ function bbp_get_user_subscriptions_rewrite_id() {
  * @since IdeaBoard (r3762)
  * @return string
  */
-function bbp_get_view_rewrite_id() {
+function ideaboard_get_view_rewrite_id() {
 	return ideaboard()->view_id;
 }
 
@@ -533,7 +533,7 @@ function bbp_get_view_rewrite_id() {
  * @since IdeaBoard (r4926)
  * @return string
  */
-function bbp_get_paged_rewrite_id() {
+function ideaboard_get_paged_rewrite_id() {
 	return ideaboard()->paged_id;
 }
 
@@ -544,7 +544,7 @@ function bbp_get_paged_rewrite_id() {
  * @global object $wp_rewrite The WP_Rewrite object
  * @return string
  */
-function bbp_get_paged_slug() {
+function ideaboard_get_paged_slug() {
 	global $wp_rewrite;
 	return $wp_rewrite->pagination_base;
 }
@@ -555,7 +555,7 @@ function bbp_get_paged_slug() {
  *
  * @since IdeaBoard (r4198)
  */
-function bbp_delete_rewrite_rules() {
+function ideaboard_delete_rewrite_rules() {
 	delete_option( 'rewrite_rules' );
 }
 
@@ -567,7 +567,7 @@ function bbp_delete_rewrite_rules() {
  * @since IdeaBoard (r4790)
  * @return bool
  */
-function bbp_is_post_request() {
+function ideaboard_is_post_request() {
 	return (bool) ( 'POST' === strtoupper( $_SERVER['REQUEST_METHOD'] ) );
 }
 
@@ -577,7 +577,7 @@ function bbp_is_post_request() {
  * @since IdeaBoard (r4790)
  * @return bool
  */
-function bbp_is_get_request() {
+function ideaboard_is_get_request() {
 	return (bool) ( 'GET' === strtoupper( $_SERVER['REQUEST_METHOD'] ) );
 }
 

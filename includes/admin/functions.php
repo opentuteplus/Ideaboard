@@ -17,13 +17,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @since IdeaBoard (r2957)
  */
-function bbp_admin_separator() {
+function ideaboard_admin_separator() {
 
 	// Caps necessary where a separator is necessary
 	$caps = array(
-		'bbp_forums_admin',
-		'bbp_topics_admin',
-		'bbp_replies_admin',
+		'ideaboard_forums_admin',
+		'ideaboard_topics_admin',
+		'ideaboard_replies_admin',
 	);
 
 	// Loop through caps, and look for a reason to show the separator
@@ -52,7 +52,7 @@ function bbp_admin_separator() {
  * @param bool $menu_order Menu order
  * @return mixed True if separator, false if not
  */
-function bbp_admin_custom_menu_order( $menu_order = false ) {
+function ideaboard_admin_custom_menu_order( $menu_order = false ) {
 	if ( false === ideaboard()->admin->show_separator )
 		return $menu_order;
 
@@ -65,25 +65,25 @@ function bbp_admin_custom_menu_order( $menu_order = false ) {
  * @since IdeaBoard (r2957)
  *
  * @param array $menu_order Menu Order
- * @uses bbp_get_forum_post_type() To get the forum post type
+ * @uses ideaboard_get_forum_post_type() To get the forum post type
  * @return array Modified menu order
  */
-function bbp_admin_menu_order( $menu_order ) {
+function ideaboard_admin_menu_order( $menu_order ) {
 
 	// Bail if user cannot see any top level IdeaBoard menus
 	if ( empty( $menu_order ) || ( false === ideaboard()->admin->show_separator ) )
 		return $menu_order;
 
 	// Initialize our custom order array
-	$bbp_menu_order = array();
+	$ideaboard_menu_order = array();
 
 	// Menu values
 	$second_sep   = 'separator2';
 	$custom_menus = array(
 		'separator-ideaboard',                               // Separator
-		'edit.php?post_type=' . bbp_get_forum_post_type(), // Forums
-		'edit.php?post_type=' . bbp_get_topic_post_type(), // Topics
-		'edit.php?post_type=' . bbp_get_reply_post_type()  // Replies
+		'edit.php?post_type=' . ideaboard_get_forum_post_type(), // Forums
+		'edit.php?post_type=' . ideaboard_get_topic_post_type(), // Topics
+		'edit.php?post_type=' . ideaboard_get_reply_post_type()  // Replies
 	);
 
 	// Loop through menu order and do some rearranging
@@ -95,21 +95,21 @@ function bbp_admin_menu_order( $menu_order ) {
 			// Add our custom menus
 			foreach ( $custom_menus as $custom_menu ) {
 				if ( array_search( $custom_menu, $menu_order ) ) {
-					$bbp_menu_order[] = $custom_menu;
+					$ideaboard_menu_order[] = $custom_menu;
 				}
 			}
 
 			// Add the appearance separator
-			$bbp_menu_order[] = $second_sep;
+			$ideaboard_menu_order[] = $second_sep;
 
 		// Skip our menu items
 		} elseif ( ! in_array( $item, $custom_menus ) ) {
-			$bbp_menu_order[] = $item;
+			$ideaboard_menu_order[] = $item;
 		}
 	}
 
 	// Return our custom order
-	return $bbp_menu_order;
+	return $ideaboard_menu_order;
 }
 
 /**
@@ -123,14 +123,14 @@ function bbp_admin_menu_order( $menu_order ) {
  * @param bool $sample Optional, defaults to false. Is it a sample permalink.
  *
  * @uses is_admin() To make sure we're on an admin page
- * @uses bbp_is_custom_post_type() To get the forum post type
+ * @uses ideaboard_is_custom_post_type() To get the forum post type
  *
  * @return string The custom post type permalink
  */
-function bbp_filter_sample_permalink( $post_link, $_post, $leavename = false, $sample = false ) {
+function ideaboard_filter_sample_permalink( $post_link, $_post, $leavename = false, $sample = false ) {
 
 	// Bail if not on an admin page and not getting a sample permalink
-	if ( !empty( $sample ) && is_admin() && bbp_is_custom_post_type() )
+	if ( !empty( $sample ) && is_admin() && ideaboard_is_custom_post_type() )
 		return urldecode( $post_link );
 
 	// Return post link
@@ -145,7 +145,7 @@ function bbp_filter_sample_permalink( $post_link, $_post, $leavename = false, $s
  * @param string $slug
  * @return string
  */
-function bbp_sanitize_slug( $slug = '' ) {
+function ideaboard_sanitize_slug( $slug = '' ) {
 
 	// Don't allow multiple slashes in a row
 	$value = preg_replace( '#/+#', '/', str_replace( '#', '', $slug ) );
@@ -164,7 +164,7 @@ function bbp_sanitize_slug( $slug = '' ) {
 	$value = rtrim( $value, '/' );
 
 	// Filter the result and return
-	return apply_filters( 'bbp_sanitize_slug', $value, $slug );
+	return apply_filters( 'ideaboard_sanitize_slug', $value, $slug );
 }
 
 /**
@@ -173,13 +173,13 @@ function bbp_sanitize_slug( $slug = '' ) {
  * @since IdeaBoard (r3765)
  * @param type $site_id
  */
-function bbp_do_uninstall( $site_id = 0 ) {
+function ideaboard_do_uninstall( $site_id = 0 ) {
 	if ( empty( $site_id ) )
 		$site_id = get_current_blog_id();
 
 	switch_to_blog( $site_id );
-	bbp_delete_options();
-	bbp_remove_caps();
+	ideaboard_delete_options();
+	ideaboard_remove_caps();
 	flush_rewrite_rules();
 	restore_current_blog();
 }
@@ -200,15 +200,15 @@ function bbp_do_uninstall( $site_id = 0 ) {
  *
  * @return If no transient, or in network admin, or is bulk activation
  */
-function bbp_do_activation_redirect() {
+function ideaboard_do_activation_redirect() {
 
 	// Bail if no activation redirect
-    if ( ! get_transient( '_bbp_activation_redirect' ) ) {
+    if ( ! get_transient( '_ideaboard_activation_redirect' ) ) {
 		return;
 	}
 
 	// Delete the redirect transient
-	delete_transient( '_bbp_activation_redirect' );
+	delete_transient( '_ideaboard_activation_redirect' );
 
 	// Bail if activating from network, or bulk
 	if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
@@ -216,7 +216,7 @@ function bbp_do_activation_redirect() {
 	}
 
 	// Bail if the current user cannot see the about page
-	if ( ! current_user_can( 'bbp_about_page' ) ) {
+	if ( ! current_user_can( 'ideaboard_about_page' ) ) {
 		return;
 	}
 
@@ -235,7 +235,7 @@ function bbp_do_activation_redirect() {
  * @global string $plugin_page
  * @global array $submenu_file
  */
-function bbp_tools_modify_menu_highlight() {
+function ideaboard_tools_modify_menu_highlight() {
 	global $plugin_page, $submenu_file;
 
 	// This tweaks the Tools subnav menu to only show one IdeaBoard menu item
@@ -249,8 +249,8 @@ function bbp_tools_modify_menu_highlight() {
  * @since IdeaBoard (r3872)
  * @param string $active_tab Name of the tab that is active
  */
-function bbp_tools_admin_tabs( $active_tab = '' ) {
-	echo bbp_get_tools_admin_tabs( $active_tab );
+function ideaboard_tools_admin_tabs( $active_tab = '' ) {
+	echo ideaboard_get_tools_admin_tabs( $active_tab );
 }
 
 	/**
@@ -259,7 +259,7 @@ function bbp_tools_admin_tabs( $active_tab = '' ) {
 	 * @since IdeaBoard (r3872)
 	 * @param string $active_tab Name of the tab that is active
 	 */
-	function bbp_get_tools_admin_tabs( $active_tab = '' ) {
+	function ideaboard_get_tools_admin_tabs( $active_tab = '' ) {
 
 		// Declare local variables
 		$tabs_html    = '';
@@ -267,7 +267,7 @@ function bbp_tools_admin_tabs( $active_tab = '' ) {
 		$active_class = 'nav-tab nav-tab-active';
 
 		// Setup core admin tabs
-		$tabs = apply_filters( 'bbp_tools_admin_tabs', array(
+		$tabs = apply_filters( 'ideaboard_tools_admin_tabs', array(
 			'0' => array(
 				'href' => get_admin_url( '', add_query_arg( array( 'page' => 'bbp-repair'    ), 'tools.php' ) ),
 				'name' => __( 'Repair Forums', 'ideaboard' )

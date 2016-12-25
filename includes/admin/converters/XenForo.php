@@ -30,7 +30,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'node',
 			'from_fieldname'  => 'node_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_id'
+			'to_fieldname'    => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0. Stored in postmeta)
@@ -38,7 +38,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'node',
 			'from_fieldname'  => 'parent_node_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -50,7 +50,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (node_id) WHERE node.node_type_id = "Category" OR node.node_type_id = "Forum" ',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_topic_count'
+			'to_fieldname'    => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -62,7 +62,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (node_id) WHERE node.node_type_id = "Category" OR node.node_type_id = "Forum" ',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_reply_count'
+			'to_fieldname'    => '_ideaboard_reply_count'
 		);
 
 		// Forum total topic count (Includes unpublished topics, Stored in postmeta)
@@ -74,7 +74,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (node_id) WHERE node.node_type_id = "Category" OR node.node_type_id = "Forum" ',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_total_topic_count'
+			'to_fieldname'    => '_ideaboard_total_topic_count'
 		);
 
 		// Forum total reply count (Includes unpublished replies, Stored in postmeta)
@@ -86,7 +86,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (node_id) WHERE node.node_type_id = "Category" OR node.node_type_id = "Forum" ',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_total_reply_count'
+			'to_fieldname'    => '_ideaboard_total_reply_count'
 		);
 
 		// Forum title.
@@ -129,7 +129,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'node',
 			'from_fieldname'  => 'node_type_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_type',
+			'to_fieldname'    => '_ideaboard_forum_type',
 			'callback_method' => 'callback_forum_type'
 		);
 
@@ -142,7 +142,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (node_id) WHERE node.node_type_id = "Category" OR node.node_type_id = "Forum" ',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_status',
+			'to_fieldname'    => '_ideaboard_status',
 			'callback_method' => 'callback_forum_status'
 		);
 
@@ -175,7 +175,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename' => 'thread',
 			'from_fieldname' => 'thread_id',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -183,7 +183,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'thread',
 			'from_fieldname'  => 'reply_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -192,7 +192,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'thread',
 			'from_fieldname'  => 'reply_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -201,7 +201,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'thread',
 			'from_fieldname'  => 'node_id',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -267,7 +267,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'thread',
 			'from_fieldname'  => 'sticky',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_old_sticky_status',
+			'to_fieldname'    => '_ideaboard_old_sticky_status',
 			'callback_method' => 'callback_sticky_status'
 		);
 
@@ -304,7 +304,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'thread',
 			'from_fieldname'  => 'last_post_date',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -321,7 +321,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename' => 'post',
 			'from_fieldname' => 'post_id',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_post_id'
+			'to_fieldname'   => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -329,7 +329,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'post',
 			'from_fieldname'  => 'thread_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -338,7 +338,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'post',
 			'from_fieldname'  => 'thread_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -431,7 +431,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename' => 'user',
 			'from_fieldname' => 'user_id',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_user_id'
+			'to_fieldname'   => '_ideaboard_user_id'
 		);
 
 /*		// User password.
@@ -443,7 +443,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (user_id)',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_converter_password'
+			'to_fieldname'    => '_ideaboard_converter_password'
 		);
 
 		// Store old User password (Stored in usermeta serialized with salt)
@@ -451,7 +451,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'user',
 			'from_fieldname'  => 'password',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_password',
+			'to_fieldname'    => '_ideaboard_password',
 			'callback_method' => 'callback_savepass'
 		);
 
@@ -466,7 +466,7 @@ class XenForo extends BBP_Converter_Base {
 		// User password verify class (Stored in usermeta for verifying password)
 		$this->field_map[] = array(
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_class',
+			'to_fieldname'   => '_ideaboard_class',
 			'default'        => 'XenForo'
 		);
 
@@ -520,7 +520,7 @@ class XenForo extends BBP_Converter_Base {
 			'from_tablename'  => 'user',
 			'from_fieldname'  => 'custom_title',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_xenforo_user_custom_title'
+			'to_fieldname'    => '_ideaboard_xenforo_user_custom_title'
 		);
 
 		// Store Status (Stored in usermeta)
@@ -532,7 +532,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (user_id)',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_xenforo_user_status'
+			'to_fieldname'    => '_ideaboard_xenforo_user_status'
 		);
 
 		// Store Signature (Stored in usermeta)
@@ -543,7 +543,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_tablename'  => 'user',
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (user_id)',
-			'to_fieldname'    => '_bbp_xenforo_user_sig',
+			'to_fieldname'    => '_ideaboard_xenforo_user_sig',
 			'to_type'         => 'user',
 			'callback_method' => 'callback_html'
 		);
@@ -557,7 +557,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (user_id)',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_xenforo_user_location'
+			'to_fieldname'    => '_ideaboard_xenforo_user_location'
 		);
 
 		// Store Occupation (Stored in usermeta)
@@ -569,7 +569,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (user_id)',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_xenforo_user_occupation'
+			'to_fieldname'    => '_ideaboard_xenforo_user_occupation'
 		);
 
 		// Store About (Stored in usermeta)
@@ -581,7 +581,7 @@ class XenForo extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (user_id)',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_xenforo_user_about',
+			'to_fieldname'    => '_ideaboard_xenforo_user_about',
 			'callback_method' => 'callback_html'
 		);
 	}

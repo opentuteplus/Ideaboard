@@ -31,7 +31,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename' => 'kunena_categories',
 			'from_fieldname' => 'id',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_id'
+			'to_fieldname'   => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0, Stored in postmeta)
@@ -39,7 +39,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_categories',
 			'from_fieldname'  => 'parent_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -47,7 +47,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename' => 'kunena_categories',
 			'from_fieldname' => 'numTopics',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -55,7 +55,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename' => 'kunena_categories',
 			'from_fieldname' => 'numPosts',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum total topic count (Includes unpublished topics, Stored in postmeta)
@@ -63,7 +63,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_categories',
 			'from_fieldname'  => 'numTopics',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_total_topic_count'
+			'to_fieldname'    => '_ideaboard_total_topic_count'
 		);
 
 		// Forum total reply count (Includes unpublished replies, Stored in postmeta)
@@ -71,7 +71,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_categories',
 			'from_fieldname'  => 'numPosts',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_total_reply_count'
+			'to_fieldname'    => '_ideaboard_total_reply_count'
 		);
 
 		// Forum title.
@@ -113,7 +113,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_categories',
 			'from_fieldname'  => 'parent_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_type',
+			'to_fieldname'    => '_ideaboard_forum_type',
 			'callback_method' => 'callback_forum_type'
 		);
 
@@ -122,7 +122,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_categories',
 			'from_fieldname'  => 'locked',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_status',
+			'to_fieldname'    => '_ideaboard_status',
 			'callback_method' => 'callback_forum_status'
 		);
 
@@ -155,7 +155,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename' => 'kunena_topics',
 			'from_fieldname' => 'id',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -163,7 +163,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_topics',
 			'from_fieldname'  => 'posts',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -172,7 +172,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_topics',
 			'from_fieldname'  => 'posts',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -181,7 +181,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_topics',
 			'from_fieldname'  => 'category_id',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -203,7 +203,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (id)',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Topic content.
@@ -274,7 +274,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_topics',
 			'from_fieldname'  => 'last_post_time',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -300,7 +300,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_messages',
 			'from_fieldname'  => 'id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_post_id'
+			'to_fieldname'    => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -308,7 +308,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_messages',
 			'from_fieldname'  => 'catid',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -317,7 +317,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename'  => 'kunena_messages',
 			'from_fieldname'  => 'thread',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -326,7 +326,7 @@ class Kunena2 extends BBP_Converter_Base {
 			'from_tablename' => 'kunena_messages',
 			'from_fieldname' => 'ip',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -417,7 +417,7 @@ class Kunena2 extends BBP_Converter_Base {
             'from_tablename' => 'users',
             'from_fieldname' => 'id',
             'to_type'        => 'user',
-            'to_fieldname'   => '_bbp_user_id'
+            'to_fieldname'   => '_ideaboard_user_id'
         );
 
         // Store old User password (Stored in usermeta serialized with salt)
@@ -425,7 +425,7 @@ class Kunena2 extends BBP_Converter_Base {
             'from_tablename'  => 'users',
             'from_fieldname'  => 'password',
             'to_type'         => 'user',
-            'to_fieldname'    => '_bbp_password',
+            'to_fieldname'    => '_ideaboard_password',
             'callback_method' => 'callback_savepass'
         );
 
@@ -443,7 +443,7 @@ class Kunena2 extends BBP_Converter_Base {
         /*
         $this->field_map[] = array(
             'to_type' => 'user',
-            'to_fieldname' => '_bbp_class',
+            'to_fieldname' => '_ideaboard_class',
             'default' => 'Kunena2'
         );
          */

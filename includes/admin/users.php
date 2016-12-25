@@ -73,11 +73,11 @@ class BBP_Users_Admin {
 			return;
 
 		// Get the roles
-		$dynamic_roles = bbp_get_dynamic_roles();
+		$dynamic_roles = ideaboard_get_dynamic_roles();
 
 		// Only keymasters can set other keymasters
-		if ( ! bbp_is_user_keymaster() )
-			unset( $dynamic_roles[ bbp_get_keymaster_role() ] ); ?>
+		if ( ! ideaboard_is_user_keymaster() )
+			unset( $dynamic_roles[ ideaboard_get_keymaster_role() ] ); ?>
 
 		<h3><?php esc_html_e( 'Forums', 'ideaboard' ); ?></h3>
 
@@ -87,7 +87,7 @@ class BBP_Users_Admin {
 					<th><label for="bbp-forums-role"><?php esc_html_e( 'Forum Role', 'ideaboard' ); ?></label></th>
 					<td>
 
-						<?php $user_role = bbp_get_user_role( $profileuser->ID ); ?>
+						<?php $user_role = ideaboard_get_user_role( $profileuser->ID ); ?>
 
 						<select name="bbp-forums-role" id="bbp-forums-role">
 
@@ -103,7 +103,7 @@ class BBP_Users_Admin {
 
 							<?php foreach ( $dynamic_roles as $role => $details ) : ?>
 
-								<option <?php selected( $user_role, $role ); ?> value="<?php echo esc_attr( $role ); ?>"><?php echo bbp_translate_user_role( $details['name'] ); ?></option>
+								<option <?php selected( $user_role, $role ); ?> value="<?php echo esc_attr( $role ); ?>"><?php echo ideaboard_translate_user_role( $details['name'] ); ?></option>
 
 							<?php endforeach; ?>
 
@@ -129,17 +129,17 @@ class BBP_Users_Admin {
 			return;
 
 		// Get the roles
-		$dynamic_roles = bbp_get_dynamic_roles();
+		$dynamic_roles = ideaboard_get_dynamic_roles();
 
 		// Only keymasters can set other keymasters
-		if ( ! bbp_is_user_keymaster() )
-			unset( $dynamic_roles[ bbp_get_keymaster_role() ] ); ?>
+		if ( ! ideaboard_is_user_keymaster() )
+			unset( $dynamic_roles[ ideaboard_get_keymaster_role() ] ); ?>
 
 		<label class="screen-reader-text" for="bbp-new-role"><?php esc_html_e( 'Change forum role to&hellip;', 'ideaboard' ) ?></label>
 		<select name="bbp-new-role" id="bbp-new-role" style="display:inline-block; float:none;">
 			<option value=''><?php esc_html_e( 'Change forum role to&hellip;', 'ideaboard' ) ?></option>
 			<?php foreach ( $dynamic_roles as $role => $details ) : ?>
-				<option value="<?php echo esc_attr( $role ); ?>"><?php echo bbp_translate_user_role( $details['name'] ); ?></option>
+				<option value="<?php echo esc_attr( $role ); ?>"><?php echo ideaboard_translate_user_role( $details['name'] ); ?></option>
 			<?php endforeach; ?>
 		</select><?php submit_button( __( 'Change', 'ideaboard' ), 'secondary', 'bbp-change-role', false );
 
@@ -151,9 +151,9 @@ class BBP_Users_Admin {
 	 * Table
 	 *
 	 * @uses current_user_can() to check for 'promote users' capability
-	 * @uses bbp_get_dynamic_roles() to get forum roles
-	 * @uses bbp_get_user_role() to get a user's current forums role
-	 * @uses bbp_set_user_role() to set the user's new forums role
+	 * @uses ideaboard_get_dynamic_roles() to get forum roles
+	 * @uses ideaboard_get_user_role() to get a user's current forums role
+	 * @uses ideaboard_set_user_role() to set the user's new forums role
 	 * @return bool Always false
 	 */
 	public function user_role_bulk_change() {
@@ -167,7 +167,7 @@ class BBP_Users_Admin {
 			return;
 
 		// Check that the new role exists
-		$dynamic_roles = bbp_get_dynamic_roles();
+		$dynamic_roles = ideaboard_get_dynamic_roles();
 		if ( empty( $dynamic_roles[ $_REQUEST['bbp-new-role'] ] ) )
 			return;
 
@@ -179,7 +179,7 @@ class BBP_Users_Admin {
 			return;
 
 		// Get the current user ID
-		$current_user_id = (int) bbp_get_current_user_id();
+		$current_user_id = (int) ideaboard_get_current_user_id();
 
 		// Run through user ids
 		foreach ( (array) $_REQUEST['users'] as $user_id ) {
@@ -190,16 +190,16 @@ class BBP_Users_Admin {
 				continue;
 
 			// Set up user and role data
-			$user_role = bbp_get_user_role( $user_id );			
+			$user_role = ideaboard_get_user_role( $user_id );			
 			$new_role  = sanitize_text_field( $_REQUEST['bbp-new-role'] );
 
 			// Only keymasters can set other keymasters
-			if ( in_array( bbp_get_keymaster_role(), array( $user_role, $new_role ) ) && ! bbp_is_user_keymaster() )
+			if ( in_array( ideaboard_get_keymaster_role(), array( $user_role, $new_role ) ) && ! ideaboard_is_user_keymaster() )
 				continue;
 
 			// Set the new forums role
 			if ( $new_role !== $user_role ) {
-				bbp_set_user_role( $user_id, $new_role );
+				ideaboard_set_user_role( $user_id, $new_role );
 			}
 		}
 	}
@@ -215,7 +215,7 @@ class BBP_Users_Admin {
 	 */
 	public static function user_role_column( $columns = array() ) {
 		$columns['role']          = __( 'Site Role',  'ideaboard' );
-		$columns['bbp_user_role'] = __( 'Forum Role', 'ideaboard' );
+		$columns['ideaboard_user_role'] = __( 'Forum Role', 'ideaboard' );
 
 		return $columns;
 	}
@@ -234,16 +234,16 @@ class BBP_Users_Admin {
 	public static function user_role_row( $retval = '', $column_name = '', $user_id = 0 ) {
 
 		// Only looking for IdeaBoard's user role column
-		if ( 'bbp_user_role' === $column_name ) {
+		if ( 'ideaboard_user_role' === $column_name ) {
 
 			// Get the users role
-			$user_role = bbp_get_user_role( $user_id );
+			$user_role = ideaboard_get_user_role( $user_id );
 			$retval    = false;
 
 			// Translate user role for display
 			if ( ! empty( $user_role ) ) {
-				$roles  = bbp_get_dynamic_roles();
-				$retval = bbp_translate_user_role( $roles[$user_role]['name'] );
+				$roles  = ideaboard_get_dynamic_roles();
+				$retval = ideaboard_translate_user_role( $roles[$user_role]['name'] );
 			}
 		}
 

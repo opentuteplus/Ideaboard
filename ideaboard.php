@@ -28,7 +28,7 @@ if ( !class_exists( 'IdeaBoard' ) ) :
 /**
  * Main IdeaBoard Class
  *
- * "How doth the little busy bee, improve each shining hour..."
+ * "How about building better products with intelligent product feedback..."
  *
  * @since IdeaBoard (r2464)
  */
@@ -196,49 +196,49 @@ final class IdeaBoard {
 
 		// Setup some base path and URL information
 		$this->file       = __FILE__;
-		$this->basename   = apply_filters( 'bbp_plugin_basenname', plugin_basename( $this->file ) );
-		$this->plugin_dir = apply_filters( 'bbp_plugin_dir_path',  plugin_dir_path( $this->file ) );
-		$this->plugin_url = apply_filters( 'bbp_plugin_dir_url',   plugin_dir_url ( $this->file ) );
+		$this->basename   = apply_filters( 'ideaboard_plugin_basenname', plugin_basename( $this->file ) );
+		$this->plugin_dir = apply_filters( 'ideaboard_plugin_dir_path',  plugin_dir_path( $this->file ) );
+		$this->plugin_url = apply_filters( 'ideaboard_plugin_dir_url',   plugin_dir_url ( $this->file ) );
 
 		// Includes
-		$this->includes_dir = apply_filters( 'bbp_includes_dir', trailingslashit( $this->plugin_dir . 'includes'  ) );
-		$this->includes_url = apply_filters( 'bbp_includes_url', trailingslashit( $this->plugin_url . 'includes'  ) );
+		$this->includes_dir = apply_filters( 'ideaboard_includes_dir', trailingslashit( $this->plugin_dir . 'includes'  ) );
+		$this->includes_url = apply_filters( 'ideaboard_includes_url', trailingslashit( $this->plugin_url . 'includes'  ) );
 
 		// Languages
-		$this->lang_dir     = apply_filters( 'bbp_lang_dir',     trailingslashit( $this->plugin_dir . 'languages' ) );
+		$this->lang_dir     = apply_filters( 'ideaboard_lang_dir',     trailingslashit( $this->plugin_dir . 'languages' ) );
 
 		// Templates
-		$this->themes_dir   = apply_filters( 'bbp_themes_dir',   trailingslashit( $this->plugin_dir . 'templates' ) );
-		$this->themes_url   = apply_filters( 'bbp_themes_url',   trailingslashit( $this->plugin_url . 'templates' ) );
+		$this->themes_dir   = apply_filters( 'ideaboard_themes_dir',   trailingslashit( $this->plugin_dir . 'templates' ) );
+		$this->themes_url   = apply_filters( 'ideaboard_themes_url',   trailingslashit( $this->plugin_url . 'templates' ) );
 
 		/** Identifiers *******************************************************/
 
 		// Post type identifiers
-		$this->forum_post_type   = apply_filters( 'bbp_forum_post_type',  'forum'     );
-		$this->topic_post_type   = apply_filters( 'bbp_topic_post_type',  'topic'     );
-		$this->reply_post_type   = apply_filters( 'bbp_reply_post_type',  'reply'     );
-		$this->topic_tag_tax_id  = apply_filters( 'bbp_topic_tag_tax_id', 'topic-tag' );
+		$this->forum_post_type   = apply_filters( 'ideaboard_forum_post_type',  'forum'     );
+		$this->topic_post_type   = apply_filters( 'ideaboard_topic_post_type',  'topic'     );
+		$this->reply_post_type   = apply_filters( 'ideaboard_reply_post_type',  'reply'     );
+		$this->topic_tag_tax_id  = apply_filters( 'ideaboard_topic_tag_tax_id', 'topic-tag' );
 
 		// Status identifiers
-		$this->spam_status_id    = apply_filters( 'bbp_spam_post_status',    'spam'    );
-		$this->closed_status_id  = apply_filters( 'bbp_closed_post_status',  'closed'  );
-		$this->orphan_status_id  = apply_filters( 'bbp_orphan_post_status',  'orphan'  );
-		$this->public_status_id  = apply_filters( 'bbp_public_post_status',  'publish' );
-		$this->pending_status_id = apply_filters( 'bbp_pending_post_status', 'pending' );
-		$this->private_status_id = apply_filters( 'bbp_private_post_status', 'private' );
-		$this->hidden_status_id  = apply_filters( 'bbp_hidden_post_status',  'hidden'  );
-		$this->trash_status_id   = apply_filters( 'bbp_trash_post_status',   'trash'   );
+		$this->spam_status_id    = apply_filters( 'ideaboard_spam_post_status',    'spam'    );
+		$this->closed_status_id  = apply_filters( 'ideaboard_closed_post_status',  'closed'  );
+		$this->orphan_status_id  = apply_filters( 'ideaboard_orphan_post_status',  'orphan'  );
+		$this->public_status_id  = apply_filters( 'ideaboard_public_post_status',  'publish' );
+		$this->pending_status_id = apply_filters( 'ideaboard_pending_post_status', 'pending' );
+		$this->private_status_id = apply_filters( 'ideaboard_private_post_status', 'private' );
+		$this->hidden_status_id  = apply_filters( 'ideaboard_hidden_post_status',  'hidden'  );
+		$this->trash_status_id   = apply_filters( 'ideaboard_trash_post_status',   'trash'   );
 
 		// Other identifiers
-		$this->user_id           = apply_filters( 'bbp_user_id',   'bbp_user'   );
-		$this->tops_id           = apply_filters( 'bbp_tops_id',   'bbp_tops'   );
-		$this->reps_id           = apply_filters( 'bbp_reps_id',   'bbp_reps'   );
-		$this->favs_id           = apply_filters( 'bbp_favs_id',   'bbp_favs'   );
-		$this->subs_id           = apply_filters( 'bbp_subs_id',   'bbp_subs'   );
-		$this->view_id           = apply_filters( 'bbp_view_id',   'bbp_view'   );
-		$this->edit_id           = apply_filters( 'bbp_edit_id',   'edit'       );
-		$this->paged_id          = apply_filters( 'bbp_paged_id',  'paged'      );
-		$this->search_id         = apply_filters( 'bbp_search_id', 'bbp_search' );
+		$this->user_id           = apply_filters( 'ideaboard_user_id',   'ideaboard_user'   );
+		$this->tops_id           = apply_filters( 'ideaboard_tops_id',   'ideaboard_tops'   );
+		$this->reps_id           = apply_filters( 'ideaboard_reps_id',   'ideaboard_reps'   );
+		$this->favs_id           = apply_filters( 'ideaboard_favs_id',   'ideaboard_favs'   );
+		$this->subs_id           = apply_filters( 'ideaboard_subs_id',   'ideaboard_subs'   );
+		$this->view_id           = apply_filters( 'ideaboard_view_id',   'ideaboard_view'   );
+		$this->edit_id           = apply_filters( 'ideaboard_edit_id',   'edit'       );
+		$this->paged_id          = apply_filters( 'ideaboard_paged_id',  'paged'      );
+		$this->search_id         = apply_filters( 'ideaboard_search_id', 'ideaboard_search' );
 
 		/** Queries ***********************************************************/
 
@@ -268,7 +268,7 @@ final class IdeaBoard {
 		$this->domain         = 'ideaboard';      // Unique identifier for retrieving translated strings
 		$this->extend         = new stdClass(); // Plugins add data here
 		$this->errors         = new WP_Error(); // Feedback
-		$this->tab_index      = apply_filters( 'bbp_default_tab_index', 100 );
+		$this->tab_index      = apply_filters( 'ideaboard_default_tab_index', 100 );
 	}
 
 	/**
@@ -354,11 +354,11 @@ final class IdeaBoard {
 	private function setup_actions() {
 
 		// Add actions to plugin activation and deactivation hooks
-		add_action( 'activate_'   . $this->basename, 'bbp_activation'   );
-		add_action( 'deactivate_' . $this->basename, 'bbp_deactivation' );
+		add_action( 'activate_'   . $this->basename, 'ideaboard_activation'   );
+		add_action( 'deactivate_' . $this->basename, 'ideaboard_deactivation' );
 
 		// If IdeaBoard is being deactivated, do not add any actions
-		if ( bbp_is_deactivation( $this->basename ) )
+		if ( ideaboard_is_deactivation( $this->basename ) )
 			return;
 
 		// Array of IdeaBoard core actions
@@ -379,10 +379,10 @@ final class IdeaBoard {
 
 		// Add the actions
 		foreach ( $actions as $class_action )
-			add_action( 'bbp_' . $class_action, array( $this, $class_action ), 5 );
+			add_action( 'ideaboard_' . $class_action, array( $this, $class_action ), 5 );
 
 		// All IdeaBoard actions are setup (includes bbp-core-hooks.php)
-		do_action_ref_array( 'bbp_after_setup_actions', array( &$this ) );
+		do_action_ref_array( 'ideaboard_after_setup_actions', array( &$this ) );
 	}
 
 	/** Public Methods ********************************************************/
@@ -399,18 +399,18 @@ final class IdeaBoard {
 	public function register_theme_packages() {
 
 		// Register the default theme compatibility package
-		bbp_register_theme_package( array(
+		ideaboard_register_theme_package( array(
 			'id'      => 'default',
 			'name'    => __( 'IdeaBoard Default', 'ideaboard' ),
-			'version' => bbp_get_version(),
+			'version' => ideaboard_get_version(),
 			'dir'     => trailingslashit( $this->themes_dir . 'default' ),
 			'url'     => trailingslashit( $this->themes_url . 'default' )
 		) );
 
 		// Register the basic theme stack. This is really dope.
-		bbp_register_template_stack( 'get_stylesheet_directory', 10 );
-		bbp_register_template_stack( 'get_template_directory',   12 );
-		bbp_register_template_stack( 'bbp_get_theme_compat_dir', 14 );
+		ideaboard_register_template_stack( 'get_stylesheet_directory', 10 );
+		ideaboard_register_template_stack( 'get_template_directory',   12 );
+		ideaboard_register_template_stack( 'ideaboard_get_theme_compat_dir', 14 );
 	}
 
 	/**
@@ -425,7 +425,7 @@ final class IdeaBoard {
 			return;
 
 		// Setup the theme package to use for compatibility
-		bbp_setup_theme_compat( bbp_get_theme_package_id() );
+		ideaboard_setup_theme_compat( ideaboard_get_theme_package_id() );
 	}
 
 	/**
@@ -476,20 +476,20 @@ final class IdeaBoard {
 
 		// Register Forum content type
 		register_post_type(
-			bbp_get_forum_post_type(),
-			apply_filters( 'bbp_register_forum_post_type', array(
-				'labels'              => bbp_get_forum_post_type_labels(),
-				'rewrite'             => bbp_get_forum_post_type_rewrite(),
-				'supports'            => bbp_get_forum_post_type_supports(),
+			ideaboard_get_forum_post_type(),
+			apply_filters( 'ideaboard_register_forum_post_type', array(
+				'labels'              => ideaboard_get_forum_post_type_labels(),
+				'rewrite'             => ideaboard_get_forum_post_type_rewrite(),
+				'supports'            => ideaboard_get_forum_post_type_supports(),
 				'description'         => __( 'IdeaBoard Forums', 'ideaboard' ),
-				'capabilities'        => bbp_get_forum_caps(),
+				'capabilities'        => ideaboard_get_forum_caps(),
 				'capability_type'     => array( 'forum', 'forums' ),
 				'menu_position'       => 555555,
-				'has_archive'         => bbp_get_root_slug(),
+				'has_archive'         => ideaboard_get_root_slug(),
 				'exclude_from_search' => true,
 				'show_in_nav_menus'   => true,
 				'public'              => true,
-				'show_ui'             => current_user_can( 'bbp_forums_admin' ),
+				'show_ui'             => current_user_can( 'ideaboard_forums_admin' ),
 				'can_export'          => true,
 				'hierarchical'        => true,
 				'query_var'           => true,
@@ -501,20 +501,20 @@ final class IdeaBoard {
 
 		// Register Topic content type
 		register_post_type(
-			bbp_get_topic_post_type(),
-			apply_filters( 'bbp_register_topic_post_type', array(
-				'labels'              => bbp_get_topic_post_type_labels(),
-				'rewrite'             => bbp_get_topic_post_type_rewrite(),
-				'supports'            => bbp_get_topic_post_type_supports(),
+			ideaboard_get_topic_post_type(),
+			apply_filters( 'ideaboard_register_topic_post_type', array(
+				'labels'              => ideaboard_get_topic_post_type_labels(),
+				'rewrite'             => ideaboard_get_topic_post_type_rewrite(),
+				'supports'            => ideaboard_get_topic_post_type_supports(),
 				'description'         => __( 'IdeaBoard Topics', 'ideaboard' ),
-				'capabilities'        => bbp_get_topic_caps(),
+				'capabilities'        => ideaboard_get_topic_caps(),
 				'capability_type'     => array( 'topic', 'topics' ),
 				'menu_position'       => 555555,
-				'has_archive'         => ( 'forums' === bbp_show_on_root() ) ? bbp_get_topic_archive_slug() : false,
+				'has_archive'         => ( 'forums' === ideaboard_show_on_root() ) ? ideaboard_get_topic_archive_slug() : false,
 				'exclude_from_search' => true,
 				'show_in_nav_menus'   => false,
 				'public'              => true,
-				'show_ui'             => current_user_can( 'bbp_topics_admin' ),
+				'show_ui'             => current_user_can( 'ideaboard_topics_admin' ),
 				'can_export'          => true,
 				'hierarchical'        => false,
 				'query_var'           => true,
@@ -526,20 +526,20 @@ final class IdeaBoard {
 
 		// Register reply content type
 		register_post_type(
-			bbp_get_reply_post_type(),
-			apply_filters( 'bbp_register_reply_post_type', array(
-				'labels'              => bbp_get_reply_post_type_labels(),
-				'rewrite'             => bbp_get_reply_post_type_rewrite(),
-				'supports'            => bbp_get_reply_post_type_supports(),
+			ideaboard_get_reply_post_type(),
+			apply_filters( 'ideaboard_register_reply_post_type', array(
+				'labels'              => ideaboard_get_reply_post_type_labels(),
+				'rewrite'             => ideaboard_get_reply_post_type_rewrite(),
+				'supports'            => ideaboard_get_reply_post_type_supports(),
 				'description'         => __( 'IdeaBoard Replies', 'ideaboard' ),
-				'capabilities'        => bbp_get_reply_caps(),
+				'capabilities'        => ideaboard_get_reply_caps(),
 				'capability_type'     => array( 'reply', 'replies' ),
 				'menu_position'       => 555555,
 				'exclude_from_search' => true,
 				'has_archive'         => false,
 				'show_in_nav_menus'   => false,
 				'public'              => true,
-				'show_ui'             => current_user_can( 'bbp_replies_admin' ),
+				'show_ui'             => current_user_can( 'ideaboard_replies_admin' ),
 				'can_export'          => true,
 				'hierarchical'        => false,
 				'query_var'           => true,
@@ -564,8 +564,8 @@ final class IdeaBoard {
 
 		// Closed
 		register_post_status(
-			bbp_get_closed_status_id(),
-			apply_filters( 'bbp_register_closed_post_status', array(
+			ideaboard_get_closed_status_id(),
+			apply_filters( 'ideaboard_register_closed_post_status', array(
 				'label'             => _x( 'Closed', 'post', 'ideaboard' ),
 				'label_count'       => _nx_noop( 'Closed <span class="count">(%s)</span>', 'Closed <span class="count">(%s)</span>', 'post', 'ideaboard' ),
 				'public'            => true,
@@ -575,8 +575,8 @@ final class IdeaBoard {
 
 		// Spam
 		register_post_status(
-			bbp_get_spam_status_id(),
-			apply_filters( 'bbp_register_spam_post_status', array(
+			ideaboard_get_spam_status_id(),
+			apply_filters( 'ideaboard_register_spam_post_status', array(
 				'label'                     => _x( 'Spam', 'post', 'ideaboard' ),
 				'label_count'               => _nx_noop( 'Spam <span class="count">(%s)</span>', 'Spam <span class="count">(%s)</span>', 'post', 'ideaboard' ),
 				'protected'                 => true,
@@ -588,8 +588,8 @@ final class IdeaBoard {
 
 		// Orphan
 		register_post_status(
-			bbp_get_orphan_status_id(),
-			apply_filters( 'bbp_register_orphan_post_status', array(
+			ideaboard_get_orphan_status_id(),
+			apply_filters( 'ideaboard_register_orphan_post_status', array(
 				'label'                     => _x( 'Orphan', 'post', 'ideaboard' ),
 				'label_count'               => _nx_noop( 'Orphan <span class="count">(%s)</span>', 'Orphans <span class="count">(%s)</span>', 'post', 'ideaboard' ),
 				'protected'                 => true,
@@ -601,8 +601,8 @@ final class IdeaBoard {
 
 		// Hidden
 		register_post_status(
-			bbp_get_hidden_status_id(),
-			apply_filters( 'bbp_register_hidden_post_status', array(
+			ideaboard_get_hidden_status_id(),
+			apply_filters( 'ideaboard_register_hidden_post_status', array(
 				'label'                     => _x( 'Hidden', 'post', 'ideaboard' ),
 				'label_count'               => _nx_noop( 'Hidden <span class="count">(%s)</span>', 'Hidden <span class="count">(%s)</span>', 'post', 'ideaboard' ),
 				'private'                   => true,
@@ -646,19 +646,19 @@ final class IdeaBoard {
 
 		// Register the topic-tag taxonomy
 		register_taxonomy(
-			bbp_get_topic_tag_tax_id(),
-			bbp_get_topic_post_type(),
-			apply_filters( 'bbp_register_topic_taxonomy', array(
-				'labels'                => bbp_get_topic_tag_tax_labels(),
-				'rewrite'               => bbp_get_topic_tag_tax_rewrite(),
-				'capabilities'          => bbp_get_topic_tag_caps(),
+			ideaboard_get_topic_tag_tax_id(),
+			ideaboard_get_topic_post_type(),
+			apply_filters( 'ideaboard_register_topic_taxonomy', array(
+				'labels'                => ideaboard_get_topic_tag_tax_labels(),
+				'rewrite'               => ideaboard_get_topic_tag_tax_rewrite(),
+				'capabilities'          => ideaboard_get_topic_tag_caps(),
 				'update_count_callback' => '_update_post_term_count',
 				'query_var'             => true,
 				'show_tagcloud'         => true,
 				'hierarchical'          => false,
 				'show_in_nav_menus'     => false,
 				'public'                => true,
-				'show_ui'               => bbp_allow_topic_tags() && current_user_can( 'bbp_topic_tags_admin' )
+				'show_ui'               => ideaboard_allow_topic_tags() && current_user_can( 'ideaboard_topic_tags_admin' )
 			)
 		) );
 	}
@@ -667,16 +667,16 @@ final class IdeaBoard {
 	 * Register the IdeaBoard views
 	 *
 	 * @since IdeaBoard (r2789)
-	 * @uses bbp_register_view() To register the views
+	 * @uses ideaboard_register_view() To register the views
 	 */
 	public static function register_views() {
 
 		// Popular topics
-		bbp_register_view(
+		ideaboard_register_view(
 			'popular',
 			__( 'Most popular topics', 'ideaboard' ),
-			apply_filters( 'bbp_register_view_popular', array(
-				'meta_key'      => '_bbp_reply_count',
+			apply_filters( 'ideaboard_register_view_popular', array(
+				'meta_key'      => '_ideaboard_reply_count',
 				'max_num_pages' => 1,
 				'orderby'       => 'meta_value_num',
 				'show_stickies' => false
@@ -684,11 +684,11 @@ final class IdeaBoard {
 		) );
 
 		// Topics with no replies
-		bbp_register_view(
+		ideaboard_register_view(
 			'no-replies',
 			__( 'Topics with no replies', 'ideaboard' ),
-			apply_filters( 'bbp_register_view_no_replies', array(
-				'meta_key'      => '_bbp_reply_count',
+			apply_filters( 'ideaboard_register_view_no_replies', array(
+				'meta_key'      => '_ideaboard_reply_count',
 				'meta_value'    => 1,
 				'meta_compare'  => '<',
 				'orderby'       => '',
@@ -732,14 +732,14 @@ final class IdeaBoard {
 	 * @uses add_rewrite_tag() To add the rewrite tags
 	 */
 	public static function add_rewrite_tags() {
-		add_rewrite_tag( '%' . bbp_get_view_rewrite_id()               . '%', '([^/]+)'   ); // View Page tag
-		add_rewrite_tag( '%' . bbp_get_edit_rewrite_id()               . '%', '([1]{1,})' ); // Edit Page tag
-		add_rewrite_tag( '%' . bbp_get_search_rewrite_id()             . '%', '([^/]+)'   ); // Search Results tag
-		add_rewrite_tag( '%' . bbp_get_user_rewrite_id()               . '%', '([^/]+)'   ); // User Profile tag
-		add_rewrite_tag( '%' . bbp_get_user_favorites_rewrite_id()     . '%', '([1]{1,})' ); // User Favorites tag
-		add_rewrite_tag( '%' . bbp_get_user_subscriptions_rewrite_id() . '%', '([1]{1,})' ); // User Subscriptions tag
-		add_rewrite_tag( '%' . bbp_get_user_topics_rewrite_id()        . '%', '([1]{1,})' ); // User Topics Tag
-		add_rewrite_tag( '%' . bbp_get_user_replies_rewrite_id()       . '%', '([1]{1,})' ); // User Replies Tag
+		add_rewrite_tag( '%' . ideaboard_get_view_rewrite_id()               . '%', '([^/]+)'   ); // View Page tag
+		add_rewrite_tag( '%' . ideaboard_get_edit_rewrite_id()               . '%', '([1]{1,})' ); // Edit Page tag
+		add_rewrite_tag( '%' . ideaboard_get_search_rewrite_id()             . '%', '([^/]+)'   ); // Search Results tag
+		add_rewrite_tag( '%' . ideaboard_get_user_rewrite_id()               . '%', '([^/]+)'   ); // User Profile tag
+		add_rewrite_tag( '%' . ideaboard_get_user_favorites_rewrite_id()     . '%', '([1]{1,})' ); // User Favorites tag
+		add_rewrite_tag( '%' . ideaboard_get_user_subscriptions_rewrite_id() . '%', '([1]{1,})' ); // User Subscriptions tag
+		add_rewrite_tag( '%' . ideaboard_get_user_topics_rewrite_id()        . '%', '([1]{1,})' ); // User Topics Tag
+		add_rewrite_tag( '%' . ideaboard_get_user_replies_rewrite_id()       . '%', '([1]{1,})' ); // User Replies Tag
 	}
 
 	/**
@@ -760,36 +760,36 @@ final class IdeaBoard {
 		$priority           = 'top';
 
 		// Single Slugs
-		$forum_slug         = bbp_get_forum_slug();
-		$topic_slug         = bbp_get_topic_slug();
-		$reply_slug         = bbp_get_reply_slug();
-		$ttag_slug          = bbp_get_topic_tag_tax_slug();
+		$forum_slug         = ideaboard_get_forum_slug();
+		$topic_slug         = ideaboard_get_topic_slug();
+		$reply_slug         = ideaboard_get_reply_slug();
+		$ttag_slug          = ideaboard_get_topic_tag_tax_slug();
 
 		// Archive Slugs
-		$user_slug          = bbp_get_user_slug();
-		$view_slug          = bbp_get_view_slug();
-		$search_slug        = bbp_get_search_slug();
-		$topic_archive_slug = bbp_get_topic_archive_slug();
-		$reply_archive_slug = bbp_get_reply_archive_slug();
+		$user_slug          = ideaboard_get_user_slug();
+		$view_slug          = ideaboard_get_view_slug();
+		$search_slug        = ideaboard_get_search_slug();
+		$topic_archive_slug = ideaboard_get_topic_archive_slug();
+		$reply_archive_slug = ideaboard_get_reply_archive_slug();
 
 		// Tertiary Slugs
 		$feed_slug          = 'feed';
 		$edit_slug          = 'edit';
-		$paged_slug         = bbp_get_paged_slug();
-		$user_favs_slug     = bbp_get_user_favorites_slug();
-		$user_subs_slug     = bbp_get_user_subscriptions_slug();
+		$paged_slug         = ideaboard_get_paged_slug();
+		$user_favs_slug     = ideaboard_get_user_favorites_slug();
+		$user_subs_slug     = ideaboard_get_user_subscriptions_slug();
 
 		// Unique rewrite ID's
 		$feed_id            = 'feed';
-		$edit_id            = bbp_get_edit_rewrite_id();
-		$view_id            = bbp_get_view_rewrite_id();
-		$paged_id           = bbp_get_paged_rewrite_id();
-		$search_id          = bbp_get_search_rewrite_id();
-		$user_id            = bbp_get_user_rewrite_id();
-		$user_favs_id       = bbp_get_user_favorites_rewrite_id();
-		$user_subs_id       = bbp_get_user_subscriptions_rewrite_id();
-		$user_tops_id       = bbp_get_user_topics_rewrite_id();
-		$user_reps_id       = bbp_get_user_replies_rewrite_id();
+		$edit_id            = ideaboard_get_edit_rewrite_id();
+		$view_id            = ideaboard_get_view_rewrite_id();
+		$paged_id           = ideaboard_get_paged_rewrite_id();
+		$search_id          = ideaboard_get_search_rewrite_id();
+		$user_id            = ideaboard_get_user_rewrite_id();
+		$user_favs_id       = ideaboard_get_user_favorites_rewrite_id();
+		$user_subs_id       = ideaboard_get_user_subscriptions_rewrite_id();
+		$user_tops_id       = ideaboard_get_user_topics_rewrite_id();
+		$user_reps_id       = ideaboard_get_user_replies_rewrite_id();
 
 		// Rewrite rule matches used repeatedly below
 		$root_rule    = '/([^/]+)/?$';
@@ -814,10 +814,10 @@ final class IdeaBoard {
 		$subs_paged_rule = '/([^/]+)/' . $user_subs_slug     . '/' . $paged_slug . '/?([0-9]{1,})/?$';
 
 		// Edit Forum|Topic|Reply|Topic-tag
-		add_rewrite_rule( $forum_slug . $edit_rule, 'index.php?' . bbp_get_forum_post_type()  . '=$matches[1]&' . $edit_id . '=1', $priority );
-		add_rewrite_rule( $topic_slug . $edit_rule, 'index.php?' . bbp_get_topic_post_type()  . '=$matches[1]&' . $edit_id . '=1', $priority );
-		add_rewrite_rule( $reply_slug . $edit_rule, 'index.php?' . bbp_get_reply_post_type()  . '=$matches[1]&' . $edit_id . '=1', $priority );
-		add_rewrite_rule( $ttag_slug  . $edit_rule, 'index.php?' . bbp_get_topic_tag_tax_id() . '=$matches[1]&' . $edit_id . '=1', $priority );
+		add_rewrite_rule( $forum_slug . $edit_rule, 'index.php?' . ideaboard_get_forum_post_type()  . '=$matches[1]&' . $edit_id . '=1', $priority );
+		add_rewrite_rule( $topic_slug . $edit_rule, 'index.php?' . ideaboard_get_topic_post_type()  . '=$matches[1]&' . $edit_id . '=1', $priority );
+		add_rewrite_rule( $reply_slug . $edit_rule, 'index.php?' . ideaboard_get_reply_post_type()  . '=$matches[1]&' . $edit_id . '=1', $priority );
+		add_rewrite_rule( $ttag_slug  . $edit_rule, 'index.php?' . ideaboard_get_topic_tag_tax_id() . '=$matches[1]&' . $edit_id . '=1', $priority );
 
 		// User Pagination|Edit|View
 		add_rewrite_rule( $user_slug . $tops_paged_rule, 'index.php?' . $user_id  . '=$matches[1]&' . $user_tops_id . '=1&' . $paged_id . '=$matches[2]', $priority );
@@ -853,14 +853,14 @@ final class IdeaBoard {
 	public static function add_permastructs() {
 
 		// Get unique ID's
-		$user_id     = bbp_get_user_rewrite_id();
-		$view_id     = bbp_get_view_rewrite_id();
-		$search_id   = bbp_get_search_rewrite_id();
+		$user_id     = ideaboard_get_user_rewrite_id();
+		$view_id     = ideaboard_get_view_rewrite_id();
+		$search_id   = ideaboard_get_search_rewrite_id();
 
 		// Get root slugs
-		$user_slug   = bbp_get_user_slug();
-		$view_slug   = bbp_get_view_slug();
-		$search_slug = bbp_get_search_slug();
+		$user_slug   = ideaboard_get_user_slug();
+		$view_slug   = ideaboard_get_view_slug();
+		$search_slug = ideaboard_get_search_slug();
 
 		// User Permastruct
 		add_permastruct( $user_id, $user_slug . '/%' . $user_id . '%', array(

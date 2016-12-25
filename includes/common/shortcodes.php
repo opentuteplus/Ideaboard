@@ -28,7 +28,7 @@ class BBP_Shortcodes {
 	/** Functions *************************************************************/
 
 	/**
-	 * Add the register_shortcodes action to bbp_init
+	 * Add the register_shortcodes action to ideaboard_init
 	 *
 	 * @since IdeaBoard (r3031)
 	 *
@@ -51,7 +51,7 @@ class BBP_Shortcodes {
 	private function setup_globals() {
 
 		// Setup the shortcodes
-		$this->codes = apply_filters( 'bbp_shortcodes', array(
+		$this->codes = apply_filters( 'ideaboard_shortcodes', array(
 
 			/** Forums ********************************************************/
 
@@ -148,13 +148,13 @@ class BBP_Shortcodes {
 	 *
 	 * @param string $query_name
 	 *
-	 * @uses bbp_set_query_name()
+	 * @uses ideaboard_set_query_name()
 	 * @uses ob_start()
 	 */
 	private function start( $query_name = '' ) {
 
 		// Set query name
-		bbp_set_query_name( $query_name );
+		ideaboard_set_query_name( $query_name );
 
 		// Start output buffer
 		ob_start();
@@ -174,7 +174,7 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Reset the query name
-		bbp_reset_query_name();
+		ideaboard_reset_query_name();
 
 		// Return and flush the output buffer
 		return ob_get_clean();
@@ -190,7 +190,7 @@ class BBP_Shortcodes {
 	 *
 	 * @param array $attr
 	 * @param string $content
-	 * @uses bbp_has_forums()
+	 * @uses ideaboard_has_forums()
 	 * @uses get_template_part()
 	 * @return string
 	 */
@@ -200,9 +200,9 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Start output buffer
-		$this->start( 'bbp_forum_archive' );
+		$this->start( 'ideaboard_forum_archive' );
 
-		bbp_get_template_part( 'content', 'archive-forum' );
+		ideaboard_get_template_part( 'content', 'archive-forum' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -217,7 +217,7 @@ class BBP_Shortcodes {
 	 * @param array $attr
 	 * @param string $content
 	 * @uses get_template_part()
-	 * @uses bbp_single_forum_description()
+	 * @uses ideaboard_single_forum_description()
 	 * @return string
 	 */
 	public function display_forum( $attr, $content = '' ) {
@@ -230,19 +230,19 @@ class BBP_Shortcodes {
 		$forum_id = ideaboard()->current_forum_id = $attr['id'];
 
 		// Bail if ID passed is not a forum
-		if ( !bbp_is_forum( $forum_id ) )
+		if ( !ideaboard_is_forum( $forum_id ) )
 			return $content;
 
 		// Start output buffer
-		$this->start( 'bbp_single_forum' );
+		$this->start( 'ideaboard_single_forum' );
 
 		// Check forum caps
-		if ( bbp_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
-			bbp_get_template_part( 'content',  'single-forum' );
+		if ( ideaboard_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
+			ideaboard_get_template_part( 'content',  'single-forum' );
 
 		// Forum is private and user does not have caps
-		} elseif ( bbp_is_forum_private( $forum_id, false ) ) {
-			bbp_get_template_part( 'feedback', 'no-access'    );
+		} elseif ( ideaboard_is_forum_private( $forum_id, false ) ) {
+			ideaboard_get_template_part( 'feedback', 'no-access'    );
 		}
 
 		// Return contents of output buffer
@@ -260,10 +260,10 @@ class BBP_Shortcodes {
 	public function display_forum_form() {
 
 		// Start output buffer
-		$this->start( 'bbp_forum_form' );
+		$this->start( 'ideaboard_forum_form' );
 
 		// Output templates
-		bbp_get_template_part( 'form', 'forum' );
+		ideaboard_get_template_part( 'form', 'forum' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -279,7 +279,7 @@ class BBP_Shortcodes {
 	 *
 	 * @param array $attr
 	 * @param string $content
-	 * @uses bbp_get_hidden_forum_ids()
+	 * @uses ideaboard_get_hidden_forum_ids()
 	 * @uses get_template_part()
 	 * @return string
 	 */
@@ -289,15 +289,15 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Filter the query
-		if ( ! bbp_is_topic_archive() ) {
-			add_filter( 'bbp_before_has_topics_parse_args', array( $this, 'display_topic_index_query' ) );
+		if ( ! ideaboard_is_topic_archive() ) {
+			add_filter( 'ideaboard_before_has_topics_parse_args', array( $this, 'display_topic_index_query' ) );
 		}
 
 		// Start output buffer
-		$this->start( 'bbp_topic_archive' );
+		$this->start( 'ideaboard_topic_archive' );
 
 		// Output template
-		bbp_get_template_part( 'content', 'archive-topic' );
+		ideaboard_get_template_part( 'content', 'archive-topic' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -325,38 +325,38 @@ class BBP_Shortcodes {
 
 		// Set passed attribute to $forum_id for clarity
 		$topic_id = ideaboard()->current_topic_id = $attr['id'];
-		$forum_id = bbp_get_topic_forum_id( $topic_id );
+		$forum_id = ideaboard_get_topic_forum_id( $topic_id );
 
 		// Bail if ID passed is not a topic
-		if ( !bbp_is_topic( $topic_id ) )
+		if ( !ideaboard_is_topic( $topic_id ) )
 			return $content;
 
 		// Reset the queries if not in theme compat
-		if ( !bbp_is_theme_compat_active() ) {
+		if ( !ideaboard_is_theme_compat_active() ) {
 
 			$bbp = ideaboard();
 
 			// Reset necessary forum_query attributes for topics loop to function
-			$bbp->forum_query->query_vars['post_type'] = bbp_get_forum_post_type();
+			$bbp->forum_query->query_vars['post_type'] = ideaboard_get_forum_post_type();
 			$bbp->forum_query->in_the_loop             = true;
 			$bbp->forum_query->post                    = get_post( $forum_id );
 
 			// Reset necessary topic_query attributes for topics loop to function
-			$bbp->topic_query->query_vars['post_type'] = bbp_get_topic_post_type();
+			$bbp->topic_query->query_vars['post_type'] = ideaboard_get_topic_post_type();
 			$bbp->topic_query->in_the_loop             = true;
 			$bbp->topic_query->post                    = get_post( $topic_id );
 		}
 
 		// Start output buffer
-		$this->start( 'bbp_single_topic' );
+		$this->start( 'ideaboard_single_topic' );
 
 		// Check forum caps
-		if ( bbp_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
-			bbp_get_template_part( 'content', 'single-topic' );
+		if ( ideaboard_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
+			ideaboard_get_template_part( 'content', 'single-topic' );
 
 		// Forum is private and user does not have caps
-		} elseif ( bbp_is_forum_private( $forum_id, false ) ) {
-			bbp_get_template_part( 'feedback', 'no-access'    );
+		} elseif ( ideaboard_is_forum_private( $forum_id, false ) ) {
+			ideaboard_get_template_part( 'feedback', 'no-access'    );
 		}
 
 		// Return contents of output buffer
@@ -381,20 +381,20 @@ class BBP_Shortcodes {
 	public function display_topic_form( $attr = array(), $content = '' ) {
 
 		// Sanity check supplied info
-		if ( !empty( $content ) || ( !empty( $attr['forum_id'] ) && ( !is_numeric( $attr['forum_id'] ) || !bbp_is_forum( $attr['forum_id'] ) ) ) )
+		if ( !empty( $content ) || ( !empty( $attr['forum_id'] ) && ( !is_numeric( $attr['forum_id'] ) || !ideaboard_is_forum( $attr['forum_id'] ) ) ) )
 			return $content;
 
 		// Unset globals
 		$this->unset_globals();
 
-		// If forum id is set, use the 'bbp_single_forum' query name
+		// If forum id is set, use the 'ideaboard_single_forum' query name
 		if ( !empty( $attr['forum_id'] ) ) {
 
 			// Set the global current_forum_id for future requests
-			ideaboard()->current_forum_id = $forum_id = bbp_get_forum_id( $attr['forum_id'] );
+			ideaboard()->current_forum_id = $forum_id = ideaboard_get_forum_id( $attr['forum_id'] );
 
 			// Start output buffer
-			$this->start( 'bbp_single_forum' );
+			$this->start( 'ideaboard_single_forum' );
 
 		// No forum id was passed
 		} else {
@@ -403,16 +403,16 @@ class BBP_Shortcodes {
 			$forum_id = 0;
 
 			// Start output buffer
-			$this->start( 'bbp_topic_form' );
+			$this->start( 'ideaboard_topic_form' );
 		}
 
 		// If the forum id is set, check forum caps else display normal topic form
-		if ( empty( $forum_id ) || bbp_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
-			bbp_get_template_part( 'form', 'topic' );
+		if ( empty( $forum_id ) || ideaboard_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
+			ideaboard_get_template_part( 'form', 'topic' );
 
 		// Forum is private and user does not have caps
-		} elseif ( bbp_is_forum_private( $forum_id, false ) ) {
-			bbp_get_template_part( 'feedback', 'no-access' );
+		} elseif ( ideaboard_is_forum_private( $forum_id, false ) ) {
+			ideaboard_get_template_part( 'feedback', 'no-access' );
 		}
 
 		// Return contents of output buffer
@@ -443,38 +443,38 @@ class BBP_Shortcodes {
 
 		// Set passed attribute to $reply_id for clarity
 		$reply_id = ideaboard()->current_reply_id = $attr['id'];
-		$forum_id = bbp_get_reply_forum_id( $reply_id );
+		$forum_id = ideaboard_get_reply_forum_id( $reply_id );
 
 		// Bail if ID passed is not a reply
-		if ( !bbp_is_reply( $reply_id ) )
+		if ( !ideaboard_is_reply( $reply_id ) )
 			return $content;
 
 		// Reset the queries if not in theme compat
-		if ( !bbp_is_theme_compat_active() ) {
+		if ( !ideaboard_is_theme_compat_active() ) {
 
 			$bbp = ideaboard();
 
 			// Reset necessary forum_query attributes for replys loop to function
-			$bbp->forum_query->query_vars['post_type'] = bbp_get_forum_post_type();
+			$bbp->forum_query->query_vars['post_type'] = ideaboard_get_forum_post_type();
 			$bbp->forum_query->in_the_loop             = true;
 			$bbp->forum_query->post                    = get_post( $forum_id );
 
 			// Reset necessary reply_query attributes for replys loop to function
-			$bbp->reply_query->query_vars['post_type'] = bbp_get_reply_post_type();
+			$bbp->reply_query->query_vars['post_type'] = ideaboard_get_reply_post_type();
 			$bbp->reply_query->in_the_loop             = true;
 			$bbp->reply_query->post                    = get_post( $reply_id );
 		}
 
 		// Start output buffer
-		$this->start( 'bbp_single_reply' );
+		$this->start( 'ideaboard_single_reply' );
 
 		// Check forum caps
-		if ( bbp_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
-			bbp_get_template_part( 'content',  'single-reply' );
+		if ( ideaboard_user_can_view_forum( array( 'forum_id' => $forum_id ) ) ) {
+			ideaboard_get_template_part( 'content',  'single-reply' );
 
 		// Forum is private and user does not have caps
-		} elseif ( bbp_is_forum_private( $forum_id, false ) ) {
-			bbp_get_template_part( 'feedback', 'no-access'    );
+		} elseif ( ideaboard_is_forum_private( $forum_id, false ) ) {
+			ideaboard_get_template_part( 'feedback', 'no-access'    );
 		}
 
 		// Return contents of output buffer
@@ -492,10 +492,10 @@ class BBP_Shortcodes {
 	public function display_reply_form() {
 
 		// Start output buffer
-		$this->start( 'bbp_reply_form' );
+		$this->start( 'ideaboard_reply_form' );
 
 		// Output templates
-		bbp_get_template_part( 'form', 'reply' );
+		ideaboard_get_template_part( 'form', 'reply' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -517,14 +517,14 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Start output buffer
-		$this->start( 'bbp_topic_tags' );
+		$this->start( 'ideaboard_topic_tags' );
 
 		// Output the topic tags
 		wp_tag_cloud( array(
 			'smallest' => 9,
 			'largest'  => 38,
 			'number'   => 80,
-			'taxonomy' => bbp_get_topic_tag_tax_id()
+			'taxonomy' => ideaboard_get_topic_tag_tax_id()
 		) );
 
 		// Return contents of output buffer
@@ -552,18 +552,18 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Filter the query
-		if ( ! bbp_is_topic_tag() ) {
-			add_filter( 'bbp_before_has_topics_parse_args', array( $this, 'display_topics_of_tag_query' ) );
+		if ( ! ideaboard_is_topic_tag() ) {
+			add_filter( 'ideaboard_before_has_topics_parse_args', array( $this, 'display_topics_of_tag_query' ) );
 		}
 
 		// Start output buffer
-		$this->start( 'bbp_topic_tag' );
+		$this->start( 'ideaboard_topic_tag' );
 
 		// Set passed attribute to $ag_id for clarity
 		ideaboard()->current_topic_tag_id = $tag_id = $attr['id'];
 
 		// Output template
-		bbp_get_template_part( 'content', 'archive-topic' );
+		ideaboard_get_template_part( 'content', 'archive-topic' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -586,10 +586,10 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Start output buffer
-		$this->start( 'bbp_topic_tag_edit' );
+		$this->start( 'ideaboard_topic_tag_edit' );
 
 		// Output template
-		bbp_get_template_part( 'content', 'topic-tag-edit' );
+		ideaboard_get_template_part( 'content', 'topic-tag-edit' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -606,7 +606,7 @@ class BBP_Shortcodes {
 	 * @param array $attr
 	 * @param string $content
 	 * @uses get_template_part()
-	 * @uses bbp_single_forum_description()
+	 * @uses ideaboard_single_forum_description()
 	 * @return string
 	 */
 	public function display_view( $attr, $content = '' ) {
@@ -619,7 +619,7 @@ class BBP_Shortcodes {
 		$view_id = $attr['id'];
 
 		// Start output buffer
-		$this->start( 'bbp_single_view' );
+		$this->start( 'ideaboard_single_view' );
 
 		// Unset globals
 		$this->unset_globals();
@@ -628,10 +628,10 @@ class BBP_Shortcodes {
 		ideaboard()->current_view_id = $view_id;
 
 		// Load the view
-		bbp_view_query( $view_id );
+		ideaboard_view_query( $view_id );
 
 		// Output template
-		bbp_get_template_part( 'content', 'single-view' );
+		ideaboard_get_template_part( 'content', 'single-view' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -650,15 +650,15 @@ class BBP_Shortcodes {
 	public function display_search_form() {
 
 		// Bail if search is disabled
-		if ( ! bbp_allow_search() ) {
+		if ( ! ideaboard_allow_search() ) {
 			return;
 		}
 
 		// Start output buffer
-		$this->start( 'bbp_search_form' );
+		$this->start( 'ideaboard_search_form' );
 
 		// Output templates
-		bbp_get_template_part( 'form', 'search' );
+		ideaboard_get_template_part( 'form', 'search' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -672,7 +672,7 @@ class BBP_Shortcodes {
 	 *
 	 * @param array $attr
 	 * @param string $content
-	 * @uses bbp_search_query()
+	 * @uses ideaboard_search_query()
 	 * @uses get_template_part()
 	 */
 	public function display_search( $attr, $content = '' ) {
@@ -683,7 +683,7 @@ class BBP_Shortcodes {
 		}
 
 		// Bail if search is disabled
-		if ( ! bbp_allow_search() ) {
+		if ( ! ideaboard_allow_search() ) {
 			return;
 		}
 
@@ -693,19 +693,19 @@ class BBP_Shortcodes {
 		}
 
 		// Set passed attribute to $search_terms for clarity
-		$search_terms = empty( $attr['search'] ) ? bbp_get_search_terms() : $attr['search'];
+		$search_terms = empty( $attr['search'] ) ? ideaboard_get_search_terms() : $attr['search'];
 
 		// Unset globals
 		$this->unset_globals();
 
 		// Set terms for query
-		set_query_var( bbp_get_search_rewrite_id(), $search_terms );
+		set_query_var( ideaboard_get_search_rewrite_id(), $search_terms );
 
 		// Start output buffer
-		$this->start( bbp_get_search_rewrite_id() );
+		$this->start( ideaboard_get_search_rewrite_id() );
 
 		// Output template
-		bbp_get_template_part( 'content', 'search' );
+		ideaboard_get_template_part( 'content', 'search' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -726,13 +726,13 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Start output buffer
-		$this->start( 'bbp_login' );
+		$this->start( 'ideaboard_login' );
 
 		// Output templates
 		if ( !is_user_logged_in() )
-			bbp_get_template_part( 'form',     'user-login' );
+			ideaboard_get_template_part( 'form',     'user-login' );
 		else
-			bbp_get_template_part( 'feedback', 'logged-in'  );
+			ideaboard_get_template_part( 'feedback', 'logged-in'  );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -751,13 +751,13 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Start output buffer
-		$this->start( 'bbp_register' );
+		$this->start( 'ideaboard_register' );
 
 		// Output templates
 		if ( !is_user_logged_in() )
-			bbp_get_template_part( 'form',     'user-register' );
+			ideaboard_get_template_part( 'form',     'user-register' );
 		else
-			bbp_get_template_part( 'feedback', 'logged-in'     );
+			ideaboard_get_template_part( 'feedback', 'logged-in'     );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -776,13 +776,13 @@ class BBP_Shortcodes {
 		$this->unset_globals();
 
 		// Start output buffer
-		$this->start( 'bbp_lost_pass' );
+		$this->start( 'ideaboard_lost_pass' );
 
 		// Output templates
 		if ( !is_user_logged_in() )
-			bbp_get_template_part( 'form',     'user-lost-pass' );
+			ideaboard_get_template_part( 'form',     'user-lost-pass' );
 		else
-			bbp_get_template_part( 'feedback', 'logged-in'      );
+			ideaboard_get_template_part( 'feedback', 'logged-in'      );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -806,7 +806,7 @@ class BBP_Shortcodes {
 		$this->start();
 
 		// Output statistics
-		bbp_get_template_part( 'content', 'statistics' );
+		ideaboard_get_template_part( 'content', 'statistics' );
 
 		// Return contents of output buffer
 		return $this->end();
@@ -828,7 +828,7 @@ class BBP_Shortcodes {
 		$this->start();
 
 		// Output breadcrumb
-		bbp_breadcrumb();
+		ideaboard_breadcrumb();
 
 		// Return contents of output buffer
 		return $this->end();
@@ -861,7 +861,7 @@ class BBP_Shortcodes {
 	 */
 	public function display_topics_of_tag_query( $args = array() ) {
 		$args['tax_query'] = array( array(
-			'taxonomy' => bbp_get_topic_tag_tax_id(),
+			'taxonomy' => ideaboard_get_topic_tag_tax_id(),
 			'field'    => 'id',
 			'terms'    => ideaboard()->current_topic_tag_id
 		) );

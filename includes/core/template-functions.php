@@ -21,11 +21,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @param string $slug
  * @param string $name Optional. Default null
- * @uses bbp_locate_template()
+ * @uses ideaboard_locate_template()
  * @uses load_template()
  * @uses get_template_part()
  */
-function bbp_get_template_part( $slug, $name = null ) {
+function ideaboard_get_template_part( $slug, $name = null ) {
 
 	// Execute code for this part
 	do_action( 'get_template_part_' . $slug, $slug, $name );
@@ -37,10 +37,10 @@ function bbp_get_template_part( $slug, $name = null ) {
 	$templates[] = $slug . '.php';
 
 	// Allow template parst to be filtered
-	$templates = apply_filters( 'bbp_get_template_part', $templates, $slug, $name );
+	$templates = apply_filters( 'ideaboard_get_template_part', $templates, $slug, $name );
 
 	// Return the part that is found
-	return bbp_locate_template( $templates, true, false );
+	return ideaboard_locate_template( $templates, true, false );
 }
 
 /**
@@ -58,11 +58,11 @@ function bbp_get_template_part( $slug, $name = null ) {
  *                            Has no effect if $load is false.
  * @return string The template filename if one is located.
  */
-function bbp_locate_template( $template_names, $load = false, $require_once = true ) {
+function ideaboard_locate_template( $template_names, $load = false, $require_once = true ) {
 
 	// No file found yet
 	$located            = false;
-	$template_locations = bbp_get_template_stack();
+	$template_locations = ideaboard_get_template_stack();
 
 	// Try to find a template file
 	foreach ( (array) $template_names as $template_name ) {
@@ -96,9 +96,9 @@ function bbp_locate_template( $template_names, $load = false, $require_once = tr
 	 * and should not be used to short-circuit any part of the template locator.
 	 *
 	 * If you want to override a specific template part, please either filter
-	 * 'bbp_get_template_part' or add a new location to the template stack.
+	 * 'ideaboard_get_template_part' or add a new location to the template stack.
 	 */
-	do_action( 'bbp_locate_template', $located, $template_name, $template_names, $template_locations, $load, $require_once );
+	do_action( 'ideaboard_locate_template', $located, $template_name, $template_names, $template_locations, $load, $require_once );
 
 	// Maybe load the template if one was located
 	if ( ( true === $load ) && !empty( $located ) ) {
@@ -127,7 +127,7 @@ function bbp_locate_template( $template_names, $load = false, $require_once = tr
  *
  * @return string The style filename if one is located.
  */
-function bbp_enqueue_style( $handle = '', $file = '', $dependencies = array(), $version = false, $media = 'all' ) {
+function ideaboard_enqueue_style( $handle = '', $file = '', $dependencies = array(), $version = false, $media = 'all' ) {
 
 	// No file found yet
 	$located = false;
@@ -137,11 +137,11 @@ function bbp_enqueue_style( $handle = '', $file = '', $dependencies = array(), $
 
 	// Make sure there is always a version
 	if ( empty( $version ) ) {
-		$version = bbp_get_version();
+		$version = ideaboard_get_version();
 	}
 
 	// Loop through template stack
-	foreach ( (array) bbp_get_template_stack() as $template_location ) {
+	foreach ( (array) ideaboard_get_template_stack() as $template_location ) {
 
 		// Continue if $template_location is empty
 		if ( empty( $template_location ) ) {
@@ -195,7 +195,7 @@ function bbp_enqueue_style( $handle = '', $file = '', $dependencies = array(), $
  *
  * @return string The script filename if one is located.
  */
-function bbp_enqueue_script( $handle = '', $file = '', $dependencies = array(), $version = false, $in_footer = 'all' ) {
+function ideaboard_enqueue_script( $handle = '', $file = '', $dependencies = array(), $version = false, $in_footer = 'all' ) {
 
 	// No file found yet
 	$located = false;
@@ -205,11 +205,11 @@ function bbp_enqueue_script( $handle = '', $file = '', $dependencies = array(), 
 
 	// Make sure there is always a version
 	if ( empty( $version ) ) {
-		$version = bbp_get_version();
+		$version = ideaboard_get_version();
 	}
 
 	// Loop through template stack
-	foreach ( (array) bbp_get_template_stack() as $template_location ) {
+	foreach ( (array) ideaboard_get_template_stack() as $template_location ) {
 
 		// Continue if $template_location is empty
 		if ( empty( $template_location ) ) {
@@ -251,21 +251,21 @@ function bbp_enqueue_script( $handle = '', $file = '', $dependencies = array(), 
  *
  * This allows for templates to live in places beyond just the parent/child
  * relationship, to allow for custom template locations. Used in conjunction
- * with bbp_locate_template(), this allows for easy template overrides.
+ * with ideaboard_locate_template(), this allows for easy template overrides.
  *
  * @since IdeaBoard (r4323)
  *
  * @param string $location Callback function that returns the
  * @param int $priority
  */
-function bbp_register_template_stack( $location_callback = '', $priority = 10 ) {
+function ideaboard_register_template_stack( $location_callback = '', $priority = 10 ) {
 
 	// Bail if no location, or function does not exist
 	if ( empty( $location_callback ) || ! function_exists( $location_callback ) )
 		return false;
 
 	// Add location callback to template stack
-	return add_filter( 'bbp_template_stack', $location_callback, (int) $priority );
+	return add_filter( 'ideaboard_template_stack', $location_callback, (int) $priority );
 }
 
 /**
@@ -275,23 +275,23 @@ function bbp_register_template_stack( $location_callback = '', $priority = 10 ) 
  *
  * @param string $location Callback function that returns the
  * @param int $priority
- * @see bbp_register_template_stack()
+ * @see ideaboard_register_template_stack()
  */
-function bbp_deregister_template_stack( $location_callback = '', $priority = 10 ) {
+function ideaboard_deregister_template_stack( $location_callback = '', $priority = 10 ) {
 
 	// Bail if no location, or function does not exist
 	if ( empty( $location_callback ) || ! function_exists( $location_callback ) )
 		return false;
 
 	// Remove location callback to template stack
-	return remove_filter( 'bbp_template_stack', $location_callback, (int) $priority );
+	return remove_filter( 'ideaboard_template_stack', $location_callback, (int) $priority );
 }
 
 /**
- * Call the functions added to the 'bbp_template_stack' filter hook, and return
+ * Call the functions added to the 'ideaboard_template_stack' filter hook, and return
  * an array of the template locations.
  *
- * @see bbp_register_template_stack()
+ * @see ideaboard_register_template_stack()
  *
  * @since IdeaBoard (r4323)
  *
@@ -301,14 +301,14 @@ function bbp_deregister_template_stack( $location_callback = '', $priority = 10 
  *
  * @return array The filtered value after all hooked functions are applied to it.
  */
-function bbp_get_template_stack() {
+function ideaboard_get_template_stack() {
 	global $wp_filter, $merged_filters, $wp_current_filter;
 
 	// Setup some default variables
-	$tag  = 'bbp_template_stack';
+	$tag  = 'ideaboard_template_stack';
 	$args = $stack = array();
 
-	// Add 'bbp_template_stack' to the current filter array.
+	// Add 'ideaboard_template_stack' to the current filter array.
 	$wp_current_filter[] = $tag;
 
 	// Sort.
@@ -326,7 +326,7 @@ function bbp_get_template_stack() {
 	// Ensure we're always at the beginning of the filter array.
 	reset( $filter );
 
-	// Loop through 'bbp_template_stack' filters, and call callback functions.
+	// Loop through 'ideaboard_template_stack' filters, and call callback functions.
 	do {
 		foreach( (array) current( $filter ) as $the_ ) {
 			if ( ! is_null( $the_['function'] ) ) {
@@ -336,13 +336,13 @@ function bbp_get_template_stack() {
 		}
 	} while ( next( $filter ) !== false );
 
-	// Remove 'bbp_template_stack' from the current filter array.
+	// Remove 'ideaboard_template_stack' from the current filter array.
 	array_pop( $wp_current_filter );
 
 	// Remove empties and duplicates.
 	$stack = array_unique( array_filter( $stack ) );
 
-	return (array) apply_filters( 'bbp_get_template_stack', $stack ) ;
+	return (array) apply_filters( 'ideaboard_get_template_stack', $stack ) ;
 }
 
 /**
@@ -354,10 +354,10 @@ function bbp_get_template_stack() {
  * @param string $name
  * @return string
  */
-function bbp_buffer_template_part( $slug, $name = null, $echo = true ) {
+function ideaboard_buffer_template_part( $slug, $name = null, $echo = true ) {
 	ob_start();
 
-	bbp_get_template_part( $slug, $name );
+	ideaboard_get_template_part( $slug, $name );
 
 	// Get the output buffer contents
 	$output = ob_get_clean();
@@ -375,19 +375,19 @@ function bbp_buffer_template_part( $slug, $name = null, $echo = true ) {
  *
  * Used to quickly retrieve the path of a template without including the file
  * extension. It will also check the parent theme and theme-compat theme with
- * the use of {@link bbp_locate_template()}. Allows for more generic template
+ * the use of {@link ideaboard_locate_template()}. Allows for more generic template
  * locations without the use of the other get_*_template() functions.
  *
  * @since IdeaBoard (r3629)
  *
  * @param string $type Filename without extension.
  * @param array $templates An optional list of template candidates
- * @uses bbp_set_theme_compat_templates()
- * @uses bbp_locate_template()
- * @uses bbp_set_theme_compat_template()
+ * @uses ideaboard_set_theme_compat_templates()
+ * @uses ideaboard_locate_template()
+ * @uses ideaboard_set_theme_compat_template()
  * @return string Full path to file.
  */
-function bbp_get_query_template( $type, $templates = array() ) {
+function ideaboard_get_query_template( $type, $templates = array() ) {
 	$type = preg_replace( '|[^a-z0-9-]+|', '', $type );
 
 	if ( empty( $templates ) )
@@ -395,12 +395,12 @@ function bbp_get_query_template( $type, $templates = array() ) {
 
 	// Filter possible templates, try to match one, and set any IdeaBoard theme
 	// compat properties so they can be cross-checked later.
-	$templates = apply_filters( "bbp_get_{$type}_template", $templates );
-	$templates = bbp_set_theme_compat_templates( $templates );
-	$template  = bbp_locate_template( $templates );
-	$template  = bbp_set_theme_compat_template( $template );
+	$templates = apply_filters( "ideaboard_get_{$type}_template", $templates );
+	$templates = ideaboard_set_theme_compat_templates( $templates );
+	$template  = ideaboard_locate_template( $templates );
+	$template  = ideaboard_set_theme_compat_template( $template );
 
-	return apply_filters( "bbp_{$type}_template", $template );
+	return apply_filters( "ideaboard_{$type}_template", $template );
 }
 
 /**
@@ -410,13 +410,13 @@ function bbp_get_query_template( $type, $templates = array() ) {
  * @param array $templates Templates we are looking for
  * @return array Possible subfolders to look in
  */
-function bbp_get_template_locations( $templates = array() ) {
+function ideaboard_get_template_locations( $templates = array() ) {
 	$locations = array(
 		'ideaboard',
 		'forums',
 		''
 	);
-	return apply_filters( 'bbp_get_template_locations', $locations, $templates );
+	return apply_filters( 'ideaboard_get_template_locations', $locations, $templates );
 }
 
 /**
@@ -427,36 +427,36 @@ function bbp_get_template_locations( $templates = array() ) {
  * @param array $templates
  * @return array()
  */
-function bbp_add_template_stack_locations( $stacks = array() ) {
+function ideaboard_add_template_stack_locations( $stacks = array() ) {
 	$retval = array();
 
 	// Get alternate locations
-	$locations = bbp_get_template_locations();
+	$locations = ideaboard_get_template_locations();
 
 	// Loop through locations and stacks and combine
 	foreach ( (array) $stacks as $stack )
 		foreach ( (array) $locations as $custom_location )
 			$retval[] = untrailingslashit( trailingslashit( $stack ) . $custom_location );
 
-	return apply_filters( 'bbp_add_template_stack_locations', array_unique( $retval ), $stacks );
+	return apply_filters( 'ideaboard_add_template_stack_locations', array_unique( $retval ), $stacks );
 }
 
 /**
  * Add checks for IdeaBoard conditions to parse_query action
  *
- * If it's a user page, WP_Query::bbp_is_single_user is set to true.
- * If it's a user edit page, WP_Query::bbp_is_single_user_edit is set to true
+ * If it's a user page, WP_Query::ideaboard_is_single_user is set to true.
+ * If it's a user edit page, WP_Query::ideaboard_is_single_user_edit is set to true
  * and the the 'wp-admin/includes/user.php' file is included.
  * In addition, on user/user edit pages, WP_Query::home is set to false & query
- * vars 'bbp_user_id' with the displayed user id and 'author_name' with the
+ * vars 'ideaboard_user_id' with the displayed user id and 'author_name' with the
  * displayed user's nicename are added.
  *
- * If it's a forum edit, WP_Query::bbp_is_forum_edit is set to true
- * If it's a topic edit, WP_Query::bbp_is_topic_edit is set to true
- * If it's a reply edit, WP_Query::bbp_is_reply_edit is set to true.
+ * If it's a forum edit, WP_Query::ideaboard_is_forum_edit is set to true
+ * If it's a topic edit, WP_Query::ideaboard_is_topic_edit is set to true
+ * If it's a reply edit, WP_Query::ideaboard_is_reply_edit is set to true.
  *
- * If it's a view page, WP_Query::bbp_is_view is set to true
- * If it's a search page, WP_Query::bbp_is_search is set to true
+ * If it's a view page, WP_Query::ideaboard_is_view is set to true
+ * If it's a search page, WP_Query::ideaboard_is_search is set to true
  *
  * @since IdeaBoard (r2688)
  *
@@ -469,13 +469,13 @@ function bbp_add_template_stack_locations( $stacks = array() ) {
  * @uses is_user_member_of_blog() To check if user profile page exists
  * @uses WP_Query::set_404() To set a 404 status
  * @uses apply_filters() Calls 'enable_edit_any_user_configuration' with true
- * @uses bbp_get_view_query_args() To get the view query args
- * @uses bbp_get_forum_post_type() To get the forum post type
- * @uses bbp_get_topic_post_type() To get the topic post type
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_view_query_args() To get the view query args
+ * @uses ideaboard_get_forum_post_type() To get the forum post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses remove_action() To remove the auto save post revision action
  */
-function bbp_parse_query( $posts_query ) {
+function ideaboard_parse_query( $posts_query ) {
 
 	// Bail if $posts_query is not the main loop
 	if ( ! $posts_query->is_main_query() )
@@ -490,12 +490,12 @@ function bbp_parse_query( $posts_query ) {
 		return;
 
 	// Get query variables
-	$bbp_view = $posts_query->get( bbp_get_view_rewrite_id() );
-	$bbp_user = $posts_query->get( bbp_get_user_rewrite_id() );
-	$is_edit  = $posts_query->get( bbp_get_edit_rewrite_id() );
+	$ideaboard_view = $posts_query->get( ideaboard_get_view_rewrite_id() );
+	$ideaboard_user = $posts_query->get( ideaboard_get_user_rewrite_id() );
+	$is_edit  = $posts_query->get( ideaboard_get_edit_rewrite_id() );
 
 	// It is a user page - We'll also check if it is user edit
-	if ( !empty( $bbp_user ) ) {
+	if ( !empty( $ideaboard_user ) ) {
 
 		/** Find User *********************************************************/
 
@@ -504,31 +504,31 @@ function bbp_parse_query( $posts_query ) {
 
 		// If using pretty permalinks, always use slug
 		if ( get_option( 'permalink_structure' ) ) {
-			$the_user = get_user_by( 'slug', $bbp_user );
+			$the_user = get_user_by( 'slug', $ideaboard_user );
 
 		// If not using pretty permalinks, always use numeric ID
-		} elseif ( is_numeric( $bbp_user ) ) {
-			$the_user = get_user_by( 'id', $bbp_user );
+		} elseif ( is_numeric( $ideaboard_user ) ) {
+			$the_user = get_user_by( 'id', $ideaboard_user );
 		}
 
 		// 404 and bail if user does not have a profile
-		if ( empty( $the_user->ID ) || ! bbp_user_has_profile( $the_user->ID ) ) {
+		if ( empty( $the_user->ID ) || ! ideaboard_user_has_profile( $the_user->ID ) ) {
 			$posts_query->set_404();
 			return;
 		}
 
 		/** User Exists *******************************************************/
 
-		$is_favs    = $posts_query->get( bbp_get_user_favorites_rewrite_id()     );
-		$is_subs    = $posts_query->get( bbp_get_user_subscriptions_rewrite_id() );
-		$is_topics  = $posts_query->get( bbp_get_user_topics_rewrite_id()        );
-		$is_replies = $posts_query->get( bbp_get_user_replies_rewrite_id()       );
+		$is_favs    = $posts_query->get( ideaboard_get_user_favorites_rewrite_id()     );
+		$is_subs    = $posts_query->get( ideaboard_get_user_subscriptions_rewrite_id() );
+		$is_topics  = $posts_query->get( ideaboard_get_user_topics_rewrite_id()        );
+		$is_replies = $posts_query->get( ideaboard_get_user_replies_rewrite_id()       );
 
 		// View or edit?
 		if ( !empty( $is_edit ) ) {
 
 			// We are editing a profile
-			$posts_query->bbp_is_single_user_edit = true;
+			$posts_query->ideaboard_is_single_user_edit = true;
 
 			// Load the core WordPress contact methods
 			if ( !function_exists( '_wp_get_user_contactmethods' ) ) {
@@ -546,31 +546,31 @@ function bbp_parse_query( $posts_query ) {
 			}
 
 			// Editing a user
-			$posts_query->bbp_is_edit = true;
+			$posts_query->ideaboard_is_edit = true;
 
 		// User favorites
 		} elseif ( ! empty( $is_favs ) ) {
-			$posts_query->bbp_is_single_user_favs = true;
+			$posts_query->ideaboard_is_single_user_favs = true;
 
 		// User subscriptions
 		} elseif ( ! empty( $is_subs ) ) {
-			$posts_query->bbp_is_single_user_subs = true;
+			$posts_query->ideaboard_is_single_user_subs = true;
 
 		// User topics
 		} elseif ( ! empty( $is_topics ) ) {
-			$posts_query->bbp_is_single_user_topics = true;
+			$posts_query->ideaboard_is_single_user_topics = true;
 
 		// User topics
 		} elseif ( ! empty( $is_replies ) ) {
-			$posts_query->bbp_is_single_user_replies = true;
+			$posts_query->ideaboard_is_single_user_replies = true;
 
 		// User profile
 		} else {
-			$posts_query->bbp_is_single_user_profile = true;
+			$posts_query->ideaboard_is_single_user_profile = true;
 		}
 
 		// Looking at a single user
-		$posts_query->bbp_is_single_user = true;
+		$posts_query->ideaboard_is_single_user = true;
 
 		// Make sure 404 is not set
 		$posts_query->is_404  = false;
@@ -580,11 +580,11 @@ function bbp_parse_query( $posts_query ) {
 
 		// User is looking at their own profile
 		if ( get_current_user_id() === $the_user->ID ) {
-			$posts_query->bbp_is_single_user_home = true;
+			$posts_query->ideaboard_is_single_user_home = true;
 		}
 
-		// Set bbp_user_id for future reference
-		$posts_query->set( 'bbp_user_id', $the_user->ID );
+		// Set ideaboard_user_id for future reference
+		$posts_query->set( 'ideaboard_user_id', $the_user->ID );
 
 		// Set author_name as current user's nicename to get correct posts
 		$posts_query->set( 'author_name', $the_user->user_nicename );
@@ -593,10 +593,10 @@ function bbp_parse_query( $posts_query ) {
 		ideaboard()->displayed_user = $the_user;
 
 	// View Page
-	} elseif ( !empty( $bbp_view ) ) {
+	} elseif ( !empty( $ideaboard_view ) ) {
 
 		// Check if the view exists by checking if there are query args are set
-		$view_args = bbp_get_view_query_args( $bbp_view );
+		$view_args = ideaboard_get_view_query_args( $ideaboard_view );
 
 		// Bail if view args is false (view isn't registered)
 		if ( false === $view_args ) {
@@ -608,21 +608,21 @@ function bbp_parse_query( $posts_query ) {
 		$posts_query->is_home     = false;
 
 		// We are in a custom topic view
-		$posts_query->bbp_is_view = true;
+		$posts_query->ideaboard_is_view = true;
 
 	// Search Page
-	} elseif ( isset( $posts_query->query_vars[ bbp_get_search_rewrite_id() ] ) ) {
+	} elseif ( isset( $posts_query->query_vars[ ideaboard_get_search_rewrite_id() ] ) ) {
 
 		// Check if there are search query args set
-		$search_terms = bbp_get_search_terms();
+		$search_terms = ideaboard_get_search_terms();
 		if ( !empty( $search_terms ) )
-			$posts_query->bbp_search_terms = $search_terms;
+			$posts_query->ideaboard_search_terms = $search_terms;
 
 		// Correct is_home variable
 		$posts_query->is_home = false;
 
 		// We are in a search query
-		$posts_query->bbp_is_search = true;
+		$posts_query->ideaboard_is_search = true;
 
 	// Forum/Topic/Reply Edit Page
 	} elseif ( !empty( $is_edit ) ) {
@@ -635,41 +635,41 @@ function bbp_parse_query( $posts_query ) {
 			switch( $post_type ) {
 
 				// We are editing a forum
-				case bbp_get_forum_post_type() :
-					$posts_query->bbp_is_forum_edit = true;
-					$posts_query->bbp_is_edit       = true;
+				case ideaboard_get_forum_post_type() :
+					$posts_query->ideaboard_is_forum_edit = true;
+					$posts_query->ideaboard_is_edit       = true;
 					break;
 
 				// We are editing a topic
-				case bbp_get_topic_post_type() :
-					$posts_query->bbp_is_topic_edit = true;
-					$posts_query->bbp_is_edit       = true;
+				case ideaboard_get_topic_post_type() :
+					$posts_query->ideaboard_is_topic_edit = true;
+					$posts_query->ideaboard_is_edit       = true;
 					break;
 
 				// We are editing a reply
-				case bbp_get_reply_post_type() :
-					$posts_query->bbp_is_reply_edit = true;
-					$posts_query->bbp_is_edit       = true;
+				case ideaboard_get_reply_post_type() :
+					$posts_query->ideaboard_is_reply_edit = true;
+					$posts_query->ideaboard_is_edit       = true;
 					break;
 			}
 
 		// We are editing a topic tag
-		} elseif ( bbp_is_topic_tag() ) {
-			$posts_query->bbp_is_topic_tag_edit = true;
-			$posts_query->bbp_is_edit           = true;
+		} elseif ( ideaboard_is_topic_tag() ) {
+			$posts_query->ideaboard_is_topic_tag_edit = true;
+			$posts_query->ideaboard_is_edit           = true;
 		}
 
 		// We save post revisions on our own
 		remove_action( 'pre_post_update', 'wp_save_post_revision' );
 
 	// Topic tag page
-	} elseif ( bbp_is_topic_tag() ) {
-		$posts_query->set( 'bbp_topic_tag',  get_query_var( 'term' )   );
-		$posts_query->set( 'post_type',      bbp_get_topic_post_type() );
-		$posts_query->set( 'posts_per_page', bbp_get_topics_per_page() );
+	} elseif ( ideaboard_is_topic_tag() ) {
+		$posts_query->set( 'ideaboard_topic_tag',  get_query_var( 'term' )   );
+		$posts_query->set( 'post_type',      ideaboard_get_topic_post_type() );
+		$posts_query->set( 'posts_per_page', ideaboard_get_topics_per_page() );
 
 	// Do topics on forums root
-	} elseif ( is_post_type_archive( array( bbp_get_forum_post_type(), bbp_get_topic_post_type() ) ) && ( 'topics' === bbp_show_on_root() ) ) {
-		$posts_query->bbp_show_topics_on_root = true;
+	} elseif ( is_post_type_archive( array( ideaboard_get_forum_post_type(), ideaboard_get_topic_post_type() ) ) && ( 'topics' === ideaboard_show_on_root() ) ) {
+		$posts_query->ideaboard_show_topics_on_root = true;
 	}
 }

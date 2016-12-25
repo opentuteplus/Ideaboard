@@ -30,7 +30,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'forums',
 			'from_fieldname' => 'fid',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_id'
+			'to_fieldname'   => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0, Stored in postmeta)
@@ -38,7 +38,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'forums',
 			'from_fieldname'  => 'pid',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -46,7 +46,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'forums',
 			'from_fieldname' => 'threads',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -54,7 +54,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'forums',
 			'from_fieldname' => 'posts',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum title.
@@ -120,7 +120,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'threads',
 			'from_fieldname' => 'tid',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -128,7 +128,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'threads',
 			'from_fieldname'  => 'replies',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -137,7 +137,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'threads',
 			'from_fieldname'  => 'replies',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -146,7 +146,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'threads',
 			'from_fieldname'  => 'fid',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -167,7 +167,7 @@ class MyBB extends BBP_Converter_Base {
 			'join_type'       => 'INNER',
 			'join_expression' => 'USING (tid) WHERE replyto = 0',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Topic content.
@@ -214,7 +214,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'threads',
 			'from_fieldname'  => 'sticky',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_old_sticky_status',
+			'to_fieldname'    => '_ideaboard_old_sticky_status',
 			'callback_method' => 'callback_sticky_status'
 		);
 
@@ -251,7 +251,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'threads',
 			'from_fieldname'  => 'lastpost',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -278,7 +278,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_fieldname'  => 'pid',
 			'from_expression' => 'WHERE replyto != 0',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_post_id'
+			'to_fieldname'    => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -286,7 +286,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'posts',
 			'from_fieldname'  => 'fid',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -295,7 +295,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'posts',
 			'from_fieldname'  => 'tid',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -304,7 +304,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'posts',
 			'from_fieldname' => 'ipaddress',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -388,7 +388,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'uid',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_user_id'
+			'to_fieldname'   => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta serialized with salt)
@@ -396,7 +396,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename'  => 'users',
 			'from_fieldname'  => 'password',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_password',
+			'to_fieldname'    => '_ideaboard_password',
 			'callback_method' => 'callback_savepass'
 		);
 
@@ -411,7 +411,7 @@ class MyBB extends BBP_Converter_Base {
 		// User password verify class (Stored in usermeta for verifying password)
 		$this->field_map[] = array(
 			'to_type'      => 'users',
-			'to_fieldname' => '_bbp_class',
+			'to_fieldname' => '_ideaboard_class',
 			'default'      => 'MyBB'
 		);
 
@@ -485,7 +485,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'icq',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_mybb_user_icq'
+			'to_fieldname'   => '_ideaboard_mybb_user_icq'
 		);
 
 		// Store MSN (Stored in usermeta)
@@ -493,7 +493,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'msn',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_mybb_user_msn'
+			'to_fieldname'   => '_ideaboard_mybb_user_msn'
 		);
 
 		// Store Signature (Stored in usermeta)
@@ -501,7 +501,7 @@ class MyBB extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'signature',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_mybb_user_sig',
+			'to_fieldname'   => '_ideaboard_mybb_user_sig',
 			'callback_method' => 'callback_html'
 		);
 

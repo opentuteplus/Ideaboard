@@ -30,7 +30,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename' => 'forums',
 			'from_fieldname' => 'forum_id',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_id'
+			'to_fieldname'   => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0, Stored in postmeta)
@@ -38,7 +38,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'forums',
 			'from_fieldname'  => 'parent_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -46,7 +46,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename' => 'forums',
 			'from_fieldname' => 'thread_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -54,7 +54,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename' => 'forums',
 			'from_fieldname' => 'message_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum title.
@@ -96,7 +96,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'forums',
 			'from_fieldname'  => 'folder_flag',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_type',
+			'to_fieldname'    => '_ideaboard_forum_type',
 			'callback_method' => 'callback_forum_type'
 		);
 
@@ -130,7 +130,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_fieldname'  => 'thread',
 			'from_expression' => 'WHERE parent_id = 0',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_topic_id'
+			'to_fieldname'    => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -138,7 +138,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'thread_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -147,7 +147,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'thread_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -156,7 +156,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'forum_id',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -174,7 +174,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'ip',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Topic content.
@@ -245,7 +245,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'datestamp',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -272,7 +272,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_fieldname'  => 'message_id',
 			'from_expression' => 'WHERE parent_id != 0',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_post_id'
+			'to_fieldname'    => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -280,7 +280,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'forum_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -289,7 +289,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'thread',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -298,7 +298,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename' => 'messages',
 			'from_fieldname' => 'ip',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -382,7 +382,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'user_id',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_user_id'
+			'to_fieldname'   => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta serialized with salt)
@@ -390,7 +390,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename'  => 'users',
 			'from_fieldname'  => 'password',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_password',
+			'to_fieldname'    => '_ideaboard_password',
 			'callback_method' => 'callback_savepass'
 		);
 
@@ -405,7 +405,7 @@ class Phorum extends BBP_Converter_Base {
 		// User password verify class (Stored in usermeta for verifying password)
 		$this->field_map[] = array(
 			'to_type'      => 'users',
-			'to_fieldname' => '_bbp_class',
+			'to_fieldname' => '_ideaboard_class',
 			'default'      => 'Phorum'
 		);
 
@@ -455,7 +455,7 @@ class Phorum extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'signature',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_phorum_user_sig',
+			'to_fieldname'   => '_ideaboard_phorum_user_sig',
 			'callback_method' => 'callback_html'
 		);
 

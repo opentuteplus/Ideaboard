@@ -7,7 +7,7 @@ jQuery(document).ready( function() {
 	}
 
 	/* Tab from topic title */
-	jQuery( '#bbp_topic_title' ).bind( 'keydown.editor-focus', function(e) {
+	jQuery( '#ideaboard_topic_title' ).bind( 'keydown.editor-focus', function(e) {
 		if ( e.which !== 9 )
 			return;
 
@@ -28,7 +28,7 @@ jQuery(document).ready( function() {
 	});
 
 	/* Shift + tab from topic tags */
-	jQuery( '#bbp_topic_tags' ).bind( 'keydown.editor-focus', function(e) {
+	jQuery( '#ideaboard_topic_tags' ).bind( 'keydown.editor-focus', function(e) {
 		if ( e.which !== 9 )
 			return;
 

@@ -85,13 +85,13 @@ class BBP_Component {
 	 * @since IdeaBoard (r2700)
 	 * @access private
 	 *
-	 * @uses apply_filters() Calls 'bbp_{@link BBP_Component::name}_id'
-	 * @uses apply_filters() Calls 'bbp_{@link BBP_Component::name}_slug'
+	 * @uses apply_filters() Calls 'ideaboard_{@link BBP_Component::name}_id'
+	 * @uses apply_filters() Calls 'ideaboard_{@link BBP_Component::name}_slug'
 	 */
 	private function setup_globals( $args = '' ) {
 		$this->name = $args['name'];
-		$this->id   = apply_filters( 'bbp_' . $this->name . '_id',   $args['id']   );
-		$this->slug = apply_filters( 'bbp_' . $this->name . '_slug', $args['slug'] );
+		$this->id   = apply_filters( 'ideaboard_' . $this->name . '_id',   $args['id']   );
+		$this->slug = apply_filters( 'ideaboard_' . $this->name . '_slug', $args['slug'] );
 	}
 
 	/**
@@ -100,10 +100,10 @@ class BBP_Component {
 	 * @since IdeaBoard (r2700)
 	 * @access private
 	 *
-	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}includes'
+	 * @uses do_action() Calls 'ideaboard_{@link BBP_Component::name}includes'
 	 */
 	private function includes() {
-		do_action( 'bbp_' . $this->name . 'includes' );
+		do_action( 'ideaboard_' . $this->name . 'includes' );
 	}
 
 	/**
@@ -114,16 +114,16 @@ class BBP_Component {
 	 *
 	 * @uses add_action() To add various actions
 	 * @uses do_action() Calls
-	 *                    'bbp_{@link BBP_Component::name}setup_actions'
+	 *                    'ideaboard_{@link BBP_Component::name}setup_actions'
 	 */
 	private function setup_actions() {
-		add_action( 'bbp_register_post_types',    array( $this, 'register_post_types'    ), 10, 2 ); // Register post types
-		add_action( 'bbp_register_taxonomies',    array( $this, 'register_taxonomies'    ), 10, 2 ); // Register taxonomies
-		add_action( 'bbp_add_rewrite_tags',       array( $this, 'add_rewrite_tags'       ), 10, 2 ); // Add the rewrite tags
-		add_action( 'bbp_generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ), 10, 2 ); // Generate rewrite rules
+		add_action( 'ideaboard_register_post_types',    array( $this, 'register_post_types'    ), 10, 2 ); // Register post types
+		add_action( 'ideaboard_register_taxonomies',    array( $this, 'register_taxonomies'    ), 10, 2 ); // Register taxonomies
+		add_action( 'ideaboard_add_rewrite_tags',       array( $this, 'add_rewrite_tags'       ), 10, 2 ); // Add the rewrite tags
+		add_action( 'ideaboard_generate_rewrite_rules', array( $this, 'generate_rewrite_rules' ), 10, 2 ); // Generate rewrite rules
 
 		// Additional actions can be attached here
-		do_action( 'bbp_' . $this->name . 'setup_actions' );
+		do_action( 'ideaboard_' . $this->name . 'setup_actions' );
 	}
 
 	/**
@@ -131,10 +131,10 @@ class BBP_Component {
 	 *
 	 * @since IdeaBoard (r2700)
 	 *
-	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_register_post_types'
+	 * @uses do_action() Calls 'ideaboard_{@link BBP_Component::name}_register_post_types'
 	 */
 	public function register_post_types() {
-		do_action( 'bbp_' . $this->name . '_register_post_types' );
+		do_action( 'ideaboard_' . $this->name . '_register_post_types' );
 	}
 
 	/**
@@ -142,10 +142,10 @@ class BBP_Component {
 	 *
 	 * @since IdeaBoard (r2700)
 	 *
-	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_register_taxonomies'
+	 * @uses do_action() Calls 'ideaboard_{@link BBP_Component::name}_register_taxonomies'
 	 */
 	public function register_taxonomies() {
-		do_action( 'bbp_' . $this->name . '_register_taxonomies' );
+		do_action( 'ideaboard_' . $this->name . '_register_taxonomies' );
 	}
 
 	/**
@@ -153,10 +153,10 @@ class BBP_Component {
 	 *
 	 * @since IdeaBoard (r2700)
 	 *
-	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_add_rewrite_tags'
+	 * @uses do_action() Calls 'ideaboard_{@link BBP_Component::name}_add_rewrite_tags'
 	 */
 	public function add_rewrite_tags() {
-		do_action( 'bbp_' . $this->name . '_add_rewrite_tags' );
+		do_action( 'ideaboard_' . $this->name . '_add_rewrite_tags' );
 	}
 
 	/**
@@ -164,10 +164,10 @@ class BBP_Component {
 	 *
 	 * @since IdeaBoard (r2700)
 	 *
-	 * @uses do_action() Calls 'bbp_{@link BBP_Component::name}_generate_rewrite_rules'
+	 * @uses do_action() Calls 'ideaboard_{@link BBP_Component::name}_generate_rewrite_rules'
 	 */
 	public function generate_rewrite_rules( $wp_rewrite ) {
-		do_action_ref_array( 'bbp_' . $this->name . '_generate_rewrite_rules', $wp_rewrite );
+		do_action_ref_array( 'ideaboard_' . $this->name . '_generate_rewrite_rules', $wp_rewrite );
 	}
 }
 endif; // BBP_Component
@@ -210,7 +210,7 @@ class BBP_Walker_Dropdown extends Walker {
 	 * @since IdeaBoard (r2746)
 	 */
 	public function __construct() {
-		$this->tree_type = bbp_get_forum_post_type();
+		$this->tree_type = ideaboard_get_forum_post_type();
 	}
 
 	/**
@@ -226,11 +226,11 @@ class BBP_Walker_Dropdown extends Walker {
 	 * @param array $args Uses 'selected' argument for selected post to set
 	 *                     selected HTML attribute for option element.
 	 * @param int $current_object_id
-	 * @uses bbp_is_forum_category() To check if the forum is a category
+	 * @uses ideaboard_is_forum_category() To check if the forum is a category
 	 * @uses current_user_can() To check if the current user can post in
 	 *                           closed forums
-	 * @uses bbp_is_forum_closed() To check if the forum is closed
-	 * @uses apply_filters() Calls 'bbp_walker_dropdown_post_title' with the
+	 * @uses ideaboard_is_forum_closed() To check if the forum is closed
+	 * @uses apply_filters() Calls 'ideaboard_walker_dropdown_post_title' with the
 	 *                        title, output, post, depth and args
 	 */
 	public function start_el( &$output, $object, $depth = 0, $args = array(), $current_object_id = 0 ) {
@@ -243,9 +243,9 @@ class BBP_Walker_Dropdown extends Walker {
 		// - the forum is a category
 		// - forum is closed
 		if (	( true === $args['disable_categories'] )
-				&& ( bbp_get_forum_post_type() === $object->post_type )
-				&& ( bbp_is_forum_category( $object->ID )
-					|| ( !current_user_can( 'edit_forum', $object->ID ) && bbp_is_forum_closed( $object->ID )
+				&& ( ideaboard_get_forum_post_type() === $object->post_type )
+				&& ( ideaboard_is_forum_category( $object->ID )
+					|| ( !current_user_can( 'edit_forum', $object->ID ) && ideaboard_is_forum_closed( $object->ID )
 				)
 			) ) {
 			$output .= ' disabled="disabled" value=""';
@@ -254,7 +254,7 @@ class BBP_Walker_Dropdown extends Walker {
 		}
 
 		$output .= '>';
-		$title   = apply_filters( 'bbp_walker_dropdown_post_title', $object->post_title, $output, $object, $depth, $args );
+		$title   = apply_filters( 'ideaboard_walker_dropdown_post_title', $object->post_title, $output, $object, $depth, $args );
 		$output .= $pad . esc_html( $title );
 		$output .= "</option>\n";
 	}
@@ -392,7 +392,7 @@ class BBP_Walker_Reply extends Walker {
 			echo "<li>\n";
 		}
 
-		bbp_get_template_part( 'loop', 'single-reply' );
+		ideaboard_get_template_part( 'loop', 'single-reply' );
 	}
 
 	/**

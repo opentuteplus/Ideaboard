@@ -439,7 +439,7 @@ div.bbp-topic-tags {
 		left: -999em;
 	}
 
-	#ideaboard-forums #bbp-search-form #bbp_search {
+	#ideaboard-forums #bbp-search-form #ideaboard_search {
 		display: inline-block;
 		width: auto;
 	}
@@ -638,14 +638,14 @@ td.bbp-topic-counts {
 	margin: 0 0 8px;
 }
 
-textarea#bbp_reply_content,
-textarea#bbp_topic_content,
-textarea#bbp_forum_content {
+textarea#ideaboard_reply_content,
+textarea#ideaboard_topic_content,
+textarea#ideaboard_forum_content {
 	width: 97%;
 	box-sizing: border-box;
 }
 
-textarea#bbp_forum_content {
+textarea#ideaboard_forum_content {
 	height: 210px;
 }
 
@@ -659,7 +659,7 @@ textarea#bbp_forum_content {
 /**
  * Fix for too-long forum names, usually from conversion
  */
-#ideaboard-forums fieldset select#bbp_forum_id {
+#ideaboard-forums fieldset select#ideaboard_forum_id {
 	max-width: 200px;
 }
 
@@ -1000,8 +1000,8 @@ fieldset div.avatar {
 /* =BuddyPress Activity Streams
 -------------------------------------------------------------- */
 
-.activity-list li.bbp_topic_create .activity-content .activity-inner,
-.activity-list li.bbp_reply_create .activity-content .activity-inner {
+.activity-list li.ideaboard_topic_create .activity-content .activity-inner,
+.activity-list li.ideaboard_reply_create .activity-content .activity-inner {
 	border-left: 2px solid #eaeaea;
 	margin-left: 5px;
 	padding-left: 10px;
@@ -1282,8 +1282,8 @@ body.my-account #ideaboard-forums {
 		width: 100%;
 		overflow: auto;
 	}
-	#ideaboard-forums input#bbp_topic_title,
-	#ideaboard-forums input#bbp_topic_tags {
+	#ideaboard-forums input#ideaboard_topic_title,
+	#ideaboard-forums input#ideaboard_topic_tags {
 		width: 95%;
 	}
 }

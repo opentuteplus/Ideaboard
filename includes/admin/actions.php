@@ -38,50 +38,50 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  *           v--WordPress Actions       v--IdeaBoard Sub-actions
  */
-add_action( 'admin_menu',              'bbp_admin_menu'                    );
-add_action( 'admin_init',              'bbp_admin_init'                    );
-add_action( 'admin_head',              'bbp_admin_head'                    );
-add_action( 'admin_notices',           'bbp_admin_notices'                 );
-add_action( 'custom_menu_order',       'bbp_admin_custom_menu_order'       );
-add_action( 'menu_order',              'bbp_admin_menu_order'              );
-add_action( 'wpmu_new_blog',           'bbp_new_site',               10, 6 );
+add_action( 'admin_menu',              'ideaboard_admin_menu'                    );
+add_action( 'admin_init',              'ideaboard_admin_init'                    );
+add_action( 'admin_head',              'ideaboard_admin_head'                    );
+add_action( 'admin_notices',           'ideaboard_admin_notices'                 );
+add_action( 'custom_menu_order',       'ideaboard_admin_custom_menu_order'       );
+add_action( 'menu_order',              'ideaboard_admin_menu_order'              );
+add_action( 'wpmu_new_blog',           'ideaboard_new_site',               10, 6 );
 
 // Hook on to admin_init
-add_action( 'bbp_admin_init', 'bbp_admin_forums'                );
-add_action( 'bbp_admin_init', 'bbp_admin_topics'                );
-add_action( 'bbp_admin_init', 'bbp_admin_replies'               );
-add_action( 'bbp_admin_init', 'bbp_setup_updater',          999 );
-add_action( 'bbp_admin_init', 'bbp_register_importers'          );
-add_action( 'bbp_admin_init', 'bbp_register_admin_style'        );
-add_action( 'bbp_admin_init', 'bbp_register_admin_settings'     );
-add_action( 'bbp_admin_init', 'bbp_do_activation_redirect', 1   );
+add_action( 'ideaboard_admin_init', 'ideaboard_admin_forums'                );
+add_action( 'ideaboard_admin_init', 'ideaboard_admin_topics'                );
+add_action( 'ideaboard_admin_init', 'ideaboard_admin_replies'               );
+add_action( 'ideaboard_admin_init', 'ideaboard_setup_updater',          999 );
+add_action( 'ideaboard_admin_init', 'ideaboard_register_importers'          );
+add_action( 'ideaboard_admin_init', 'ideaboard_register_admin_style'        );
+add_action( 'ideaboard_admin_init', 'ideaboard_register_admin_settings'     );
+add_action( 'ideaboard_admin_init', 'ideaboard_do_activation_redirect', 1   );
 
 // Initialize the admin area
-add_action( 'bbp_init', 'bbp_admin' );
+add_action( 'ideaboard_init', 'ideaboard_admin' );
 
 // Reset the menu order
-add_action( 'bbp_admin_menu', 'bbp_admin_separator' );
+add_action( 'ideaboard_admin_menu', 'ideaboard_admin_separator' );
 
 // Activation
-add_action( 'bbp_activation', 'bbp_delete_rewrite_rules'        );
-add_action( 'bbp_activation', 'bbp_make_current_user_keymaster' );
+add_action( 'ideaboard_activation', 'ideaboard_delete_rewrite_rules'        );
+add_action( 'ideaboard_activation', 'ideaboard_make_current_user_keymaster' );
 
 // Deactivation
-add_action( 'bbp_deactivation', 'bbp_remove_caps'          );
-add_action( 'bbp_deactivation', 'bbp_delete_rewrite_rules' );
+add_action( 'ideaboard_deactivation', 'ideaboard_remove_caps'          );
+add_action( 'ideaboard_deactivation', 'ideaboard_delete_rewrite_rules' );
 
 // New Site
-add_action( 'bbp_new_site', 'bbp_create_initial_content', 8 );
+add_action( 'ideaboard_new_site', 'ideaboard_create_initial_content', 8 );
 
 // Contextual Helpers
-add_action( 'load-settings_page_ideaboard', 'bbp_admin_settings_help' );
+add_action( 'load-settings_page_ideaboard', 'ideaboard_admin_settings_help' );
 
 // Handle submission of Tools pages
-add_action( 'load-tools_page_bbp-repair', 'bbp_admin_repair_handler' );
-add_action( 'load-tools_page_bbp-reset',  'bbp_admin_reset_handler'  );
+add_action( 'load-tools_page_bbp-repair', 'ideaboard_admin_repair_handler' );
+add_action( 'load-tools_page_bbp-reset',  'ideaboard_admin_reset_handler'  );
 
 // Add sample permalink filter
-add_filter( 'post_type_link', 'bbp_filter_sample_permalink', 10, 4 );
+add_filter( 'post_type_link', 'ideaboard_filter_sample_permalink', 10, 4 );
 
 /**
  * When a new site is created in a multisite installation, run the activation
@@ -96,7 +96,7 @@ add_filter( 'post_type_link', 'bbp_filter_sample_permalink', 10, 4 );
  * @param int $site_id
  * @param array() $meta
  */
-function bbp_new_site( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+function ideaboard_new_site( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 
 	// Bail if plugin is not network activated
 	if ( ! is_plugin_active_for_network( ideaboard()->basename ) )
@@ -106,7 +106,7 @@ function bbp_new_site( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 	switch_to_blog( $blog_id );
 
 	// Do the IdeaBoard activation routine
-	do_action( 'bbp_new_site', $blog_id, $user_id, $domain, $path, $site_id, $meta );
+	do_action( 'ideaboard_new_site', $blog_id, $user_id, $domain, $path, $site_id, $meta );
 
 	// restore original blog
 	restore_current_blog();
@@ -118,68 +118,68 @@ function bbp_new_site( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
  * Piggy back admin_init action
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_admin_init'
+ * @uses do_action() Calls 'ideaboard_admin_init'
  */
-function bbp_admin_init() {
-	do_action( 'bbp_admin_init' );
+function ideaboard_admin_init() {
+	do_action( 'ideaboard_admin_init' );
 }
 
 /**
  * Piggy back admin_menu action
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_admin_menu'
+ * @uses do_action() Calls 'ideaboard_admin_menu'
  */
-function bbp_admin_menu() {
-	do_action( 'bbp_admin_menu' );
+function ideaboard_admin_menu() {
+	do_action( 'ideaboard_admin_menu' );
 }
 
 /**
  * Piggy back admin_head action
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_admin_head'
+ * @uses do_action() Calls 'ideaboard_admin_head'
  */
-function bbp_admin_head() {
-	do_action( 'bbp_admin_head' );
+function ideaboard_admin_head() {
+	do_action( 'ideaboard_admin_head' );
 }
 
 /**
  * Piggy back admin_notices action
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_admin_notices'
+ * @uses do_action() Calls 'ideaboard_admin_notices'
  */
-function bbp_admin_notices() {
-	do_action( 'bbp_admin_notices' );
+function ideaboard_admin_notices() {
+	do_action( 'ideaboard_admin_notices' );
 }
 
 /**
  * Dedicated action to register IdeaBoard importers
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_admin_notices'
+ * @uses do_action() Calls 'ideaboard_admin_notices'
  */
-function bbp_register_importers() {
-	do_action( 'bbp_register_importers' );
+function ideaboard_register_importers() {
+	do_action( 'ideaboard_register_importers' );
 }
 
 /**
  * Dedicated action to register admin styles
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_admin_notices'
+ * @uses do_action() Calls 'ideaboard_admin_notices'
  */
-function bbp_register_admin_style() {
-	do_action( 'bbp_register_admin_style' );
+function ideaboard_register_admin_style() {
+	do_action( 'ideaboard_register_admin_style' );
 }
 
 /**
  * Dedicated action to register admin settings
  *
  * @since IdeaBoard (r3766)
- * @uses do_action() Calls 'bbp_register_admin_settings'
+ * @uses do_action() Calls 'ideaboard_register_admin_settings'
  */
-function bbp_register_admin_settings() {
-	do_action( 'bbp_register_admin_settings' );
+function ideaboard_register_admin_settings() {
+	do_action( 'ideaboard_register_admin_settings' );
 }

@@ -18,56 +18,56 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since IdeaBoard (r4001)
  * @return array
  */
-function bbp_admin_get_settings_sections() {
-	return (array) apply_filters( 'bbp_admin_get_settings_sections', array(
-		'bbp_settings_users' => array(
+function ideaboard_admin_get_settings_sections() {
+	return (array) apply_filters( 'ideaboard_admin_get_settings_sections', array(
+		'ideaboard_settings_users' => array(
 			'title'    => __( 'Forum User Settings', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_user_section',
+			'callback' => 'ideaboard_admin_setting_callback_user_section',
 			'page'     => 'discussion'
 		),
-		'bbp_settings_features' => array(
+		'ideaboard_settings_features' => array(
 			'title'    => __( 'Forum Features', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_features_section',
+			'callback' => 'ideaboard_admin_setting_callback_features_section',
 			'page'     => 'discussion'
 		),
-		'bbp_settings_theme_compat' => array(
+		'ideaboard_settings_theme_compat' => array(
 			'title'    => __( 'Forum Theme Packages', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_subtheme_section',
+			'callback' => 'ideaboard_admin_setting_callback_subtheme_section',
 			'page'     => 'general'
 		),
-		'bbp_settings_per_page' => array(
+		'ideaboard_settings_per_page' => array(
 			'title'    => __( 'Topics and Replies Per Page', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_per_page_section',
+			'callback' => 'ideaboard_admin_setting_callback_per_page_section',
 			'page'     => 'reading'
 		),
-		'bbp_settings_per_rss_page' => array(
+		'ideaboard_settings_per_rss_page' => array(
 			'title'    => __( 'Topics and Replies Per RSS Page', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_per_rss_page_section',
+			'callback' => 'ideaboard_admin_setting_callback_per_rss_page_section',
 			'page'     => 'reading',
 		),
-		'bbp_settings_root_slugs' => array(
+		'ideaboard_settings_root_slugs' => array(
 			'title'    => __( 'Forum Root Slug', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_root_slug_section',
+			'callback' => 'ideaboard_admin_setting_callback_root_slug_section',
 			'page'     => 'permalink'
 		),
-		'bbp_settings_single_slugs' => array(
+		'ideaboard_settings_single_slugs' => array(
 			'title'    => __( 'Single Forum Slugs', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_single_slug_section',
+			'callback' => 'ideaboard_admin_setting_callback_single_slug_section',
 			'page'     => 'permalink',
 		),
-		'bbp_settings_user_slugs' => array(
+		'ideaboard_settings_user_slugs' => array(
 			'title'    => __( 'Forum User Slugs', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_user_slug_section',
+			'callback' => 'ideaboard_admin_setting_callback_user_slug_section',
 			'page'     => 'permalink',
 		),
-		'bbp_settings_buddypress' => array(
+		'ideaboard_settings_buddypress' => array(
 			'title'    => __( 'BuddyPress Integration', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_buddypress_section',
+			'callback' => 'ideaboard_admin_setting_callback_buddypress_section',
 			'page'     => 'buddypress',
 		),
-		'bbp_settings_akismet' => array(
+		'ideaboard_settings_akismet' => array(
 			'title'    => __( 'Akismet Integration', 'ideaboard' ),
-			'callback' => 'bbp_admin_setting_callback_akismet_section',
+			'callback' => 'ideaboard_admin_setting_callback_akismet_section',
 			'page'     => 'discussion'
 		)
 	) );
@@ -79,47 +79,47 @@ function bbp_admin_get_settings_sections() {
  * @since IdeaBoard (r4001)
  * @return type
  */
-function bbp_admin_get_settings_fields() {
-	return (array) apply_filters( 'bbp_admin_get_settings_fields', array(
+function ideaboard_admin_get_settings_fields() {
+	return (array) apply_filters( 'ideaboard_admin_get_settings_fields', array(
 
 		/** User Section ******************************************************/
 
-		'bbp_settings_users' => array(
+		'ideaboard_settings_users' => array(
 
 			// Edit lock setting
-			'_bbp_edit_lock' => array(
+			'_ideaboard_edit_lock' => array(
 				'title'             => __( 'Disallow editing after', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_editlock',
+				'callback'          => 'ideaboard_admin_setting_callback_editlock',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Throttle setting
-			'_bbp_throttle_time' => array(
+			'_ideaboard_throttle_time' => array(
 				'title'             => __( 'Throttle posting every', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_throttle',
+				'callback'          => 'ideaboard_admin_setting_callback_throttle',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow anonymous posting setting
-			'_bbp_allow_anonymous' => array(
+			'_ideaboard_allow_anonymous' => array(
 				'title'             => __( 'Anonymous posting', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_anonymous',
+				'callback'          => 'ideaboard_admin_setting_callback_anonymous',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow global access (on multisite)
-			'_bbp_allow_global_access' => array(
+			'_ideaboard_allow_global_access' => array(
 				'title'             => __( 'Auto role', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_global_access',
+				'callback'          => 'ideaboard_admin_setting_callback_global_access',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow global access (on multisite)
-			'_bbp_default_role' => array(
+			'_ideaboard_default_role' => array(
 				'sanitize_callback' => 'sanitize_text_field',
 				'args'              => array()
 			)
@@ -127,74 +127,74 @@ function bbp_admin_get_settings_fields() {
 
 		/** Features Section **************************************************/
 
-		'bbp_settings_features' => array(
+		'ideaboard_settings_features' => array(
 
 			// Allow topic and reply revisions
-			'_bbp_allow_revisions' => array(
+			'_ideaboard_allow_revisions' => array(
 				'title'             => __( 'Revisions', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_revisions',
+				'callback'          => 'ideaboard_admin_setting_callback_revisions',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow favorites setting
-			'_bbp_enable_favorites' => array(
+			'_ideaboard_enable_favorites' => array(
 				'title'             => __( 'Favorites', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_favorites',
+				'callback'          => 'ideaboard_admin_setting_callback_favorites',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow subscriptions setting
-			'_bbp_enable_subscriptions' => array(
+			'_ideaboard_enable_subscriptions' => array(
 				'title'             => __( 'Subscriptions', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_subscriptions',
+				'callback'          => 'ideaboard_admin_setting_callback_subscriptions',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow topic tags
-			'_bbp_allow_topic_tags' => array(
+			'_ideaboard_allow_topic_tags' => array(
 				'title'             => __( 'Topic tags', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_topic_tags',
+				'callback'          => 'ideaboard_admin_setting_callback_topic_tags',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow topic tags
-			'_bbp_allow_search' => array(
+			'_ideaboard_allow_search' => array(
 				'title'             => __( 'Search', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_search',
+				'callback'          => 'ideaboard_admin_setting_callback_search',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow fancy editor setting
-			'_bbp_use_wp_editor' => array(
+			'_ideaboard_use_wp_editor' => array(
 				'title'             => __( 'Post Formatting', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_use_wp_editor',
+				'callback'          => 'ideaboard_admin_setting_callback_use_wp_editor',
 				'args'              => array(),
 				'sanitize_callback' => 'intval'
 			),
 
 			// Allow auto embedding setting
-			'_bbp_use_autoembed' => array(
+			'_ideaboard_use_autoembed' => array(
 				'title'             => __( 'Auto-embed links', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_use_autoembed',
+				'callback'          => 'ideaboard_admin_setting_callback_use_autoembed',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Set reply threading level
-			'_bbp_thread_replies_depth' => array(
+			'_ideaboard_thread_replies_depth' => array(
 				'title'             => __( 'Reply Threading', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_thread_replies_depth',
+				'callback'          => 'ideaboard_admin_setting_callback_thread_replies_depth',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Allow threaded replies
-			'_bbp_allow_threaded_replies' => array(
+			'_ideaboard_allow_threaded_replies' => array(
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
@@ -202,12 +202,12 @@ function bbp_admin_get_settings_fields() {
 
 		/** Theme Packages ****************************************************/
 
-		'bbp_settings_theme_compat' => array(
+		'ideaboard_settings_theme_compat' => array(
 
 			// Theme package setting
-			'_bbp_theme_package_id' => array(
+			'_ideaboard_theme_package_id' => array(
 				'title'             => __( 'Current Package', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_subtheme_id',
+				'callback'          => 'ideaboard_admin_setting_callback_subtheme_id',
 				'sanitize_callback' => 'esc_sql',
 				'args'              => array()
 			)
@@ -215,20 +215,20 @@ function bbp_admin_get_settings_fields() {
 
 		/** Per Page Section **************************************************/
 
-		'bbp_settings_per_page' => array(
+		'ideaboard_settings_per_page' => array(
 
 			// Replies per page setting
-			'_bbp_topics_per_page' => array(
+			'_ideaboard_topics_per_page' => array(
 				'title'             => __( 'Topics', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_topics_per_page',
+				'callback'          => 'ideaboard_admin_setting_callback_topics_per_page',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Replies per page setting
-			'_bbp_replies_per_page' => array(
+			'_ideaboard_replies_per_page' => array(
 				'title'             => __( 'Replies', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_replies_per_page',
+				'callback'          => 'ideaboard_admin_setting_callback_replies_per_page',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
@@ -236,20 +236,20 @@ function bbp_admin_get_settings_fields() {
 
 		/** Per RSS Page Section **********************************************/
 
-		'bbp_settings_per_rss_page' => array(
+		'ideaboard_settings_per_rss_page' => array(
 
 			// Replies per page setting
-			'_bbp_topics_per_rss_page' => array(
+			'_ideaboard_topics_per_rss_page' => array(
 				'title'             => __( 'Topics', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_topics_per_rss_page',
+				'callback'          => 'ideaboard_admin_setting_callback_topics_per_rss_page',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Replies per page setting
-			'_bbp_replies_per_rss_page' => array(
+			'_ideaboard_replies_per_rss_page' => array(
 				'title'             => __( 'Replies', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_replies_per_rss_page',
+				'callback'          => 'ideaboard_admin_setting_callback_replies_per_rss_page',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
@@ -257,28 +257,28 @@ function bbp_admin_get_settings_fields() {
 
 		/** Front Slugs *******************************************************/
 
-		'bbp_settings_root_slugs' => array(
+		'ideaboard_settings_root_slugs' => array(
 
 			// Root slug setting
-			'_bbp_root_slug' => array(
+			'_ideaboard_root_slug' => array(
 				'title'             => __( 'Forum Root', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_root_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_root_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Include root setting
-			'_bbp_include_root' => array(
+			'_ideaboard_include_root' => array(
 				'title'             => __( 'Forum Prefix', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_include_root',
+				'callback'          => 'ideaboard_admin_setting_callback_include_root',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// What to show on Forum Root
-			'_bbp_show_on_root' => array(
+			'_ideaboard_show_on_root' => array(
 				'title'             => __( 'Forum root should show', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_show_on_root',
+				'callback'          => 'ideaboard_admin_setting_callback_show_on_root',
 				'sanitize_callback' => 'sanitize_text_field',
 				'args'              => array()
 			),
@@ -286,118 +286,118 @@ function bbp_admin_get_settings_fields() {
 
 		/** Single Slugs ******************************************************/
 
-		'bbp_settings_single_slugs' => array(
+		'ideaboard_settings_single_slugs' => array(
 
 			// Forum slug setting
-			'_bbp_forum_slug' => array(
+			'_ideaboard_forum_slug' => array(
 				'title'             => __( 'Forum', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_forum_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_forum_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Topic slug setting
-			'_bbp_topic_slug' => array(
+			'_ideaboard_topic_slug' => array(
 				'title'             => __( 'Topic', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_topic_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_topic_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Topic tag slug setting
-			'_bbp_topic_tag_slug' => array(
+			'_ideaboard_topic_tag_slug' => array(
 				'title'             => __( 'Topic Tag', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_topic_tag_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_topic_tag_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// View slug setting
-			'_bbp_view_slug' => array(
+			'_ideaboard_view_slug' => array(
 				'title'             => __( 'Topic View', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_view_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_view_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Reply slug setting
-			'_bbp_reply_slug' => array(
+			'_ideaboard_reply_slug' => array(
 				'title'             => __( 'Reply', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_reply_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_reply_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Search slug setting
-			'_bbp_search_slug' => array(
+			'_ideaboard_search_slug' => array(
 				'title'             => __( 'Search', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_search_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_search_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			)
 		),
 
 		/** User Slugs ********************************************************/
 
-		'bbp_settings_user_slugs' => array(
+		'ideaboard_settings_user_slugs' => array(
 
 			// User slug setting
-			'_bbp_user_slug' => array(
+			'_ideaboard_user_slug' => array(
 				'title'             => __( 'User Base', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_user_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_user_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Topics slug setting
-			'_bbp_topic_archive_slug' => array(
+			'_ideaboard_topic_archive_slug' => array(
 				'title'             => __( 'Topics Started', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_topic_archive_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_topic_archive_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Replies slug setting
-			'_bbp_reply_archive_slug' => array(
+			'_ideaboard_reply_archive_slug' => array(
 				'title'             => __( 'Replies Created', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_reply_archive_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_reply_archive_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Favorites slug setting
-			'_bbp_user_favs_slug' => array(
+			'_ideaboard_user_favs_slug' => array(
 				'title'             => __( 'Favorite Topics', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_user_favs_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_user_favs_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			),
 
 			// Subscriptions slug setting
-			'_bbp_user_subs_slug' => array(
+			'_ideaboard_user_subs_slug' => array(
 				'title'             => __( 'Topic Subscriptions', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_user_subs_slug',
-				'sanitize_callback' => 'bbp_sanitize_slug',
+				'callback'          => 'ideaboard_admin_setting_callback_user_subs_slug',
+				'sanitize_callback' => 'ideaboard_sanitize_slug',
 				'args'              => array()
 			)
 		),
 
 		/** BuddyPress ********************************************************/
 
-		'bbp_settings_buddypress' => array(
+		'ideaboard_settings_buddypress' => array(
 
 			// Are group forums enabled?
-			'_bbp_enable_group_forums' => array(
+			'_ideaboard_enable_group_forums' => array(
 				'title'             => __( 'Enable Group Forums', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_group_forums',
+				'callback'          => 'ideaboard_admin_setting_callback_group_forums',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 
 			// Group forums parent forum ID
-			'_bbp_group_forums_root_id' => array(
+			'_ideaboard_group_forums_root_id' => array(
 				'title'             => __( 'Group Forums Parent', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_group_forums_root_id',
+				'callback'          => 'ideaboard_admin_setting_callback_group_forums_root_id',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
@@ -405,12 +405,12 @@ function bbp_admin_get_settings_fields() {
 
 		/** Akismet ***********************************************************/
 
-		'bbp_settings_akismet' => array(
+		'ideaboard_settings_akismet' => array(
 
 			// Should we use Akismet
-			'_bbp_enable_akismet' => array(
+			'_ideaboard_enable_akismet' => array(
 				'title'             => __( 'Use Akismet', 'ideaboard' ),
-				'callback'          => 'bbp_admin_setting_callback_akismet',
+				'callback'          => 'ideaboard_admin_setting_callback_akismet',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
@@ -425,16 +425,16 @@ function bbp_admin_get_settings_fields() {
  * @param string $section_id
  * @return mixed False if section is invalid, array of fields otherwise.
  */
-function bbp_admin_get_settings_fields_for_section( $section_id = '' ) {
+function ideaboard_admin_get_settings_fields_for_section( $section_id = '' ) {
 
 	// Bail if section is empty
 	if ( empty( $section_id ) )
 		return false;
 
-	$fields = bbp_admin_get_settings_fields();
+	$fields = ideaboard_admin_get_settings_fields();
 	$retval = isset( $fields[$section_id] ) ? $fields[$section_id] : false;
 
-	return (array) apply_filters( 'bbp_admin_get_settings_fields_for_section', $retval, $section_id );
+	return (array) apply_filters( 'ideaboard_admin_get_settings_fields_for_section', $retval, $section_id );
 }
 
 /** User Section **************************************************************/
@@ -444,7 +444,7 @@ function bbp_admin_get_settings_fields_for_section( $section_id = '' ) {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_user_section() {
+function ideaboard_admin_setting_callback_user_section() {
 ?>
 
 	<p><?php esc_html_e( 'Setting time limits and other user posting capabilities', 'ideaboard' ); ?></p>
@@ -458,13 +458,13 @@ function bbp_admin_setting_callback_user_section() {
  *
  * @since IdeaBoard (r2737)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_editlock() {
+function ideaboard_admin_setting_callback_editlock() {
 ?>
 
-	<input name="_bbp_edit_lock" id="_bbp_edit_lock" type="number" min="0" step="1" value="<?php bbp_form_option( '_bbp_edit_lock', '5' ); ?>" class="small-text"<?php bbp_maybe_admin_setting_disabled( '_bbp_edit_lock' ); ?> />
-	<label for="_bbp_edit_lock"><?php esc_html_e( 'minutes', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_edit_lock" id="_ideaboard_edit_lock" type="number" min="0" step="1" value="<?php ideaboard_form_option( '_ideaboard_edit_lock', '5' ); ?>" class="small-text"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_edit_lock' ); ?> />
+	<label for="_ideaboard_edit_lock"><?php esc_html_e( 'minutes', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -474,13 +474,13 @@ function bbp_admin_setting_callback_editlock() {
  *
  * @since IdeaBoard (r2737)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_throttle() {
+function ideaboard_admin_setting_callback_throttle() {
 ?>
 
-	<input name="_bbp_throttle_time" id="_bbp_throttle_time" type="number" min="0" step="1" value="<?php bbp_form_option( '_bbp_throttle_time', '10' ); ?>" class="small-text"<?php bbp_maybe_admin_setting_disabled( '_bbp_throttle_time' ); ?> />
-	<label for="_bbp_throttle_time"><?php esc_html_e( 'seconds', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_throttle_time" id="_ideaboard_throttle_time" type="number" min="0" step="1" value="<?php ideaboard_form_option( '_ideaboard_throttle_time', '10' ); ?>" class="small-text"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_throttle_time' ); ?> />
+	<label for="_ideaboard_throttle_time"><?php esc_html_e( 'seconds', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -492,11 +492,11 @@ function bbp_admin_setting_callback_throttle() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_anonymous() {
+function ideaboard_admin_setting_callback_anonymous() {
 ?>
 
-	<input name="_bbp_allow_anonymous" id="_bbp_allow_anonymous" type="checkbox" value="1" <?php checked( bbp_allow_anonymous( false ) ); bbp_maybe_admin_setting_disabled( '_bbp_allow_anonymous' ); ?> />
-	<label for="_bbp_allow_anonymous"><?php esc_html_e( 'Allow guest users without accounts to create topics and replies', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_allow_anonymous" id="_ideaboard_allow_anonymous" type="checkbox" value="1" <?php checked( ideaboard_allow_anonymous( false ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_allow_anonymous' ); ?> />
+	<label for="_ideaboard_allow_anonymous"><?php esc_html_e( 'Allow guest users without accounts to create topics and replies', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -508,28 +508,28 @@ function bbp_admin_setting_callback_anonymous() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_global_access() {
+function ideaboard_admin_setting_callback_global_access() {
 
 	// Get the default role once rather than loop repeatedly below
-	$default_role = bbp_get_default_role();
+	$default_role = ideaboard_get_default_role();
 
 	// Start the output buffer for the select dropdown
 	ob_start(); ?>
 
 	</label>
-	<label for="_bbp_default_role">
-		<select name="_bbp_default_role" id="_bbp_default_role" <?php bbp_maybe_admin_setting_disabled( '_bbp_default_role' ); ?>>
-		<?php foreach ( bbp_get_dynamic_roles() as $role => $details ) : ?>
+	<label for="_ideaboard_default_role">
+		<select name="_ideaboard_default_role" id="_ideaboard_default_role" <?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_default_role' ); ?>>
+		<?php foreach ( ideaboard_get_dynamic_roles() as $role => $details ) : ?>
 
-			<option <?php selected( $default_role, $role ); ?> value="<?php echo esc_attr( $role ); ?>"><?php echo bbp_translate_user_role( $details['name'] ); ?></option>
+			<option <?php selected( $default_role, $role ); ?> value="<?php echo esc_attr( $role ); ?>"><?php echo ideaboard_translate_user_role( $details['name'] ); ?></option>
 
 		<?php endforeach; ?>
 		</select>
 
 	<?php $select = ob_get_clean(); ?>
 
-	<label for="_bbp_allow_global_access">
-		<input name="_bbp_allow_global_access" id="_bbp_allow_global_access" type="checkbox" value="1" <?php checked( bbp_allow_global_access( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_allow_global_access' ); ?> />
+	<label for="_ideaboard_allow_global_access">
+		<input name="_ideaboard_allow_global_access" id="_ideaboard_allow_global_access" type="checkbox" value="1" <?php checked( ideaboard_allow_global_access( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_allow_global_access' ); ?> />
 		<?php printf( esc_html__( 'Automatically give registered visitors the %s forum role', 'ideaboard' ), $select ); ?>
 	</label>
 
@@ -543,7 +543,7 @@ function bbp_admin_setting_callback_global_access() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_features_section() {
+function ideaboard_admin_setting_callback_features_section() {
 ?>
 
 	<p><?php esc_html_e( 'Forum features that can be toggled on and off', 'ideaboard' ); ?></p>
@@ -558,11 +558,11 @@ function bbp_admin_setting_callback_features_section() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_favorites() {
+function ideaboard_admin_setting_callback_favorites() {
 ?>
 
-	<input name="_bbp_enable_favorites" id="_bbp_enable_favorites" type="checkbox" value="1" <?php checked( bbp_is_favorites_active( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_enable_favorites' ); ?> />
-	<label for="_bbp_enable_favorites"><?php esc_html_e( 'Allow users to mark topics as favorites', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_enable_favorites" id="_ideaboard_enable_favorites" type="checkbox" value="1" <?php checked( ideaboard_is_favorites_active( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_enable_favorites' ); ?> />
+	<label for="_ideaboard_enable_favorites"><?php esc_html_e( 'Allow users to mark topics as favorites', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -574,11 +574,11 @@ function bbp_admin_setting_callback_favorites() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_subscriptions() {
+function ideaboard_admin_setting_callback_subscriptions() {
 ?>
 
-	<input name="_bbp_enable_subscriptions" id="_bbp_enable_subscriptions" type="checkbox" value="1" <?php checked( bbp_is_subscriptions_active( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_enable_subscriptions' ); ?> />
-	<label for="_bbp_enable_subscriptions"><?php esc_html_e( 'Allow users to subscribe to forums and topics', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_enable_subscriptions" id="_ideaboard_enable_subscriptions" type="checkbox" value="1" <?php checked( ideaboard_is_subscriptions_active( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_enable_subscriptions' ); ?> />
+	<label for="_ideaboard_enable_subscriptions"><?php esc_html_e( 'Allow users to subscribe to forums and topics', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -590,11 +590,11 @@ function bbp_admin_setting_callback_subscriptions() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_topic_tags() {
+function ideaboard_admin_setting_callback_topic_tags() {
 ?>
 
-	<input name="_bbp_allow_topic_tags" id="_bbp_allow_topic_tags" type="checkbox" value="1" <?php checked( bbp_allow_topic_tags( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_allow_topic_tags' ); ?> />
-	<label for="_bbp_allow_topic_tags"><?php esc_html_e( 'Allow topics to have tags', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_allow_topic_tags" id="_ideaboard_allow_topic_tags" type="checkbox" value="1" <?php checked( ideaboard_allow_topic_tags( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_allow_topic_tags' ); ?> />
+	<label for="_ideaboard_allow_topic_tags"><?php esc_html_e( 'Allow topics to have tags', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -606,11 +606,11 @@ function bbp_admin_setting_callback_topic_tags() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_search() {
+function ideaboard_admin_setting_callback_search() {
 ?>
 
-	<input name="_bbp_allow_search" id="_bbp_allow_search" type="checkbox" value="1" <?php checked( bbp_allow_search( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_allow_search' ); ?> />
-	<label for="_bbp_allow_search"><?php esc_html_e( 'Allow forum wide search', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_allow_search" id="_ideaboard_allow_search" type="checkbox" value="1" <?php checked( ideaboard_allow_search( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_allow_search' ); ?> />
+	<label for="_ideaboard_allow_search"><?php esc_html_e( 'Allow forum wide search', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -622,22 +622,22 @@ function bbp_admin_setting_callback_search() {
  *
  * @since IdeaBoard (r4944)
  *
- * @uses apply_filters() Calls 'bbp_thread_replies_depth_max' to set a
+ * @uses apply_filters() Calls 'ideaboard_thread_replies_depth_max' to set a
  *                        maximum displayed level
  * @uses selected() To display the selected attribute
  */
-function bbp_admin_setting_callback_thread_replies_depth() {
+function ideaboard_admin_setting_callback_thread_replies_depth() {
 
 	// Set maximum depth for dropdown
-	$max_depth     = (int) apply_filters( 'bbp_thread_replies_depth_max', 10 );
-	$current_depth = bbp_thread_replies_depth();
+	$max_depth     = (int) apply_filters( 'ideaboard_thread_replies_depth_max', 10 );
+	$current_depth = ideaboard_thread_replies_depth();
 
 	// Start an output buffer for the select dropdown
 	ob_start(); ?>
 
 	</label>
-	<label for="_bbp_thread_replies_depth">
-		<select name="_bbp_thread_replies_depth" id="_bbp_thread_replies_depth" <?php bbp_maybe_admin_setting_disabled( '_bbp_thread_replies_depth' ); ?>>
+	<label for="_ideaboard_thread_replies_depth">
+		<select name="_ideaboard_thread_replies_depth" id="_ideaboard_thread_replies_depth" <?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_thread_replies_depth' ); ?>>
 		<?php for ( $i = 2; $i <= $max_depth; $i++ ) : ?>
 
 			<option value="<?php echo esc_attr( $i ); ?>" <?php selected( $i, $current_depth ); ?>><?php echo esc_html( $i ); ?></option>
@@ -647,8 +647,8 @@ function bbp_admin_setting_callback_thread_replies_depth() {
 
 	<?php $select = ob_get_clean(); ?>
 
-	<label for="_bbp_allow_threaded_replies">
-		<input name="_bbp_allow_threaded_replies" id="_bbp_allow_threaded_replies" type="checkbox" value="1" <?php checked( '1', bbp_allow_threaded_replies( false ) ); bbp_maybe_admin_setting_disabled( '_bbp_allow_threaded_replies' ); ?> />
+	<label for="_ideaboard_allow_threaded_replies">
+		<input name="_ideaboard_allow_threaded_replies" id="_ideaboard_allow_threaded_replies" type="checkbox" value="1" <?php checked( '1', ideaboard_allow_threaded_replies( false ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_allow_threaded_replies' ); ?> />
 		<?php printf( esc_html__( 'Enable threaded (nested) replies %s levels deep', 'ideaboard' ), $select ); ?>
 	</label>
 
@@ -662,11 +662,11 @@ function bbp_admin_setting_callback_thread_replies_depth() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_revisions() {
+function ideaboard_admin_setting_callback_revisions() {
 ?>
 
-	<input name="_bbp_allow_revisions" id="_bbp_allow_revisions" type="checkbox" value="1" <?php checked( bbp_allow_revisions( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_allow_revisions' ); ?> />
-	<label for="_bbp_allow_revisions"><?php esc_html_e( 'Allow topic and reply revision logging', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_allow_revisions" id="_ideaboard_allow_revisions" type="checkbox" value="1" <?php checked( ideaboard_allow_revisions( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_allow_revisions' ); ?> />
+	<label for="_ideaboard_allow_revisions"><?php esc_html_e( 'Allow topic and reply revision logging', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -678,11 +678,11 @@ function bbp_admin_setting_callback_revisions() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_use_wp_editor() {
+function ideaboard_admin_setting_callback_use_wp_editor() {
 ?>
 
-	<input name="_bbp_use_wp_editor" id="_bbp_use_wp_editor" type="checkbox" value="1" <?php checked( bbp_use_wp_editor( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_use_wp_editor' ); ?> />
-	<label for="_bbp_use_wp_editor"><?php esc_html_e( 'Add toolbar & buttons to textareas to help with HTML formatting', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_use_wp_editor" id="_ideaboard_use_wp_editor" type="checkbox" value="1" <?php checked( ideaboard_use_wp_editor( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_use_wp_editor' ); ?> />
+	<label for="_ideaboard_use_wp_editor"><?php esc_html_e( 'Add toolbar & buttons to textareas to help with HTML formatting', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -692,7 +692,7 @@ function bbp_admin_setting_callback_use_wp_editor() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_subtheme_section() {
+function ideaboard_admin_setting_callback_subtheme_section() {
 ?>
 
 	<p><?php esc_html_e( 'How your forum content is displayed within your existing theme.', 'ideaboard' ); ?></p>
@@ -707,11 +707,11 @@ function bbp_admin_setting_callback_subtheme_section() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_subtheme_id() {
+function ideaboard_admin_setting_callback_subtheme_id() {
 
 	// Declare locale variable
 	$theme_options   = '';
-	$current_package = bbp_get_theme_package_id( 'default' );
+	$current_package = ideaboard_get_theme_package_id( 'default' );
 
 	// Note: This should never be empty. /templates/ is the
 	// canonical backup if no other packages exist. If there's an error here,
@@ -724,8 +724,8 @@ function bbp_admin_setting_callback_subtheme_id() {
 
 	if ( !empty( $theme_options ) ) : ?>
 
-		<select name="_bbp_theme_package_id" id="_bbp_theme_package_id" <?php bbp_maybe_admin_setting_disabled( '_bbp_theme_package_id' ); ?>><?php echo $theme_options ?></select>
-		<label for="_bbp_theme_package_id"><?php esc_html_e( 'will serve all IdeaBoard templates', 'ideaboard' ); ?></label>
+		<select name="_ideaboard_theme_package_id" id="_ideaboard_theme_package_id" <?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_theme_package_id' ); ?>><?php echo $theme_options ?></select>
+		<label for="_ideaboard_theme_package_id"><?php esc_html_e( 'will serve all IdeaBoard templates', 'ideaboard' ); ?></label>
 
 	<?php else : ?>
 
@@ -741,11 +741,11 @@ function bbp_admin_setting_callback_subtheme_id() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_use_autoembed() {
+function ideaboard_admin_setting_callback_use_autoembed() {
 ?>
 
-	<input name="_bbp_use_autoembed" id="_bbp_use_autoembed" type="checkbox" value="1" <?php checked( bbp_use_autoembed( true ) ); bbp_maybe_admin_setting_disabled( '_bbp_use_autoembed' ); ?> />
-	<label for="_bbp_use_autoembed"><?php esc_html_e( 'Embed media (YouTube, Twitter, Flickr, etc...) directly into topics and replies', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_use_autoembed" id="_ideaboard_use_autoembed" type="checkbox" value="1" <?php checked( ideaboard_use_autoembed( true ) ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_use_autoembed' ); ?> />
+	<label for="_ideaboard_use_autoembed"><?php esc_html_e( 'Embed media (YouTube, Twitter, Flickr, etc...) directly into topics and replies', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -757,7 +757,7 @@ function bbp_admin_setting_callback_use_autoembed() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_per_page_section() {
+function ideaboard_admin_setting_callback_per_page_section() {
 ?>
 
 	<p><?php esc_html_e( 'How many topics and replies to show per page', 'ideaboard' ); ?></p>
@@ -770,13 +770,13 @@ function bbp_admin_setting_callback_per_page_section() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_topics_per_page() {
+function ideaboard_admin_setting_callback_topics_per_page() {
 ?>
 
-	<input name="_bbp_topics_per_page" id="_bbp_topics_per_page" type="number" min="1" step="1" value="<?php bbp_form_option( '_bbp_topics_per_page', '15' ); ?>" class="small-text"<?php bbp_maybe_admin_setting_disabled( '_bbp_topics_per_page' ); ?> />
-	<label for="_bbp_topics_per_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_topics_per_page" id="_ideaboard_topics_per_page" type="number" min="1" step="1" value="<?php ideaboard_form_option( '_ideaboard_topics_per_page', '15' ); ?>" class="small-text"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_topics_per_page' ); ?> />
+	<label for="_ideaboard_topics_per_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -786,13 +786,13 @@ function bbp_admin_setting_callback_topics_per_page() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_replies_per_page() {
+function ideaboard_admin_setting_callback_replies_per_page() {
 ?>
 
-	<input name="_bbp_replies_per_page" id="_bbp_replies_per_page" type="number" min="1" step="1" value="<?php bbp_form_option( '_bbp_replies_per_page', '15' ); ?>" class="small-text"<?php bbp_maybe_admin_setting_disabled( '_bbp_replies_per_page' ); ?> />
-	<label for="_bbp_replies_per_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_replies_per_page" id="_ideaboard_replies_per_page" type="number" min="1" step="1" value="<?php ideaboard_form_option( '_ideaboard_replies_per_page', '15' ); ?>" class="small-text"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_replies_per_page' ); ?> />
+	<label for="_ideaboard_replies_per_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -804,7 +804,7 @@ function bbp_admin_setting_callback_replies_per_page() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_per_rss_page_section() {
+function ideaboard_admin_setting_callback_per_rss_page_section() {
 ?>
 
 	<p><?php esc_html_e( 'How many topics and replies to show per RSS page', 'ideaboard' ); ?></p>
@@ -817,13 +817,13 @@ function bbp_admin_setting_callback_per_rss_page_section() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_topics_per_rss_page() {
+function ideaboard_admin_setting_callback_topics_per_rss_page() {
 ?>
 
-	<input name="_bbp_topics_per_rss_page" id="_bbp_topics_per_rss_page" type="number" min="1" step="1" value="<?php bbp_form_option( '_bbp_topics_per_rss_page', '25' ); ?>" class="small-text"<?php bbp_maybe_admin_setting_disabled( '_bbp_topics_per_rss_page' ); ?> />
-	<label for="_bbp_topics_per_rss_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_topics_per_rss_page" id="_ideaboard_topics_per_rss_page" type="number" min="1" step="1" value="<?php ideaboard_form_option( '_ideaboard_topics_per_rss_page', '25' ); ?>" class="small-text"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_topics_per_rss_page' ); ?> />
+	<label for="_ideaboard_topics_per_rss_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -833,13 +833,13 @@ function bbp_admin_setting_callback_topics_per_rss_page() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_replies_per_rss_page() {
+function ideaboard_admin_setting_callback_replies_per_rss_page() {
 ?>
 
-	<input name="_bbp_replies_per_rss_page" id="_bbp_replies_per_rss_page" type="number" min="1" step="1" value="<?php bbp_form_option( '_bbp_replies_per_rss_page', '25' ); ?>" class="small-text"<?php bbp_maybe_admin_setting_disabled( '_bbp_replies_per_rss_page' ); ?> />
-	<label for="_bbp_replies_per_rss_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_replies_per_rss_page" id="_ideaboard_replies_per_rss_page" type="number" min="1" step="1" value="<?php ideaboard_form_option( '_ideaboard_replies_per_rss_page', '25' ); ?>" class="small-text"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_replies_per_rss_page' ); ?> />
+	<label for="_ideaboard_replies_per_rss_page"><?php esc_html_e( 'per page', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -851,7 +851,7 @@ function bbp_admin_setting_callback_replies_per_rss_page() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_root_slug_section() {
+function ideaboard_admin_setting_callback_root_slug_section() {
 
 	// Flush rewrite rules when this section is saved
 	if ( isset( $_GET['settings-updated'] ) && isset( $_GET['page'] ) )
@@ -867,16 +867,16 @@ function bbp_admin_setting_callback_root_slug_section() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_root_slug() {
+function ideaboard_admin_setting_callback_root_slug() {
 ?>
 
-        <input name="_bbp_root_slug" id="_bbp_root_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_root_slug', 'forums', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_root_slug' ); ?> />
+        <input name="_ideaboard_root_slug" id="_ideaboard_root_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_root_slug', 'forums', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_root_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_root_slug', 'forums' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_root_slug', 'forums' );
 }
 
 /**
@@ -886,11 +886,11 @@ function bbp_admin_setting_callback_root_slug() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_include_root() {
+function ideaboard_admin_setting_callback_include_root() {
 ?>
 
-	<input name="_bbp_include_root" id="_bbp_include_root" type="checkbox" value="1" <?php checked( bbp_include_root_slug() ); bbp_maybe_admin_setting_disabled( '_bbp_include_root' ); ?> />
-	<label for="_bbp_include_root"><?php esc_html_e( 'Prefix all forum content with the Forum Root slug (Recommended)', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_include_root" id="_ideaboard_include_root" type="checkbox" value="1" <?php checked( ideaboard_include_root_slug() ); ideaboard_maybe_admin_setting_disabled( '_ideaboard_include_root' ); ?> />
+	<label for="_ideaboard_include_root"><?php esc_html_e( 'Prefix all forum content with the Forum Root slug (Recommended)', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -902,10 +902,10 @@ function bbp_admin_setting_callback_include_root() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_show_on_root() {
+function ideaboard_admin_setting_callback_show_on_root() {
 
 	// Current setting
-	$show_on_root = bbp_show_on_root();
+	$show_on_root = ideaboard_show_on_root();
 
 	// Options for forum root output
 	$root_options = array(
@@ -917,7 +917,7 @@ function bbp_admin_setting_callback_show_on_root() {
 		)
 	); ?>
 
-	<select name="_bbp_show_on_root" id="_bbp_show_on_root" <?php bbp_maybe_admin_setting_disabled( '_bbp_show_on_root' ); ?>>
+	<select name="_ideaboard_show_on_root" id="_ideaboard_show_on_root" <?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_show_on_root' ); ?>>
 
 		<?php foreach ( $root_options as $option_id => $details ) : ?>
 
@@ -937,7 +937,7 @@ function bbp_admin_setting_callback_show_on_root() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_user_slug_section() {
+function ideaboard_admin_setting_callback_user_slug_section() {
 ?>
 
 	<p><?php esc_html_e( 'Customize your user profile slugs.', 'ideaboard' ); ?></p>
@@ -950,16 +950,16 @@ function bbp_admin_setting_callback_user_slug_section() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_user_slug() {
+function ideaboard_admin_setting_callback_user_slug() {
 ?>
 
-	<input name="_bbp_user_slug" id="_bbp_user_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_user_slug', 'users', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_user_slug' ); ?> />
+	<input name="_ideaboard_user_slug" id="_ideaboard_user_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_user_slug', 'users', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_user_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_user_slug', 'users' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_user_slug', 'users' );
 }
 
 /**
@@ -967,16 +967,16 @@ function bbp_admin_setting_callback_user_slug() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_topic_archive_slug() {
+function ideaboard_admin_setting_callback_topic_archive_slug() {
 ?>
 
-	<input name="_bbp_topic_archive_slug" id="_bbp_topic_archive_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_topic_archive_slug', 'topics', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_topic_archive_slug' ); ?> />
+	<input name="_ideaboard_topic_archive_slug" id="_ideaboard_topic_archive_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_topic_archive_slug', 'topics', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_topic_archive_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_topic_archive_slug', 'topics' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_topic_archive_slug', 'topics' );
 }
 
 /**
@@ -984,16 +984,16 @@ function bbp_admin_setting_callback_topic_archive_slug() {
  *
  * @since IdeaBoard (r4932)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_reply_archive_slug() {
+function ideaboard_admin_setting_callback_reply_archive_slug() {
 ?>
 
-	<input name="_bbp_reply_archive_slug" id="_bbp_reply_archive_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_reply_archive_slug', 'replies', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_reply_archive_slug' ); ?> />
+	<input name="_ideaboard_reply_archive_slug" id="_ideaboard_reply_archive_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_reply_archive_slug', 'replies', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_reply_archive_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_reply_archive_slug', 'replies' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_reply_archive_slug', 'replies' );
 }
 
 /**
@@ -1001,16 +1001,16 @@ function bbp_admin_setting_callback_reply_archive_slug() {
  *
  * @since IdeaBoard (r4932)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_user_favs_slug() {
+function ideaboard_admin_setting_callback_user_favs_slug() {
 ?>
 
-	<input name="_bbp_user_favs_slug" id="_bbp_user_favs_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_user_favs_slug', 'favorites', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_user_favs_slug' ); ?> />
+	<input name="_ideaboard_user_favs_slug" id="_ideaboard_user_favs_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_user_favs_slug', 'favorites', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_user_favs_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_reply_archive_slug', 'favorites' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_reply_archive_slug', 'favorites' );
 }
 
 /**
@@ -1018,16 +1018,16 @@ function bbp_admin_setting_callback_user_favs_slug() {
  *
  * @since IdeaBoard (r4932)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_user_subs_slug() {
+function ideaboard_admin_setting_callback_user_subs_slug() {
 ?>
 
-	<input name="_bbp_user_subs_slug" id="_bbp_user_subs_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_user_subs_slug', 'subscriptions', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_user_subs_slug' ); ?> />
+	<input name="_ideaboard_user_subs_slug" id="_ideaboard_user_subs_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_user_subs_slug', 'subscriptions', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_user_subs_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_user_subs_slug', 'subscriptions' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_user_subs_slug', 'subscriptions' );
 }
 
 /** Single Slugs **************************************************************/
@@ -1037,7 +1037,7 @@ function bbp_admin_setting_callback_user_subs_slug() {
  *
  * @since IdeaBoard (r2786)
  */
-function bbp_admin_setting_callback_single_slug_section() {
+function ideaboard_admin_setting_callback_single_slug_section() {
 ?>
 
 	<p><?php printf( esc_html__( 'Custom slugs for single forums, topics, replies, tags, views, and search.', 'ideaboard' ), get_admin_url( null, 'options-permalink.php' ) ); ?></p>
@@ -1050,16 +1050,16 @@ function bbp_admin_setting_callback_single_slug_section() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_forum_slug() {
+function ideaboard_admin_setting_callback_forum_slug() {
 ?>
 
-	<input name="_bbp_forum_slug" id="_bbp_forum_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_forum_slug', 'forum', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_forum_slug' ); ?> />
+	<input name="_ideaboard_forum_slug" id="_ideaboard_forum_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_forum_slug', 'forum', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_forum_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_forum_slug', 'forum' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_forum_slug', 'forum' );
 }
 
 /**
@@ -1067,16 +1067,16 @@ function bbp_admin_setting_callback_forum_slug() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_topic_slug() {
+function ideaboard_admin_setting_callback_topic_slug() {
 ?>
 
-	<input name="_bbp_topic_slug" id="_bbp_topic_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_topic_slug', 'topic', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_topic_slug' ); ?> />
+	<input name="_ideaboard_topic_slug" id="_ideaboard_topic_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_topic_slug', 'topic', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_topic_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_topic_slug', 'topic' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_topic_slug', 'topic' );
 }
 
 /**
@@ -1084,16 +1084,16 @@ function bbp_admin_setting_callback_topic_slug() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_reply_slug() {
+function ideaboard_admin_setting_callback_reply_slug() {
 ?>
 
-	<input name="_bbp_reply_slug" id="_bbp_reply_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_reply_slug', 'reply', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_reply_slug' ); ?> />
+	<input name="_ideaboard_reply_slug" id="_ideaboard_reply_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_reply_slug', 'reply', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_reply_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_reply_slug', 'reply' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_reply_slug', 'reply' );
 }
 
 /**
@@ -1101,17 +1101,17 @@ function bbp_admin_setting_callback_reply_slug() {
  *
  * @since IdeaBoard (r2786)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_topic_tag_slug() {
+function ideaboard_admin_setting_callback_topic_tag_slug() {
 ?>
 
-	<input name="_bbp_topic_tag_slug" id="_bbp_topic_tag_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_topic_tag_slug', 'topic-tag', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_topic_tag_slug' ); ?> />
+	<input name="_ideaboard_topic_tag_slug" id="_ideaboard_topic_tag_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_topic_tag_slug', 'topic-tag', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_topic_tag_slug' ); ?> />
 
 <?php
 
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_topic_tag_slug', 'topic-tag' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_topic_tag_slug', 'topic-tag' );
 }
 
 /**
@@ -1119,16 +1119,16 @@ function bbp_admin_setting_callback_topic_tag_slug() {
  *
  * @since IdeaBoard (r2789)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_view_slug() {
+function ideaboard_admin_setting_callback_view_slug() {
 ?>
 
-	<input name="_bbp_view_slug" id="_bbp_view_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_view_slug', 'view', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_view_slug' ); ?> />
+	<input name="_ideaboard_view_slug" id="_ideaboard_view_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_view_slug', 'view', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_view_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_view_slug', 'view' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_view_slug', 'view' );
 }
 
 /**
@@ -1136,16 +1136,16 @@ function bbp_admin_setting_callback_view_slug() {
  *
  * @since IdeaBoard (r4579)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_search_slug() {
+function ideaboard_admin_setting_callback_search_slug() {
 ?>
 
-	<input name="_bbp_search_slug" id="_bbp_search_slug" type="text" class="regular-text code" value="<?php bbp_form_option( '_bbp_search_slug', 'search', true ); ?>"<?php bbp_maybe_admin_setting_disabled( '_bbp_search_slug' ); ?> />
+	<input name="_ideaboard_search_slug" id="_ideaboard_search_slug" type="text" class="regular-text code" value="<?php ideaboard_form_option( '_ideaboard_search_slug', 'search', true ); ?>"<?php ideaboard_maybe_admin_setting_disabled( '_ideaboard_search_slug' ); ?> />
 
 <?php
 	// Slug Check
-	bbp_form_slug_conflict_check( '_bbp_search_slug', 'search' );
+	ideaboard_form_slug_conflict_check( '_ideaboard_search_slug', 'search' );
 }
 
 /** BuddyPress ****************************************************************/
@@ -1155,7 +1155,7 @@ function bbp_admin_setting_callback_search_slug() {
  *
  * @since IdeaBoard (r3575)
  */
-function bbp_admin_setting_callback_buddypress_section() {
+function ideaboard_admin_setting_callback_buddypress_section() {
 ?>
 
 	<p><?php esc_html_e( 'Forum settings for BuddyPress', 'ideaboard' ); ?></p>
@@ -1170,11 +1170,11 @@ function bbp_admin_setting_callback_buddypress_section() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_group_forums() {
+function ideaboard_admin_setting_callback_group_forums() {
 ?>
 
-	<input name="_bbp_enable_group_forums" id="_bbp_enable_group_forums" type="checkbox" value="1" <?php checked( bbp_is_group_forums_active( true ) );  bbp_maybe_admin_setting_disabled( '_bbp_enable_group_forums' ); ?> />
-	<label for="_bbp_enable_group_forums"><?php esc_html_e( 'Allow BuddyPress Groups to have their own forums', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_enable_group_forums" id="_ideaboard_enable_group_forums" type="checkbox" value="1" <?php checked( ideaboard_is_group_forums_active( true ) );  ideaboard_maybe_admin_setting_disabled( '_ideaboard_enable_group_forums' ); ?> />
+	<label for="_ideaboard_enable_group_forums"><?php esc_html_e( 'Allow BuddyPress Groups to have their own forums', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1184,22 +1184,22 @@ function bbp_admin_setting_callback_group_forums() {
  *
  * @since IdeaBoard (r3575)
  *
- * @uses bbp_form_option() To output the option value
+ * @uses ideaboard_form_option() To output the option value
  */
-function bbp_admin_setting_callback_group_forums_root_id() {
+function ideaboard_admin_setting_callback_group_forums_root_id() {
 
 	// Output the dropdown for all forums
-	bbp_dropdown( array(
-		'selected'           => bbp_get_group_forums_root_id(),
+	ideaboard_dropdown( array(
+		'selected'           => ideaboard_get_group_forums_root_id(),
 		'show_none'          => __( '&mdash; Forum root &mdash;', 'ideaboard' ),
 		'orderby'            => 'title',
 		'order'              => 'ASC',
-		'select_id'          => '_bbp_group_forums_root_id',
+		'select_id'          => '_ideaboard_group_forums_root_id',
 		'disable_categories' => false,
-		'disabled'           => '_bbp_group_forums_root_id'
+		'disabled'           => '_ideaboard_group_forums_root_id'
 	) ); ?>
 
-	<label for="_bbp_group_forums_root_id"><?php esc_html_e( 'is the parent for all group forums', 'ideaboard' ); ?></label>
+	<label for="_ideaboard_group_forums_root_id"><?php esc_html_e( 'is the parent for all group forums', 'ideaboard' ); ?></label>
 	<p class="description"><?php esc_html_e( 'Using the Forum Root is not recommended. Changing this does not move existing forums.', 'ideaboard' ); ?></p>
 
 <?php
@@ -1212,7 +1212,7 @@ function bbp_admin_setting_callback_group_forums_root_id() {
  *
  * @since IdeaBoard (r3575)
  */
-function bbp_admin_setting_callback_akismet_section() {
+function ideaboard_admin_setting_callback_akismet_section() {
 ?>
 
 	<p><?php esc_html_e( 'Forum settings for Akismet', 'ideaboard' ); ?></p>
@@ -1228,11 +1228,11 @@ function bbp_admin_setting_callback_akismet_section() {
  *
  * @uses checked() To display the checked attribute
  */
-function bbp_admin_setting_callback_akismet() {
+function ideaboard_admin_setting_callback_akismet() {
 ?>
 
-	<input name="_bbp_enable_akismet" id="_bbp_enable_akismet" type="checkbox" value="1" <?php checked( bbp_is_akismet_active( true ) );  bbp_maybe_admin_setting_disabled( '_bbp_enable_akismet' ); ?> />
-	<label for="_bbp_enable_akismet"><?php esc_html_e( 'Allow Akismet to actively prevent forum spam.', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_enable_akismet" id="_ideaboard_enable_akismet" type="checkbox" value="1" <?php checked( ideaboard_is_akismet_active( true ) );  ideaboard_maybe_admin_setting_disabled( '_ideaboard_enable_akismet' ); ?> />
+	<label for="_ideaboard_enable_akismet"><?php esc_html_e( 'Allow Akismet to actively prevent forum spam.', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1248,7 +1248,7 @@ function bbp_admin_setting_callback_akismet() {
  * @uses settings_fields() To output the hidden fields for the form
  * @uses do_settings_sections() To output the settings sections
  */
-function bbp_admin_settings() {
+function ideaboard_admin_settings() {
 ?>
 
 	<div class="wrap">
@@ -1280,7 +1280,7 @@ function bbp_admin_settings() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_main_section() {
+function ideaboard_converter_setting_callback_main_section() {
 ?>
 
 	<p><?php _e( 'Information about your previous forums database so that they can be converted. <strong>Backup your database before proceeding.</strong>', 'ideaboard' ); ?></p>
@@ -1293,7 +1293,7 @@ function bbp_converter_setting_callback_main_section() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_platform() {
+function ideaboard_converter_setting_callback_platform() {
 
 	$platform_options = '';
 	$curdir           = opendir( ideaboard()->admin->admin_dir . 'converters/' );
@@ -1312,8 +1312,8 @@ function bbp_converter_setting_callback_platform() {
 
 	closedir( $curdir ); ?>
 
-	<select name="_bbp_converter_platform" id="_bbp_converter_platform" /><?php echo $platform_options ?></select>
-	<label for="_bbp_converter_platform"><?php esc_html_e( 'is the previous forum software', 'ideaboard' ); ?></label>
+	<select name="_ideaboard_converter_platform" id="_ideaboard_converter_platform" /><?php echo $platform_options ?></select>
+	<label for="_ideaboard_converter_platform"><?php esc_html_e( 'is the previous forum software', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1323,11 +1323,11 @@ function bbp_converter_setting_callback_platform() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_dbserver() {
+function ideaboard_converter_setting_callback_dbserver() {
 ?>
 
-	<input name="_bbp_converter_db_server" id="_bbp_converter_db_server" type="text" value="<?php bbp_form_option( '_bbp_converter_db_server', 'localhost' ); ?>" class="medium-text" />
-	<label for="_bbp_converter_db_server"><?php esc_html_e( 'IP or hostname', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_db_server" id="_ideaboard_converter_db_server" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_db_server', 'localhost' ); ?>" class="medium-text" />
+	<label for="_ideaboard_converter_db_server"><?php esc_html_e( 'IP or hostname', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1337,11 +1337,11 @@ function bbp_converter_setting_callback_dbserver() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_dbport() {
+function ideaboard_converter_setting_callback_dbport() {
 ?>
 
-	<input name="_bbp_converter_db_port" id="_bbp_converter_db_port" type="text" value="<?php bbp_form_option( '_bbp_converter_db_port', '3306' ); ?>" class="small-text" />
-	<label for="_bbp_converter_db_port"><?php esc_html_e( 'Use default 3306 if unsure', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_db_port" id="_ideaboard_converter_db_port" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_db_port', '3306' ); ?>" class="small-text" />
+	<label for="_ideaboard_converter_db_port"><?php esc_html_e( 'Use default 3306 if unsure', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1351,11 +1351,11 @@ function bbp_converter_setting_callback_dbport() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_dbuser() {
+function ideaboard_converter_setting_callback_dbuser() {
 ?>
 
-	<input name="_bbp_converter_db_user" id="_bbp_converter_db_user" type="text" value="<?php bbp_form_option( '_bbp_converter_db_user' ); ?>" class="medium-text" />
-	<label for="_bbp_converter_db_user"><?php esc_html_e( 'User for your database connection', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_db_user" id="_ideaboard_converter_db_user" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_db_user' ); ?>" class="medium-text" />
+	<label for="_ideaboard_converter_db_user"><?php esc_html_e( 'User for your database connection', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1365,11 +1365,11 @@ function bbp_converter_setting_callback_dbuser() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_dbpass() {
+function ideaboard_converter_setting_callback_dbpass() {
 ?>
 
-	<input name="_bbp_converter_db_pass" id="_bbp_converter_db_pass" type="password" value="<?php bbp_form_option( '_bbp_converter_db_pass' ); ?>" class="medium-text" />
-	<label for="_bbp_converter_db_pass"><?php esc_html_e( 'Password to access the database', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_db_pass" id="_ideaboard_converter_db_pass" type="password" value="<?php ideaboard_form_option( '_ideaboard_converter_db_pass' ); ?>" class="medium-text" />
+	<label for="_ideaboard_converter_db_pass"><?php esc_html_e( 'Password to access the database', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1379,11 +1379,11 @@ function bbp_converter_setting_callback_dbpass() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_dbname() {
+function ideaboard_converter_setting_callback_dbname() {
 ?>
 
-	<input name="_bbp_converter_db_name" id="_bbp_converter_db_name" type="text" value="<?php bbp_form_option( '_bbp_converter_db_name' ); ?>" class="medium-text" />
-	<label for="_bbp_converter_db_name"><?php esc_html_e( 'Name of the database with your old forum data', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_db_name" id="_ideaboard_converter_db_name" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_db_name' ); ?>" class="medium-text" />
+	<label for="_ideaboard_converter_db_name"><?php esc_html_e( 'Name of the database with your old forum data', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1393,7 +1393,7 @@ function bbp_converter_setting_callback_dbname() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_options_section() {
+function ideaboard_converter_setting_callback_options_section() {
 ?>
 
 	<p><?php esc_html_e( 'Some optional parameters to help tune the conversion process.', 'ideaboard' ); ?></p>
@@ -1406,11 +1406,11 @@ function bbp_converter_setting_callback_options_section() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_dbprefix() {
+function ideaboard_converter_setting_callback_dbprefix() {
 ?>
 
-	<input name="_bbp_converter_db_prefix" id="_bbp_converter_db_prefix" type="text" value="<?php bbp_form_option( '_bbp_converter_db_prefix' ); ?>" class="medium-text" />
-	<label for="_bbp_converter_db_prefix"><?php esc_html_e( '(If converting from BuddyPress Forums, use "wp_bb_" or your custom prefix)', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_db_prefix" id="_ideaboard_converter_db_prefix" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_db_prefix' ); ?>" class="medium-text" />
+	<label for="_ideaboard_converter_db_prefix"><?php esc_html_e( '(If converting from BuddyPress Forums, use "wp_bb_" or your custom prefix)', 'ideaboard' ); ?></label>
 
 <?php
 }
@@ -1420,11 +1420,11 @@ function bbp_converter_setting_callback_dbprefix() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_rows() {
+function ideaboard_converter_setting_callback_rows() {
 ?>
 
-	<input name="_bbp_converter_rows" id="_bbp_converter_rows" type="text" value="<?php bbp_form_option( '_bbp_converter_rows', '100' ); ?>" class="small-text" />
-	<label for="_bbp_converter_rows"><?php esc_html_e( 'rows to process at a time', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_rows" id="_ideaboard_converter_rows" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_rows', '100' ); ?>" class="small-text" />
+	<label for="_ideaboard_converter_rows"><?php esc_html_e( 'rows to process at a time', 'ideaboard' ); ?></label>
 	<p class="description"><?php esc_html_e( 'Keep this low if you experience out-of-memory issues.', 'ideaboard' ); ?></p>
 
 <?php
@@ -1435,11 +1435,11 @@ function bbp_converter_setting_callback_rows() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_delay_time() {
+function ideaboard_converter_setting_callback_delay_time() {
 ?>
 
-	<input name="_bbp_converter_delay_time" id="_bbp_converter_delay_time" type="text" value="<?php bbp_form_option( '_bbp_converter_delay_time', '1' ); ?>" class="small-text" />
-	<label for="_bbp_converter_delay_time"><?php esc_html_e( 'second(s) delay between each group of rows', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_delay_time" id="_ideaboard_converter_delay_time" type="text" value="<?php ideaboard_form_option( '_ideaboard_converter_delay_time', '1' ); ?>" class="small-text" />
+	<label for="_ideaboard_converter_delay_time"><?php esc_html_e( 'second(s) delay between each group of rows', 'ideaboard' ); ?></label>
 	<p class="description"><?php esc_html_e( 'Keep this high to prevent too-many-connection issues.', 'ideaboard' ); ?></p>
 
 <?php
@@ -1450,11 +1450,11 @@ function bbp_converter_setting_callback_delay_time() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_restart() {
+function ideaboard_converter_setting_callback_restart() {
 ?>
 
-	<input name="_bbp_converter_restart" id="_bbp_converter_restart" type="checkbox" value="1" <?php checked( get_option( '_bbp_converter_restart', false ) ); ?> />
-	<label for="_bbp_converter_restart"><?php esc_html_e( 'Start a fresh conversion from the beginning', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_restart" id="_ideaboard_converter_restart" type="checkbox" value="1" <?php checked( get_option( '_ideaboard_converter_restart', false ) ); ?> />
+	<label for="_ideaboard_converter_restart"><?php esc_html_e( 'Start a fresh conversion from the beginning', 'ideaboard' ); ?></label>
 	<p class="description"><?php esc_html_e( 'You should clean old conversion information before starting over.', 'ideaboard' ); ?></p>
 
 <?php
@@ -1465,11 +1465,11 @@ function bbp_converter_setting_callback_restart() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_clean() {
+function ideaboard_converter_setting_callback_clean() {
 ?>
 
-	<input name="_bbp_converter_clean" id="_bbp_converter_clean" type="checkbox" value="1" <?php checked( get_option( '_bbp_converter_clean', false ) ); ?> />
-	<label for="_bbp_converter_clean"><?php esc_html_e( 'Purge all information from a previously attempted import', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_clean" id="_ideaboard_converter_clean" type="checkbox" value="1" <?php checked( get_option( '_ideaboard_converter_clean', false ) ); ?> />
+	<label for="_ideaboard_converter_clean"><?php esc_html_e( 'Purge all information from a previously attempted import', 'ideaboard' ); ?></label>
 	<p class="description"><?php esc_html_e( 'Use this if an import failed and you want to remove that incomplete data.', 'ideaboard' ); ?></p>
 
 <?php
@@ -1480,11 +1480,11 @@ function bbp_converter_setting_callback_clean() {
  *
  * @since IdeaBoard (r3813)
  */
-function bbp_converter_setting_callback_convert_users() {
+function ideaboard_converter_setting_callback_convert_users() {
 ?>
 
-	<input name="_bbp_converter_convert_users" id="_bbp_converter_convert_users" type="checkbox" value="1" <?php checked( get_option( '_bbp_converter_convert_users', false ) ); ?> />
-	<label for="_bbp_converter_convert_users"><?php esc_html_e( 'Attempt to import user accounts from previous forums', 'ideaboard' ); ?></label>
+	<input name="_ideaboard_converter_convert_users" id="_ideaboard_converter_convert_users" type="checkbox" value="1" <?php checked( get_option( '_ideaboard_converter_convert_users', false ) ); ?> />
+	<label for="_ideaboard_converter_convert_users"><?php esc_html_e( 'Attempt to import user accounts from previous forums', 'ideaboard' ); ?></label>
 	<p class="description"><?php esc_html_e( 'Non-IdeaBoard passwords cannot be automatically converted. They will be converted as each user logs in.', 'ideaboard' ); ?></p>
 
 <?php
@@ -1499,14 +1499,14 @@ function bbp_converter_setting_callback_convert_users() {
  * @uses settings_fields() To output the hidden fields for the form
  * @uses do_settings_sections() To output the settings sections
  */
-function bbp_converter_settings() {
+function ideaboard_converter_settings() {
 ?>
 
 	<div class="wrap">
 
 		<?php screen_icon( 'tools' ); ?>
 
-		<h2 class="nav-tab-wrapper"><?php bbp_tools_admin_tabs( esc_html__( 'Import Forums', 'ideaboard' ) ); ?></h2>
+		<h2 class="nav-tab-wrapper"><?php ideaboard_tools_admin_tabs( esc_html__( 'Import Forums', 'ideaboard' ) ); ?></h2>
 
 		<form action="#" method="post" id="bbp-converter-settings">
 
@@ -1535,7 +1535,7 @@ function bbp_converter_settings() {
  * @since IdeaBoard (r3119)
  * @uses get_current_screen()
  */
-function bbp_admin_settings_help() {
+function ideaboard_admin_settings_help() {
 
 	$current_screen = get_current_screen();
 
@@ -1606,7 +1606,7 @@ function bbp_admin_settings_help() {
  *
  * @param string $option_key
  */
-function bbp_maybe_admin_setting_disabled( $option_key = '' ) {
+function ideaboard_maybe_admin_setting_disabled( $option_key = '' ) {
 	disabled( isset( ideaboard()->options[$option_key] ) );
 }
 
@@ -1615,14 +1615,14 @@ function bbp_maybe_admin_setting_disabled( $option_key = '' ) {
  *
  * @since IdeaBoard (r3203)
  *
- * @uses bbp_get_bbp_form_option()
+ * @uses ideaboard_get_ideaboard_form_option()
  *
  * @param string $option
  * @param string $default
  * @param bool $slug
  */
-function bbp_form_option( $option, $default = '' , $slug = false ) {
-	echo bbp_get_form_option( $option, $default, $slug );
+function ideaboard_form_option( $option, $default = '' , $slug = false ) {
+	echo ideaboard_get_form_option( $option, $default, $slug );
 }
 	/**
 	 * Return settings API option
@@ -1637,7 +1637,7 @@ function bbp_form_option( $option, $default = '' , $slug = false ) {
 	 * @param string $default
 	 * @param bool $slug
 	 */
-	function bbp_get_form_option( $option, $default = '', $slug = false ) {
+	function ideaboard_get_form_option( $option, $default = '', $slug = false ) {
 
 		// Get the option and sanitize it
 		$value = get_option( $option, $default );
@@ -1656,7 +1656,7 @@ function bbp_form_option( $option, $default = '' , $slug = false ) {
 			$value = $default;
 
 		// Allow plugins to further filter the output
-		return apply_filters( 'bbp_get_form_option', $value, $option );
+		return apply_filters( 'ideaboard_get_form_option', $value, $option );
 	}
 
 /**
@@ -1667,20 +1667,20 @@ function bbp_form_option( $option, $default = '' , $slug = false ) {
  * @param string $slug
  * @param string $default
  *
- * @uses bbp_get_form_option() To get a sanitized slug string
+ * @uses ideaboard_get_form_option() To get a sanitized slug string
  */
-function bbp_form_slug_conflict_check( $slug, $default ) {
+function ideaboard_form_slug_conflict_check( $slug, $default ) {
 
 	// Only set the slugs once ver page load
 	static $the_core_slugs = array();
 
 	// Get the form value
-	$this_slug = bbp_get_form_option( $slug, $default, true );
+	$this_slug = ideaboard_get_form_option( $slug, $default, true );
 
 	if ( empty( $the_core_slugs ) ) {
 
 		// Slugs to check
-		$core_slugs = apply_filters( 'bbp_slug_conflict_check', array(
+		$core_slugs = apply_filters( 'ideaboard_slug_conflict_check', array(
 
 			/** WordPress Core ****************************************************/
 
@@ -1700,28 +1700,28 @@ function bbp_form_slug_conflict_check( $slug, $default ) {
 			/** IdeaBoard Core ******************************************************/
 
 			// Forum archive slug
-			'_bbp_root_slug'          => array( 'name' => __( 'Forums base', 'ideaboard' ), 'default' => 'forums', 'context' => 'IdeaBoard' ),
+			'_ideaboard_root_slug'          => array( 'name' => __( 'Forums base', 'ideaboard' ), 'default' => 'forums', 'context' => 'IdeaBoard' ),
 
 			// Topic archive slug
-			'_bbp_topic_archive_slug' => array( 'name' => __( 'Topics base', 'ideaboard' ), 'default' => 'topics', 'context' => 'IdeaBoard' ),
+			'_ideaboard_topic_archive_slug' => array( 'name' => __( 'Topics base', 'ideaboard' ), 'default' => 'topics', 'context' => 'IdeaBoard' ),
 
 			// Forum slug
-			'_bbp_forum_slug'         => array( 'name' => __( 'Forum slug',  'ideaboard' ), 'default' => 'forum',  'context' => 'IdeaBoard' ),
+			'_ideaboard_forum_slug'         => array( 'name' => __( 'Forum slug',  'ideaboard' ), 'default' => 'forum',  'context' => 'IdeaBoard' ),
 
 			// Topic slug
-			'_bbp_topic_slug'         => array( 'name' => __( 'Topic slug',  'ideaboard' ), 'default' => 'topic',  'context' => 'IdeaBoard' ),
+			'_ideaboard_topic_slug'         => array( 'name' => __( 'Topic slug',  'ideaboard' ), 'default' => 'topic',  'context' => 'IdeaBoard' ),
 
 			// Reply slug
-			'_bbp_reply_slug'         => array( 'name' => __( 'Reply slug',  'ideaboard' ), 'default' => 'reply',  'context' => 'IdeaBoard' ),
+			'_ideaboard_reply_slug'         => array( 'name' => __( 'Reply slug',  'ideaboard' ), 'default' => 'reply',  'context' => 'IdeaBoard' ),
 
 			// User profile slug
-			'_bbp_user_slug'          => array( 'name' => __( 'User base',   'ideaboard' ), 'default' => 'users',  'context' => 'IdeaBoard' ),
+			'_ideaboard_user_slug'          => array( 'name' => __( 'User base',   'ideaboard' ), 'default' => 'users',  'context' => 'IdeaBoard' ),
 
 			// View slug
-			'_bbp_view_slug'          => array( 'name' => __( 'View base',   'ideaboard' ), 'default' => 'view',   'context' => 'IdeaBoard' ),
+			'_ideaboard_view_slug'          => array( 'name' => __( 'View base',   'ideaboard' ), 'default' => 'view',   'context' => 'IdeaBoard' ),
 
 			// Topic tag slug
-			'_bbp_topic_tag_slug'     => array( 'name' => __( 'Topic tag slug', 'ideaboard' ), 'default' => 'topic-tag', 'context' => 'IdeaBoard' ),
+			'_ideaboard_topic_tag_slug'     => array( 'name' => __( 'Topic tag slug', 'ideaboard' ), 'default' => 'topic-tag', 'context' => 'IdeaBoard' ),
 		) );
 
 		/** BuddyPress Core *******************************************************/
@@ -1740,14 +1740,14 @@ function bbp_form_slug_conflict_check( $slug, $default ) {
 		}
 
 		// Set the static
-		$the_core_slugs = apply_filters( 'bbp_slug_conflict', $core_slugs );
+		$the_core_slugs = apply_filters( 'ideaboard_slug_conflict', $core_slugs );
 	}
 
 	// Loop through slugs to check
 	foreach ( $the_core_slugs as $key => $value ) {
 
 		// Get the slug
-		$slug_check = bbp_get_form_option( $key, $value['default'], true );
+		$slug_check = ideaboard_get_form_option( $key, $value['default'], true );
 
 		// Compare
 		if ( ( $slug !== $key ) && ( $slug_check === $this_slug ) ) : ?>

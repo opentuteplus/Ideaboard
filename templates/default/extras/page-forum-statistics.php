@@ -9,9 +9,9 @@
 
 get_header(); ?>
 
-	<?php do_action( 'bbp_before_main_content' ); ?>
+	<?php do_action( 'ideaboard_before_main_content' ); ?>
 
-	<?php do_action( 'bbp_template_notices' ); ?>
+	<?php do_action( 'ideaboard_template_notices' ); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
@@ -23,27 +23,27 @@ get_header(); ?>
 
 				<div id="ideaboard-forums">
 
-					<?php bbp_get_template_part( 'content', 'statistics' ); ?>
+					<?php ideaboard_get_template_part( 'content', 'statistics' ); ?>
 
-					<?php do_action( 'bbp_before_popular_topics' ); ?>
+					<?php do_action( 'ideaboard_before_popular_topics' ); ?>
 
-					<?php bbp_set_query_name( 'bbp_popular_topics' ); ?>
+					<?php ideaboard_set_query_name( 'ideaboard_popular_topics' ); ?>
 
-					<?php if ( bbp_view_query( 'popular' ) ) : ?>
+					<?php if ( ideaboard_view_query( 'popular' ) ) : ?>
 
 						<h2 class="entry-title"><?php _e( 'Popular Topics', 'ideaboard' ); ?></h2>
 
-						<?php bbp_get_template_part( 'pagination', 'topics' ); ?>
+						<?php ideaboard_get_template_part( 'pagination', 'topics' ); ?>
 
-						<?php bbp_get_template_part( 'loop',       'topics' ); ?>
+						<?php ideaboard_get_template_part( 'loop',       'topics' ); ?>
 
-						<?php bbp_get_template_part( 'pagination', 'topics' ); ?>
+						<?php ideaboard_get_template_part( 'pagination', 'topics' ); ?>
 
 					<?php endif; ?>
 
-					<?php bbp_reset_query_name(); ?>
+					<?php ideaboard_reset_query_name(); ?>
 
-					<?php do_action( 'bbp_after_popular_topics' ); ?>
+					<?php do_action( 'ideaboard_after_popular_topics' ); ?>
 
 				</div>
 			</div>
@@ -51,7 +51,7 @@ get_header(); ?>
 
 	<?php endwhile; ?>
 
-	<?php do_action( 'bbp_after_main_content' ); ?>
+	<?php do_action( 'ideaboard_after_main_content' ); ?>
 
 <?php get_sidebar(); ?>
 

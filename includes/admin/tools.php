@@ -17,21 +17,21 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @since IdeaBoard (r2613)
  *
- * @uses bbp_admin_repair_list() To get the recount list
+ * @uses ideaboard_admin_repair_list() To get the recount list
  * @uses check_admin_referer() To verify the nonce and the referer
  * @uses wp_cache_flush() To flush the cache
  * @uses do_action() Calls 'admin_notices' to display the notices
  * @uses screen_icon() To display the screen icon
  * @uses wp_nonce_field() To add a hidden nonce field
  */
-function bbp_admin_repair() {
+function ideaboard_admin_repair() {
 ?>
 
 	<div class="wrap">
 
 		<?php screen_icon( 'tools' ); ?>
 
-		<h2 class="nav-tab-wrapper"><?php bbp_tools_admin_tabs( __( 'Repair Forums', 'ideaboard' ) ); ?></h2>
+		<h2 class="nav-tab-wrapper"><?php ideaboard_tools_admin_tabs( __( 'Repair Forums', 'ideaboard' ) ); ?></h2>
 
 		<p><?php esc_html_e( 'IdeaBoard keeps track of relationships between forums, topics, replies, and topic tags, and users. Occasionally these relationships become out of sync, most often after an import or migration. Use the tools below to manually recalculate these relationships.', 'ideaboard' ); ?></p>
 		<p class="description"><?php esc_html_e( 'Some of these tools create substantial database overhead. Avoid running more than 1 repair job at a time.', 'ideaboard' ); ?></p>
@@ -45,7 +45,7 @@ function bbp_admin_repair() {
 							<fieldset>
 								<legend class="screen-reader-text"><span><?php esc_html_e( 'Repair', 'ideaboard' ) ?></span></legend>
 
-								<?php foreach ( bbp_admin_repair_list() as $item ) : ?>
+								<?php foreach ( ideaboard_admin_repair_list() as $item ) : ?>
 
 									<label><input type="checkbox" class="checkbox" name="<?php echo esc_attr( $item[0] ) . '" id="' . esc_attr( str_replace( '_', '-', $item[0] ) ); ?>" value="1" /> <?php echo esc_html( $item[1] ); ?></label><br />
 
@@ -72,14 +72,14 @@ function bbp_admin_repair() {
  *
  * @since IdeaBoard (r2613)
  *
- * @uses bbp_admin_repair_list() To get the recount list
+ * @uses ideaboard_admin_repair_list() To get the recount list
  * @uses check_admin_referer() To verify the nonce and the referer
  * @uses wp_cache_flush() To flush the cache
  * @uses do_action() Calls 'admin_notices' to display the notices
  */
-function bbp_admin_repair_handler() {
+function ideaboard_admin_repair_handler() {
 
-	if ( ! bbp_is_post_request() )
+	if ( ! ideaboard_is_post_request() )
 		return;
 
 	check_admin_referer( 'ideaboard-do-counts' );
@@ -89,7 +89,7 @@ function bbp_admin_repair_handler() {
 
 	wp_cache_flush();
 
-	foreach ( (array) bbp_admin_repair_list() as $item ) {
+	foreach ( (array) ideaboard_admin_repair_list() as $item ) {
 		if ( isset( $item[2] ) && isset( $_POST[$item[0]] ) && 1 === absint( $_POST[$item[0]] ) && is_callable( $item[2] ) ) {
 			$messages[] = call_user_func( $item[2] );
 		}
@@ -97,7 +97,7 @@ function bbp_admin_repair_handler() {
 
 	if ( count( $messages ) ) {
 		foreach ( $messages as $message ) {
-			bbp_admin_tools_feedback( $message[1] );
+			ideaboard_admin_tools_feedback( $message[1] );
 		}
 	}
 }
@@ -113,7 +113,7 @@ function bbp_admin_repair_handler() {
  * @uses add_action() Adds the admin notice action with the message HTML
  * @return string The message HTML
  */
-function bbp_admin_tools_feedback( $message, $class = false ) {
+function ideaboard_admin_tools_feedback( $message, $class = false ) {
 	if ( is_string( $message ) ) {
 		$message = '<p>' . $message . '</p>';
 		$class = $class ? $class : 'updated';
@@ -153,33 +153,33 @@ function bbp_admin_tools_feedback( $message, $class = false ) {
  *
  * @since IdeaBoard (r2613)
  *
- * @uses apply_filters() Calls 'bbp_repair_list' with the list array
+ * @uses apply_filters() Calls 'ideaboard_repair_list' with the list array
  * @return array Repair list of options
  */
-function bbp_admin_repair_list() {
+function ideaboard_admin_repair_list() {
 	$repair_list = array(
-		0  => array( 'bbp-sync-topic-meta',          __( 'Recalculate the parent topic for each post',        'ideaboard' ), 'bbp_admin_repair_topic_meta'               ),
-		5  => array( 'bbp-sync-forum-meta',          __( 'Recalculate the parent forum for each post',        'ideaboard' ), 'bbp_admin_repair_forum_meta'               ),
-		10 => array( 'bbp-sync-forum-visibility',    __( 'Recalculate private and hidden forums',             'ideaboard' ), 'bbp_admin_repair_forum_visibility'         ),
-		15 => array( 'bbp-sync-all-topics-forums',   __( 'Recalculate last activity in each topic and forum', 'ideaboard' ), 'bbp_admin_repair_freshness'                ),
-		20 => array( 'bbp-sync-all-topics-sticky',   __( 'Recalculate the sticky relationship of each topic', 'ideaboard' ), 'bbp_admin_repair_sticky'                   ),
-		25 => array( 'bbp-sync-all-reply-positions', __( 'Recalculate the position of each reply',            'ideaboard' ), 'bbp_admin_repair_reply_menu_order'         ),
-		30 => array( 'bbp-group-forums',             __( 'Repair BuddyPress Group Forum relationships',       'ideaboard' ), 'bbp_admin_repair_group_forum_relationship' ),
-		35 => array( 'bbp-forum-topics',             __( 'Count topics in each forum',                        'ideaboard' ), 'bbp_admin_repair_forum_topic_count'        ),
-		40 => array( 'bbp-forum-replies',            __( 'Count replies in each forum',                       'ideaboard' ), 'bbp_admin_repair_forum_reply_count'        ),
-		45 => array( 'bbp-topic-replies',            __( 'Count replies in each topic',                       'ideaboard' ), 'bbp_admin_repair_topic_reply_count'        ),
-		50 => array( 'bbp-topic-voices',             __( 'Count voices in each topic',                        'ideaboard' ), 'bbp_admin_repair_topic_voice_count'        ),
-		55 => array( 'bbp-topic-hidden-replies',     __( 'Count spammed & trashed replies in each topic',     'ideaboard' ), 'bbp_admin_repair_topic_hidden_reply_count' ),
-		60 => array( 'bbp-user-topics',              __( 'Count topics for each user',                        'ideaboard' ), 'bbp_admin_repair_user_topic_count'         ),
-		65 => array( 'bbp-user-replies',             __( 'Count replies for each user',                       'ideaboard' ), 'bbp_admin_repair_user_reply_count'         ),
-		70 => array( 'bbp-user-favorites',           __( 'Remove trashed topics from user favorites',         'ideaboard' ), 'bbp_admin_repair_user_favorites'           ),
-		75 => array( 'bbp-user-topic-subscriptions', __( 'Remove trashed topics from user subscriptions',     'ideaboard' ), 'bbp_admin_repair_user_topic_subscriptions' ),
-		80 => array( 'bbp-user-forum-subscriptions', __( 'Remove trashed forums from user subscriptions',     'ideaboard' ), 'bbp_admin_repair_user_forum_subscriptions' ),
-		85 => array( 'bbp-user-role-map',            __( 'Remap existing users to default forum roles',       'ideaboard' ), 'bbp_admin_repair_user_roles'               )
+		0  => array( 'bbp-sync-topic-meta',          __( 'Recalculate the parent topic for each post',        'ideaboard' ), 'ideaboard_admin_repair_topic_meta'               ),
+		5  => array( 'bbp-sync-forum-meta',          __( 'Recalculate the parent forum for each post',        'ideaboard' ), 'ideaboard_admin_repair_forum_meta'               ),
+		10 => array( 'bbp-sync-forum-visibility',    __( 'Recalculate private and hidden forums',             'ideaboard' ), 'ideaboard_admin_repair_forum_visibility'         ),
+		15 => array( 'bbp-sync-all-topics-forums',   __( 'Recalculate last activity in each topic and forum', 'ideaboard' ), 'ideaboard_admin_repair_freshness'                ),
+		20 => array( 'bbp-sync-all-topics-sticky',   __( 'Recalculate the sticky relationship of each topic', 'ideaboard' ), 'ideaboard_admin_repair_sticky'                   ),
+		25 => array( 'bbp-sync-all-reply-positions', __( 'Recalculate the position of each reply',            'ideaboard' ), 'ideaboard_admin_repair_reply_menu_order'         ),
+		30 => array( 'bbp-group-forums',             __( 'Repair BuddyPress Group Forum relationships',       'ideaboard' ), 'ideaboard_admin_repair_group_forum_relationship' ),
+		35 => array( 'bbp-forum-topics',             __( 'Count topics in each forum',                        'ideaboard' ), 'ideaboard_admin_repair_forum_topic_count'        ),
+		40 => array( 'bbp-forum-replies',            __( 'Count replies in each forum',                       'ideaboard' ), 'ideaboard_admin_repair_forum_reply_count'        ),
+		45 => array( 'bbp-topic-replies',            __( 'Count replies in each topic',                       'ideaboard' ), 'ideaboard_admin_repair_topic_reply_count'        ),
+		50 => array( 'bbp-topic-voices',             __( 'Count voices in each topic',                        'ideaboard' ), 'ideaboard_admin_repair_topic_voice_count'        ),
+		55 => array( 'bbp-topic-hidden-replies',     __( 'Count spammed & trashed replies in each topic',     'ideaboard' ), 'ideaboard_admin_repair_topic_hidden_reply_count' ),
+		60 => array( 'bbp-user-topics',              __( 'Count topics for each user',                        'ideaboard' ), 'ideaboard_admin_repair_user_topic_count'         ),
+		65 => array( 'bbp-user-replies',             __( 'Count replies for each user',                       'ideaboard' ), 'ideaboard_admin_repair_user_reply_count'         ),
+		70 => array( 'bbp-user-favorites',           __( 'Remove trashed topics from user favorites',         'ideaboard' ), 'ideaboard_admin_repair_user_favorites'           ),
+		75 => array( 'bbp-user-topic-subscriptions', __( 'Remove trashed topics from user subscriptions',     'ideaboard' ), 'ideaboard_admin_repair_user_topic_subscriptions' ),
+		80 => array( 'bbp-user-forum-subscriptions', __( 'Remove trashed forums from user subscriptions',     'ideaboard' ), 'ideaboard_admin_repair_user_forum_subscriptions' ),
+		85 => array( 'bbp-user-role-map',            __( 'Remap existing users to default forum roles',       'ideaboard' ), 'ideaboard_admin_repair_user_roles'               )
 	);
 	ksort( $repair_list );
 
-	return (array) apply_filters( 'bbp_repair_list', $repair_list );
+	return (array) apply_filters( 'ideaboard_repair_list', $repair_list );
 }
 
 /**
@@ -187,36 +187,36 @@ function bbp_admin_repair_list() {
  *
  * @since IdeaBoard (r2613)
  *
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_topic_reply_count() {
+function ideaboard_admin_repair_topic_reply_count() {
 	global $wpdb;
 
 	$statement = __( 'Counting the number of replies in each topic&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
 	// Post types and status
-	$tpt = bbp_get_topic_post_type();
-	$rpt = bbp_get_reply_post_type();
-	$pps = bbp_get_public_status_id();
-	$cps = bbp_get_closed_status_id();
+	$tpt = ideaboard_get_topic_post_type();
+	$rpt = ideaboard_get_reply_post_type();
+	$pps = ideaboard_get_public_status_id();
+	$cps = ideaboard_get_closed_status_id();
 
-	// Delete the meta key _bbp_reply_count for each topic
+	// Delete the meta key _ideaboard_reply_count for each topic
 	$sql_delete = "DELETE `postmeta` FROM `{$wpdb->postmeta}` AS `postmeta`
 						LEFT JOIN `{$wpdb->posts}` AS `posts` ON `posts`.`ID` = `postmeta`.`post_id`
 						WHERE `posts`.`post_type` = '{$tpt}'
-						AND `postmeta`.`meta_key` = '_bbp_reply_count'";
+						AND `postmeta`.`meta_key` = '_ideaboard_reply_count'";
 
 	if ( is_wp_error( $wpdb->query( $sql_delete ) ) ) {
 		return array( 1, sprintf( $statement, $result ) );
 	}
 
-	// Recalculate the meta key _bbp_reply_count for each topic
+	// Recalculate the meta key _ideaboard_reply_count for each topic
 	$sql = "INSERT INTO `{$wpdb->postmeta}` (`post_id`, `meta_key`, `meta_value`) (
-			SELECT `topics`.`ID` AS `post_id`, '_bbp_reply_count' AS `meta_key`, COUNT(`replies`.`ID`) As `meta_value`
+			SELECT `topics`.`ID` AS `post_id`, '_ideaboard_reply_count' AS `meta_key`, COUNT(`replies`.`ID`) As `meta_value`
 				FROM `{$wpdb->posts}` AS `topics`
 					LEFT JOIN `{$wpdb->posts}` as `replies`
 						ON  `replies`.`post_parent` = `topics`.`ID`
@@ -238,33 +238,33 @@ function bbp_admin_repair_topic_reply_count() {
  *
  * @since IdeaBoard (r2613)
  *
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_topic_voice_count() {
+function ideaboard_admin_repair_topic_voice_count() {
 	global $wpdb;
 
 	$statement = __( 'Counting the number of voices in each topic&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
-	$sql_delete = "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` = '_bbp_voice_count';";
+	$sql_delete = "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` = '_ideaboard_voice_count';";
 	if ( is_wp_error( $wpdb->query( $sql_delete ) ) )
 		return array( 1, sprintf( $statement, $result ) );
 
 	// Post types and status
-	$tpt = bbp_get_topic_post_type();
-	$rpt = bbp_get_reply_post_type();
-	$pps = bbp_get_public_status_id();
-	$cps = bbp_get_closed_status_id();
+	$tpt = ideaboard_get_topic_post_type();
+	$rpt = ideaboard_get_reply_post_type();
+	$pps = ideaboard_get_public_status_id();
+	$cps = ideaboard_get_closed_status_id();
 
 	$sql = "INSERT INTO `{$wpdb->postmeta}` (`post_id`, `meta_key`, `meta_value`) (
-			SELECT `postmeta`.`meta_value`, '_bbp_voice_count', COUNT(DISTINCT `post_author`) as `meta_value`
+			SELECT `postmeta`.`meta_value`, '_ideaboard_voice_count', COUNT(DISTINCT `post_author`) as `meta_value`
 				FROM `{$wpdb->posts}` AS `posts`
 				LEFT JOIN `{$wpdb->postmeta}` AS `postmeta`
 					ON `posts`.`ID` = `postmeta`.`post_id`
-					AND `postmeta`.`meta_key` = '_bbp_topic_id'
+					AND `postmeta`.`meta_key` = '_ideaboard_topic_id'
 				WHERE `posts`.`post_type` IN ( '{$tpt}', '{$rpt}' )
 					AND `posts`.`post_status` IN ( '{$pps}', '{$cps}' )
 					AND `posts`.`post_author` != '0'
@@ -285,17 +285,17 @@ function bbp_admin_repair_topic_voice_count() {
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_topic_hidden_reply_count() {
+function ideaboard_admin_repair_topic_hidden_reply_count() {
 	global $wpdb;
 
 	$statement = __( 'Counting the number of spammed and trashed replies in each topic&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
-	$sql_delete = "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` = '_bbp_reply_count_hidden';";
+	$sql_delete = "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` = '_ideaboard_reply_count_hidden';";
 	if ( is_wp_error( $wpdb->query( $sql_delete ) ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$sql = "INSERT INTO `{$wpdb->postmeta}` (`post_id`, `meta_key`, `meta_value`) (SELECT `post_parent`, '_bbp_reply_count_hidden', COUNT(`post_status`) as `meta_value` FROM `{$wpdb->posts}` WHERE `post_type` = '" . bbp_get_reply_post_type() . "' AND `post_status` IN ( '" . implode( "','", array( bbp_get_trash_status_id(), bbp_get_spam_status_id() ) ) . "') GROUP BY `post_parent`);";
+	$sql = "INSERT INTO `{$wpdb->postmeta}` (`post_id`, `meta_key`, `meta_value`) (SELECT `post_parent`, '_ideaboard_reply_count_hidden', COUNT(`post_status`) as `meta_value` FROM `{$wpdb->posts}` WHERE `post_type` = '" . ideaboard_get_reply_post_type() . "' AND `post_status` IN ( '" . implode( "','", array( ideaboard_get_trash_status_id(), ideaboard_get_spam_status_id() ) ) . "') GROUP BY `post_parent`);";
 	if ( is_wp_error( $wpdb->query( $sql ) ) )
 		return array( 2, sprintf( $statement, $result ) );
 
@@ -310,7 +310,7 @@ function bbp_admin_repair_topic_hidden_reply_count() {
  * @global WPDB $wpdb
  * @return If a wp_error() occurs and no converted forums are found
  */
-function bbp_admin_repair_group_forum_relationship() {
+function ideaboard_admin_repair_group_forum_relationship() {
 	global $wpdb;
 
 	$statement = __( 'Repairing BuddyPress group-forum relationships&hellip; %s', 'ideaboard' );
@@ -328,7 +328,7 @@ function bbp_admin_repair_group_forum_relationship() {
 								FROM `{$wpdb->posts}` AS `forum`
 									LEFT JOIN `{$wpdb->postmeta}` AS `forummeta`
 										ON `forum`.`ID` = `forummeta`.`post_id`
-										AND `forummeta`.`meta_key` = '_bbp_old_forum_id'
+										AND `forummeta`.`meta_key` = '_ideaboard_old_forum_id'
 								WHERE `forum`.`post_type` = 'forum'
 								GROUP BY `forum`.`ID`;" );
 
@@ -359,7 +359,7 @@ function bbp_admin_repair_group_forum_relationship() {
 		if ( !empty( $group_id ) ) {
 
 			// Update the group to forum meta connection in forums
-			update_post_meta( $group_forums->ID, '_bbp_group_ids', array( $group_id ) );
+			update_post_meta( $group_forums->ID, '_ideaboard_group_ids', array( $group_id ) );
 
 			// Get the group status
 			$group_status = $wpdb->get_var( "SELECT `status` FROM `{$groups_table}` WHERE `id` = '{$group_id}';" );
@@ -369,7 +369,7 @@ function bbp_admin_repair_group_forum_relationship() {
 
 				// Public groups have public forums
 				case 'public' :
-					bbp_publicize_forum( $group_forums->ID );
+					ideaboard_publicize_forum( $group_forums->ID );
 
 					// Bump the count for output later
 					++$s_count;
@@ -378,7 +378,7 @@ function bbp_admin_repair_group_forum_relationship() {
 				// Private/hidden groups have hidden forums
 				case 'private' :
 				case 'hidden'  :
-					bbp_hide_forum( $group_forums->ID );
+					ideaboard_hide_forum( $group_forums->ID );
 
 					// Bump the count for output later
 					++$s_count;
@@ -401,8 +401,8 @@ function bbp_admin_repair_group_forum_relationship() {
 
 	// Try to get the group root forum
 	$posts = get_posts( array(
-		'post_type'   => bbp_get_forum_post_type(),
-		'meta_key'    => '_bbp_old_forum_id',
+		'post_type'   => ideaboard_get_forum_post_type(),
+		'meta_key'    => '_ideaboard_old_forum_id',
 		'meta_value'  => $old_default_forum_id,
 		'numberposts' => 1
 	) );
@@ -420,7 +420,7 @@ function bbp_admin_repair_group_forum_relationship() {
 		}
 
 		// Update the group forums root metadata
-		update_option( '_bbp_group_forums_root_id', $posts[0]->ID );
+		update_option( '_ideaboard_group_forums_root_id', $posts[0]->ID );
 	}
 
 	// Remove old IdeaBoard 1.1 roles (BuddyPress)
@@ -431,7 +431,7 @@ function bbp_admin_repair_group_forum_relationship() {
 	remove_role( 'keymaster' );
 
 	// Complete results
-	$result = sprintf( __( 'Complete! %s groups updated; %s forums updated; %s forum statuses synced.', 'ideaboard' ), bbp_number_format( $g_count ), bbp_number_format( $f_count ), bbp_number_format( $s_count ) );
+	$result = sprintf( __( 'Complete! %s groups updated; %s forums updated; %s forum statuses synced.', 'ideaboard' ), ideaboard_number_format( $g_count ), ideaboard_number_format( $f_count ), ideaboard_number_format( $s_count ) );
 	return array( 0, sprintf( $statement, $result ) );
 }
 
@@ -442,25 +442,25 @@ function bbp_admin_repair_group_forum_relationship() {
  *
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
- * @uses bbp_get_forum_post_type() To get the forum post type
+ * @uses ideaboard_get_forum_post_type() To get the forum post type
  * @uses get_posts() To get the forums
- * @uses bbp_update_forum_topic_count() To update the forum topic count
+ * @uses ideaboard_update_forum_topic_count() To update the forum topic count
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_forum_topic_count() {
+function ideaboard_admin_repair_forum_topic_count() {
 	global $wpdb;
 
 	$statement = __( 'Counting the number of topics in each forum&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
-	$sql_delete = "DELETE FROM {$wpdb->postmeta} WHERE meta_key IN ( '_bbp_topic_count', '_bbp_total_topic_count' );";
+	$sql_delete = "DELETE FROM {$wpdb->postmeta} WHERE meta_key IN ( '_ideaboard_topic_count', '_ideaboard_total_topic_count' );";
 	if ( is_wp_error( $wpdb->query( $sql_delete ) ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$forums = get_posts( array( 'post_type' => bbp_get_forum_post_type(), 'numberposts' => -1 ) );
+	$forums = get_posts( array( 'post_type' => ideaboard_get_forum_post_type(), 'numberposts' => -1 ) );
 	if ( !empty( $forums ) ) {
 		foreach ( $forums as $forum ) {
-			bbp_update_forum_topic_count( $forum->ID );
+			ideaboard_update_forum_topic_count( $forum->ID );
 		}
 	} else {
 		return array( 2, sprintf( $statement, $result ) );
@@ -476,36 +476,36 @@ function bbp_admin_repair_forum_topic_count() {
  *
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
- * @uses bbp_get_forum_post_type() To get the forum post type
+ * @uses ideaboard_get_forum_post_type() To get the forum post type
  * @uses get_posts() To get the forums
- * @uses bbp_update_forum_reply_count() To update the forum reply count
+ * @uses ideaboard_update_forum_reply_count() To update the forum reply count
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_forum_reply_count() {
+function ideaboard_admin_repair_forum_reply_count() {
 	global $wpdb;
 
 	$statement = __( 'Counting the number of replies in each forum&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
 	// Post type
-	$fpt = bbp_get_forum_post_type();
+	$fpt = ideaboard_get_forum_post_type();
 
-	// Delete the meta keys _bbp_reply_count and _bbp_total_reply_count for each forum
+	// Delete the meta keys _ideaboard_reply_count and _ideaboard_total_reply_count for each forum
 	$sql_delete = "DELETE `postmeta` FROM `{$wpdb->postmeta}` AS `postmeta`
 						LEFT JOIN `{$wpdb->posts}` AS `posts` ON `posts`.`ID` = `postmeta`.`post_id`
 						WHERE `posts`.`post_type` = '{$fpt}'
-						AND `postmeta`.`meta_key` = '_bbp_reply_count'
-						OR `postmeta`.`meta_key` = '_bbp_total_reply_count'";
+						AND `postmeta`.`meta_key` = '_ideaboard_reply_count'
+						OR `postmeta`.`meta_key` = '_ideaboard_total_reply_count'";
 
 	if ( is_wp_error( $wpdb->query( $sql_delete ) ) ) {
  		return array( 1, sprintf( $statement, $result ) );
 	}
  
-	// Recalculate the metas key _bbp_reply_count and _bbp_total_reply_count for each forum
-	$forums = get_posts( array( 'post_type' => bbp_get_forum_post_type(), 'numberposts' => -1 ) );
+	// Recalculate the metas key _ideaboard_reply_count and _ideaboard_total_reply_count for each forum
+	$forums = get_posts( array( 'post_type' => ideaboard_get_forum_post_type(), 'numberposts' => -1 ) );
 	if ( !empty( $forums ) ) {
 		foreach ( $forums as $forum ) {
-			bbp_update_forum_reply_count( $forum->ID );
+			ideaboard_update_forum_reply_count( $forum->ID );
 		}
 	} else {
 		return array( 2, sprintf( $statement, $result ) );
@@ -519,23 +519,23 @@ function bbp_admin_repair_forum_reply_count() {
  *
  * @since IdeaBoard (r3889)
  *
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_user_topic_count() {
+function ideaboard_admin_repair_user_topic_count() {
 	global $wpdb;
 
 	$statement   = __( 'Counting the number of topics each user has created&hellip; %s', 'ideaboard' );
 	$result      = __( 'Failed!', 'ideaboard' );
-	$sql_select  = "SELECT `post_author`, COUNT(DISTINCT `ID`) as `_count` FROM `{$wpdb->posts}` WHERE `post_type` = '" . bbp_get_topic_post_type() . "' AND `post_status` = '" . bbp_get_public_status_id() . "' GROUP BY `post_author`;";
+	$sql_select  = "SELECT `post_author`, COUNT(DISTINCT `ID`) as `_count` FROM `{$wpdb->posts}` WHERE `post_type` = '" . ideaboard_get_topic_post_type() . "' AND `post_status` = '" . ideaboard_get_public_status_id() . "' GROUP BY `post_author`;";
 	$insert_rows = $wpdb->get_results( $sql_select );
 
 	if ( is_wp_error( $insert_rows ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$key           = $wpdb->prefix . '_bbp_topic_count';
+	$key           = $wpdb->prefix . '_ideaboard_topic_count';
 	$insert_values = array();
 	foreach ( $insert_rows as $insert_row )
 		$insert_values[] = "('{$insert_row->post_author}', '{$key}', '{$insert_row->_count}')";
@@ -564,23 +564,23 @@ function bbp_admin_repair_user_topic_count() {
  *
  * @since IdeaBoard (r2613)
  *
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_user_reply_count() {
+function ideaboard_admin_repair_user_reply_count() {
 	global $wpdb;
 
 	$statement   = __( 'Counting the number of topics to which each user has replied&hellip; %s', 'ideaboard' );
 	$result      = __( 'Failed!', 'ideaboard' );
-	$sql_select  = "SELECT `post_author`, COUNT(DISTINCT `ID`) as `_count` FROM `{$wpdb->posts}` WHERE `post_type` = '" . bbp_get_reply_post_type() . "' AND `post_status` = '" . bbp_get_public_status_id() . "' GROUP BY `post_author`;";
+	$sql_select  = "SELECT `post_author`, COUNT(DISTINCT `ID`) as `_count` FROM `{$wpdb->posts}` WHERE `post_type` = '" . ideaboard_get_reply_post_type() . "' AND `post_status` = '" . ideaboard_get_public_status_id() . "' GROUP BY `post_author`;";
 	$insert_rows = $wpdb->get_results( $sql_select );
 
 	if ( is_wp_error( $insert_rows ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$key           = $wpdb->prefix . '_bbp_reply_count';
+	$key           = $wpdb->prefix . '_ideaboard_reply_count';
 	$insert_values = array();
 	foreach ( $insert_rows as $insert_row )
 		$insert_values[] = "('{$insert_row->post_author}', '{$key}', '{$insert_row->_count}')";
@@ -609,23 +609,23 @@ function bbp_admin_repair_user_reply_count() {
  *
  * @since IdeaBoard (r2613)
  *
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_user_favorites() {
+function ideaboard_admin_repair_user_favorites() {
 	global $wpdb;
 
 	$statement = __( 'Removing trashed topics from user favorites&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
-	$key       = $wpdb->prefix . '_bbp_favorites';
+	$key       = $wpdb->prefix . '_ideaboard_favorites';
 	$users     = $wpdb->get_results( "SELECT `user_id`, `meta_value` AS `favorites` FROM `{$wpdb->usermeta}` WHERE `meta_key` = '{$key}';" );
 
 	if ( is_wp_error( $users ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$topics = $wpdb->get_col( "SELECT `ID` FROM `{$wpdb->posts}` WHERE `post_type` = '" . bbp_get_topic_post_type() . "' AND `post_status` = '" . bbp_get_public_status_id() . "';" );
+	$topics = $wpdb->get_col( "SELECT `ID` FROM `{$wpdb->posts}` WHERE `post_type` = '" . ideaboard_get_topic_post_type() . "' AND `post_status` = '" . ideaboard_get_public_status_id() . "';" );
 
 	if ( is_wp_error( $topics ) )
 		return array( 2, sprintf( $statement, $result ) );
@@ -671,23 +671,23 @@ function bbp_admin_repair_user_favorites() {
  *
  * @since IdeaBoard (r2668)
  *
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_user_topic_subscriptions() {
+function ideaboard_admin_repair_user_topic_subscriptions() {
 	global $wpdb;
 
 	$statement = __( 'Removing trashed topics from user subscriptions&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
-	$key       = $wpdb->prefix . '_bbp_subscriptions';
+	$key       = $wpdb->prefix . '_ideaboard_subscriptions';
 	$users     = $wpdb->get_results( "SELECT `user_id`, `meta_value` AS `subscriptions` FROM `{$wpdb->usermeta}` WHERE `meta_key` = '{$key}';" );
 
 	if ( is_wp_error( $users ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$topics = $wpdb->get_col( "SELECT `ID` FROM `{$wpdb->posts}` WHERE `post_type` = '" . bbp_get_topic_post_type() . "' AND `post_status` = '" . bbp_get_public_status_id() . "';" );
+	$topics = $wpdb->get_col( "SELECT `ID` FROM `{$wpdb->posts}` WHERE `post_type` = '" . ideaboard_get_topic_post_type() . "' AND `post_status` = '" . ideaboard_get_public_status_id() . "';" );
 	if ( is_wp_error( $topics ) )
 		return array( 2, sprintf( $statement, $result ) );
 
@@ -732,23 +732,23 @@ function bbp_admin_repair_user_topic_subscriptions() {
  *
  * @since IdeaBoard (r5155)
  *
- * @uses bbp_get_forum_post_type() To get the topic post type
+ * @uses ideaboard_get_forum_post_type() To get the topic post type
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_user_forum_subscriptions() {
+function ideaboard_admin_repair_user_forum_subscriptions() {
 	global $wpdb;
 
 	$statement = __( 'Removing trashed forums from user subscriptions&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
-	$key       = $wpdb->prefix . '_bbp_forum_subscriptions';
+	$key       = $wpdb->prefix . '_ideaboard_forum_subscriptions';
 	$users     = $wpdb->get_results( "SELECT `user_id`, `meta_value` AS `subscriptions` FROM `{$wpdb->usermeta}` WHERE `meta_key` = '{$key}';" );
 
 	if ( is_wp_error( $users ) )
 		return array( 1, sprintf( $statement, $result ) );
 
-	$forums = $wpdb->get_col( "SELECT `ID` FROM `{$wpdb->posts}` WHERE `post_type` = '" . bbp_get_forum_post_type() . "' AND `post_status` = '" . bbp_get_public_status_id() . "';" );
+	$forums = $wpdb->get_col( "SELECT `ID` FROM `{$wpdb->posts}` WHERE `post_type` = '" . ideaboard_get_forum_post_type() . "' AND `post_status` = '" . ideaboard_get_public_status_id() . "';" );
 	if ( is_wp_error( $forums ) )
 		return array( 2, sprintf( $statement, $result ) );
 
@@ -795,24 +795,24 @@ function bbp_admin_repair_user_forum_subscriptions() {
  *
  * @since IdeaBoard (r4340)
  *
- * @uses bbp_get_user_role_map() To get the map of user roles
+ * @uses ideaboard_get_user_role_map() To get the map of user roles
  * @uses get_editable_roles() To get the current WordPress roles
  * @uses get_users() To get the users of each role (limited to ID field)
- * @uses bbp_set_user_role() To set each user's forums role
+ * @uses ideaboard_set_user_role() To set each user's forums role
  */
-function bbp_admin_repair_user_roles() {
+function ideaboard_admin_repair_user_roles() {
 
 	$statement    = __( 'Remapping forum role for each user on this site&hellip; %s', 'ideaboard' );
 	$changed      = 0;
-	$role_map     = bbp_get_user_role_map();
-	$default_role = bbp_get_default_role();
+	$role_map     = ideaboard_get_user_role_map();
+	$default_role = ideaboard_get_default_role();
 
 	// Bail if no role map exists
 	if ( empty( $role_map ) )
 		return array( 1, sprintf( $statement, __( 'Failed!', 'ideaboard' ) ) );
 
 	// Iterate through each role...
-	foreach ( array_keys( bbp_get_blog_roles() ) as $role ) {
+	foreach ( array_keys( ideaboard_get_blog_roles() ) as $role ) {
 
 		// Reset the offset
 		$offset = 0;
@@ -830,7 +830,7 @@ function bbp_admin_repair_user_roles() {
 
 			// Iterate through each user of $role and try to set it
 			foreach ( (array) $users as $user_id ) {
-				if ( bbp_set_user_role( $user_id, $new_role ) ) {
+				if ( ideaboard_set_user_role( $user_id, $new_role ) ) {
 					++$changed; // Keep a count to display at the end
 				}
 			}
@@ -840,7 +840,7 @@ function bbp_admin_repair_user_roles() {
 		}
 	}
 
-	$result = sprintf( __( 'Complete! %s users updated.', 'ideaboard' ), bbp_number_format( $changed ) );
+	$result = sprintf( __( 'Complete! %s users updated.', 'ideaboard' ), ideaboard_number_format( $changed ) );
 	return array( 0, sprintf( $statement, $result ) );
 }
 
@@ -853,77 +853,77 @@ function bbp_admin_repair_user_roles() {
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_freshness() {
+function ideaboard_admin_repair_freshness() {
 	global $wpdb;
 
 	$statement = __( 'Recomputing latest post in every topic and forum&hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
 	// First, delete everything.
-	if ( is_wp_error( $wpdb->query( "DELETE FROM `$wpdb->postmeta` WHERE `meta_key` IN ( '_bbp_last_reply_id', '_bbp_last_topic_id', '_bbp_last_active_id', '_bbp_last_active_time' );" ) ) )
+	if ( is_wp_error( $wpdb->query( "DELETE FROM `$wpdb->postmeta` WHERE `meta_key` IN ( '_ideaboard_last_reply_id', '_ideaboard_last_topic_id', '_ideaboard_last_active_id', '_ideaboard_last_active_time' );" ) ) )
 		return array( 1, sprintf( $statement, $result ) );
 
 	// Next, give all the topics with replies the ID their last reply.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `topic`.`ID`, '_bbp_last_reply_id', MAX( `reply`.`ID` )
+			( SELECT `topic`.`ID`, '_ideaboard_last_reply_id', MAX( `reply`.`ID` )
 			FROM `$wpdb->posts` AS `topic` INNER JOIN `$wpdb->posts` AS `reply` ON `topic`.`ID` = `reply`.`post_parent`
-			WHERE `reply`.`post_status` IN ( '" . bbp_get_public_status_id() . "' ) AND `topic`.`post_type` = 'topic' AND `reply`.`post_type` = 'reply'
+			WHERE `reply`.`post_status` IN ( '" . ideaboard_get_public_status_id() . "' ) AND `topic`.`post_type` = 'topic' AND `reply`.`post_type` = 'reply'
 			GROUP BY `topic`.`ID` );" ) ) )
 		return array( 2, sprintf( $statement, $result ) );
 
 	// For any remaining topics, give a reply ID of 0.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `ID`, '_bbp_last_reply_id', 0
+			( SELECT `ID`, '_ideaboard_last_reply_id', 0
 			FROM `$wpdb->posts` AS `topic` LEFT JOIN `$wpdb->postmeta` AS `reply`
-			ON `topic`.`ID` = `reply`.`post_id` AND `reply`.`meta_key` = '_bbp_last_reply_id'
+			ON `topic`.`ID` = `reply`.`post_id` AND `reply`.`meta_key` = '_ideaboard_last_reply_id'
 			WHERE `reply`.`meta_id` IS NULL AND `topic`.`post_type` = 'topic' );" ) ) )
 		return array( 3, sprintf( $statement, $result ) );
 
 	// Now we give all the forums with topics the ID their last topic.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `forum`.`ID`, '_bbp_last_topic_id', `topic`.`ID`
+			( SELECT `forum`.`ID`, '_ideaboard_last_topic_id', `topic`.`ID`
 			FROM `$wpdb->posts` AS `forum` INNER JOIN `$wpdb->posts` AS `topic` ON `forum`.`ID` = `topic`.`post_parent`
-			WHERE `topic`.`post_status` IN ( '" . bbp_get_public_status_id() . "' ) AND `forum`.`post_type` = 'forum' AND `topic`.`post_type` = 'topic'
+			WHERE `topic`.`post_status` IN ( '" . ideaboard_get_public_status_id() . "' ) AND `forum`.`post_type` = 'forum' AND `topic`.`post_type` = 'topic'
 			GROUP BY `forum`.`ID` );" ) ) )
 		return array( 4, sprintf( $statement, $result ) );
 
 	// For any remaining forums, give a topic ID of 0.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `ID`, '_bbp_last_topic_id', 0
+			( SELECT `ID`, '_ideaboard_last_topic_id', 0
 			FROM `$wpdb->posts` AS `forum` LEFT JOIN `$wpdb->postmeta` AS `topic`
-			ON `forum`.`ID` = `topic`.`post_id` AND `topic`.`meta_key` = '_bbp_last_topic_id'
+			ON `forum`.`ID` = `topic`.`post_id` AND `topic`.`meta_key` = '_ideaboard_last_topic_id'
 			WHERE `topic`.`meta_id` IS NULL AND `forum`.`post_type` = 'forum' );" ) ) )
 		return array( 5, sprintf( $statement, $result ) );
 
 	// After that, we give all the topics with replies the ID their last reply (again, this time for a different reason).
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `topic`.`ID`, '_bbp_last_active_id', MAX( `reply`.`ID` )
+			( SELECT `topic`.`ID`, '_ideaboard_last_active_id', MAX( `reply`.`ID` )
 			FROM `$wpdb->posts` AS `topic` INNER JOIN `$wpdb->posts` AS `reply` ON `topic`.`ID` = `reply`.`post_parent`
-			WHERE `reply`.`post_status` IN ( '" . bbp_get_public_status_id() . "' ) AND `topic`.`post_type` = 'topic' AND `reply`.`post_type` = 'reply'
+			WHERE `reply`.`post_status` IN ( '" . ideaboard_get_public_status_id() . "' ) AND `topic`.`post_type` = 'topic' AND `reply`.`post_type` = 'reply'
 			GROUP BY `topic`.`ID` );" ) ) )
 		return array( 6, sprintf( $statement, $result ) );
 
 	// For any remaining topics, give a reply ID of themself.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `ID`, '_bbp_last_active_id', `ID`
+			( SELECT `ID`, '_ideaboard_last_active_id', `ID`
 			FROM `$wpdb->posts` AS `topic` LEFT JOIN `$wpdb->postmeta` AS `reply`
-			ON `topic`.`ID` = `reply`.`post_id` AND `reply`.`meta_key` = '_bbp_last_active_id'
+			ON `topic`.`ID` = `reply`.`post_id` AND `reply`.`meta_key` = '_ideaboard_last_active_id'
 			WHERE `reply`.`meta_id` IS NULL AND `topic`.`post_type` = 'topic' );" ) ) )
 		return array( 7, sprintf( $statement, $result ) );
 
 	// Give topics with replies their last update time.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `topic`.`ID`, '_bbp_last_active_time', MAX( `reply`.`post_date` )
+			( SELECT `topic`.`ID`, '_ideaboard_last_active_time', MAX( `reply`.`post_date` )
 			FROM `$wpdb->posts` AS `topic` INNER JOIN `$wpdb->posts` AS `reply` ON `topic`.`ID` = `reply`.`post_parent`
-			WHERE `reply`.`post_status` IN ( '" . bbp_get_public_status_id() . "' ) AND `topic`.`post_type` = 'topic' AND `reply`.`post_type` = 'reply'
+			WHERE `reply`.`post_status` IN ( '" . ideaboard_get_public_status_id() . "' ) AND `topic`.`post_type` = 'topic' AND `reply`.`post_type` = 'reply'
 			GROUP BY `topic`.`ID` );" ) ) )
 		return array( 8, sprintf( $statement, $result ) );
 
 	// Give topics without replies their last update time.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `ID`, '_bbp_last_active_time', `post_date`
+			( SELECT `ID`, '_ideaboard_last_active_time', `post_date`
 			FROM `$wpdb->posts` AS `topic` LEFT JOIN `$wpdb->postmeta` AS `reply`
-			ON `topic`.`ID` = `reply`.`post_id` AND `reply`.`meta_key` = '_bbp_last_active_time'
+			ON `topic`.`ID` = `reply`.`post_id` AND `reply`.`meta_key` = '_ideaboard_last_active_time'
 			WHERE `reply`.`meta_id` IS NULL AND `topic`.`post_type` = 'topic' );" ) ) )
 		return array( 9, sprintf( $statement, $result ) );
 
@@ -934,15 +934,15 @@ function bbp_admin_repair_freshness() {
 
  	// Loop through forums
  	foreach ( $forums as $forum_id ) {
-		if ( !bbp_is_forum_category( $forum_id ) ) {
-			bbp_update_forum( array( 'forum_id' => $forum_id ) );
+		if ( !ideaboard_is_forum_category( $forum_id ) ) {
+			ideaboard_update_forum( array( 'forum_id' => $forum_id ) );
 		}
 	}
 
 	// Loop through categories when forums are done
 	foreach ( $forums as $forum_id ) {
-		if ( bbp_is_forum_category( $forum_id ) ) {
-			bbp_update_forum( array( 'forum_id' => $forum_id ) );
+		if ( ideaboard_is_forum_category( $forum_id ) ) {
+			ideaboard_update_forum( array( 'forum_id' => $forum_id ) );
 		}
 	}
 
@@ -959,7 +959,7 @@ function bbp_admin_repair_freshness() {
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_sticky() {
+function ideaboard_admin_repair_sticky() {
 	global $wpdb;
 
 	$statement = __( 'Repairing the sticky topic to the parent forum relationships&hellip; %s', 'ideaboard' );
@@ -972,7 +972,7 @@ function bbp_admin_repair_sticky() {
 
 	// Loop through forums and get their sticky topics
 	foreach ( $forums as $forum ) {
-		$forum_stickies[$forum] = get_post_meta( $forum, '_bbp_sticky_topics', true );
+		$forum_stickies[$forum] = get_post_meta( $forum, '_ideaboard_sticky_topics', true );
 	}
 
 	// Cleanup
@@ -991,7 +991,7 @@ function bbp_admin_repair_sticky() {
 
 			// If the topic is not a super sticky, and the forum ID does not
 			// match the topic's forum ID, unset the forum's sticky meta.
-			if ( ! bbp_is_topic_super_sticky( $topic_id ) && $forum_id !== bbp_get_topic_forum_id( $topic_id ) ) {
+			if ( ! ideaboard_is_topic_super_sticky( $topic_id ) && $forum_id !== ideaboard_get_topic_forum_id( $topic_id ) ) {
 				unset( $forum_stickies[$forum_id][$id] );
 			}
 		}
@@ -1000,7 +1000,7 @@ function bbp_admin_repair_sticky() {
 		$stickers = empty( $forum_stickies[$forum_id] ) ? '' : array_values( $forum_stickies[$forum_id] );
 
 		// Update the forum's sticky topics meta
-		update_post_meta( $forum_id, '_bbp_sticky_topics', $stickers );
+		update_post_meta( $forum_id, '_ideaboard_sticky_topics', $stickers );
 	}
 
 	// Complete results
@@ -1018,11 +1018,11 @@ function bbp_admin_repair_sticky() {
  * @uses update_option() To update the private and hidden post ID pointers
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_forum_visibility() {
+function ideaboard_admin_repair_forum_visibility() {
 	$statement = __( 'Recalculating forum visibility &hellip; %s', 'ideaboard' );
 
 	// Bail if queries returned errors
-	if ( ! bbp_repair_forum_visibility() ) {
+	if ( ! ideaboard_repair_forum_visibility() ) {
 		return array( 2, sprintf( $statement, __( 'Failed!',   'ideaboard' ) ) );
 
 	// Complete results
@@ -1040,19 +1040,19 @@ function bbp_admin_repair_forum_visibility() {
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_forum_meta() {
+function ideaboard_admin_repair_forum_meta() {
 	global $wpdb;
 
 	$statement = __( 'Recalculating the forum for each post &hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
 	// First, delete everything.
-	if ( is_wp_error( $wpdb->query( "DELETE FROM `$wpdb->postmeta` WHERE `meta_key` = '_bbp_forum_id';" ) ) )
+	if ( is_wp_error( $wpdb->query( "DELETE FROM `$wpdb->postmeta` WHERE `meta_key` = '_ideaboard_forum_id';" ) ) )
 		return array( 1, sprintf( $statement, $result ) );
 
 	// Next, give all the topics with replies the ID their last reply.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `forum`.`ID`, '_bbp_forum_id', `forum`.`post_parent`
+			( SELECT `forum`.`ID`, '_ideaboard_forum_id', `forum`.`post_parent`
 			FROM `$wpdb->posts`
 				AS `forum`
 			WHERE `forum`.`post_type` = 'forum'
@@ -1061,7 +1061,7 @@ function bbp_admin_repair_forum_meta() {
 
 	// Next, give all the topics with replies the ID their last reply.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `topic`.`ID`, '_bbp_forum_id', `topic`.`post_parent`
+			( SELECT `topic`.`ID`, '_ideaboard_forum_id', `topic`.`post_parent`
 			FROM `$wpdb->posts`
 				AS `topic`
 			WHERE `topic`.`post_type` = 'topic'
@@ -1070,7 +1070,7 @@ function bbp_admin_repair_forum_meta() {
 
 	// Next, give all the topics with replies the ID their last reply.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `reply`.`ID`, '_bbp_forum_id', `topic`.`post_parent`
+			( SELECT `reply`.`ID`, '_ideaboard_forum_id', `topic`.`post_parent`
 			FROM `$wpdb->posts`
 				AS `reply`
 			INNER JOIN `$wpdb->posts`
@@ -1094,19 +1094,19 @@ function bbp_admin_repair_forum_meta() {
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_topic_meta() {
+function ideaboard_admin_repair_topic_meta() {
 	global $wpdb;
 
 	$statement = __( 'Recalculating the topic for each post &hellip; %s', 'ideaboard' );
 	$result    = __( 'Failed!', 'ideaboard' );
 
 	// First, delete everything.
-	if ( is_wp_error( $wpdb->query( "DELETE FROM `$wpdb->postmeta` WHERE `meta_key` = '_bbp_topic_id';" ) ) )
+	if ( is_wp_error( $wpdb->query( "DELETE FROM `$wpdb->postmeta` WHERE `meta_key` = '_ideaboard_topic_id';" ) ) )
 		return array( 1, sprintf( $statement, $result ) );
 
 	// Next, give all the topics with replies the ID their last reply.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `topic`.`ID`, '_bbp_topic_id', `topic`.`ID`
+			( SELECT `topic`.`ID`, '_ideaboard_topic_id', `topic`.`ID`
 			FROM `$wpdb->posts`
 				AS `topic`
 			WHERE `topic`.`post_type` = 'topic'
@@ -1115,7 +1115,7 @@ function bbp_admin_repair_topic_meta() {
 
 	// Next, give all the topics with replies the ID their last reply.
 	if ( is_wp_error( $wpdb->query( "INSERT INTO `$wpdb->postmeta` (`post_id`, `meta_key`, `meta_value`)
-			( SELECT `reply`.`ID`, '_bbp_topic_id', `topic`.`ID`
+			( SELECT `reply`.`ID`, '_ideaboard_topic_id', `topic`.`ID`
 			FROM `$wpdb->posts`
 				AS `reply`
 			INNER JOIN `$wpdb->posts`
@@ -1137,23 +1137,23 @@ function bbp_admin_repair_topic_meta() {
  *
  * @uses wpdb::query() To run our recount sql queries
  * @uses is_wp_error() To check if the executed query returned {@link WP_Error}
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_update_reply_position() To update the reply position
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_update_reply_position() To update the reply position
  * @return array An array of the status code and the message
  */
-function bbp_admin_repair_reply_menu_order() {
+function ideaboard_admin_repair_reply_menu_order() {
 	global $wpdb;
 
 	$statement = __( 'Recalculating reply menu order &hellip; %s', 'ideaboard' );
 	$result    = __( 'No reply positions to recalculate!',         'ideaboard' );
 
-	// Delete cases where `_bbp_reply_to` was accidentally set to itself
-	if ( is_wp_error( $wpdb->query( "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` = '_bbp_reply_to' AND `post_id` = `meta_value`;" ) ) ) {
+	// Delete cases where `_ideaboard_reply_to` was accidentally set to itself
+	if ( is_wp_error( $wpdb->query( "DELETE FROM `{$wpdb->postmeta}` WHERE `meta_key` = '_ideaboard_reply_to' AND `post_id` = `meta_value`;" ) ) ) {
 		return array( 1, sprintf( $statement, $result ) ); 
 	}
 
 	// Post type
-	$rpt = bbp_get_reply_post_type();
+	$rpt = ideaboard_get_reply_post_type();
 
 	// Get an array of reply id's to update the menu oder for each reply
 	$replies = $wpdb->get_results( "SELECT `a`.`ID` FROM `{$wpdb->posts}` AS `a`
@@ -1174,7 +1174,7 @@ function bbp_admin_repair_reply_menu_order() {
 
 	// Recalculate the menu order position for each reply
 	foreach ( $replies as $reply ) {
-		bbp_update_reply_position( $reply->ID );
+		ideaboard_update_reply_position( $reply->ID );
 	}
 
 	// Cleanup
@@ -1198,14 +1198,14 @@ function bbp_admin_repair_reply_menu_order() {
  * @uses screen_icon() To display the screen icon
  * @uses wp_nonce_field() To add a hidden nonce field
  */
-function bbp_admin_reset() {
+function ideaboard_admin_reset() {
 ?>
 
 	<div class="wrap">
 
 		<?php screen_icon( 'tools' ); ?>
 
-		<h2 class="nav-tab-wrapper"><?php bbp_tools_admin_tabs( __( 'Reset Forums', 'ideaboard' ) ); ?></h2>
+		<h2 class="nav-tab-wrapper"><?php ideaboard_tools_admin_tabs( __( 'Reset Forums', 'ideaboard' ) ); ?></h2>
 		<p><?php esc_html_e( 'Revert your forums back to a brand new installation. This process cannot be undone.', 'ideaboard' ); ?></p>
 		<p><strong><?php esc_html_e( 'Backup your database before proceeding.', 'ideaboard' ); ?></strong></p>
 
@@ -1267,14 +1267,14 @@ function bbp_admin_reset() {
  * @uses check_admin_referer() To verify the nonce and the referer
  * @uses wp_cache_flush() To flush the cache
  */
-function bbp_admin_reset_handler() {
+function ideaboard_admin_reset_handler() {
 
 	// Bail if not resetting
-	if ( ! bbp_is_post_request() || empty( $_POST['ideaboard-are-you-sure'] ) )
+	if ( ! ideaboard_is_post_request() || empty( $_POST['ideaboard-are-you-sure'] ) )
 		return;
 
 	// Only keymasters can proceed
-	if ( ! bbp_is_user_keymaster() )
+	if ( ! ideaboard_is_user_keymaster() )
 		return;
 
 	check_admin_referer( 'ideaboard-reset' );
@@ -1322,7 +1322,7 @@ function bbp_admin_reset_handler() {
 
 	// Delete users
 	if ( !empty( $_POST['ideaboard-delete-imported-users'] ) ) {
-		$sql_users  = $wpdb->get_results( "SELECT `user_id` FROM `{$wpdb->usermeta}` WHERE `meta_key` = '_bbp_user_id'", OBJECT_K );
+		$sql_users  = $wpdb->get_results( "SELECT `user_id` FROM `{$wpdb->usermeta}` WHERE `meta_key` = '_ideaboard_user_id'", OBJECT_K );
 		if ( !empty( $sql_users ) ) {
 			$sql_meta = array();
 			foreach ( $sql_users as $key => $value ) {
@@ -1342,7 +1342,7 @@ function bbp_admin_reset_handler() {
 	// Delete imported user metadata
 	} else {
 		$statement  = __( 'Deleting User Meta&hellip; %s', 'ideaboard' );
-		$sql_delete = "DELETE FROM `{$wpdb->usermeta}` WHERE `meta_key` LIKE '%%_bbp_%%';";
+		$sql_delete = "DELETE FROM `{$wpdb->usermeta}` WHERE `meta_key` LIKE '%%_ideaboard_%%';";
 		$result     = is_wp_error( $wpdb->query( $sql_delete ) ) ? $failed : $success;
 		$messages[] = sprintf( $statement, $result );
 	}
@@ -1350,7 +1350,7 @@ function bbp_admin_reset_handler() {
 	/** Converter *************************************************************/
 
 	$statement  = __( 'Deleting Conversion Table&hellip; %s', 'ideaboard' );
-	$table_name = $wpdb->prefix . 'bbp_converter_translator';
+	$table_name = $wpdb->prefix . 'ideaboard_converter_translator';
 	if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) === $table_name ) {
 		$wpdb->query( "DROP TABLE {$table_name}" );
 		$result = $success;
@@ -1362,22 +1362,22 @@ function bbp_admin_reset_handler() {
 	/** Options ***************************************************************/
 
 	$statement  = __( 'Deleting Settings&hellip; %s', 'ideaboard' );
-	bbp_delete_options();
+	ideaboard_delete_options();
 	$messages[] = sprintf( $statement, $success );
 
 	/** Roles *****************************************************************/
 
 	$statement  = __( 'Deleting Roles and Capabilities&hellip; %s', 'ideaboard' );
-	remove_role( bbp_get_moderator_role() );
-	remove_role( bbp_get_participant_role() );
-	bbp_remove_caps();
+	remove_role( ideaboard_get_moderator_role() );
+	remove_role( ideaboard_get_participant_role() );
+	ideaboard_remove_caps();
 	$messages[] = sprintf( $statement, $success );
 
 	/** Output ****************************************************************/
 
 	if ( count( $messages ) ) {
 		foreach ( $messages as $message ) {
-			bbp_admin_tools_feedback( $message );
+			ideaboard_admin_tools_feedback( $message );
 		}
 	}
 }

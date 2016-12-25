@@ -100,7 +100,7 @@ We're keeping things as small and light as possible while still allowing for gre
 * Fix various existing importer scripts
 * Fix forum visibility meta saving
 * Fix Akismet anonymous user meta checking
-* Fix inconsistent bbp_dropdown() results
+* Fix inconsistent ideaboard_dropdown() results
 * Fix topic and reply ping-status inconsistencies
 
 = 2.4.1 =

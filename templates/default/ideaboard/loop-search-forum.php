@@ -13,34 +13,34 @@
 
 	<div class="bbp-meta">
 
-		<span class="bbp-forum-post-date"><?php printf( __( 'Last updated %s', 'ideaboard' ), bbp_get_forum_last_active_time() ); ?></span>
+		<span class="bbp-forum-post-date"><?php printf( __( 'Last updated %s', 'ideaboard' ), ideaboard_get_forum_last_active_time() ); ?></span>
 
-		<a href="<?php bbp_forum_permalink(); ?>" class="bbp-forum-permalink">#<?php bbp_forum_id(); ?></a>
+		<a href="<?php ideaboard_forum_permalink(); ?>" class="bbp-forum-permalink">#<?php ideaboard_forum_id(); ?></a>
 
 	</div><!-- .bbp-meta -->
 
 	<div class="bbp-forum-title">
 
-		<?php do_action( 'bbp_theme_before_forum_title' ); ?>
+		<?php do_action( 'ideaboard_theme_before_forum_title' ); ?>
 
-		<h3><?php _e( 'Forum: ', 'ideaboard' ); ?><a href="<?php bbp_forum_permalink(); ?>"><?php bbp_forum_title(); ?></a></h3>
+		<h3><?php _e( 'Forum: ', 'ideaboard' ); ?><a href="<?php ideaboard_forum_permalink(); ?>"><?php ideaboard_forum_title(); ?></a></h3>
 
-		<?php do_action( 'bbp_theme_after_forum_title' ); ?>
+		<?php do_action( 'ideaboard_theme_after_forum_title' ); ?>
 
 	</div><!-- .bbp-forum-title -->
 
 </div><!-- .bbp-forum-header -->
 
-<div id="post-<?php bbp_forum_id(); ?>" <?php bbp_forum_class(); ?>>
+<div id="post-<?php ideaboard_forum_id(); ?>" <?php ideaboard_forum_class(); ?>>
 
 	<div class="bbp-forum-content">
 
-		<?php do_action( 'bbp_theme_before_forum_content' ); ?>
+		<?php do_action( 'ideaboard_theme_before_forum_content' ); ?>
 
-		<?php bbp_forum_content(); ?>
+		<?php ideaboard_forum_content(); ?>
 
-		<?php do_action( 'bbp_theme_after_forum_content' ); ?>
+		<?php do_action( 'ideaboard_theme_after_forum_content' ); ?>
 
 	</div><!-- .bbp-forum-content -->
 
-</div><!-- #post-<?php bbp_forum_id(); ?> -->
+</div><!-- #post-<?php ideaboard_forum_id(); ?> -->

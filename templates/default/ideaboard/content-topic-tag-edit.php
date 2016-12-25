@@ -11,14 +11,14 @@
 
 <div id="ideaboard-forums">
 
-	<?php bbp_breadcrumb(); ?>
+	<?php ideaboard_breadcrumb(); ?>
 
-	<?php bbp_topic_tag_description(); ?>
+	<?php ideaboard_topic_tag_description(); ?>
 
-	<?php do_action( 'bbp_template_before_topic_tag_edit' ); ?>
+	<?php do_action( 'ideaboard_template_before_topic_tag_edit' ); ?>
 
-	<?php bbp_get_template_part( 'form', 'topic-tag' ); ?>
+	<?php ideaboard_get_template_part( 'form', 'topic-tag' ); ?>
 
-	<?php do_action( 'bbp_template_after_topic_tag_edit' ); ?>
+	<?php do_action( 'ideaboard_template_after_topic_tag_edit' ); ?>
 
 </div>

@@ -10,7 +10,7 @@
  * @param array $component_names
  * @return array
  */
-function bbp_filter_notifications_get_registered_components( $component_names = array() ) {
+function ideaboard_filter_notifications_get_registered_components( $component_names = array() ) {
 
 	// Force $component_names to be an array
 	if ( ! is_array( $component_names ) ) {
@@ -18,12 +18,12 @@ function bbp_filter_notifications_get_registered_components( $component_names = 
 	}
 
 	// Add 'forums' component to registered components array
-	array_push( $component_names, bbp_get_component_name() );
+	array_push( $component_names, ideaboard_get_component_name() );
 
 	// Return component's with 'forums' appended
 	return $component_names;
 }
-add_filter( 'bp_notifications_get_registered_components', 'bbp_filter_notifications_get_registered_components', 10 );
+add_filter( 'bp_notifications_get_registered_components', 'ideaboard_filter_notifications_get_registered_components', 10 );
 
 /**
  * Format the BuddyBar/Toolbar notifications
@@ -38,25 +38,25 @@ add_filter( 'bp_notifications_get_registered_components', 'bbp_filter_notificati
  * @param int $total_items The total number of messaging-related notifications waiting for the user
  * @param string $format 'string' for BuddyBar-compatible notifications; 'array' for WP Toolbar
  */
-function bbp_format_buddypress_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string' ) {
+function ideaboard_format_buddypress_notifications( $action, $item_id, $secondary_item_id, $total_items, $format = 'string' ) {
 
 	// New reply notifications
-	if ( 'bbp_new_reply' === $action ) {
-		$topic_id    = bbp_get_reply_topic_id( $item_id );
-		$topic_title = bbp_get_topic_title( $topic_id );
-		$topic_link  = wp_nonce_url( add_query_arg( array( 'action' => 'bbp_mark_read', 'topic_id' => $topic_id ), bbp_get_reply_url( $item_id ) ), 'bbp_mark_topic_' . $topic_id );
+	if ( 'ideaboard_new_reply' === $action ) {
+		$topic_id    = ideaboard_get_reply_topic_id( $item_id );
+		$topic_title = ideaboard_get_topic_title( $topic_id );
+		$topic_link  = wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_mark_read', 'topic_id' => $topic_id ), ideaboard_get_reply_url( $item_id ) ), 'ideaboard_mark_topic_' . $topic_id );
 		$title_attr  = __( 'Topic Replies', 'ideaboard' );
 
 		if ( (int) $total_items > 1 ) {
 			$text   = sprintf( __( 'You have %d new replies', 'ideaboard' ), (int) $total_items );
-			$filter = 'bbp_multiple_new_subscription_notification';
+			$filter = 'ideaboard_multiple_new_subscription_notification';
 		} else {
 			if ( !empty( $secondary_item_id ) ) {
 				$text = sprintf( __( 'You have %d new reply to %2$s from %3$s', 'ideaboard' ), (int) $total_items, $topic_title, bp_core_get_user_displayname( $secondary_item_id ) );
 			} else {
 				$text = sprintf( __( 'You have %d new reply to %s',             'ideaboard' ), (int) $total_items, $topic_title );
 			}
-			$filter = 'bbp_single_new_subscription_notification';
+			$filter = 'ideaboard_single_new_subscription_notification';
 		}
 
 		// WordPress Toolbar
@@ -71,12 +71,12 @@ function bbp_format_buddypress_notifications( $action, $item_id, $secondary_item
 			), $topic_link, (int) $total_items, $text, $topic_title );
 		}
 
-		do_action( 'bbp_format_buddypress_notifications', $action, $item_id, $secondary_item_id, $total_items );
+		do_action( 'ideaboard_format_buddypress_notifications', $action, $item_id, $secondary_item_id, $total_items );
 
 		return $return;
 	}
 }
-add_filter( 'bp_notifications_get_notifications_for_user', 'bbp_format_buddypress_notifications', 10, 5 );
+add_filter( 'bp_notifications_get_notifications_for_user', 'ideaboard_format_buddypress_notifications', 10, 5 );
 
 /**
  * Hooked into the new reply function, this notification action is responsible
@@ -92,7 +92,7 @@ add_filter( 'bp_notifications_get_notifications_for_user', 'bbp_format_buddypres
  * @param bool $is_edit Used to bail if this gets hooked to an edit action
  * @param int $reply_to
  */
-function bbp_buddypress_add_notification( $reply_id = 0, $topic_id = 0, $forum_id = 0, $anonymous_data = false, $author_id = 0, $is_edit = false, $reply_to = 0 ) {
+function ideaboard_buddypress_add_notification( $reply_id = 0, $topic_id = 0, $forum_id = 0, $anonymous_data = false, $author_id = 0, $is_edit = false, $reply_to = 0 ) {
 
 	// Bail if somehow this is hooked to an edit action
 	if ( !empty( $is_edit ) ) {
@@ -100,20 +100,20 @@ function bbp_buddypress_add_notification( $reply_id = 0, $topic_id = 0, $forum_i
 	}
 
 	// Get autohr information
-	$topic_author_id   = bbp_get_topic_author_id( $topic_id );
+	$topic_author_id   = ideaboard_get_topic_author_id( $topic_id );
 	$secondary_item_id = $author_id;
 
 	// Hierarchical replies
 	if ( !empty( $reply_to ) ) {
-		$reply_to_item_id = bbp_get_topic_author_id( $reply_to );
+		$reply_to_item_id = ideaboard_get_topic_author_id( $reply_to );
 	}
 
 	// Get some reply information
 	$args = array(
 		'user_id'          => $topic_author_id,
 		'item_id'          => $topic_id,
-		'component_name'   => bbp_get_component_name(),
-		'component_action' => 'bbp_new_reply',
+		'component_name'   => ideaboard_get_component_name(),
+		'component_action' => 'ideaboard_new_reply',
 		'date_notified'    => get_post( $reply_id )->post_date,
 	);
 
@@ -131,7 +131,7 @@ function bbp_buddypress_add_notification( $reply_id = 0, $topic_id = 0, $forum_i
 		bp_notifications_add_notification( $args );
  	}
 }
-add_action( 'bbp_new_reply', 'bbp_buddypress_add_notification', 10, 7 );
+add_action( 'ideaboard_new_reply', 'ideaboard_buddypress_add_notification', 10, 7 );
 
 /**
  * Mark notifications as read when reading a topic
@@ -140,7 +140,7 @@ add_action( 'bbp_new_reply', 'bbp_buddypress_add_notification', 10, 7 );
  *
  * @return If not trying to mark a notification as read
  */
-function bbp_buddypress_mark_notifications( $action = '' ) {
+function ideaboard_buddypress_mark_notifications( $action = '' ) {
 
 	// Bail if no topic ID is passed
 	if ( empty( $_GET['topic_id'] ) ) {
@@ -148,7 +148,7 @@ function bbp_buddypress_mark_notifications( $action = '' ) {
 	}
 
 	// Bail if action is not for this function
-	if ( 'bbp_mark_read' !== $action ) {
+	if ( 'ideaboard_mark_read' !== $action ) {
 		return;
 	}
 
@@ -157,26 +157,26 @@ function bbp_buddypress_mark_notifications( $action = '' ) {
 	$topic_id = intval( $_GET['topic_id'] );
 
 	// Check nonce
-	if ( ! bbp_verify_nonce_request( 'bbp_mark_topic_' . $topic_id ) ) {
-		bbp_add_error( 'bbp_notification_topic_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard_mark_topic_' . $topic_id ) ) {
+		ideaboard_add_error( 'ideaboard_notification_topic_id', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 
 	// Check current user's ability to edit the user
 	} elseif ( !current_user_can( 'edit_user', $user_id ) ) {
-		bbp_add_error( 'bbp_notification_permissions', __( '<strong>ERROR</strong>: You do not have permission to mark notifications for that user.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_notification_permissions', __( '<strong>ERROR</strong>: You do not have permission to mark notifications for that user.', 'ideaboard' ) );
 	}
 
 	// Bail if we have errors
-	if ( ! bbp_has_errors() ) {
+	if ( ! ideaboard_has_errors() ) {
 
 		// Attempt to clear notifications for the current user from this topic
-		$success = bp_notifications_mark_notifications_by_item_id( $user_id, $topic_id, bbp_get_component_name(), 'bbp_new_reply' );
+		$success = bp_notifications_mark_notifications_by_item_id( $user_id, $topic_id, ideaboard_get_component_name(), 'ideaboard_new_reply' );
 
 		// Do additional subscriptions actions
-		do_action( 'bbp_notifications_handler', $success, $user_id, $topic_id, $action );
+		do_action( 'ideaboard_notifications_handler', $success, $user_id, $topic_id, $action );
 	}
 
 	// Redirect to the topic
-	$redirect = bbp_get_reply_url( $topic_id );
+	$redirect = ideaboard_get_reply_url( $topic_id );
 
 	// Redirect
 	wp_safe_redirect( $redirect );
@@ -184,4 +184,4 @@ function bbp_buddypress_mark_notifications( $action = '' ) {
 	// For good measure
 	exit();
 }
-add_action( 'bbp_get_request', 'bbp_buddypress_mark_notifications', 1 );
+add_action( 'ideaboard_get_request', 'ideaboard_buddypress_mark_notifications', 1 );

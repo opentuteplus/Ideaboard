@@ -9,9 +9,9 @@
 
 ?>
 
-<?php do_action( 'bbp_template_before_replies_loop' ); ?>
+<?php do_action( 'ideaboard_template_before_replies_loop' ); ?>
 
-<ul id="topic-<?php bbp_topic_id(); ?>-replies" class="forums bbp-replies">
+<ul id="topic-<?php ideaboard_topic_id(); ?>-replies" class="forums bbp-replies">
 
 	<li class="bbp-header">
 
@@ -19,13 +19,13 @@
 
 		<div class="bbp-reply-content">
 
-			<?php if ( !bbp_show_lead_topic() ) : ?>
+			<?php if ( !ideaboard_show_lead_topic() ) : ?>
 
 				<?php _e( 'Posts', 'ideaboard' ); ?>
 
-				<?php bbp_topic_subscription_link(); ?>
+				<?php ideaboard_topic_subscription_link(); ?>
 
-				<?php bbp_user_favorites_link(); ?>
+				<?php ideaboard_user_favorites_link(); ?>
 
 			<?php else : ?>
 
@@ -39,15 +39,15 @@
 
 	<li class="bbp-body">
 
-		<?php if ( bbp_thread_replies() ) : ?>
+		<?php if ( ideaboard_thread_replies() ) : ?>
 
-			<?php bbp_list_replies(); ?>
+			<?php ideaboard_list_replies(); ?>
 
 		<?php else : ?>
 
-			<?php while ( bbp_replies() ) : bbp_the_reply(); ?>
+			<?php while ( ideaboard_replies() ) : ideaboard_the_reply(); ?>
 
-				<?php bbp_get_template_part( 'loop', 'single-reply' ); ?>
+				<?php ideaboard_get_template_part( 'loop', 'single-reply' ); ?>
 
 			<?php endwhile; ?>
 
@@ -61,7 +61,7 @@
 
 		<div class="bbp-reply-content">
 
-			<?php if ( !bbp_show_lead_topic() ) : ?>
+			<?php if ( !ideaboard_show_lead_topic() ) : ?>
 
 				<?php _e( 'Posts', 'ideaboard' ); ?>
 
@@ -75,6 +75,6 @@
 
 	</li><!-- .bbp-footer -->
 
-</ul><!-- #topic-<?php bbp_topic_id(); ?>-replies -->
+</ul><!-- #topic-<?php ideaboard_topic_id(); ?>-replies -->
 
-<?php do_action( 'bbp_template_after_replies_loop' ); ?>
+<?php do_action( 'ideaboard_template_after_replies_loop' ); ?>

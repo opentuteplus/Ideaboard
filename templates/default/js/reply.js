@@ -1,6 +1,6 @@
 addReply = {
 	moveForm : function(replyId, parentId, respondId, postId) {
-		var t = this, div, reply = t.I(replyId), respond = t.I(respondId), cancel = t.I('bbp-cancel-reply-to-link'), parent = t.I('bbp_reply_to'), post = t.I('bbp_topic_id');
+		var t = this, div, reply = t.I(replyId), respond = t.I(respondId), cancel = t.I('bbp-cancel-reply-to-link'), parent = t.I('ideaboard_reply_to'), post = t.I('ideaboard_topic_id');
 
 		if ( ! reply || ! respond || ! cancel || ! parent )
 			return;
@@ -27,7 +27,7 @@ addReply = {
 			if ( ! temp || ! respond )
 				return;
 
-			t.I('bbp_reply_to').value = '0';
+			t.I('ideaboard_reply_to').value = '0';
 			temp.parentNode.insertBefore(respond, temp);
 			temp.parentNode.removeChild(temp);
 			this.style.display = 'none';
@@ -35,7 +35,7 @@ addReply = {
 			return false;
 		}
 
-		try { t.I('bbp_reply_content').focus(); }
+		try { t.I('ideaboard_reply_content').focus(); }
 		catch(e) {}
 
 		return false;

@@ -30,7 +30,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename' => 'taxonomy_term_data',
 			'from_fieldname' => 'tid',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_id'
+			'to_fieldname'   => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0, Stored in postmeta)
@@ -42,7 +42,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'join_expression' => 'USING (tid)',
 			'from_expression' => 'LEFT JOIN taxonomy_vocabulary AS taxonomy_vocabulary USING (vid) WHERE module = "forum"',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum title.
@@ -108,7 +108,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename' => 'forum_index',
 			'from_fieldname' => 'nid',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -116,7 +116,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'forum_index',
 			'from_fieldname'  => 'comment_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -125,7 +125,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'forum_index',
 			'from_fieldname'  => 'comment_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -134,7 +134,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'forum_index',
 			'from_fieldname'  => 'tid',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -195,7 +195,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'forum_index',
 			'from_fieldname'  => 'sticky',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_old_sticky_status',
+			'to_fieldname'    => '_ideaboard_old_sticky_status',
 			'callback_method' => 'callback_sticky_status'
 		);
 
@@ -232,7 +232,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'forum_index',
 			'from_fieldname'  => 'last_comment_timestamp',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -308,7 +308,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename' => 'comment',
 			'from_fieldname' => 'cid',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_post_id'
+			'to_fieldname'   => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -320,7 +320,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'join_type'       => 'INNER',
 			'join_expression' => 'ON forum.nid = comment.nid',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -329,7 +329,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'comment',
 			'from_fieldname'  => 'nid',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -338,7 +338,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'comment',
 			'from_fieldname'  => 'pid',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_reply_to'
+			'to_fieldname'    => '_ideaboard_reply_to'
 		);
 
 		// Reply author ip (Stored in postmeta)
@@ -346,7 +346,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename' => 'comment',
 			'from_fieldname' => 'hostname',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -434,7 +434,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'uid',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_user_id'
+			'to_fieldname'   => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta serialized with salt)
@@ -442,7 +442,7 @@ class Drupal7 extends BBP_Converter_Base {
 			'from_tablename'  => 'users',
 			'from_fieldname'  => 'pass',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_password'
+			'to_fieldname'    => '_ideaboard_password'
 //			'callback_method' => 'callback_savepass'
 		);
 
@@ -457,7 +457,7 @@ class Drupal7 extends BBP_Converter_Base {
 		// User password verify class (Stored in usermeta for verifying password)
 		$this->field_map[] = array(
 			'to_type'      => 'users',
-			'to_fieldname' => '_bbp_class',
+			'to_fieldname' => '_ideaboard_class',
 			'default'      => 'Drupal7'
 		);
 
@@ -498,7 +498,7 @@ class Drupal7 extends BBP_Converter_Base {
 		$this->field_map[] = array(
 			'from_tablename'  => 'users',
 			'from_fieldname'  => 'signature',
-			'to_fieldname'    => '_bbp_drupal7_user_sig',
+			'to_fieldname'    => '_ideaboard_drupal7_user_sig',
 			'to_type'         => 'user',
 			'callback_method' => 'callback_html'
 		);

@@ -31,7 +31,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_fieldname'  => 'CategoryID',
 			'from_expression' => 'WHERE Category.CategoryID > 0',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_id'
+			'to_fieldname'    => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0. Stored in postmeta)
@@ -39,7 +39,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Category',
 			'from_fieldname'  => 'ParentCategoryID',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id',
+			'to_fieldname'    => '_ideaboard_forum_parent_id',
 			'callback_method' => 'callback_forum_parent'
 		);
 
@@ -48,7 +48,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Category',
 			'from_fieldname' => 'CountDiscussions',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -56,7 +56,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Category',
 			'from_fieldname' => 'CountComments',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum total topic count (Stored in postmeta)
@@ -64,7 +64,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Category',
 			'from_fieldname' => 'CountDiscussions',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_topic_count'
+			'to_fieldname'   => '_ideaboard_total_topic_count'
 		);
 
 		// Forum total reply count (Stored in postmeta)
@@ -72,7 +72,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Category',
 			'from_fieldname' => 'CountComments',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_reply_count'
+			'to_fieldname'   => '_ideaboard_total_reply_count'
 		);
 
 		// Forum title.
@@ -142,7 +142,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Discussion',
 			'from_fieldname' => 'DiscussionID',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -150,7 +150,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Discussion',
 			'from_fieldname'  => 'CountComments',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -159,7 +159,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Discussion',
 			'from_fieldname'  => 'CountComments',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -168,7 +168,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Discussion',
 			'from_fieldname'  => 'CategoryID',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -221,7 +221,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Discussion',
 			'from_fieldname'  => 'InsertIPAddress',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Topic parent forum id (If no parent, then 0)
@@ -262,7 +262,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Discussion',
 			'from_fieldname' => 'DateLastComment',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_last_active_time'
+			'to_fieldname'   => '_ideaboard_last_active_time'
 		);
 
 		/** Tags Section ******************************************************/
@@ -302,7 +302,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Comment',
 			'from_fieldname'  => 'CommentID',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_post_id'
+			'to_fieldname'    => '_ideaboard_post_id'
 		);
 
 		// Reply parent topic id (If no parent, then 0. Stored in postmeta)
@@ -310,7 +310,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'Comment',
 			'from_fieldname'  => 'DiscussionID',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -322,7 +322,7 @@ class Vanilla extends BBP_Converter_Base {
 			'join_type'       => 'INNER',
 			'join_expression' => 'USING (DiscussionID)',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -357,7 +357,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'Comment',
 			'from_fieldname' => 'InsertIPAddress',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -420,7 +420,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename'  => 'User',
 			'from_fieldname'  => 'UserID',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_user_id'
+			'to_fieldname'    => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta)
@@ -428,7 +428,7 @@ class Vanilla extends BBP_Converter_Base {
 			'from_tablename' => 'User',
 			'from_fieldname' => 'Password',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_password'
+			'to_fieldname'   => '_ideaboard_password'
 		);
 
 		// User name.

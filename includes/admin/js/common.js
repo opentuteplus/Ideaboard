@@ -1,13 +1,13 @@
 jQuery( document ).ready( function() {
 
-	var bbp_author_id = jQuery( '#bbp_author_id' );
+	var ideaboard_author_id = jQuery( '#ideaboard_author_id' );
 
-	bbp_author_id.suggest(
-		bbp_author_id.data( 'ajax-url' ),
+	ideaboard_author_id.suggest(
+		ideaboard_author_id.data( 'ajax-url' ),
 		{
 			onSelect: function() {
 				var value = this.value;
-				bbp_author_id.val( value.substr( 0, value.indexOf( ' ' ) ) );
+				ideaboard_author_id.val( value.substr( 0, value.indexOf( ' ' ) ) );
 			}
 		}
 	);

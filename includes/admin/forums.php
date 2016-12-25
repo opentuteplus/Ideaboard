@@ -51,14 +51,14 @@ class BBP_Forums_Admin {
 	 *
 	 * @uses add_action() To add various actions
 	 * @uses add_filter() To add various filters
-	 * @uses bbp_get_forum_post_type() To get the forum post type
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_forum_post_type() To get the forum post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
 	 */
 	private function setup_actions() {
 
 		// Add some general styling to the admin area
-		add_action( 'bbp_admin_head',        array( $this, 'admin_head'       ) );
+		add_action( 'ideaboard_admin_head',        array( $this, 'admin_head'       ) );
 
 		// Messages
 		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
@@ -100,7 +100,7 @@ class BBP_Forums_Admin {
 	 * @access private
 	 */
 	private function setup_globals() {
-		$this->post_type = bbp_get_forum_post_type();
+		$this->post_type = ideaboard_get_forum_post_type();
 	}
 
 	/** Contextual Help *******************************************************/
@@ -230,24 +230,24 @@ class BBP_Forums_Admin {
 	 *
 	 * @since IdeaBoard (r2746)
 	 *
-	 * @uses bbp_get_forum_post_type() To get the forum post type
+	 * @uses ideaboard_get_forum_post_type() To get the forum post type
 	 * @uses add_meta_box() To add the metabox
-	 * @uses do_action() Calls 'bbp_forum_attributes_metabox'
+	 * @uses do_action() Calls 'ideaboard_forum_attributes_metabox'
 	 */
 	public function attributes_metabox() {
 
 		if ( $this->bail() ) return;
 
 		add_meta_box (
-			'bbp_forum_attributes',
+			'ideaboard_forum_attributes',
 			__( 'Forum Attributes', 'ideaboard' ),
-			'bbp_forum_metabox',
+			'ideaboard_forum_metabox',
 			$this->post_type,
 			'side',
 			'high'
 		);
 
-		do_action( 'bbp_forum_attributes_metabox' );
+		do_action( 'ideaboard_forum_attributes_metabox' );
 	}
 
 	/**
@@ -258,17 +258,17 @@ class BBP_Forums_Admin {
 	 * @param int $forum_id Forum id
 	 * @uses current_user_can() To check if the current user is capable of
 	 *                           editing the forum
-	 * @uses bbp_get_forum() To get the forum
-	 * @uses bbp_is_forum_closed() To check if the forum is closed
-	 * @uses bbp_is_forum_category() To check if the forum is a category
-	 * @uses bbp_is_forum_private() To check if the forum is private
-	 * @uses bbp_close_forum() To close the forum
-	 * @uses bbp_open_forum() To open the forum
-	 * @uses bbp_categorize_forum() To make the forum a category
-	 * @uses bbp_normalize_forum() To make the forum normal (not category)
-	 * @uses bbp_privatize_forum() To mark the forum as private
-	 * @uses bbp_publicize_forum() To mark the forum as public
-	 * @uses do_action() Calls 'bbp_forum_attributes_metabox_save' with the
+	 * @uses ideaboard_get_forum() To get the forum
+	 * @uses ideaboard_is_forum_closed() To check if the forum is closed
+	 * @uses ideaboard_is_forum_category() To check if the forum is a category
+	 * @uses ideaboard_is_forum_private() To check if the forum is private
+	 * @uses ideaboard_close_forum() To close the forum
+	 * @uses ideaboard_open_forum() To open the forum
+	 * @uses ideaboard_categorize_forum() To make the forum a category
+	 * @uses ideaboard_normalize_forum() To make the forum normal (not category)
+	 * @uses ideaboard_privatize_forum() To mark the forum as private
+	 * @uses ideaboard_publicize_forum() To mark the forum as public
+	 * @uses do_action() Calls 'ideaboard_forum_attributes_metabox_save' with the
 	 *                    forum id
 	 * @return int Forum id
 	 */
@@ -281,15 +281,15 @@ class BBP_Forums_Admin {
 			return $forum_id;
 
 		// Bail if not a post request
-		if ( ! bbp_is_post_request() )
+		if ( ! ideaboard_is_post_request() )
 			return $forum_id;
 
 		// Nonce check
-		if ( empty( $_POST['bbp_forum_metabox'] ) || !wp_verify_nonce( $_POST['bbp_forum_metabox'], 'bbp_forum_metabox_save' ) )
+		if ( empty( $_POST['ideaboard_forum_metabox'] ) || !wp_verify_nonce( $_POST['ideaboard_forum_metabox'], 'ideaboard_forum_metabox_save' ) )
 			return $forum_id;
 
 		// Only save for forum post-types
-		if ( ! bbp_is_forum( $forum_id ) )
+		if ( ! ideaboard_is_forum( $forum_id ) )
 			return $forum_id;
 
 		// Bail if current user cannot edit this forum
@@ -300,12 +300,12 @@ class BBP_Forums_Admin {
 		$parent_id = ( !empty( $_POST['parent_id'] ) && is_numeric( $_POST['parent_id'] ) ) ? (int) $_POST['parent_id'] : 0;
 
 		// Update the forum meta bidness
-		bbp_update_forum( array(
+		ideaboard_update_forum( array(
 			'forum_id'    => $forum_id,
 			'post_parent' => (int) $parent_id
 		) );
 
-		do_action( 'bbp_forum_attributes_metabox_save', $forum_id );
+		do_action( 'ideaboard_forum_attributes_metabox_save', $forum_id );
 
 		return $forum_id;
 	}
@@ -315,11 +315,11 @@ class BBP_Forums_Admin {
 	 *
 	 * @since IdeaBoard (r2464)
 	 *
-	 * @uses bbp_get_forum_post_type() To get the forum post type
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_forum_post_type() To get the forum post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
 	 * @uses sanitize_html_class() To sanitize the classes
-	 * @uses do_action() Calls 'bbp_admin_head'
+	 * @uses do_action() Calls 'ideaboard_admin_head'
 	 */
 	public function admin_head() {
 
@@ -340,39 +340,39 @@ class BBP_Forums_Admin {
 				width: 60px;
 			}
 
-			#bbp_forum_attributes hr {
+			#ideaboard_forum_attributes hr {
 				border-style: solid;
 				border-width: 1px;
 				border-color: #ccc #fff #fff #ccc;
 			}
 
-			.column-bbp_forum_topic_count,
-			.column-bbp_forum_reply_count,
-			.column-bbp_topic_reply_count,
-			.column-bbp_topic_voice_count {
+			.column-ideaboard_forum_topic_count,
+			.column-ideaboard_forum_reply_count,
+			.column-ideaboard_topic_reply_count,
+			.column-ideaboard_topic_voice_count {
 				width: 8% !important;
 			}
 
 			.column-author,
-			.column-bbp_reply_author,
-			.column-bbp_topic_author {
+			.column-ideaboard_reply_author,
+			.column-ideaboard_topic_author {
 				width: 10% !important;
 			}
 
-			.column-bbp_topic_forum,
-			.column-bbp_reply_forum,
-			.column-bbp_reply_topic {
+			.column-ideaboard_topic_forum,
+			.column-ideaboard_reply_forum,
+			.column-ideaboard_reply_topic {
 				width: 10% !important;
 			}
 
-			.column-bbp_forum_freshness,
-			.column-bbp_topic_freshness {
+			.column-ideaboard_forum_freshness,
+			.column-ideaboard_topic_freshness {
 				width: 10% !important;
 			}
 
-			.column-bbp_forum_created,
-			.column-bbp_topic_created,
-			.column-bbp_reply_created {
+			.column-ideaboard_forum_created,
+			.column-ideaboard_topic_created,
+			.column-ideaboard_reply_created {
 				width: 15% !important;
 			}
 
@@ -396,7 +396,7 @@ class BBP_Forums_Admin {
 	 * @since IdeaBoard (r2485)
 	 *
 	 * @param array $columns The columns
-	 * @uses apply_filters() Calls 'bbp_admin_forums_column_headers' with
+	 * @uses apply_filters() Calls 'ideaboard_admin_forums_column_headers' with
 	 *                        the columns
 	 * @return array $columns IdeaBoard forum columns
 	 */
@@ -407,14 +407,14 @@ class BBP_Forums_Admin {
 		$columns = array (
 			'cb'                    => '<input type="checkbox" />',
 			'title'                 => __( 'Forum',     'ideaboard' ),
-			'bbp_forum_topic_count' => __( 'Topics',    'ideaboard' ),
-			'bbp_forum_reply_count' => __( 'Replies',   'ideaboard' ),
+			'ideaboard_forum_topic_count' => __( 'Topics',    'ideaboard' ),
+			'ideaboard_forum_reply_count' => __( 'Replies',   'ideaboard' ),
 			'author'                => __( 'Creator',   'ideaboard' ),
-			'bbp_forum_created'     => __( 'Created' ,  'ideaboard' ),
-			'bbp_forum_freshness'   => __( 'Freshness', 'ideaboard' )
+			'ideaboard_forum_created'     => __( 'Created' ,  'ideaboard' ),
+			'ideaboard_forum_freshness'   => __( 'Freshness', 'ideaboard' )
 		);
 
-		return apply_filters( 'bbp_admin_forums_column_headers', $columns );
+		return apply_filters( 'ideaboard_admin_forums_column_headers', $columns );
 	}
 
 	/**
@@ -424,14 +424,14 @@ class BBP_Forums_Admin {
 	 *
 	 * @param string $column Column
 	 * @param int $forum_id Forum id
-	 * @uses bbp_forum_topic_count() To output the forum topic count
-	 * @uses bbp_forum_reply_count() To output the forum reply count
+	 * @uses ideaboard_forum_topic_count() To output the forum topic count
+	 * @uses ideaboard_forum_reply_count() To output the forum reply count
 	 * @uses get_the_date() Get the forum creation date
 	 * @uses get_the_time() Get the forum creation time
 	 * @uses esc_attr() To sanitize the forum creation time
-	 * @uses bbp_get_forum_last_active_time() To get the time when the forum was
+	 * @uses ideaboard_get_forum_last_active_time() To get the time when the forum was
 	 *                                    last active
-	 * @uses do_action() Calls 'bbp_admin_forums_column_data' with the
+	 * @uses do_action() Calls 'ideaboard_admin_forums_column_data' with the
 	 *                    column and forum id
 	 */
 	public function column_data( $column, $forum_id ) {
@@ -439,15 +439,15 @@ class BBP_Forums_Admin {
 		if ( $this->bail() ) return;
 
 		switch ( $column ) {
-			case 'bbp_forum_topic_count' :
-				bbp_forum_topic_count( $forum_id );
+			case 'ideaboard_forum_topic_count' :
+				ideaboard_forum_topic_count( $forum_id );
 				break;
 
-			case 'bbp_forum_reply_count' :
-				bbp_forum_reply_count( $forum_id );
+			case 'ideaboard_forum_reply_count' :
+				ideaboard_forum_reply_count( $forum_id );
 				break;
 
-			case 'bbp_forum_created':
+			case 'ideaboard_forum_created':
 				printf( '%1$s <br /> %2$s',
 					get_the_date(),
 					esc_attr( get_the_time() )
@@ -455,8 +455,8 @@ class BBP_Forums_Admin {
 
 				break;
 
-			case 'bbp_forum_freshness' :
-				$last_active = bbp_get_forum_last_active_time( $forum_id, false );
+			case 'ideaboard_forum_freshness' :
+				$last_active = ideaboard_get_forum_last_active_time( $forum_id, false );
 				if ( !empty( $last_active ) )
 					echo esc_html( $last_active );
 				else
@@ -465,7 +465,7 @@ class BBP_Forums_Admin {
 				break;
 
 			default:
-				do_action( 'bbp_admin_forums_column_data', $column, $forum_id );
+				do_action( 'ideaboard_admin_forums_column_data', $column, $forum_id );
 				break;
 		}
 	}
@@ -480,7 +480,7 @@ class BBP_Forums_Admin {
 	 *
 	 * @param array $actions Actions
 	 * @param array $forum Forum object
-	 * @uses bbp_forum_content() To output forum description
+	 * @uses ideaboard_forum_content() To output forum description
 	 * @return array $actions Actions
 	 */
 	public function row_actions( $actions, $forum ) {
@@ -490,7 +490,7 @@ class BBP_Forums_Admin {
 		unset( $actions['inline hide-if-no-js'] );
 
 		// simple hack to show the forum description under the title
-		bbp_forum_content( $forum->ID );
+		ideaboard_forum_content( $forum->ID );
 
 		return $actions;
 	}
@@ -501,7 +501,7 @@ class BBP_Forums_Admin {
 	 * @since IdeaBoard (r3080)
 	 *
 	 * @global int $post_ID
-	 * @uses bbp_get_forum_permalink()
+	 * @uses ideaboard_get_forum_permalink()
 	 * @uses wp_post_revision_title()
 	 * @uses esc_url()
 	 * @uses add_query_arg()
@@ -516,10 +516,10 @@ class BBP_Forums_Admin {
 		if ( $this->bail() ) return $messages;
 
 		// URL for the current forum
-		$forum_url = bbp_get_forum_permalink( $post_ID );
+		$forum_url = ideaboard_get_forum_permalink( $post_ID );
 
 		// Current forum's post_date
-		$post_date = bbp_get_global_post_field( 'post_date', 'raw' );
+		$post_date = ideaboard_get_global_post_field( 'post_date', 'raw' );
 
 		// Messages array
 		$messages[$this->post_type] = array(
@@ -578,6 +578,6 @@ endif; // class_exists check
  *
  * @uses BBP_Forums_Admin
  */
-function bbp_admin_forums() {
+function ideaboard_admin_forums() {
 	ideaboard()->admin->forums = new BBP_Forums_Admin();
 }

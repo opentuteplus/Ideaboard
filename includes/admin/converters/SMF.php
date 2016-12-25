@@ -30,7 +30,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'boards',
 			'from_fieldname' => 'id_board',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_id'
+			'to_fieldname'   => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0, Stored in postmeta)
@@ -38,7 +38,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'boards',
 			'from_fieldname'  => 'id_parent',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -46,7 +46,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'boards',
 			'from_fieldname' => 'num_topics',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -54,7 +54,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'boards',
 			'from_fieldname' => 'num_posts',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum total topic count (Stored in postmeta)
@@ -62,7 +62,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'boards',
 			'from_fieldname' => 'num_topics',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_topic_count'
+			'to_fieldname'   => '_ideaboard_total_topic_count'
 		);
 
 		// Forum total reply count (Stored in postmeta)
@@ -70,7 +70,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'boards',
 			'from_fieldname' => 'num_posts',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_reply_count'
+			'to_fieldname'   => '_ideaboard_total_reply_count'
 		);
 
 		// Forum title.
@@ -136,7 +136,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'topics',
 			'from_fieldname' => 'id_topic',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -144,7 +144,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'topics',
 			'from_fieldname'  => 'num_replies',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -153,7 +153,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'topics',
 			'from_fieldname'  => 'num_replies',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -162,7 +162,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'topics',
 			'from_fieldname'  => 'id_board',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -183,7 +183,7 @@ class SMF extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'ON topics.id_first_msg = messages.id_msg',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Topic content.
@@ -245,7 +245,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'topics',
 			'from_fieldname'  => 'is_sticky',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_old_sticky_status',
+			'to_fieldname'    => '_ideaboard_old_sticky_status',
 			'callback_method' => 'callback_sticky_status'
 		);
 
@@ -297,7 +297,7 @@ class SMF extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'ON topics.id_first_msg = messages.id_msg',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -314,7 +314,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'id_msg',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_post_id'
+			'to_fieldname'    => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -325,7 +325,7 @@ class SMF extends BBP_Converter_Base {
 			'join_type'       => 'LEFT',
 			'join_expression' => 'USING (id_topic) WHERE topics.id_first_msg != messages.id_msg',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -334,7 +334,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'messages',
 			'from_fieldname'  => 'id_topic',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -343,7 +343,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'messages',
 			'from_fieldname' => 'poster_ip',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -428,7 +428,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'id_member',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_user_id'
+			'to_fieldname'   => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta serialized with salt)
@@ -436,14 +436,14 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename'  => 'members',
 			'from_fieldname'  => 'passwd',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_password',
+			'to_fieldname'    => '_ideaboard_password',
 			'callback_method' => 'callback_savepass'
 		);
 
 		// User password verify class (Stored in usermeta for verifying password)
 		$this->field_map[] = array(
 			'to_type'      => 'user',
-			'to_fieldname' => '_bbp_class',
+			'to_fieldname' => '_ideaboard_class',
 			'default'      => 'SMF'
 		);
 
@@ -517,7 +517,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'icq',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_smf_user_icq'
+			'to_fieldname'   => '_ideaboard_smf_user_icq'
 		);
 
 		// Store MSN (Stored in usermeta)
@@ -525,7 +525,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'msn',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_smf_user_msn'
+			'to_fieldname'   => '_ideaboard_smf_user_msn'
 		);
 
 		// Store Signature (Stored in usermeta)
@@ -533,7 +533,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'signature',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_smf_user_sig',
+			'to_fieldname'   => '_ideaboard_smf_user_sig',
 			'callback_method' => 'callback_html'
 		);
 
@@ -542,7 +542,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'avatar',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_smf_user_avatar',
+			'to_fieldname'   => '_ideaboard_smf_user_avatar',
 			'callback_method' => 'callback_html'
 		);
 
@@ -551,7 +551,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'location',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_smf_user_location',
+			'to_fieldname'   => '_ideaboard_smf_user_location',
 			'callback_method' => 'callback_html'
 		);
 
@@ -560,7 +560,7 @@ class SMF extends BBP_Converter_Base {
 			'from_tablename' => 'members',
 			'from_fieldname' => 'personal_text',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_smf_user_personal_text',
+			'to_fieldname'   => '_ideaboard_smf_user_personal_text',
 			'callback_method' => 'callback_html'
 		);
 	}

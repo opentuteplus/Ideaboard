@@ -131,17 +131,17 @@ class BBP_Admin {
 	private function setup_actions() {
 
 		// Bail to prevent interfering with the deactivation process
-		if ( bbp_is_deactivation() )
+		if ( ideaboard_is_deactivation() )
 			return;
 
 		/** General Actions ***************************************************/
 
-		add_action( 'bbp_admin_menu',              array( $this, 'admin_menus'                )     ); // Add menu item to settings menu
-		add_action( 'bbp_admin_head',              array( $this, 'admin_head'                 )     ); // Add some general styling to the admin area
-		add_action( 'bbp_admin_notices',           array( $this, 'activation_notice'          )     ); // Add notice if not using a IdeaBoard theme
-		add_action( 'bbp_register_admin_style',    array( $this, 'register_admin_style'       )     ); // Add green admin style
-		add_action( 'bbp_register_admin_settings', array( $this, 'register_admin_settings'    )     ); // Add settings
-		add_action( 'bbp_activation',              array( $this, 'new_install'                )     ); // Add menu item to settings menu
+		add_action( 'ideaboard_admin_menu',              array( $this, 'admin_menus'                )     ); // Add menu item to settings menu
+		add_action( 'ideaboard_admin_head',              array( $this, 'admin_head'                 )     ); // Add some general styling to the admin area
+		add_action( 'ideaboard_admin_notices',           array( $this, 'activation_notice'          )     ); // Add notice if not using a IdeaBoard theme
+		add_action( 'ideaboard_register_admin_style',    array( $this, 'register_admin_style'       )     ); // Add green admin style
+		add_action( 'ideaboard_register_admin_settings', array( $this, 'register_admin_settings'    )     ); // Add settings
+		add_action( 'ideaboard_activation',              array( $this, 'new_install'                )     ); // Add menu item to settings menu
 		add_action( 'admin_enqueue_scripts',       array( $this, 'enqueue_styles'             )     ); // Add enqueued CSS
 		add_action( 'admin_enqueue_scripts',       array( $this, 'enqueue_scripts'            )     ); // Add enqueued JS
 		add_action( 'wp_dashboard_setup',          array( $this, 'dashboard_widget_right_now' )     ); // Forums 'Right now' Dashboard widget
@@ -150,8 +150,8 @@ class BBP_Admin {
 		/** Ajax **************************************************************/
 
 		// No _nopriv_ equivalent - users must be logged in
-		add_action( 'wp_ajax_bbp_suggest_topic', array( $this, 'suggest_topic' ) );
-		add_action( 'wp_ajax_bbp_suggest_user',  array( $this, 'suggest_user'  ) );
+		add_action( 'wp_ajax_ideaboard_suggest_topic', array( $this, 'suggest_topic' ) );
+		add_action( 'wp_ajax_ideaboard_suggest_user',  array( $this, 'suggest_user'  ) );
 
 		/** Filters ***********************************************************/
 
@@ -159,10 +159,10 @@ class BBP_Admin {
 		add_filter( 'plugin_action_links', array( $this, 'modify_plugin_action_links' ), 10, 2 );
 
 		// Map settings capabilities
-		add_filter( 'bbp_map_meta_caps',   array( $this, 'map_settings_meta_caps' ), 10, 4 );
+		add_filter( 'ideaboard_map_meta_caps',   array( $this, 'map_settings_meta_caps' ), 10, 4 );
 
 		// Hide the theme compat package selection
-		add_filter( 'bbp_admin_get_settings_sections', array( $this, 'hide_theme_compat_packages' ) );
+		add_filter( 'ideaboard_admin_get_settings_sections', array( $this, 'hide_theme_compat_packages' ) );
 
 		// Allow keymasters to save forums settings
 		add_filter( 'option_page_capability_ideaboard',  array( $this, 'option_page_capability_ideaboard' ) );
@@ -175,7 +175,7 @@ class BBP_Admin {
 		/** Dependencies ******************************************************/
 
 		// Allow plugins to modify these actions
-		do_action_ref_array( 'bbp_admin_loaded', array( &$this ) );
+		do_action_ref_array( 'ideaboard_admin_loaded', array( &$this ) );
 	}
 
 	/**
@@ -192,40 +192,40 @@ class BBP_Admin {
 		$hooks = array();
 
 		// These are later removed in admin_head
-		if ( current_user_can( 'bbp_tools_page' ) ) {
-			if ( current_user_can( 'bbp_tools_repair_page' ) ) {
+		if ( current_user_can( 'ideaboard_tools_page' ) ) {
+			if ( current_user_can( 'ideaboard_tools_repair_page' ) ) {
 				$hooks[] = add_management_page(
 					__( 'Repair Forums', 'ideaboard' ),
 					__( 'Forum Repair',  'ideaboard' ),
 					$this->minimum_capability,
 					'bbp-repair',
-					'bbp_admin_repair'
+					'ideaboard_admin_repair'
 				);
 			}
 
-			if ( current_user_can( 'bbp_tools_import_page' ) ) {
+			if ( current_user_can( 'ideaboard_tools_import_page' ) ) {
 				$hooks[] = add_management_page(
 					__( 'Import Forums', 'ideaboard' ),
 					__( 'Forum Import',  'ideaboard' ),
 					$this->minimum_capability,
 					'bbp-converter',
-					'bbp_converter_settings'
+					'ideaboard_converter_settings'
 				);
 			}
 
-			if ( current_user_can( 'bbp_tools_reset_page' ) ) {
+			if ( current_user_can( 'ideaboard_tools_reset_page' ) ) {
 				$hooks[] = add_management_page(
 					__( 'Reset Forums', 'ideaboard' ),
 					__( 'Forum Reset',  'ideaboard' ),
 					$this->minimum_capability,
 					'bbp-reset',
-					'bbp_admin_reset'
+					'ideaboard_admin_reset'
 				);
 			}
 
 			// Fudge the highlighted subnav item when on a IdeaBoard admin page
 			foreach ( $hooks as $hook ) {
-				add_action( "admin_head-$hook", 'bbp_tools_modify_menu_highlight' );
+				add_action( "admin_head-$hook", 'ideaboard_tools_modify_menu_highlight' );
 			}
 
 			// Forums Tools Root
@@ -234,23 +234,23 @@ class BBP_Admin {
 				__( 'Forums', 'ideaboard' ),
 				$this->minimum_capability,
 				'bbp-repair',
-				'bbp_admin_repair'
+				'ideaboard_admin_repair'
 			);
 		}
 
 		// Are settings enabled?
-		if ( ! bbp_settings_integration() && current_user_can( 'bbp_settings_page' ) ) {
+		if ( ! ideaboard_settings_integration() && current_user_can( 'ideaboard_settings_page' ) ) {
 			add_options_page(
 				__( 'Forums',  'ideaboard' ),
 				__( 'Forums',  'ideaboard' ),
 				$this->minimum_capability,
 				'ideaboard',
-				'bbp_admin_settings'
+				'ideaboard_admin_settings'
 			);
 		}
 
 		// These are later removed in admin_head
-		if ( current_user_can( 'bbp_about_page' ) ) {
+		if ( current_user_can( 'ideaboard_about_page' ) ) {
 
 			// About
 			add_dashboard_page(
@@ -314,10 +314,10 @@ class BBP_Admin {
 	 * @return type
 	 */
 	public static function new_install() {
-		if ( !bbp_is_install() )
+		if ( !ideaboard_is_install() )
 			return;
 
-		bbp_create_initial_content();
+		ideaboard_create_initial_content();
 	}
 
 	/**
@@ -333,12 +333,12 @@ class BBP_Admin {
 	public static function register_admin_settings() {
 
 		// Bail if no sections available
-		$sections = bbp_admin_get_settings_sections();
+		$sections = ideaboard_admin_get_settings_sections();
 		if ( empty( $sections ) )
 			return false;
 
 		// Are we using settings integration?
-		$settings_integration = bbp_settings_integration();
+		$settings_integration = ideaboard_settings_integration();
 
 		// Loop through sections
 		foreach ( (array) $sections as $section_id => $section ) {
@@ -348,7 +348,7 @@ class BBP_Admin {
 				continue;
 
 			// Only add section and fields if section has fields
-			$fields = bbp_admin_get_settings_fields_for_section( $section_id );
+			$fields = ideaboard_admin_get_settings_fields_for_section( $section_id );
 			if ( empty( $fields ) )
 				continue;
 
@@ -386,7 +386,7 @@ class BBP_Admin {
 	 * @param int $user_id User id
 	 * @param mixed $args Arguments
 	 * @uses get_post() To get the post
-	 * @uses apply_filters() Calls 'bbp_map_meta_caps' with caps, cap, user id and
+	 * @uses apply_filters() Calls 'ideaboard_map_meta_caps' with caps, cap, user id and
 	 *                        args
 	 * @return array Actual capabilities for meta capability
 	 */
@@ -396,7 +396,7 @@ class BBP_Admin {
 		switch ( $cap ) {
 
 			// BuddyPress
-			case 'bbp_settings_buddypress' :
+			case 'ideaboard_settings_buddypress' :
 				if ( ( is_plugin_active( 'buddypress/bp-loader.php' ) && defined( 'BP_VERSION' ) && bp_is_root_blog() ) && is_super_admin() ) {
 					$caps = array( ideaboard()->admin->minimum_capability );
 				} else {
@@ -406,7 +406,7 @@ class BBP_Admin {
 				break;
 
 			// Akismet
-			case 'bbp_settings_akismet' :
+			case 'ideaboard_settings_akismet' :
 				if ( ( is_plugin_active( 'akismet/akismet.php' ) && defined( 'AKISMET_VERSION' ) ) && is_super_admin() ) {
 					$caps = array( ideaboard()->admin->minimum_capability );
 				} else {
@@ -416,25 +416,25 @@ class BBP_Admin {
 				break;
 
 			// IdeaBoard
-			case 'bbp_about_page'            : // About and Credits
-			case 'bbp_tools_page'            : // Tools Page
-			case 'bbp_tools_repair_page'     : // Tools - Repair Page
-			case 'bbp_tools_import_page'     : // Tools - Import Page
-			case 'bbp_tools_reset_page'      : // Tools - Reset Page
-			case 'bbp_settings_page'         : // Settings Page
-			case 'bbp_settings_users'        : // Settings - Users
-			case 'bbp_settings_features'     : // Settings - Features
-			case 'bbp_settings_theme_compat' : // Settings - Theme compat
-			case 'bbp_settings_root_slugs'   : // Settings - Root slugs
-			case 'bbp_settings_single_slugs' : // Settings - Single slugs
-			case 'bbp_settings_user_slugs'   : // Settings - User slugs
-			case 'bbp_settings_per_page'     : // Settings - Per page
-			case 'bbp_settings_per_rss_page' : // Settings - Per RSS page
+			case 'ideaboard_about_page'            : // About and Credits
+			case 'ideaboard_tools_page'            : // Tools Page
+			case 'ideaboard_tools_repair_page'     : // Tools - Repair Page
+			case 'ideaboard_tools_import_page'     : // Tools - Import Page
+			case 'ideaboard_tools_reset_page'      : // Tools - Reset Page
+			case 'ideaboard_settings_page'         : // Settings Page
+			case 'ideaboard_settings_users'        : // Settings - Users
+			case 'ideaboard_settings_features'     : // Settings - Features
+			case 'ideaboard_settings_theme_compat' : // Settings - Theme compat
+			case 'ideaboard_settings_root_slugs'   : // Settings - Root slugs
+			case 'ideaboard_settings_single_slugs' : // Settings - Single slugs
+			case 'ideaboard_settings_user_slugs'   : // Settings - User slugs
+			case 'ideaboard_settings_per_page'     : // Settings - Per page
+			case 'ideaboard_settings_per_rss_page' : // Settings - Per RSS page
 				$caps = array( ideaboard()->admin->minimum_capability );
 				break;
 		}
 
-		return apply_filters( 'bbp_map_settings_meta_caps', $caps, $cap, $user_id, $args );
+		return apply_filters( 'ideaboard_map_settings_meta_caps', $caps, $cap, $user_id, $args );
 	}
 
 	/**
@@ -442,7 +442,7 @@ class BBP_Admin {
 	 *
 	 * @since IdeaBoard (r2737)
 	 *
-	 * @uses apply_filters() Calls 'bbp_importer_path' filter to allow plugins
+	 * @uses apply_filters() Calls 'ideaboard_importer_path' filter to allow plugins
 	 *                        to customize the importer script locations.
 	 */
 	public function register_importers() {
@@ -455,13 +455,13 @@ class BBP_Admin {
 		require_once( ABSPATH . 'wp-admin/includes/import.php' );
 
 		// Load our importers
-		$importers = apply_filters( 'bbp_importers', array( 'ideaboard' ) );
+		$importers = apply_filters( 'ideaboard_importers', array( 'ideaboard' ) );
 
 		// Loop through included importers
 		foreach ( $importers as $importer ) {
 
 			// Allow custom importer directory
-			$import_dir  = apply_filters( 'bbp_importer_path', $this->admin_dir . 'importers', $importer );
+			$import_dir  = apply_filters( 'ideaboard_importer_path', $this->admin_dir . 'importers', $importer );
 
 			// Compile the importer path
 			$import_file = trailingslashit( $import_dir ) . $importer . '.php';
@@ -506,12 +506,12 @@ class BBP_Admin {
 		$new_links = array();
 
 		// Settings page link
-		if ( current_user_can( 'bbp_settings_page' ) ) {
+		if ( current_user_can( 'ideaboard_settings_page' ) ) {
 			$new_links['settings'] = '<a href="' . esc_url( add_query_arg( array( 'page' => 'ideaboard'   ), admin_url( 'options-general.php' ) ) ) . '">' . esc_html__( 'Settings', 'ideaboard' ) . '</a>';
 		}
 
 		// About page link
-		if ( current_user_can( 'bbp_about_page' ) ) {
+		if ( current_user_can( 'ideaboard_about_page' ) ) {
 			$new_links['about']    = '<a href="' . esc_url( add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php'           ) ) ) . '">' . esc_html__( 'About',    'ideaboard' ) . '</a>';
 		}
 
@@ -527,7 +527,7 @@ class BBP_Admin {
 	 * @uses wp_add_dashboard_widget() To add the dashboard widget
 	 */
 	public static function dashboard_widget_right_now() {
-		wp_add_dashboard_widget( 'bbp-dashboard-right-now', __( 'Right Now in Forums', 'ideaboard' ), 'bbp_dashboard_widget_right_now' );
+		wp_add_dashboard_widget( 'bbp-dashboard-right-now', __( 'Right Now in Forums', 'ideaboard' ), 'ideaboard_dashboard_widget_right_now' );
 	}
 
 	/**
@@ -557,23 +557,23 @@ class BBP_Admin {
 		wp_enqueue_script( 'suggest' );
 
 		// Get the version to use for JS
-		$version = bbp_get_version();
+		$version = ideaboard_get_version();
 
 		// Post type checker (only topics and replies)
 		if ( 'post' === get_current_screen()->base ) {
 			switch( get_current_screen()->post_type ) {
-				case bbp_get_reply_post_type() :
-				case bbp_get_topic_post_type() :
+				case ideaboard_get_reply_post_type() :
+				case ideaboard_get_topic_post_type() :
 
 					// Enqueue the common JS
 					wp_enqueue_script( 'bbp-admin-common-js', $this->js_url . 'common.js', array( 'jquery' ), $version );
 
 					// Topics admin
-					if ( bbp_get_topic_post_type() === get_current_screen()->post_type ) {
+					if ( ideaboard_get_topic_post_type() === get_current_screen()->post_type ) {
 						wp_enqueue_script( 'bbp-admin-topics-js', $this->js_url . 'topics.js', array( 'jquery' ), $version );
 
 					// Replies admin
-					} elseif ( bbp_get_reply_post_type() === get_current_screen()->post_type ) {
+					} elseif ( ideaboard_get_reply_post_type() === get_current_screen()->post_type ) {
 						wp_enqueue_script( 'bbp-admin-replies-js', $this->js_url . 'replies.js', array( 'jquery' ), $version );
 					}
 
@@ -588,7 +588,7 @@ class BBP_Admin {
 	 * @since IdeaBoard (r5224)
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( 'bbp-admin-css', $this->css_url . 'admin.css', array( 'dashicons' ), bbp_get_version() );
+		wp_enqueue_style( 'bbp-admin-css', $this->css_url . 'admin.css', array( 'dashicons' ), ideaboard_get_version() );
 	}
 
 	/**
@@ -662,7 +662,7 @@ class BBP_Admin {
 	 */
 	public function hide_theme_compat_packages( $sections = array() ) {
 		if ( count( ideaboard()->theme_compat->packages ) <= 1 )
-			unset( $sections['bbp_settings_theme_compat'] );
+			unset( $sections['ideaboard_settings_theme_compat'] );
 
 		return $sections;
 	}
@@ -688,9 +688,9 @@ class BBP_Admin {
 	 * @since IdeaBoard (r4261)
 	 *
 	 * @uses get_posts()
-	 * @uses bbp_get_topic_post_type()
-	 * @uses bbp_get_topic_id()
-	 * @uses bbp_get_topic_title()
+	 * @uses ideaboard_get_topic_post_type()
+	 * @uses ideaboard_get_topic_id()
+	 * @uses ideaboard_get_topic_title()
 	 */
 	public function suggest_topic() {
 		global $wpdb;
@@ -706,18 +706,18 @@ class BBP_Admin {
 		}
 
 		// Check the ajax nonce
-		check_ajax_referer( 'bbp_suggest_topic_nonce' );
+		check_ajax_referer( 'ideaboard_suggest_topic_nonce' );
 
 		// Try to get some topics
 		$topics = get_posts( array(
 			's'         => $wpdb->esc_like( $_REQUEST['q'] ),
-			'post_type' => bbp_get_topic_post_type()
+			'post_type' => ideaboard_get_topic_post_type()
 		) );
 
 		// If we found some topics, loop through and display them
 		if ( ! empty( $topics ) ) {
 			foreach ( (array) $topics as $post ) {
-				printf( esc_html__( '%s - %s', 'ideaboard' ), bbp_get_topic_id( $post->ID ), bbp_get_topic_title( $post->ID ) . "\n" );
+				printf( esc_html__( '%s - %s', 'ideaboard' ), ideaboard_get_topic_id( $post->ID ), ideaboard_get_topic_title( $post->ID ) . "\n" );
 			}
 		}
 		die();
@@ -742,7 +742,7 @@ class BBP_Admin {
 		}
 
 		// Check the ajax nonce
-		check_ajax_referer( 'bbp_suggest_user_nonce' );
+		check_ajax_referer( 'ideaboard_suggest_user_nonce' );
 
 		// Try to get some users
 		$users_query = new WP_User_Query( array(
@@ -755,7 +755,7 @@ class BBP_Admin {
 		// If we found some users, loop through and display them
 		if ( ! empty( $users_query->results ) ) {
 			foreach ( (array) $users_query->results as $user ) {
-				printf( esc_html__( '%s - %s', 'ideaboard' ), bbp_get_user_id( $user->ID ), bbp_get_user_nicename( $user->ID, array( 'force' => $user->user_nicename ) ) . "\n" );
+				printf( esc_html__( '%s - %s', 'ideaboard' ), ideaboard_get_user_id( $user->ID ), ideaboard_get_user_nicename( $user->ID, array( 'force' => $user->user_nicename ) ) . "\n" );
 			}
 		}
 		die();
@@ -770,7 +770,7 @@ class BBP_Admin {
 	 */
 	public function about_screen() {
 
-		list( $display_version ) = explode( '-', bbp_get_version() ); ?>
+		list( $display_version ) = explode( '-', ideaboard_get_version() ); ?>
 
 		<div class="wrap about-wrap">
 			<h1><?php printf( esc_html__( 'Welcome to IdeaBoard %s', 'ideaboard' ), $display_version ); ?></h1>
@@ -847,7 +847,7 @@ class BBP_Admin {
 	 */
 	public function credits_screen() {
 
-		list( $display_version ) = explode( '-', bbp_get_version() ); ?>
+		list( $display_version ) = explode( '-', ideaboard_get_version() ); ?>
 
 		<div class="wrap about-wrap">
 			<h1><?php printf( esc_html__( 'Welcome to IdeaBoard %s', 'ideaboard' ), $display_version ); ?></h1>
@@ -968,7 +968,7 @@ class BBP_Admin {
 			case 'bbp-update' :
 
 				// Run the full updater
-				bbp_version_updater(); ?>
+				ideaboard_version_updater(); ?>
 
 				<p><?php esc_html_e( 'All done!', 'ideaboard' ); ?></p>
 				<a class="button" href="index.php?page=bbp-update"><?php esc_html_e( 'Go Back', 'ideaboard' ); ?></a>
@@ -1059,7 +1059,7 @@ class BBP_Admin {
 
 							// Run the updater on this site
 							if ( is_plugin_active_for_network( $basename ) || is_plugin_active( $basename ) ) {
-								bbp_version_updater();
+								ideaboard_version_updater();
 							}
 
 							// restore original blog
@@ -1067,7 +1067,7 @@ class BBP_Admin {
 
 							// Do some actions to allow plugins to do things too
 							do_action( 'after_ideaboard_upgrade', $response             );
-							do_action( 'bbp_upgrade_site',      $details[ 'blog_id' ] );
+							do_action( 'ideaboard_upgrade_site',      $details[ 'blog_id' ] );
 
 						endforeach; ?>
 
@@ -1112,7 +1112,7 @@ endif; // class_exists check
  *
  * @uses BBP_Admin
  */
-function bbp_admin() {
+function ideaboard_admin() {
 	ideaboard()->admin = new BBP_Admin();
 
 	ideaboard()->admin->converter = new BBP_Converter();

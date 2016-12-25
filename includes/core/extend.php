@@ -20,13 +20,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @return If IdeaBoard is not active
  */
-function bbp_setup_akismet() {
+function ideaboard_setup_akismet() {
 
 	// Bail if no akismet
 	if ( !defined( 'AKISMET_VERSION' ) ) return;
 
 	// Bail if Akismet is turned off
-	if ( !bbp_is_akismet_active() ) return;
+	if ( !ideaboard_is_akismet_active() ) return;
 
 	// Include the Akismet Component
 	require( ideaboard()->includes_dir . 'extend/akismet.php' );
@@ -37,12 +37,12 @@ function bbp_setup_akismet() {
 
 /**
  * Requires and creates the BuddyPress extension, and adds component creation
- * action to bp_init hook. @see bbp_setup_buddypress_component()
+ * action to bp_init hook. @see ideaboard_setup_buddypress_component()
  *
  * @since IdeaBoard (r3395)
  * @return If BuddyPress is not active
  */
-function bbp_setup_buddypress() {
+function ideaboard_setup_buddypress() {
 
 	if ( ! function_exists( 'buddypress' ) ) {
 

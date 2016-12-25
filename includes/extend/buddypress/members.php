@@ -48,14 +48,14 @@ class BBP_BuddyPress_Members {
 		/** Favorites *********************************************************/
 
 		// Move handler to 'bp_actions' - BuddyPress bypasses template_loader
-		remove_action( 'template_redirect', 'bbp_favorites_handler', 1 );
-		add_action(    'bp_actions',        'bbp_favorites_handler', 1 );
+		remove_action( 'template_redirect', 'ideaboard_favorites_handler', 1 );
+		add_action(    'bp_actions',        'ideaboard_favorites_handler', 1 );
 
 		/** Subscriptions *****************************************************/
 
 		// Move handler to 'bp_actions' - BuddyPress bypasses template_loader
-		remove_action( 'template_redirect', 'bbp_subscriptions_handler', 1 );
-		add_action(    'bp_actions',        'bbp_subscriptions_handler', 1 );
+		remove_action( 'template_redirect', 'ideaboard_subscriptions_handler', 1 );
+		add_action(    'bp_actions',        'ideaboard_subscriptions_handler', 1 );
 	}
 
 	/**
@@ -68,9 +68,9 @@ class BBP_BuddyPress_Members {
 	 * @uses add_action() To add various actions
 	 */
 	private function setup_filters() {
-		add_filter( 'bbp_pre_get_user_profile_url',    array( $this, 'user_profile_url'            )        );
-		add_filter( 'bbp_get_favorites_permalink',     array( $this, 'get_favorites_permalink'     ), 10, 2 );
-		add_filter( 'bbp_get_subscriptions_permalink', array( $this, 'get_subscriptions_permalink' ), 10, 2 );
+		add_filter( 'ideaboard_pre_get_user_profile_url',    array( $this, 'user_profile_url'            )        );
+		add_filter( 'ideaboard_get_favorites_permalink',     array( $this, 'get_favorites_permalink'     ), 10, 2 );
+		add_filter( 'ideaboard_get_subscriptions_permalink', array( $this, 'get_subscriptions_permalink' ), 10, 2 );
 	}
 
 	/** Filters ***************************************************************/
@@ -94,19 +94,19 @@ class BBP_BuddyPress_Members {
 		if ( bp_is_current_component( $component_slug ) ) {
 
 			// Empty action or 'topics' action
-			if ( !bp_current_action() || bp_is_current_action( bbp_get_topic_archive_slug() ) ) {
-				$profile_url = bp_core_get_user_domain( $user_id ) . $component_slug . '/' . bbp_get_topic_archive_slug();
+			if ( !bp_current_action() || bp_is_current_action( ideaboard_get_topic_archive_slug() ) ) {
+				$profile_url = bp_core_get_user_domain( $user_id ) . $component_slug . '/' . ideaboard_get_topic_archive_slug();
 
 			// Empty action or 'topics' action
-			} elseif ( bp_is_current_action( bbp_get_reply_archive_slug() ) ) {
-				$profile_url = bp_core_get_user_domain( $user_id ) . $component_slug . '/' . bbp_get_reply_archive_slug();
+			} elseif ( bp_is_current_action( ideaboard_get_reply_archive_slug() ) ) {
+				$profile_url = bp_core_get_user_domain( $user_id ) . $component_slug . '/' . ideaboard_get_reply_archive_slug();
 
 			// 'favorites' action
-			} elseif ( bbp_is_favorites_active() && bp_is_current_action( bbp_get_user_favorites_slug() ) ) {
+			} elseif ( ideaboard_is_favorites_active() && bp_is_current_action( ideaboard_get_user_favorites_slug() ) ) {
 				$profile_url = $this->get_favorites_permalink( '', $user_id );
 
 			// 'subscriptions' action
-			} elseif ( bbp_is_subscriptions_active() && bp_is_current_action( bbp_get_user_subscriptions_slug() ) ) {
+			} elseif ( ideaboard_is_subscriptions_active() && bp_is_current_action( ideaboard_get_user_subscriptions_slug() ) ) {
 				$profile_url = $this->get_subscriptions_permalink( '', $user_id );
 			}
 
@@ -128,7 +128,7 @@ class BBP_BuddyPress_Members {
 	 */
 	public function get_favorites_permalink( $url, $user_id ) {
 		$component_slug = ideaboard()->extend->buddypress->slug;
-		$url            = trailingslashit( bp_core_get_user_domain( $user_id ) . $component_slug . '/' . bbp_get_user_favorites_slug() );
+		$url            = trailingslashit( bp_core_get_user_domain( $user_id ) . $component_slug . '/' . ideaboard_get_user_favorites_slug() );
 		return $url;
 	}
 
@@ -142,7 +142,7 @@ class BBP_BuddyPress_Members {
 	 */
 	public function get_subscriptions_permalink( $url, $user_id ) {
 		$component_slug = ideaboard()->extend->buddypress->slug;
-		$url            = trailingslashit( bp_core_get_user_domain( $user_id ) . $component_slug . '/' . bbp_get_user_subscriptions_slug() );
+		$url            = trailingslashit( bp_core_get_user_domain( $user_id ) . $component_slug . '/' . ideaboard_get_user_subscriptions_slug() );
 		return $url;
 	}
 
@@ -164,12 +164,12 @@ class BBP_BuddyPress_Members {
 		global $wp_query;
 
 		// 'favorites' action
-		if ( bbp_is_favorites_active() && bp_is_current_action( bbp_get_user_favorites_slug() ) ) {
-			$wp_query->bbp_is_single_user_favs = true;
+		if ( ideaboard_is_favorites_active() && bp_is_current_action( ideaboard_get_user_favorites_slug() ) ) {
+			$wp_query->ideaboard_is_single_user_favs = true;
 
 		// 'subscriptions' action
-		} elseif ( bbp_is_subscriptions_active() && bp_is_current_action( bbp_get_user_subscriptions_slug() ) ) {
-			$wp_query->bbp_is_single_user_subs = true;
+		} elseif ( ideaboard_is_subscriptions_active() && bp_is_current_action( ideaboard_get_user_subscriptions_slug() ) ) {
+			$wp_query->ideaboard_is_single_user_subs = true;
 		}
 	}
 }

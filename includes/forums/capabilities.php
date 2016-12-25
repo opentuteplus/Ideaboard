@@ -14,11 +14,11 @@
  *
  * @since IdeaBoard (r2593)
  *
- * @uses apply_filters() Calls 'bbp_get_forum_caps' with the capabilities
+ * @uses apply_filters() Calls 'ideaboard_get_forum_caps' with the capabilities
  * @return array Forum capabilities
  */
-function bbp_get_forum_caps() {
-	return apply_filters( 'bbp_get_forum_caps', array (
+function ideaboard_get_forum_caps() {
+	return apply_filters( 'ideaboard_get_forum_caps', array (
 		'edit_posts'          => 'edit_forums',
 		'edit_others_posts'   => 'edit_others_forums',
 		'publish_posts'       => 'publish_forums',
@@ -43,7 +43,7 @@ function bbp_get_forum_caps() {
  * @uses apply_filters() Filter capability map results
  * @return array Actual capabilities for meta capability
  */
-function bbp_map_forum_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
+function ideaboard_map_forum_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
 
 	// What capability is being checked?
 	switch ( $cap ) {
@@ -77,7 +77,7 @@ function bbp_map_forum_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 					$post_type = get_post_type_object( $_post->post_type );
 
 					// Post is public
-					if ( bbp_get_public_status_id() === $_post->post_status ) {
+					if ( ideaboard_get_public_status_id() === $_post->post_status ) {
 						$caps = array( 'spectate' );
 
 					// User is author so allow read
@@ -133,7 +133,7 @@ function bbp_map_forum_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 				$caps      = array();
 
 				// Add 'do_not_allow' cap if user is spam or deleted
-				if ( bbp_is_user_inactive( $user_id ) ) {
+				if ( ideaboard_is_user_inactive( $user_id ) ) {
 					$caps[] = 'do_not_allow';
 
 				// User is author so allow edit if not in admin
@@ -162,7 +162,7 @@ function bbp_map_forum_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 				$caps      = array();
 
 				// Add 'do_not_allow' cap if user is spam or deleted
-				if ( bbp_is_user_inactive( $user_id ) ) {
+				if ( ideaboard_is_user_inactive( $user_id ) ) {
 					$caps[] = 'do_not_allow';
 
 				// User is author so allow to delete
@@ -179,10 +179,10 @@ function bbp_map_forum_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 
 		/** Admin *************************************************************/
 
-		case 'bbp_forums_admin' :
+		case 'ideaboard_forums_admin' :
 			$caps = array( 'keep_gate' );
 			break;
 	}
 
-	return apply_filters( 'bbp_map_forum_meta_caps', $caps, $cap, $user_id, $args );
+	return apply_filters( 'ideaboard_map_forum_meta_caps', $caps, $cap, $user_id, $args );
 }

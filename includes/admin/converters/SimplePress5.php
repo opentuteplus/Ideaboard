@@ -30,7 +30,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfforums',
 			'from_fieldname' => 'forum_id',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_id'
+			'to_fieldname'   => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0, Stored in postmeta)
@@ -38,7 +38,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfforums',
 			'from_fieldname' => 'parent',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_forum_parent_id'
+			'to_fieldname'   => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -46,7 +46,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfforums',
 			'from_fieldname' => 'topic_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -54,7 +54,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfforums',
 			'from_fieldname' => 'post_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum total topic count (Stored in postmeta)
@@ -62,7 +62,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfforums',
 			'from_fieldname' => 'topic_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_topic_count'
+			'to_fieldname'   => '_ideaboard_total_topic_count'
 		);
 
 		// Forum total reply count (Stored in postmeta)
@@ -70,7 +70,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfforums',
 			'from_fieldname' => 'post_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_reply_count'
+			'to_fieldname'   => '_ideaboard_total_reply_count'
 		);
 
 		// Forum title.
@@ -136,7 +136,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sftopics',
 			'from_fieldname' => 'topic_id',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_topic_id'
+			'to_fieldname'   => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -144,7 +144,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sftopics',
 			'from_fieldname' => 'post_count',
 			'to_type'        => 'topic',
-			'to_fieldname'   => '_bbp_reply_count',
+			'to_fieldname'   => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -153,7 +153,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename'  => 'sftopics',
 			'from_fieldname'  => 'forum_id',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -219,7 +219,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename'  => 'sftopics',
 			'from_fieldname'  => 'topic_pinned',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_old_sticky_status',
+			'to_fieldname'    => '_ideaboard_old_sticky_status',
 			'callback_method' => 'callback_sticky_status'
 		);
 
@@ -252,7 +252,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename'  => 'sftopics',
 			'from_fieldname'  => 'topic_date',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time'
+			'to_fieldname'    => '_ideaboard_last_active_time'
 		);
 
 		/** Tags Section ******************************************************/
@@ -268,7 +268,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfposts',
 			'from_fieldname' => 'post_id',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_post_id'
+			'to_fieldname'   => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -276,7 +276,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename'  => 'sfposts',
 			'from_fieldname'  => 'forum_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -285,7 +285,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename'  => 'sfposts',
 			'from_fieldname'  => 'topic_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -294,7 +294,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'sfposts',
 			'from_fieldname' => 'poster_ip',
 			'to_type'        => 'reply',
-			'to_fieldname'   => '_bbp_author_ip'
+			'to_fieldname'   => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -383,7 +383,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'ID',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_user_id'
+			'to_fieldname'   => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta)
@@ -391,7 +391,7 @@ class SimplePress5 extends BBP_Converter_Base {
 			'from_tablename' => 'users',
 			'from_fieldname' => 'user_pass',
 			'to_type'        => 'user',
-			'to_fieldname'   => '_bbp_password'
+			'to_fieldname'   => '_ideaboard_password'
 		);
 
 		// User name.

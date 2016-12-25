@@ -16,11 +16,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since IdeaBoard (r3764)
  *
  * @uses get_option()
- * @uses bbp_get_db_version() To get IdeaBoard's database version
+ * @uses ideaboard_get_db_version() To get IdeaBoard's database version
  * @return bool True if update, False if not
  */
-function bbp_is_install() {
-	return ! bbp_get_db_version_raw();
+function ideaboard_is_install() {
+	return ! ideaboard_get_db_version_raw();
 }
 
 /**
@@ -29,12 +29,12 @@ function bbp_is_install() {
  * @since IdeaBoard (r3421)
  *
  * @uses get_option()
- * @uses bbp_get_db_version() To get IdeaBoard's database version
+ * @uses ideaboard_get_db_version() To get IdeaBoard's database version
  * @return bool True if update, False if not
  */
-function bbp_is_update() {
-	$raw    = (int) bbp_get_db_version_raw();
-	$cur    = (int) bbp_get_db_version();
+function ideaboard_is_update() {
+	$raw    = (int) ideaboard_get_db_version_raw();
+	$cur    = (int) ideaboard_get_db_version();
 	$retval = (bool) ( $raw < $cur );
 	return $retval;
 }
@@ -49,7 +49,7 @@ function bbp_is_update() {
  *
  * @return bool True if activating IdeaBoard, false if not
  */
-function bbp_is_activation( $basename = '' ) {
+function ideaboard_is_activation( $basename = '' ) {
 	global $pagenow;
 
 	$bbp    = ideaboard();
@@ -98,7 +98,7 @@ function bbp_is_activation( $basename = '' ) {
  * @since IdeaBoard (r3421)
  * @return bool True if deactivating IdeaBoard, false if not
  */
-function bbp_is_deactivation( $basename = '' ) {
+function ideaboard_is_deactivation( $basename = '' ) {
 	global $pagenow;
 
 	$bbp    = ideaboard();
@@ -146,10 +146,10 @@ function bbp_is_deactivation( $basename = '' ) {
  *
  * @since IdeaBoard (r3421)
  * @uses update_option()
- * @uses bbp_get_db_version() To get IdeaBoard's database version
+ * @uses ideaboard_get_db_version() To get IdeaBoard's database version
  */
-function bbp_version_bump() {
-	update_option( '_bbp_db_version', bbp_get_db_version() );
+function ideaboard_version_bump() {
+	update_option( '_ideaboard_db_version', ideaboard_get_db_version() );
 }
 
 /**
@@ -157,18 +157,18 @@ function bbp_version_bump() {
  *
  * @since IdeaBoard (r3419)
  *
- * @uses bbp_version_updater()
- * @uses bbp_version_bump()
+ * @uses ideaboard_version_updater()
+ * @uses ideaboard_version_bump()
  * @uses flush_rewrite_rules()
  */
-function bbp_setup_updater() {
+function ideaboard_setup_updater() {
 
 	// Bail if no update needed
-	if ( ! bbp_is_update() )
+	if ( ! ideaboard_is_update() )
 		return;
 
 	// Call the automated updater
-	bbp_version_updater();
+	ideaboard_version_updater();
 }
 
 /**
@@ -177,10 +177,10 @@ function bbp_setup_updater() {
  * @since IdeaBoard (r3767)
  * @param array $args Array of arguments to override default values
  */
-function bbp_create_initial_content( $args = array() ) {
+function ideaboard_create_initial_content( $args = array() ) {
 
 	// Parse arguments against default values
-	$r = bbp_parse_args( $args, array(
+	$r = ideaboard_parse_args( $args, array(
 		'forum_parent'  => 0,
 		'forum_status'  => 'publish',
 		'forum_title'   => __( 'General',                                  'ideaboard' ),
@@ -192,7 +192,7 @@ function bbp_create_initial_content( $args = array() ) {
 	), 'create_initial_content' );
 
 	// Create the initial forum
-	$forum_id = bbp_insert_forum( array(
+	$forum_id = ideaboard_insert_forum( array(
 		'post_parent'  => $r['forum_parent'],
 		'post_status'  => $r['forum_status'],
 		'post_title'   => $r['forum_title'],
@@ -200,7 +200,7 @@ function bbp_create_initial_content( $args = array() ) {
 	) );
 
 	// Create the initial topic
-	$topic_id = bbp_insert_topic(
+	$topic_id = ideaboard_insert_topic(
 		array(
 			'post_parent'  => $forum_id,
 			'post_title'   => $r['topic_title'],
@@ -210,7 +210,7 @@ function bbp_create_initial_content( $args = array() ) {
 	);
 
 	// Create the initial reply
-	$reply_id = bbp_insert_reply(
+	$reply_id = ideaboard_insert_reply(
 		array(
 			'post_parent'  => $topic_id,
 			'post_title'   => $r['reply_title'],
@@ -238,10 +238,10 @@ function bbp_create_initial_content( $args = array() ) {
  *
  * @since IdeaBoard (r4104)
  */
-function bbp_version_updater() {
+function ideaboard_version_updater() {
 
 	// Get the raw database version
-	$raw_db_version = (int) bbp_get_db_version_raw();
+	$raw_db_version = (int) ideaboard_get_db_version_raw();
 
 	/** 2.0 Branch ************************************************************/
 
@@ -260,7 +260,7 @@ function bbp_version_updater() {
 		 *
 		 * @link http://ideaboard.trac.wordpress.org/ticket/1891
 		 */
-		bbp_admin_repair_forum_visibility();
+		ideaboard_admin_repair_forum_visibility();
 	}
 
 	/** 2.2 Branch ************************************************************/
@@ -269,13 +269,13 @@ function bbp_version_updater() {
 	if ( $raw_db_version < 220 ) {
 
 		// Remove the Moderator role from the database
-		remove_role( bbp_get_moderator_role() );
+		remove_role( ideaboard_get_moderator_role() );
 
 		// Remove the Participant role from the database
-		remove_role( bbp_get_participant_role() );
+		remove_role( ideaboard_get_participant_role() );
 
 		// Remove capabilities
-		bbp_remove_caps();
+		ideaboard_remove_caps();
 	}
 
 	/** 2.3 Branch ************************************************************/
@@ -288,10 +288,10 @@ function bbp_version_updater() {
 	/** All done! *************************************************************/
 
 	// Bump the version
-	bbp_version_bump();
+	ideaboard_version_bump();
 
 	// Delete rewrite rules to force a flush
-	bbp_delete_rewrite_rules();
+	ideaboard_delete_rewrite_rules();
 }
 
 /**
@@ -306,20 +306,20 @@ function bbp_version_updater() {
  *
  * @return If network admin or bulk activation
  */
-function bbp_add_activation_redirect() {
+function ideaboard_add_activation_redirect() {
 
 	// Bail if activating from network, or bulk
 	if ( is_network_admin() || isset( $_GET['activate-multi'] ) )
 		return;
 
 	// Add the transient to redirect
-    set_transient( '_bbp_activation_redirect', true, 30 );
+    set_transient( '_ideaboard_activation_redirect', true, 30 );
 }
 
 /**
- * Hooked to the 'bbp_activate' action, this helper function automatically makes
+ * Hooked to the 'ideaboard_activate' action, this helper function automatically makes
  * the current user a Key Master in the forums if they just activated IdeaBoard,
- * regardless of the bbp_allow_global_access() setting.
+ * regardless of the ideaboard_allow_global_access() setting.
  *
  * @since IdeaBoard (r4910)
  *
@@ -329,12 +329,12 @@ function bbp_add_activation_redirect() {
  * @uses get_current_user_id() to get the current user ID
  * @uses get_current_blog_id() to get the current blog ID
  * @uses is_user_member_of_blog() to bail if the current user does not have a role
- * @uses bbp_is_user_keymaster() to bail if the user is already a keymaster
- * @uses bbp_set_user_role() to make the current user a keymaster
+ * @uses ideaboard_is_user_keymaster() to bail if the user is already a keymaster
+ * @uses ideaboard_set_user_role() to make the current user a keymaster
  *
  * @return If user can't activate plugins or is already a keymaster
  */
-function bbp_make_current_user_keymaster() {
+function ideaboard_make_current_user_keymaster() {
 
 	// Bail if the current user can't activate plugins since previous pageload
 	if ( ! current_user_can( 'activate_plugins' ) ) {
@@ -352,12 +352,12 @@ function bbp_make_current_user_keymaster() {
 
 	// Bail if the current user already has a forum role to prevent
 	// unexpected role and capability escalation.
-	if ( bbp_get_user_role( $user_id ) ) {
+	if ( ideaboard_get_user_role( $user_id ) ) {
 		return;
 	}
 
 	// Make the current user a keymaster
-	bbp_set_user_role( $user_id, bbp_get_keymaster_role() );
+	ideaboard_set_user_role( $user_id, ideaboard_get_keymaster_role() );
 
 	// Reload the current user so caps apply immediately
 	wp_get_current_user();

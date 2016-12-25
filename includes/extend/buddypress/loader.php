@@ -70,7 +70,7 @@ class BBP_Forums_Component extends BP_Component {
 		}
 
 		// BuddyPress Group Extension class
-		if ( bbp_is_group_forums_active() && bp_is_active( 'groups' ) ) {
+		if ( ideaboard_is_group_forums_active() && bp_is_active( 'groups' ) ) {
 			$includes[] = 'groups.php';
 		}
 
@@ -141,7 +141,7 @@ class BBP_Forums_Component extends BP_Component {
 		}
 
 		// Register the group extension only if groups are active
-		if ( bbp_is_group_forums_active() && bp_is_active( 'groups' ) ) {
+		if ( ideaboard_is_group_forums_active() && bp_is_active( 'groups' ) ) {
 			bp_register_group_extension( 'BBP_Forums_Group_Extension' );
 		}
 	}
@@ -153,7 +153,7 @@ class BBP_Forums_Component extends BP_Component {
 	 * @since IdeaBoard (r3902)
 	 */
 	private function fully_loaded() {
-		do_action_ref_array( 'bbp_buddypress_loaded', array( $this ) );
+		do_action_ref_array( 'ideaboard_buddypress_loaded', array( $this ) );
 	}
 
 	/**
@@ -175,8 +175,8 @@ class BBP_Forums_Component extends BP_Component {
 			'name'                => __( 'Forums', 'ideaboard' ),
 			'slug'                => $this->slug,
 			'position'            => 80,
-			'screen_function'     => 'bbp_member_forums_screen_topics',
-			'default_subnav_slug' => bbp_get_topic_archive_slug(),
+			'screen_function'     => 'ideaboard_member_forums_screen_topics',
+			'default_subnav_slug' => ideaboard_get_topic_archive_slug(),
 			'item_css_id'         => $this->id
 		);
 
@@ -194,10 +194,10 @@ class BBP_Forums_Component extends BP_Component {
 		// Topics started
 		$sub_nav[] = array(
 			'name'            => __( 'Topics Started', 'ideaboard' ),
-			'slug'            => bbp_get_topic_archive_slug(),
+			'slug'            => ideaboard_get_topic_archive_slug(),
 			'parent_url'      => $forums_link,
 			'parent_slug'     => $this->slug,
-			'screen_function' => 'bbp_member_forums_screen_topics',
+			'screen_function' => 'ideaboard_member_forums_screen_topics',
 			'position'        => 20,
 			'item_css_id'     => 'topics'
 		);
@@ -205,10 +205,10 @@ class BBP_Forums_Component extends BP_Component {
 		// Replies to topics
 		$sub_nav[] = array(
 			'name'            => __( 'Replies Created', 'ideaboard' ),
-			'slug'            => bbp_get_reply_archive_slug(),
+			'slug'            => ideaboard_get_reply_archive_slug(),
 			'parent_url'      => $forums_link,
 			'parent_slug'     => $this->slug,
-			'screen_function' => 'bbp_member_forums_screen_replies',
+			'screen_function' => 'ideaboard_member_forums_screen_replies',
 			'position'        => 40,
 			'item_css_id'     => 'replies'
 		);
@@ -216,10 +216,10 @@ class BBP_Forums_Component extends BP_Component {
 		// Favorite topics
 		$sub_nav[] = array(
 			'name'            => __( 'Favorites', 'ideaboard' ),
-			'slug'            => bbp_get_user_favorites_slug(),
+			'slug'            => ideaboard_get_user_favorites_slug(),
 			'parent_url'      => $forums_link,
 			'parent_slug'     => $this->slug,
-			'screen_function' => 'bbp_member_forums_screen_favorites',
+			'screen_function' => 'ideaboard_member_forums_screen_favorites',
 			'position'        => 60,
 			'item_css_id'     => 'favorites'
 		);
@@ -228,10 +228,10 @@ class BBP_Forums_Component extends BP_Component {
 		if ( bp_is_my_profile() ) {
 			$sub_nav[] = array(
 				'name'            => __( 'Subscriptions', 'ideaboard' ),
-				'slug'            => bbp_get_user_subscriptions_slug(),
+				'slug'            => ideaboard_get_user_subscriptions_slug(),
 				'parent_url'      => $forums_link,
 				'parent_slug'     => $this->slug,
-				'screen_function' => 'bbp_member_forums_screen_subscriptions',
+				'screen_function' => 'ideaboard_member_forums_screen_subscriptions',
 				'position'        => 60,
 				'item_css_id'     => 'subscriptions'
 			);
@@ -267,7 +267,7 @@ class BBP_Forums_Component extends BP_Component {
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-topics',
 				'title'  => __( 'Topics Started', 'ideaboard' ),
-				'href'   => trailingslashit( $forums_link . bbp_get_topic_archive_slug() )
+				'href'   => trailingslashit( $forums_link . ideaboard_get_topic_archive_slug() )
 			);
 
 			// Replies
@@ -275,7 +275,7 @@ class BBP_Forums_Component extends BP_Component {
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-replies',
 				'title'  => __( 'Replies Created', 'ideaboard' ),
-				'href'   => trailingslashit( $forums_link . bbp_get_reply_archive_slug() )
+				'href'   => trailingslashit( $forums_link . ideaboard_get_reply_archive_slug() )
 			);
 
 			// Favorites
@@ -283,7 +283,7 @@ class BBP_Forums_Component extends BP_Component {
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-favorites',
 				'title'  => __( 'Favorite Topics', 'ideaboard' ),
-				'href'   => trailingslashit( $forums_link . bbp_get_user_favorites_slug() )
+				'href'   => trailingslashit( $forums_link . ideaboard_get_user_favorites_slug() )
 			);
 
 			// Subscriptions
@@ -291,7 +291,7 @@ class BBP_Forums_Component extends BP_Component {
 				'parent' => 'my-account-' . $this->id,
 				'id'     => 'my-account-' . $this->id . '-subscriptions',
 				'title'  => __( 'Subscribed Topics', 'ideaboard' ),
-				'href'   => trailingslashit( $forums_link . bbp_get_user_subscriptions_slug() )
+				'href'   => trailingslashit( $forums_link . ideaboard_get_user_subscriptions_slug() )
 			);
 		}
 

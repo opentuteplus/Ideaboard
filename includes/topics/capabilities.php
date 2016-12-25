@@ -14,11 +14,11 @@
  *
  * @since IdeaBoard (r2593)
  *
- * @uses apply_filters() Calls 'bbp_get_topic_caps' with the capabilities
+ * @uses apply_filters() Calls 'ideaboard_get_topic_caps' with the capabilities
  * @return array Topic capabilities
  */
-function bbp_get_topic_caps() {
-	return apply_filters( 'bbp_get_topic_caps', array (
+function ideaboard_get_topic_caps() {
+	return apply_filters( 'ideaboard_get_topic_caps', array (
 		'edit_posts'          => 'edit_topics',
 		'edit_others_posts'   => 'edit_others_topics',
 		'publish_posts'       => 'publish_topics',
@@ -34,11 +34,11 @@ function bbp_get_topic_caps() {
  *
  * @since IdeaBoard (r2593)
  *
- * @uses apply_filters() Calls 'bbp_get_topic_tag_caps' with the capabilities
+ * @uses apply_filters() Calls 'ideaboard_get_topic_tag_caps' with the capabilities
  * @return array Topic tag capabilities
  */
-function bbp_get_topic_tag_caps() {
-	return apply_filters( 'bbp_get_topic_tag_caps', array (
+function ideaboard_get_topic_tag_caps() {
+	return apply_filters( 'ideaboard_get_topic_tag_caps', array (
 		'manage_terms' => 'manage_topic_tags',
 		'edit_terms'   => 'edit_topic_tags',
 		'delete_terms' => 'delete_topic_tags',
@@ -60,7 +60,7 @@ function bbp_get_topic_tag_caps() {
  * @uses apply_filters() Filter capability map results
  * @return array Actual capabilities for meta capability
  */
-function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
+function ideaboard_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $args = array() ) {
 
 	// What capability is being checked?
 	switch ( $cap ) {
@@ -84,7 +84,7 @@ function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 					$post_type = get_post_type_object( $_post->post_type );
 
 					// Post is public
-					if ( bbp_get_public_status_id() === $_post->post_status ) {
+					if ( ideaboard_get_public_status_id() === $_post->post_status ) {
 						$caps = array( 'spectate' );
 
 					// User is author so allow read
@@ -140,7 +140,7 @@ function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 				$caps      = array();
 
 				// Add 'do_not_allow' cap if user is spam or deleted
-				if ( bbp_is_user_inactive( $user_id ) ) {
+				if ( ideaboard_is_user_inactive( $user_id ) ) {
 					$caps[] = 'do_not_allow';
 
 				// User is author so allow edit if not in admin
@@ -168,7 +168,7 @@ function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 				$caps      = array();
 
 				// Add 'do_not_allow' cap if user is spam or deleted
-				if ( bbp_is_user_inactive( $user_id ) ) {
+				if ( ideaboard_is_user_inactive( $user_id ) ) {
 					$caps[] = 'do_not_allow';
 
 				// Moderators can always edit forum content
@@ -196,12 +196,12 @@ function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
 
 		/** Admin *************************************************************/
 
-		case 'bbp_topics_admin' :
+		case 'ideaboard_topics_admin' :
 			$caps = array( 'moderate' );
 			break;
 	}
 
-	return apply_filters( 'bbp_map_topic_meta_caps', $caps, $cap, $user_id, $args );
+	return apply_filters( 'ideaboard_map_topic_meta_caps', $caps, $cap, $user_id, $args );
 }
 
 /**
@@ -216,7 +216,7 @@ function bbp_map_topic_meta_caps( $caps = array(), $cap = '', $user_id = 0, $arg
  * @uses apply_filters() Filter capability map results
  * @return array Actual capabilities for meta capability
  */
-function bbp_map_topic_tag_meta_caps( $caps, $cap, $user_id, $args ) {
+function ideaboard_map_topic_tag_meta_caps( $caps, $cap, $user_id, $args ) {
 
 	// What capability is being checked?
 	switch ( $cap ) {
@@ -224,7 +224,7 @@ function bbp_map_topic_tag_meta_caps( $caps, $cap, $user_id, $args ) {
 		case 'edit_topic_tags'      :
 		case 'delete_topic_tags'    :
 		case 'assign_topic_tags'    :
-		case 'bbp_topic_tags_admin' :
+		case 'ideaboard_topic_tags_admin' :
 
 			// Moderators can always edit
 			if ( user_can( $user_id, 'moderate' ) ) {
@@ -232,5 +232,5 @@ function bbp_map_topic_tag_meta_caps( $caps, $cap, $user_id, $args ) {
 			}
 	}
 
-	return apply_filters( 'bbp_map_topic_tag_meta_caps', $caps, $cap, $user_id, $args );
+	return apply_filters( 'ideaboard_map_topic_tag_meta_caps', $caps, $cap, $user_id, $args );
 }

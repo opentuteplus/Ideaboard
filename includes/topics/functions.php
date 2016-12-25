@@ -18,22 +18,22 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @since IdeaBoard (r3349)
  *
- * @uses bbp_parse_args()
- * @uses bbp_get_topic_post_type()
+ * @uses ideaboard_parse_args()
+ * @uses ideaboard_get_topic_post_type()
  * @uses wp_insert_post()
  * @uses update_post_meta()
  *
  * @param array $topic_data Forum post data
  * @param arrap $topic_meta Forum meta data
  */
-function bbp_insert_topic( $topic_data = array(), $topic_meta = array() ) {
+function ideaboard_insert_topic( $topic_data = array(), $topic_meta = array() ) {
 
 	// Parse arguments against default values
-	$topic_data = bbp_parse_args( $topic_data, array(
+	$topic_data = ideaboard_parse_args( $topic_data, array(
 		'post_parent'    => 0, // forum ID
-		'post_status'    => bbp_get_public_status_id(),
-		'post_type'      => bbp_get_topic_post_type(),
-		'post_author'    => bbp_get_current_user_id(),
+		'post_status'    => ideaboard_get_public_status_id(),
+		'post_type'      => ideaboard_get_topic_post_type(),
+		'post_author'    => ideaboard_get_current_user_id(),
 		'post_password'  => '',
 		'post_content'   => '',
 		'post_title'     => '',
@@ -49,8 +49,8 @@ function bbp_insert_topic( $topic_data = array(), $topic_meta = array() ) {
 		return false;
 
 	// Parse arguments against default values
-	$topic_meta = bbp_parse_args( $topic_meta, array(
-		'author_ip'          => bbp_current_author_ip(),
+	$topic_meta = ideaboard_parse_args( $topic_meta, array(
+		'author_ip'          => ideaboard_current_author_ip(),
 		'forum_id'           => 0,
 		'topic_id'           => $topic_id,
 		'voice_count'        => 1,
@@ -63,13 +63,13 @@ function bbp_insert_topic( $topic_data = array(), $topic_meta = array() ) {
 
 	// Insert topic meta
 	foreach ( $topic_meta as $meta_key => $meta_value ) {
-		update_post_meta( $topic_id, '_bbp_' . $meta_key, $meta_value );
+		update_post_meta( $topic_id, '_ideaboard_' . $meta_key, $meta_value );
 	}
 
 	// Update the forum
-	$forum_id = bbp_get_topic_forum_id( $topic_id );
+	$forum_id = ideaboard_get_topic_forum_id( $topic_id );
 	if ( !empty( $forum_id ) ) {
-		bbp_update_forum( array( 'forum_id' => $forum_id ) );
+		ideaboard_update_forum( array( 'forum_id' => $forum_id ) );
 	}
 
 	// Return new topic ID
@@ -82,44 +82,44 @@ function bbp_insert_topic( $topic_data = array(), $topic_meta = array() ) {
  * Handles the front end topic submission
  *
  * @param string $action The requested action to compare this function to
- * @uses bbp_add_error() To add an error message
- * @uses bbp_verify_nonce_request() To verify the nonce and check the referer
- * @uses bbp_is_anonymous() To check if an anonymous post is being made
+ * @uses ideaboard_add_error() To add an error message
+ * @uses ideaboard_verify_nonce_request() To verify the nonce and check the referer
+ * @uses ideaboard_is_anonymous() To check if an anonymous post is being made
  * @uses current_user_can() To check if the current user can publish topic
- * @uses bbp_get_current_user_id() To get the current user id
- * @uses bbp_filter_anonymous_post_data() To filter anonymous data
- * @uses bbp_set_current_anonymous_user_data() To set the anonymous user cookies
+ * @uses ideaboard_get_current_user_id() To get the current user id
+ * @uses ideaboard_filter_anonymous_post_data() To filter anonymous data
+ * @uses ideaboard_set_current_anonymous_user_data() To set the anonymous user cookies
  * @uses is_wp_error() To check if the value retrieved is a {@link WP_Error}
  * @uses esc_attr() For sanitization
- * @uses bbp_is_forum_category() To check if the forum is a category
- * @uses bbp_is_forum_closed() To check if the forum is closed
- * @uses bbp_is_forum_private() To check if the forum is private
- * @uses bbp_check_for_flood() To check for flooding
- * @uses bbp_check_for_duplicate() To check for duplicates
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_is_forum_category() To check if the forum is a category
+ * @uses ideaboard_is_forum_closed() To check if the forum is closed
+ * @uses ideaboard_is_forum_private() To check if the forum is private
+ * @uses ideaboard_check_for_flood() To check for flooding
+ * @uses ideaboard_check_for_duplicate() To check for duplicates
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses remove_filter() To remove kses filters if needed
- * @uses apply_filters() Calls 'bbp_new_topic_pre_title' with the content
- * @uses apply_filters() Calls 'bbp_new_topic_pre_content' with the content
+ * @uses apply_filters() Calls 'ideaboard_new_topic_pre_title' with the content
+ * @uses apply_filters() Calls 'ideaboard_new_topic_pre_content' with the content
  * @uses IdeaBoard::errors::get_error_codes() To get the {@link WP_Error} errors
  * @uses wp_insert_post() To insert the topic
- * @uses do_action() Calls 'bbp_new_topic' with the topic id, forum id,
+ * @uses do_action() Calls 'ideaboard_new_topic' with the topic id, forum id,
  *                    anonymous data and reply author
- * @uses bbp_stick_topic() To stick or super stick the topic
- * @uses bbp_unstick_topic() To unstick the topic
- * @uses bbp_get_topic_permalink() To get the topic permalink
+ * @uses ideaboard_stick_topic() To stick or super stick the topic
+ * @uses ideaboard_unstick_topic() To unstick the topic
+ * @uses ideaboard_get_topic_permalink() To get the topic permalink
  * @uses wp_safe_redirect() To redirect to the topic link
  * @uses IdeaBoard::errors::get_error_messages() To get the {@link WP_Error} error
  *                                              messages
  */
-function bbp_new_topic_handler( $action = '' ) {
+function ideaboard_new_topic_handler( $action = '' ) {
 
 	// Bail if action is not bbp-new-topic
 	if ( 'bbp-new-topic' !== $action )
 		return;
 
 	// Nonce check
-	if ( ! bbp_verify_nonce_request( 'bbp-new-topic' ) ) {
-		bbp_add_error( 'bbp_new_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+	if ( ! ideaboard_verify_nonce_request( 'bbp-new-topic' ) ) {
+		ideaboard_add_error( 'ideaboard_new_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
@@ -127,19 +127,19 @@ function bbp_new_topic_handler( $action = '' ) {
 	$view_all = false;
 	$forum_id = $topic_author = $anonymous_data = 0;
 	$topic_title = $topic_content = '';
-	$terms = array( bbp_get_topic_tag_tax_id() => array() );
+	$terms = array( ideaboard_get_topic_tag_tax_id() => array() );
 
 	/** Topic Author **********************************************************/
 
 	// User is anonymous
-	if ( bbp_is_anonymous() ) {
+	if ( ideaboard_is_anonymous() ) {
 
 		// Filter anonymous data
-		$anonymous_data = bbp_filter_anonymous_post_data();
+		$anonymous_data = ideaboard_filter_anonymous_post_data();
 
 		// Anonymous data checks out, so set cookies, etc...
 		if ( !empty( $anonymous_data ) && is_array( $anonymous_data ) ) {
-			bbp_set_current_anonymous_user_data( $anonymous_data );
+			ideaboard_set_current_anonymous_user_data( $anonymous_data );
 		}
 
 	// User is logged in
@@ -147,75 +147,75 @@ function bbp_new_topic_handler( $action = '' ) {
 
 		// User cannot create topics
 		if ( !current_user_can( 'publish_topics' ) ) {
-			bbp_add_error( 'bbp_topic_permissions', __( '<strong>ERROR</strong>: You do not have permission to create new topics.', 'ideaboard' ) );
+			ideaboard_add_error( 'ideaboard_topic_permissions', __( '<strong>ERROR</strong>: You do not have permission to create new topics.', 'ideaboard' ) );
 			return;
 		}
 
 		// Topic author is current user
-		$topic_author = bbp_get_current_user_id();
+		$topic_author = ideaboard_get_current_user_id();
 	}
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_bbp_unfiltered_html_topic'] ) && wp_create_nonce( 'bbp-unfiltered-html-topic_new' ) === $_POST['_bbp_unfiltered_html_topic'] ) {
-		remove_filter( 'bbp_new_topic_pre_title',   'wp_filter_kses'      );
-		remove_filter( 'bbp_new_topic_pre_content', 'bbp_encode_bad',  10 );
-		remove_filter( 'bbp_new_topic_pre_content', 'bbp_filter_kses', 30 );
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_topic'] ) && wp_create_nonce( 'bbp-unfiltered-html-topic_new' ) === $_POST['_ideaboard_unfiltered_html_topic'] ) {
+		remove_filter( 'ideaboard_new_topic_pre_title',   'wp_filter_kses'      );
+		remove_filter( 'ideaboard_new_topic_pre_content', 'ideaboard_encode_bad',  10 );
+		remove_filter( 'ideaboard_new_topic_pre_content', 'ideaboard_filter_kses', 30 );
 	}
 
 	/** Topic Title ***********************************************************/
 
-	if ( !empty( $_POST['bbp_topic_title'] ) )
-		$topic_title = esc_attr( strip_tags( $_POST['bbp_topic_title'] ) );
+	if ( !empty( $_POST['ideaboard_topic_title'] ) )
+		$topic_title = esc_attr( strip_tags( $_POST['ideaboard_topic_title'] ) );
 
 	// Filter and sanitize
-	$topic_title = apply_filters( 'bbp_new_topic_pre_title', $topic_title );
+	$topic_title = apply_filters( 'ideaboard_new_topic_pre_title', $topic_title );
 
 	// No topic title
 	if ( empty( $topic_title ) )
-		bbp_add_error( 'bbp_topic_title', __( '<strong>ERROR</strong>: Your topic needs a title.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_topic_title', __( '<strong>ERROR</strong>: Your topic needs a title.', 'ideaboard' ) );
 
 	/** Topic Content *********************************************************/
 
-	if ( !empty( $_POST['bbp_topic_content'] ) )
-		$topic_content = $_POST['bbp_topic_content'];
+	if ( !empty( $_POST['ideaboard_topic_content'] ) )
+		$topic_content = $_POST['ideaboard_topic_content'];
 
 	// Filter and sanitize
-	$topic_content = apply_filters( 'bbp_new_topic_pre_content', $topic_content );
+	$topic_content = apply_filters( 'ideaboard_new_topic_pre_content', $topic_content );
 
 	// No topic content
 	if ( empty( $topic_content ) )
-		bbp_add_error( 'bbp_topic_content', __( '<strong>ERROR</strong>: Your topic cannot be empty.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_topic_content', __( '<strong>ERROR</strong>: Your topic cannot be empty.', 'ideaboard' ) );
 
 	/** Topic Forum ***********************************************************/
 
 	// Error check the POST'ed topic id
-	if ( isset( $_POST['bbp_forum_id'] ) ) {
+	if ( isset( $_POST['ideaboard_forum_id'] ) ) {
 
 		// Empty Forum id was passed
-		if ( empty( $_POST['bbp_forum_id'] ) ) {
-			bbp_add_error( 'bbp_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID is missing.', 'ideaboard' ) );
+		if ( empty( $_POST['ideaboard_forum_id'] ) ) {
+			ideaboard_add_error( 'ideaboard_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID is missing.', 'ideaboard' ) );
 
 		// Forum id is not a number
-		} elseif ( ! is_numeric( $_POST['bbp_forum_id'] ) ) {
-			bbp_add_error( 'bbp_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID must be a number.', 'ideaboard' ) );
+		} elseif ( ! is_numeric( $_POST['ideaboard_forum_id'] ) ) {
+			ideaboard_add_error( 'ideaboard_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID must be a number.', 'ideaboard' ) );
 
 		// Forum id might be valid
 		} else {
 
 			// Get the forum id
-			$posted_forum_id = intval( $_POST['bbp_forum_id'] );
+			$posted_forum_id = intval( $_POST['ideaboard_forum_id'] );
 
 			// Forum id is empty
 			if ( 0 === $posted_forum_id ) {
-				bbp_add_error( 'bbp_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID is missing.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID is missing.', 'ideaboard' ) );
 
 			// Forum id is a negative number
 			} elseif ( 0 > $posted_forum_id ) {
-				bbp_add_error( 'bbp_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID cannot be a negative number.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID cannot be a negative number.', 'ideaboard' ) );
 
 			// Forum does not exist
-			} elseif ( ! bbp_get_forum( $posted_forum_id ) ) {
-				bbp_add_error( 'bbp_topic_forum_id', __( '<strong>ERROR</strong>: Forum does not exist.', 'ideaboard' ) );
+			} elseif ( ! ideaboard_get_forum( $posted_forum_id ) ) {
+				ideaboard_add_error( 'ideaboard_topic_forum_id', __( '<strong>ERROR</strong>: Forum does not exist.', 'ideaboard' ) );
 
 			// Use the POST'ed forum id
 			} else {
@@ -228,27 +228,27 @@ function bbp_new_topic_handler( $action = '' ) {
 	if ( !empty( $forum_id ) ) {
 
 		// Forum is a category
-		if ( bbp_is_forum_category( $forum_id ) ) {
-			bbp_add_error( 'bbp_new_topic_forum_category', __( '<strong>ERROR</strong>: This forum is a category. No topics can be created in this forum.', 'ideaboard' ) );
+		if ( ideaboard_is_forum_category( $forum_id ) ) {
+			ideaboard_add_error( 'ideaboard_new_topic_forum_category', __( '<strong>ERROR</strong>: This forum is a category. No topics can be created in this forum.', 'ideaboard' ) );
 
 		// Forum is not a category
 		} else {
 
 			// Forum is closed and user cannot access
-			if ( bbp_is_forum_closed( $forum_id ) && !current_user_can( 'edit_forum', $forum_id ) ) {
-				bbp_add_error( 'bbp_new_topic_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new topics.', 'ideaboard' ) );
+			if ( ideaboard_is_forum_closed( $forum_id ) && !current_user_can( 'edit_forum', $forum_id ) ) {
+				ideaboard_add_error( 'ideaboard_new_topic_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new topics.', 'ideaboard' ) );
 			}
 
 			// Forum is private and user cannot access
-			if ( bbp_is_forum_private( $forum_id ) ) {
+			if ( ideaboard_is_forum_private( $forum_id ) ) {
 				if ( !current_user_can( 'read_private_forums' ) ) {
-					bbp_add_error( 'bbp_new_topic_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_new_topic_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
 				}
 
 			// Forum is hidden and user cannot access
-			} elseif ( bbp_is_forum_hidden( $forum_id ) ) {
+			} elseif ( ideaboard_is_forum_hidden( $forum_id ) ) {
 				if ( !current_user_can( 'read_hidden_forums' ) ) {
-					bbp_add_error( 'bbp_new_topic_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_new_topic_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
 				}
 			}
 		}
@@ -256,40 +256,40 @@ function bbp_new_topic_handler( $action = '' ) {
 
 	/** Topic Flooding ********************************************************/
 
-	if ( !bbp_check_for_flood( $anonymous_data, $topic_author ) )
-		bbp_add_error( 'bbp_topic_flood', __( '<strong>ERROR</strong>: Slow down; you move too fast.', 'ideaboard' ) );
+	if ( !ideaboard_check_for_flood( $anonymous_data, $topic_author ) )
+		ideaboard_add_error( 'ideaboard_topic_flood', __( '<strong>ERROR</strong>: Slow down; you move too fast.', 'ideaboard' ) );
 
 	/** Topic Duplicate *******************************************************/
 
-	if ( !bbp_check_for_duplicate( array( 'post_type' => bbp_get_topic_post_type(), 'post_author' => $topic_author, 'post_content' => $topic_content, 'anonymous_data' => $anonymous_data ) ) )
-		bbp_add_error( 'bbp_topic_duplicate', __( '<strong>ERROR</strong>: Duplicate topic detected; it looks as though you&#8217;ve already said that!', 'ideaboard' ) );
+	if ( !ideaboard_check_for_duplicate( array( 'post_type' => ideaboard_get_topic_post_type(), 'post_author' => $topic_author, 'post_content' => $topic_content, 'anonymous_data' => $anonymous_data ) ) )
+		ideaboard_add_error( 'ideaboard_topic_duplicate', __( '<strong>ERROR</strong>: Duplicate topic detected; it looks as though you&#8217;ve already said that!', 'ideaboard' ) );
 
 	/** Topic Blacklist *******************************************************/
 
-	if ( !bbp_check_for_blacklist( $anonymous_data, $topic_author, $topic_title, $topic_content ) )
-		bbp_add_error( 'bbp_topic_blacklist', __( '<strong>ERROR</strong>: Your topic cannot be created at this time.', 'ideaboard' ) );
+	if ( !ideaboard_check_for_blacklist( $anonymous_data, $topic_author, $topic_title, $topic_content ) )
+		ideaboard_add_error( 'ideaboard_topic_blacklist', __( '<strong>ERROR</strong>: Your topic cannot be created at this time.', 'ideaboard' ) );
 
 	/** Topic Status **********************************************************/
 
 	// Maybe put into moderation
-	if ( !bbp_check_for_moderation( $anonymous_data, $topic_author, $topic_title, $topic_content ) ) {
-		$topic_status = bbp_get_pending_status_id();
+	if ( !ideaboard_check_for_moderation( $anonymous_data, $topic_author, $topic_title, $topic_content ) ) {
+		$topic_status = ideaboard_get_pending_status_id();
 
 	// Check a whitelist of possible topic status ID's
-	} elseif ( !empty( $_POST['bbp_topic_status'] ) && in_array( $_POST['bbp_topic_status'], array_keys( bbp_get_topic_statuses() ) ) ) {
-		$topic_status = $_POST['bbp_topic_status'];
+	} elseif ( !empty( $_POST['ideaboard_topic_status'] ) && in_array( $_POST['ideaboard_topic_status'], array_keys( ideaboard_get_topic_statuses() ) ) ) {
+		$topic_status = $_POST['ideaboard_topic_status'];
 
 	// Default to published if nothing else
 	} else {
-		$topic_status = bbp_get_public_status_id();
+		$topic_status = ideaboard_get_public_status_id();
 	}
 
 	/** Topic Tags ************************************************************/
 
-	if ( bbp_allow_topic_tags() && !empty( $_POST['bbp_topic_tags'] ) ) {
+	if ( ideaboard_allow_topic_tags() && !empty( $_POST['ideaboard_topic_tags'] ) ) {
 
 		// Escape tag input
-		$terms = esc_attr( strip_tags( $_POST['bbp_topic_tags'] ) );
+		$terms = esc_attr( strip_tags( $_POST['ideaboard_topic_tags'] ) );
 
 		// Explode by comma
 		if ( strstr( $terms, ',' ) ) {
@@ -297,28 +297,28 @@ function bbp_new_topic_handler( $action = '' ) {
 		}
 
 		// Add topic tag ID as main key
-		$terms = array( bbp_get_topic_tag_tax_id() => $terms );
+		$terms = array( ideaboard_get_topic_tag_tax_id() => $terms );
 	}
 
 	/** Additional Actions (Before Save) **************************************/
 
-	do_action( 'bbp_new_topic_pre_extras', $forum_id );
+	do_action( 'ideaboard_new_topic_pre_extras', $forum_id );
 
 	// Bail if errors
-	if ( bbp_has_errors() )
+	if ( ideaboard_has_errors() )
 		return;
 
 	/** No Errors *************************************************************/
 
 	// Add the content of the form to $topic_data as an array.
 	// Just in time manipulation of topic data before being created
-	$topic_data = apply_filters( 'bbp_new_topic_pre_insert', array(
+	$topic_data = apply_filters( 'ideaboard_new_topic_pre_insert', array(
 		'post_author'    => $topic_author,
 		'post_title'     => $topic_title,
 		'post_content'   => $topic_content,
 		'post_status'    => $topic_status,
 		'post_parent'    => $forum_id,
-		'post_type'      => bbp_get_topic_post_type(),
+		'post_type'      => ideaboard_get_topic_post_type(),
 		'tax_input'      => $terms,
 		'comment_status' => 'closed'
 	) );
@@ -334,7 +334,7 @@ function bbp_new_topic_handler( $action = '' ) {
 
 		// If the forum is trash, or the topic_status is switched to
 		// trash, trash it properly
-		if ( ( get_post_field( 'post_status', $forum_id ) === bbp_get_trash_status_id() ) || ( $topic_data['post_status'] === bbp_get_trash_status_id() ) ) {
+		if ( ( get_post_field( 'post_status', $forum_id ) === ideaboard_get_trash_status_id() ) || ( $topic_data['post_status'] === ideaboard_get_trash_status_id() ) ) {
 
 			// Trash the reply
 			wp_trash_post( $topic_id );
@@ -346,8 +346,8 @@ function bbp_new_topic_handler( $action = '' ) {
 		/** Spam Check ********************************************************/
 
 		// If reply or topic are spam, officially spam this reply
-		if ( $topic_data['post_status'] === bbp_get_spam_status_id() ) {
-			add_post_meta( $topic_id, '_bbp_spam_meta_status', bbp_get_public_status_id() );
+		if ( $topic_data['post_status'] === ideaboard_get_spam_status_id() ) {
+			add_post_meta( $topic_id, '_ideaboard_spam_meta_status', ideaboard_get_public_status_id() );
 
 			// Force view=all
 			$view_all = true;
@@ -355,27 +355,27 @@ function bbp_new_topic_handler( $action = '' ) {
 
 		/** Update counts, etc... *********************************************/
 
-		do_action( 'bbp_new_topic', $topic_id, $forum_id, $anonymous_data, $topic_author );
+		do_action( 'ideaboard_new_topic', $topic_id, $forum_id, $anonymous_data, $topic_author );
 
 		/** Stickies **********************************************************/
 
-		// Sticky check after 'bbp_new_topic' action so forum ID meta is set
-		if ( !empty( $_POST['bbp_stick_topic'] ) && in_array( $_POST['bbp_stick_topic'], array( 'stick', 'super', 'unstick' ) ) ) {
+		// Sticky check after 'ideaboard_new_topic' action so forum ID meta is set
+		if ( !empty( $_POST['ideaboard_stick_topic'] ) && in_array( $_POST['ideaboard_stick_topic'], array( 'stick', 'super', 'unstick' ) ) ) {
 
 			// What's the caps?
 			if ( current_user_can( 'moderate' ) ) {
 
 				// What's the haps?
-				switch ( $_POST['bbp_stick_topic'] ) {
+				switch ( $_POST['ideaboard_stick_topic'] ) {
 
 					// Sticky in this forum
 					case 'stick'   :
-						bbp_stick_topic( $topic_id );
+						ideaboard_stick_topic( $topic_id );
 						break;
 
 					// Super sticky in all forums
 					case 'super'   :
-						bbp_stick_topic( $topic_id, true );
+						ideaboard_stick_topic( $topic_id, true );
 						break;
 
 					// We can avoid this as it is a new topic
@@ -388,31 +388,31 @@ function bbp_new_topic_handler( $action = '' ) {
 
 		/** Additional Actions (After Save) ***********************************/
 
-		do_action( 'bbp_new_topic_post_extras', $topic_id );
+		do_action( 'ideaboard_new_topic_post_extras', $topic_id );
 
 		/** Redirect **********************************************************/
 
 		// Redirect to
-		$redirect_to = bbp_get_redirect_to();
+		$redirect_to = ideaboard_get_redirect_to();
 
 		// Get the topic URL
-		$redirect_url = bbp_get_topic_permalink( $topic_id, $redirect_to );
+		$redirect_url = ideaboard_get_topic_permalink( $topic_id, $redirect_to );
 
 		// Add view all?
-		if ( bbp_get_view_all() || !empty( $view_all ) ) {
+		if ( ideaboard_get_view_all() || !empty( $view_all ) ) {
 
 			// User can moderate, so redirect to topic with view all set
 			if ( current_user_can( 'moderate' ) ) {
-				$redirect_url = bbp_add_view_all( $redirect_url );
+				$redirect_url = ideaboard_add_view_all( $redirect_url );
 
 			// User cannot moderate, so redirect to forum
 			} else {
-				$redirect_url = bbp_get_forum_permalink( $forum_id );
+				$redirect_url = ideaboard_get_forum_permalink( $forum_id );
 			}
 		}
 
 		// Allow to be filtered
-		$redirect_url = apply_filters( 'bbp_new_topic_redirect_to', $redirect_url, $redirect_to, $topic_id );
+		$redirect_url = apply_filters( 'ideaboard_new_topic_redirect_to', $redirect_url, $redirect_to, $topic_id );
 
 		/** Successful Save ***************************************************/
 
@@ -425,7 +425,7 @@ function bbp_new_topic_handler( $action = '' ) {
 	// Errors
 	} else {
 		$append_error = ( is_wp_error( $topic_id ) && $topic_id->get_error_message() ) ? $topic_id->get_error_message() . ' ' : '';
-		bbp_add_error( 'bbp_topic_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your topic:' . $append_error, 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_topic_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your topic:' . $append_error, 'ideaboard' ) );
 	}
 }
 
@@ -433,38 +433,38 @@ function bbp_new_topic_handler( $action = '' ) {
  * Handles the front end edit topic submission
  *
  * @param string $action The requested action to compare this function to
- * @uses bbp_add_error() To add an error message
- * @uses bbp_get_topic() To get the topic
- * @uses bbp_verify_nonce_request() To verify the nonce and check the request
- * @uses bbp_is_topic_anonymous() To check if topic is by an anonymous user
+ * @uses ideaboard_add_error() To add an error message
+ * @uses ideaboard_get_topic() To get the topic
+ * @uses ideaboard_verify_nonce_request() To verify the nonce and check the request
+ * @uses ideaboard_is_topic_anonymous() To check if topic is by an anonymous user
  * @uses current_user_can() To check if the current user can edit the topic
- * @uses bbp_filter_anonymous_post_data() To filter anonymous data
+ * @uses ideaboard_filter_anonymous_post_data() To filter anonymous data
  * @uses is_wp_error() To check if the value retrieved is a {@link WP_Error}
  * @uses esc_attr() For sanitization
- * @uses bbp_is_forum_category() To check if the forum is a category
- * @uses bbp_is_forum_closed() To check if the forum is closed
- * @uses bbp_is_forum_private() To check if the forum is private
+ * @uses ideaboard_is_forum_category() To check if the forum is a category
+ * @uses ideaboard_is_forum_closed() To check if the forum is closed
+ * @uses ideaboard_is_forum_private() To check if the forum is private
  * @uses remove_filter() To remove kses filters if needed
- * @uses apply_filters() Calls 'bbp_edit_topic_pre_title' with the title and
+ * @uses apply_filters() Calls 'ideaboard_edit_topic_pre_title' with the title and
  *                        topic id
- * @uses apply_filters() Calls 'bbp_edit_topic_pre_content' with the content
+ * @uses apply_filters() Calls 'ideaboard_edit_topic_pre_content' with the content
  *                        and topic id
  * @uses IdeaBoard::errors::get_error_codes() To get the {@link WP_Error} errors
  * @uses wp_save_post_revision() To save a topic revision
- * @uses bbp_update_topic_revision_log() To update the topic revision log
- * @uses bbp_stick_topic() To stick or super stick the topic
- * @uses bbp_unstick_topic() To unstick the topic
+ * @uses ideaboard_update_topic_revision_log() To update the topic revision log
+ * @uses ideaboard_stick_topic() To stick or super stick the topic
+ * @uses ideaboard_unstick_topic() To unstick the topic
  * @uses wp_update_post() To update the topic
- * @uses do_action() Calls 'bbp_edit_topic' with the topic id, forum id,
+ * @uses do_action() Calls 'ideaboard_edit_topic' with the topic id, forum id,
  *                    anonymous data and reply author
- * @uses bbp_move_topic_handler() To handle movement of a topic from one forum
+ * @uses ideaboard_move_topic_handler() To handle movement of a topic from one forum
  *                                 to another
- * @uses bbp_get_topic_permalink() To get the topic permalink
+ * @uses ideaboard_get_topic_permalink() To get the topic permalink
  * @uses wp_safe_redirect() To redirect to the topic link
  * @uses IdeaBoard::errors::get_error_messages() To get the {@link WP_Error} error
  *                                              messages
  */
-function bbp_edit_topic_handler( $action = '' ) {
+function ideaboard_edit_topic_handler( $action = '' ) {
 
 	// Bail if action is not bbp-edit-topic
 	if ( 'bbp-edit-topic' !== $action )
@@ -478,95 +478,95 @@ function bbp_edit_topic_handler( $action = '' ) {
 	/** Topic *****************************************************************/
 
 	// Topic id was not passed
-	if ( empty( $_POST['bbp_topic_id'] ) ) {
-		bbp_add_error( 'bbp_edit_topic_id', __( '<strong>ERROR</strong>: Topic ID not found.', 'ideaboard' ) );
+	if ( empty( $_POST['ideaboard_topic_id'] ) ) {
+		ideaboard_add_error( 'ideaboard_edit_topic_id', __( '<strong>ERROR</strong>: Topic ID not found.', 'ideaboard' ) );
 		return;
 
 	// Topic id was passed
-	} elseif ( is_numeric( $_POST['bbp_topic_id'] ) ) {
-		$topic_id = (int) $_POST['bbp_topic_id'];
-		$topic    = bbp_get_topic( $topic_id );
+	} elseif ( is_numeric( $_POST['ideaboard_topic_id'] ) ) {
+		$topic_id = (int) $_POST['ideaboard_topic_id'];
+		$topic    = ideaboard_get_topic( $topic_id );
 	}
 
 	// Topic does not exist
 	if ( empty( $topic ) ) {
-		bbp_add_error( 'bbp_edit_topic_not_found', __( '<strong>ERROR</strong>: The topic you want to edit was not found.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_edit_topic_not_found', __( '<strong>ERROR</strong>: The topic you want to edit was not found.', 'ideaboard' ) );
 		return;
 
 	// Topic exists
 	} else {
 
 		// Check users ability to create new topic
-		if ( ! bbp_is_topic_anonymous( $topic_id ) ) {
+		if ( ! ideaboard_is_topic_anonymous( $topic_id ) ) {
 
 			// User cannot edit this topic
 			if ( !current_user_can( 'edit_topic', $topic_id ) ) {
-				bbp_add_error( 'bbp_edit_topic_permissions', __( '<strong>ERROR</strong>: You do not have permission to edit that topic.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_edit_topic_permissions', __( '<strong>ERROR</strong>: You do not have permission to edit that topic.', 'ideaboard' ) );
 			}
 
 			// Set topic author
-			$topic_author = bbp_get_topic_author_id( $topic_id );
+			$topic_author = ideaboard_get_topic_author_id( $topic_id );
 
 		// It is an anonymous post
 		} else {
 
 			// Filter anonymous data
-			$anonymous_data = bbp_filter_anonymous_post_data( array(), true );
+			$anonymous_data = ideaboard_filter_anonymous_post_data( array(), true );
 		}
 	}
 
 	// Nonce check
-	if ( ! bbp_verify_nonce_request( 'bbp-edit-topic_' . $topic_id ) ) {
-		bbp_add_error( 'bbp_edit_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+	if ( ! ideaboard_verify_nonce_request( 'bbp-edit-topic_' . $topic_id ) ) {
+		ideaboard_add_error( 'ideaboard_edit_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_bbp_unfiltered_html_topic'] ) && ( wp_create_nonce( 'bbp-unfiltered-html-topic_' . $topic_id ) === $_POST['_bbp_unfiltered_html_topic'] ) ) {
-		remove_filter( 'bbp_edit_topic_pre_title',   'wp_filter_kses'      );
-		remove_filter( 'bbp_edit_topic_pre_content', 'bbp_encode_bad',  10 );
-		remove_filter( 'bbp_edit_topic_pre_content', 'bbp_filter_kses', 30 );
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_topic'] ) && ( wp_create_nonce( 'bbp-unfiltered-html-topic_' . $topic_id ) === $_POST['_ideaboard_unfiltered_html_topic'] ) ) {
+		remove_filter( 'ideaboard_edit_topic_pre_title',   'wp_filter_kses'      );
+		remove_filter( 'ideaboard_edit_topic_pre_content', 'ideaboard_encode_bad',  10 );
+		remove_filter( 'ideaboard_edit_topic_pre_content', 'ideaboard_filter_kses', 30 );
 	}
 
 	/** Topic Forum ***********************************************************/
 
 	// Forum id was not passed
-	if ( empty( $_POST['bbp_forum_id'] ) ) {
-		bbp_add_error( 'bbp_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID is missing.', 'ideaboard' ) );
+	if ( empty( $_POST['ideaboard_forum_id'] ) ) {
+		ideaboard_add_error( 'ideaboard_topic_forum_id', __( '<strong>ERROR</strong>: Forum ID is missing.', 'ideaboard' ) );
 
 	// Forum id was passed
-	} elseif ( is_numeric( $_POST['bbp_forum_id'] ) ) {
-		$forum_id = (int) $_POST['bbp_forum_id'];
+	} elseif ( is_numeric( $_POST['ideaboard_forum_id'] ) ) {
+		$forum_id = (int) $_POST['ideaboard_forum_id'];
 	}
 
 	// Current forum this topic is in
-	$current_forum_id = bbp_get_topic_forum_id( $topic_id );
+	$current_forum_id = ideaboard_get_topic_forum_id( $topic_id );
 
 	// Forum exists
 	if ( !empty( $forum_id ) && ( $forum_id !== $current_forum_id ) ) {
 
 		// Forum is a category
-		if ( bbp_is_forum_category( $forum_id ) ) {
-			bbp_add_error( 'bbp_edit_topic_forum_category', __( '<strong>ERROR</strong>: This forum is a category. No topics can be created in it.', 'ideaboard' ) );
+		if ( ideaboard_is_forum_category( $forum_id ) ) {
+			ideaboard_add_error( 'ideaboard_edit_topic_forum_category', __( '<strong>ERROR</strong>: This forum is a category. No topics can be created in it.', 'ideaboard' ) );
 
 		// Forum is not a category
 		} else {
 
 			// Forum is closed and user cannot access
-			if ( bbp_is_forum_closed( $forum_id ) && !current_user_can( 'edit_forum', $forum_id ) ) {
-				bbp_add_error( 'bbp_edit_topic_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new topics.', 'ideaboard' ) );
+			if ( ideaboard_is_forum_closed( $forum_id ) && !current_user_can( 'edit_forum', $forum_id ) ) {
+				ideaboard_add_error( 'ideaboard_edit_topic_forum_closed', __( '<strong>ERROR</strong>: This forum has been closed to new topics.', 'ideaboard' ) );
 			}
 
 			// Forum is private and user cannot access
-			if ( bbp_is_forum_private( $forum_id ) ) {
+			if ( ideaboard_is_forum_private( $forum_id ) ) {
 				if ( !current_user_can( 'read_private_forums' ) ) {
-					bbp_add_error( 'bbp_edit_topic_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_edit_topic_forum_private', __( '<strong>ERROR</strong>: This forum is private and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
 				}
 
 			// Forum is hidden and user cannot access
-			} elseif ( bbp_is_forum_hidden( $forum_id ) ) {
+			} elseif ( ideaboard_is_forum_hidden( $forum_id ) ) {
 				if ( !current_user_can( 'read_hidden_forums' ) ) {
-					bbp_add_error( 'bbp_edit_topic_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_edit_topic_forum_hidden', __( '<strong>ERROR</strong>: This forum is hidden and you do not have the capability to read or create new topics in it.', 'ideaboard' ) );
 				}
 			}
 		}
@@ -574,46 +574,46 @@ function bbp_edit_topic_handler( $action = '' ) {
 
 	/** Topic Title ***********************************************************/
 
-	if ( !empty( $_POST['bbp_topic_title'] ) )
-		$topic_title = esc_attr( strip_tags( $_POST['bbp_topic_title'] ) );
+	if ( !empty( $_POST['ideaboard_topic_title'] ) )
+		$topic_title = esc_attr( strip_tags( $_POST['ideaboard_topic_title'] ) );
 
 	// Filter and sanitize
-	$topic_title = apply_filters( 'bbp_edit_topic_pre_title', $topic_title, $topic_id );
+	$topic_title = apply_filters( 'ideaboard_edit_topic_pre_title', $topic_title, $topic_id );
 
 	// No topic title
 	if ( empty( $topic_title ) )
-		bbp_add_error( 'bbp_edit_topic_title', __( '<strong>ERROR</strong>: Your topic needs a title.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_edit_topic_title', __( '<strong>ERROR</strong>: Your topic needs a title.', 'ideaboard' ) );
 
 	/** Topic Content *********************************************************/
 
-	if ( !empty( $_POST['bbp_topic_content'] ) )
-		$topic_content = $_POST['bbp_topic_content'];
+	if ( !empty( $_POST['ideaboard_topic_content'] ) )
+		$topic_content = $_POST['ideaboard_topic_content'];
 
 	// Filter and sanitize
-	$topic_content = apply_filters( 'bbp_edit_topic_pre_content', $topic_content, $topic_id );
+	$topic_content = apply_filters( 'ideaboard_edit_topic_pre_content', $topic_content, $topic_id );
 
 	// No topic content
 	if ( empty( $topic_content ) )
-		bbp_add_error( 'bbp_edit_topic_content', __( '<strong>ERROR</strong>: Your topic cannot be empty.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_edit_topic_content', __( '<strong>ERROR</strong>: Your topic cannot be empty.', 'ideaboard' ) );
 
 	/** Topic Blacklist *******************************************************/
 
-	if ( !bbp_check_for_blacklist( $anonymous_data, $topic_author, $topic_title, $topic_content ) )
-		bbp_add_error( 'bbp_topic_blacklist', __( '<strong>ERROR</strong>: Your topic cannot be edited at this time.', 'ideaboard' ) );
+	if ( !ideaboard_check_for_blacklist( $anonymous_data, $topic_author, $topic_title, $topic_content ) )
+		ideaboard_add_error( 'ideaboard_topic_blacklist', __( '<strong>ERROR</strong>: Your topic cannot be edited at this time.', 'ideaboard' ) );
 
 	/** Topic Status **********************************************************/
 
 	// Maybe put into moderation
-	if ( !bbp_check_for_moderation( $anonymous_data, $topic_author, $topic_title, $topic_content ) ) {
+	if ( !ideaboard_check_for_moderation( $anonymous_data, $topic_author, $topic_title, $topic_content ) ) {
 
 		// Set post status to pending if public or closed
-		if ( in_array( $topic->post_status, array( bbp_get_public_status_id(), bbp_get_closed_status_id() ) ) ) {
-			$topic_status = bbp_get_pending_status_id();
+		if ( in_array( $topic->post_status, array( ideaboard_get_public_status_id(), ideaboard_get_closed_status_id() ) ) ) {
+			$topic_status = ideaboard_get_pending_status_id();
 		}
 
 	// Check a whitelist of possible topic status ID's
-	} elseif ( !empty( $_POST['bbp_topic_status'] ) && in_array( $_POST['bbp_topic_status'], array_keys( bbp_get_topic_statuses() ) ) ) {
-		$topic_status = $_POST['bbp_topic_status'];
+	} elseif ( !empty( $_POST['ideaboard_topic_status'] ) && in_array( $_POST['ideaboard_topic_status'], array_keys( ideaboard_get_topic_statuses() ) ) ) {
+		$topic_status = $_POST['ideaboard_topic_status'];
 
 	// Use existing post_status
 	} else {
@@ -623,54 +623,54 @@ function bbp_edit_topic_handler( $action = '' ) {
 	/** Topic Tags ************************************************************/
 
 	// Either replace terms
-	if ( bbp_allow_topic_tags() && current_user_can( 'assign_topic_tags' ) && ! empty( $_POST['bbp_topic_tags'] ) ) {
+	if ( ideaboard_allow_topic_tags() && current_user_can( 'assign_topic_tags' ) && ! empty( $_POST['ideaboard_topic_tags'] ) ) {
 
 		// Escape tag input
-		$terms = esc_attr( strip_tags( $_POST['bbp_topic_tags'] ) );
+		$terms = esc_attr( strip_tags( $_POST['ideaboard_topic_tags'] ) );
 
 		// Explode by comma
 		if ( strstr( $terms, ',' ) )
 			$terms = explode( ',', $terms );
 
 		// Add topic tag ID as main key
-		$terms = array( bbp_get_topic_tag_tax_id() => $terms );
+		$terms = array( ideaboard_get_topic_tag_tax_id() => $terms );
 
 	// ...or remove them.
-	} elseif ( isset( $_POST['bbp_topic_tags'] ) ) {
-		$terms = array( bbp_get_topic_tag_tax_id() => array() );
+	} elseif ( isset( $_POST['ideaboard_topic_tags'] ) ) {
+		$terms = array( ideaboard_get_topic_tag_tax_id() => array() );
 
 	// Existing terms
 	} else {
-		$terms = array( bbp_get_topic_tag_tax_id() => explode( ',', bbp_get_topic_tag_names( $topic_id, ',' ) ) );
+		$terms = array( ideaboard_get_topic_tag_tax_id() => explode( ',', ideaboard_get_topic_tag_names( $topic_id, ',' ) ) );
 	}
 
 	/** Additional Actions (Before Save) **************************************/
 
-	do_action( 'bbp_edit_topic_pre_extras', $topic_id );
+	do_action( 'ideaboard_edit_topic_pre_extras', $topic_id );
 
 	// Bail if errors
-	if ( bbp_has_errors() )
+	if ( ideaboard_has_errors() )
 		return;
 
 	/** No Errors *************************************************************/
 
 	// Add the content of the form to $topic_data as an array
 	// Just in time manipulation of topic data before being edited
-	$topic_data = apply_filters( 'bbp_edit_topic_pre_insert', array(
+	$topic_data = apply_filters( 'ideaboard_edit_topic_pre_insert', array(
 		'ID'           => $topic_id,
 		'post_title'   => $topic_title,
 		'post_content' => $topic_content,
 		'post_status'  => $topic_status,
 		'post_parent'  => $forum_id,
 		'post_author'  => $topic_author,
-		'post_type'    => bbp_get_topic_post_type(),
+		'post_type'    => ideaboard_get_topic_post_type(),
 		'tax_input'    => $terms,
 	) );
 
 	// Toggle revisions to avoid duplicates
-	if ( post_type_supports( bbp_get_topic_post_type(), 'revisions' ) ) {
+	if ( post_type_supports( ideaboard_get_topic_post_type(), 'revisions' ) ) {
 		$revisions_removed = true;
-		remove_post_type_support( bbp_get_topic_post_type(), 'revisions' );
+		remove_post_type_support( ideaboard_get_topic_post_type(), 'revisions' );
 	}
 
 	// Insert topic
@@ -679,7 +679,7 @@ function bbp_edit_topic_handler( $action = '' ) {
 	// Toggle revisions back on
 	if ( true === $revisions_removed ) {
 		$revisions_removed = false;
-		add_post_type_support( bbp_get_topic_post_type(), 'revisions' );
+		add_post_type_support( ideaboard_get_topic_post_type(), 'revisions' );
 	}
 
 	/** No Errors *************************************************************/
@@ -687,23 +687,23 @@ function bbp_edit_topic_handler( $action = '' ) {
 	if ( !empty( $topic_id ) && !is_wp_error( $topic_id ) ) {
 
 		// Update counts, etc...
-		do_action( 'bbp_edit_topic', $topic_id, $forum_id, $anonymous_data, $topic_author , true /* Is edit */ );
+		do_action( 'ideaboard_edit_topic', $topic_id, $forum_id, $anonymous_data, $topic_author , true /* Is edit */ );
 
 		/** Revisions *********************************************************/
 
 		// Revision Reason
-		if ( !empty( $_POST['bbp_topic_edit_reason'] ) ) {
-			$topic_edit_reason = esc_attr( strip_tags( $_POST['bbp_topic_edit_reason'] ) );
+		if ( !empty( $_POST['ideaboard_topic_edit_reason'] ) ) {
+			$topic_edit_reason = esc_attr( strip_tags( $_POST['ideaboard_topic_edit_reason'] ) );
 		}
 
 		// Update revision log
-		if ( !empty( $_POST['bbp_log_topic_edit'] ) && ( "1" === $_POST['bbp_log_topic_edit'] ) )  {
+		if ( !empty( $_POST['ideaboard_log_topic_edit'] ) && ( "1" === $_POST['ideaboard_log_topic_edit'] ) )  {
 			$revision_id = wp_save_post_revision( $topic_id );
 			if ( ! empty( $revision_id ) ) {
-				bbp_update_topic_revision_log( array(
+				ideaboard_update_topic_revision_log( array(
 					'topic_id'    => $topic_id,
 					'revision_id' => $revision_id,
-					'author_id'   => bbp_get_current_user_id(),
+					'author_id'   => ideaboard_get_current_user_id(),
 					'reason'      => $topic_edit_reason
 				) );
 			}
@@ -712,36 +712,36 @@ function bbp_edit_topic_handler( $action = '' ) {
 		/** Move Topic ********************************************************/
 
 		// If the new forum id is not equal to the old forum id, run the
-		// bbp_move_topic action and pass the topic's forum id as the
+		// ideaboard_move_topic action and pass the topic's forum id as the
 		// first arg and topic id as the second to update counts.
 		if ( $forum_id !== $topic->post_parent ) {
-			bbp_move_topic_handler( $topic_id, $topic->post_parent, $forum_id );
+			ideaboard_move_topic_handler( $topic_id, $topic->post_parent, $forum_id );
 		}
 
 		/** Stickies **********************************************************/
 
-		if ( !empty( $_POST['bbp_stick_topic'] ) && in_array( $_POST['bbp_stick_topic'], array_keys( bbp_get_topic_types() ) ) ) {
+		if ( !empty( $_POST['ideaboard_stick_topic'] ) && in_array( $_POST['ideaboard_stick_topic'], array_keys( ideaboard_get_topic_types() ) ) ) {
 
 			// What's the caps?
 			if ( current_user_can( 'moderate' ) ) {
 
 				// What's the haps?
-				switch ( $_POST['bbp_stick_topic'] ) {
+				switch ( $_POST['ideaboard_stick_topic'] ) {
 
 					// Sticky in forum
 					case 'stick'   :
-						bbp_stick_topic( $topic_id );
+						ideaboard_stick_topic( $topic_id );
 						break;
 
 					// Sticky in all forums
 					case 'super'   :
-						bbp_stick_topic( $topic_id, true );
+						ideaboard_stick_topic( $topic_id, true );
 						break;
 
 					// Normal
 					case 'unstick' :
 					default        :
-						bbp_unstick_topic( $topic_id );
+						ideaboard_unstick_topic( $topic_id );
 						break;
 				}
 			}
@@ -749,25 +749,25 @@ function bbp_edit_topic_handler( $action = '' ) {
 
 		/** Additional Actions (After Save) ***********************************/
 
-		do_action( 'bbp_edit_topic_post_extras', $topic_id );
+		do_action( 'ideaboard_edit_topic_post_extras', $topic_id );
 
 		/** Redirect **********************************************************/
 
 		// Redirect to
-		$redirect_to = bbp_get_redirect_to();
+		$redirect_to = ideaboard_get_redirect_to();
 
 		// View all?
-		$view_all = bbp_get_view_all();
+		$view_all = ideaboard_get_view_all();
 
 		// Get the topic URL
-		$topic_url = bbp_get_topic_permalink( $topic_id, $redirect_to );
+		$topic_url = ideaboard_get_topic_permalink( $topic_id, $redirect_to );
 
 		// Add view all?
 		if ( !empty( $view_all ) )
-			$topic_url = bbp_add_view_all( $topic_url );
+			$topic_url = ideaboard_add_view_all( $topic_url );
 
 		// Allow to be filtered
-		$topic_url = apply_filters( 'bbp_edit_topic_redirect_to', $topic_url, $view_all, $redirect_to );
+		$topic_url = apply_filters( 'ideaboard_edit_topic_redirect_to', $topic_url, $view_all, $redirect_to );
 
 		/** Successful Edit ***************************************************/
 
@@ -781,7 +781,7 @@ function bbp_edit_topic_handler( $action = '' ) {
 
 	} else {
 		$append_error = ( is_wp_error( $topic_id ) && $topic_id->get_error_message() ) ? $topic_id->get_error_message() . ' ' : '';
-		bbp_add_error( 'bbp_topic_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your topic:' . $append_error . 'Please try again.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_topic_error', __( '<strong>ERROR</strong>: The following problem(s) have been found with your topic:' . $append_error . 'Please try again.', 'ideaboard' ) );
 	}
 }
 
@@ -793,33 +793,33 @@ function bbp_edit_topic_handler( $action = '' ) {
  * @param bool|array $anonymous_data Optional logged-out user data.
  * @param int $author_id Author id
  * @param bool $is_edit Optional. Is the post being edited? Defaults to false.
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_forum_id() To get the forum id
- * @uses bbp_get_current_user_id() To get the current user id
- * @yses bbp_get_topic_forum_id() To get the topic forum id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_forum_id() To get the forum id
+ * @uses ideaboard_get_current_user_id() To get the current user id
+ * @yses ideaboard_get_topic_forum_id() To get the topic forum id
  * @uses update_post_meta() To update the topic metas
  * @uses set_transient() To update the flood check transient for the ip
- * @uses bbp_update_user_last_posted() To update the users last posted time
- * @uses bbp_is_subscriptions_active() To check if the subscriptions feature is
+ * @uses ideaboard_update_user_last_posted() To update the users last posted time
+ * @uses ideaboard_is_subscriptions_active() To check if the subscriptions feature is
  *                                      activated or not
- * @uses bbp_is_user_subscribed() To check if the user is subscribed
- * @uses bbp_remove_user_subscription() To remove the user's subscription
- * @uses bbp_add_user_subscription() To add the user's subscription
- * @uses bbp_update_topic_forum_id() To update the topic's forum id
- * @uses bbp_update_topic_topic_id() To update the topic's topic id
- * @uses bbp_update_topic_last_reply_id() To update the last reply id topic meta
- * @uses bbp_update_topic_last_active_id() To update the topic last active id
- * @uses bbp_update_topic_last_active_time() To update the last active topic meta
- * @uses bbp_update_topic_reply_count() To update the topic reply count
- * @uses bbp_update_topic_reply_count_hidden() To udpate the topic hidden reply count
- * @uses bbp_update_topic_voice_count() To update the topic voice count
- * @uses bbp_update_topic_walker() To udpate the topic's ancestors
+ * @uses ideaboard_is_user_subscribed() To check if the user is subscribed
+ * @uses ideaboard_remove_user_subscription() To remove the user's subscription
+ * @uses ideaboard_add_user_subscription() To add the user's subscription
+ * @uses ideaboard_update_topic_forum_id() To update the topic's forum id
+ * @uses ideaboard_update_topic_topic_id() To update the topic's topic id
+ * @uses ideaboard_update_topic_last_reply_id() To update the last reply id topic meta
+ * @uses ideaboard_update_topic_last_active_id() To update the topic last active id
+ * @uses ideaboard_update_topic_last_active_time() To update the last active topic meta
+ * @uses ideaboard_update_topic_reply_count() To update the topic reply count
+ * @uses ideaboard_update_topic_reply_count_hidden() To udpate the topic hidden reply count
+ * @uses ideaboard_update_topic_voice_count() To update the topic voice count
+ * @uses ideaboard_update_topic_walker() To udpate the topic's ancestors
  */
-function bbp_update_topic( $topic_id = 0, $forum_id = 0, $anonymous_data = false, $author_id = 0, $is_edit = false ) {
+function ideaboard_update_topic( $topic_id = 0, $forum_id = 0, $anonymous_data = false, $author_id = 0, $is_edit = false ) {
 
-	// Validate the ID's passed from 'bbp_new_topic' action
-	$topic_id = bbp_get_topic_id( $topic_id );
-	$forum_id = bbp_get_forum_id( $forum_id );
+	// Validate the ID's passed from 'ideaboard_new_topic' action
+	$topic_id = ideaboard_get_topic_id( $topic_id );
+	$forum_id = ideaboard_get_forum_id( $forum_id );
 
 	// Bail if there is no topic
 	if ( empty( $topic_id ) )
@@ -827,22 +827,22 @@ function bbp_update_topic( $topic_id = 0, $forum_id = 0, $anonymous_data = false
 
 	// Check author_id
 	if ( empty( $author_id ) )
-		$author_id = bbp_get_current_user_id();
+		$author_id = ideaboard_get_current_user_id();
 
 	// Check forum_id
 	if ( empty( $forum_id ) )
-		$forum_id = bbp_get_topic_forum_id( $topic_id );
+		$forum_id = ideaboard_get_topic_forum_id( $topic_id );
 
 	// If anonymous post, store name, email, website and ip in post_meta.
 	// It expects anonymous_data to be sanitized.
-	// Check bbp_filter_anonymous_post_data() for sanitization.
+	// Check ideaboard_filter_anonymous_post_data() for sanitization.
 	if ( !empty( $anonymous_data ) && is_array( $anonymous_data ) ) {
 
 		// Parse arguments against default values
-		$r = bbp_parse_args( $anonymous_data, array(
-			'bbp_anonymous_name'    => '',
-			'bbp_anonymous_email'   => '',
-			'bbp_anonymous_website' => '',
+		$r = ideaboard_parse_args( $anonymous_data, array(
+			'ideaboard_anonymous_name'    => '',
+			'ideaboard_anonymous_email'   => '',
+			'ideaboard_anonymous_website' => '',
 		), 'update_topic' );
 
 		// Update all anonymous metas
@@ -852,53 +852,53 @@ function bbp_update_topic( $topic_id = 0, $forum_id = 0, $anonymous_data = false
 
 		// Set transient for throttle check (only on new, not edit)
 		if ( empty( $is_edit ) ) {
-			set_transient( '_bbp_' . bbp_current_author_ip() . '_last_posted', time() );
+			set_transient( '_ideaboard_' . ideaboard_current_author_ip() . '_last_posted', time() );
 		}
 
 	} else {
 		if ( empty( $is_edit ) && !current_user_can( 'throttle' ) ) {
-			bbp_update_user_last_posted( $author_id );
+			ideaboard_update_user_last_posted( $author_id );
 		}
 	}
 
 	// Handle Subscription Checkbox
-	if ( bbp_is_subscriptions_active() && !empty( $author_id ) ) {
-		$subscribed = bbp_is_user_subscribed( $author_id, $topic_id );
-		$subscheck  = ( !empty( $_POST['bbp_topic_subscription'] ) && ( 'bbp_subscribe' === $_POST['bbp_topic_subscription'] ) ) ? true : false;
+	if ( ideaboard_is_subscriptions_active() && !empty( $author_id ) ) {
+		$subscribed = ideaboard_is_user_subscribed( $author_id, $topic_id );
+		$subscheck  = ( !empty( $_POST['ideaboard_topic_subscription'] ) && ( 'ideaboard_subscribe' === $_POST['ideaboard_topic_subscription'] ) ) ? true : false;
 
 		// Subscribed and unsubscribing
 		if ( true === $subscribed && false === $subscheck ) {
-			bbp_remove_user_subscription( $author_id, $topic_id );
+			ideaboard_remove_user_subscription( $author_id, $topic_id );
 
 		// Subscribing
 		} elseif ( false === $subscribed && true === $subscheck ) {
-			bbp_add_user_subscription( $author_id, $topic_id );
+			ideaboard_add_user_subscription( $author_id, $topic_id );
 		}
 	}
 
 	// Forum topic meta
-	bbp_update_topic_forum_id( $topic_id, $forum_id );
-	bbp_update_topic_topic_id( $topic_id, $topic_id );
+	ideaboard_update_topic_forum_id( $topic_id, $forum_id );
+	ideaboard_update_topic_topic_id( $topic_id, $topic_id );
 
 	// Update associated topic values if this is a new topic
 	if ( empty( $is_edit ) ) {
 
 		// Update poster IP if not editing
-		update_post_meta( $topic_id, '_bbp_author_ip', bbp_current_author_ip(), false );
+		update_post_meta( $topic_id, '_ideaboard_author_ip', ideaboard_current_author_ip(), false );
 
 		// Last active time
 		$last_active = current_time( 'mysql' );
 
 		// Reply topic meta
-		bbp_update_topic_last_reply_id      ( $topic_id, 0            );
-		bbp_update_topic_last_active_id     ( $topic_id, $topic_id    );
-		bbp_update_topic_last_active_time   ( $topic_id, $last_active );
-		bbp_update_topic_reply_count        ( $topic_id, 0            );
-		bbp_update_topic_reply_count_hidden ( $topic_id, 0            );
-		bbp_update_topic_voice_count        ( $topic_id               );
+		ideaboard_update_topic_last_reply_id      ( $topic_id, 0            );
+		ideaboard_update_topic_last_active_id     ( $topic_id, $topic_id    );
+		ideaboard_update_topic_last_active_time   ( $topic_id, $last_active );
+		ideaboard_update_topic_reply_count        ( $topic_id, 0            );
+		ideaboard_update_topic_reply_count_hidden ( $topic_id, 0            );
+		ideaboard_update_topic_voice_count        ( $topic_id               );
 
 		// Walk up ancestors and do the dirty work
-		bbp_update_topic_walker( $topic_id, $last_active, $forum_id, 0, false );
+		ideaboard_update_topic_walker( $topic_id, $last_active, $forum_id, 0, false );
 	}
 }
 
@@ -914,16 +914,16 @@ function bbp_update_topic( $topic_id = 0, $forum_id = 0, $anonymous_data = false
  * @param int $forum_id Optional. Forum id
  * @param int $reply_id Optional. Reply id
  * @param bool $refresh Reset all the previous parameters? Defaults to true.
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_topic_forum_id() To get the topic forum id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_topic_forum_id() To get the topic forum id
  * @uses get_post_ancestors() To get the topic's ancestors
- * @uses bbp_is_forum() To check if the ancestor is a forum
- * @uses bbp_update_forum() To update the forum
+ * @uses ideaboard_is_forum() To check if the ancestor is a forum
+ * @uses ideaboard_update_forum() To update the forum
  */
-function bbp_update_topic_walker( $topic_id, $last_active_time = '', $forum_id = 0, $reply_id = 0, $refresh = true ) {
+function ideaboard_update_topic_walker( $topic_id, $last_active_time = '', $forum_id = 0, $reply_id = 0, $refresh = true ) {
 
 	// Validate topic_id
-	$topic_id  = bbp_get_topic_id( $topic_id );
+	$topic_id  = ideaboard_get_topic_id( $topic_id );
 
 	// Define local variable(s)
 	$active_id = 0;
@@ -933,7 +933,7 @@ function bbp_update_topic_walker( $topic_id, $last_active_time = '', $forum_id =
 
 		// Get the forum ID if none was passed
 		if ( empty( $forum_id )  ) {
-			$forum_id = bbp_get_topic_forum_id( $topic_id );
+			$forum_id = ideaboard_get_topic_forum_id( $topic_id );
 		}
 
 		// Set the active_id based on topic_id/reply_id
@@ -949,7 +949,7 @@ function bbp_update_topic_walker( $topic_id, $last_active_time = '', $forum_id =
 	// If we want a full refresh, unset any of the possibly passed variables
 	if ( true === $refresh ) {
 		$forum_id = $topic_id = $reply_id = $active_id = $last_active_time = 0;
-		$topic_status = bbp_get_public_status_id();
+		$topic_status = ideaboard_get_public_status_id();
 	}
 
 	// Loop through ancestors
@@ -957,10 +957,10 @@ function bbp_update_topic_walker( $topic_id, $last_active_time = '', $forum_id =
 		foreach ( $ancestors as $ancestor ) {
 
 			// If ancestor is a forum, update counts
-			if ( bbp_is_forum( $ancestor ) ) {
+			if ( ideaboard_is_forum( $ancestor ) ) {
 
 				// Update the forum
-				bbp_update_forum( array(
+				ideaboard_update_forum( array(
 					'forum_id'           => $ancestor,
 					'last_topic_id'      => $topic_id,
 					'last_reply_id'      => $reply_id,
@@ -980,34 +980,34 @@ function bbp_update_topic_walker( $topic_id, $last_active_time = '', $forum_id =
  * @param int $topic_id Topic id
  * @param int $old_forum_id Old forum id
  * @param int $new_forum_id New forum id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_forum_id() To get the forum id
- * @uses bbp_get_stickies() To get the old forums sticky topics
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_forum_id() To get the forum id
+ * @uses ideaboard_get_stickies() To get the old forums sticky topics
  * @uses delete_post_meta() To delete the forum sticky meta
  * @uses update_post_meta() To update the old forum sticky meta
- * @uses bbp_stick_topic() To stick the topic in the new forum
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_get_all_child_ids() To get the public child ids
- * @uses bbp_update_reply_forum_id() To update the reply forum id
- * @uses bbp_update_topic_forum_id() To update the topic forum id
+ * @uses ideaboard_stick_topic() To stick the topic in the new forum
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_all_child_ids() To get the public child ids
+ * @uses ideaboard_update_reply_forum_id() To update the reply forum id
+ * @uses ideaboard_update_topic_forum_id() To update the topic forum id
  * @uses get_post_ancestors() To get the topic's ancestors
- * @uses bbp_is_forum() To check if the ancestor is a forum
- * @uses bbp_update_forum() To update the forum
+ * @uses ideaboard_is_forum() To check if the ancestor is a forum
+ * @uses ideaboard_update_forum() To update the forum
  */
-function bbp_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id ) {
+function ideaboard_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id ) {
 
 	// Validate parameters
-	$topic_id     = bbp_get_topic_id( $topic_id     );
-	$old_forum_id = bbp_get_forum_id( $old_forum_id );
-	$new_forum_id = bbp_get_forum_id( $new_forum_id );
+	$topic_id     = ideaboard_get_topic_id( $topic_id     );
+	$old_forum_id = ideaboard_get_forum_id( $old_forum_id );
+	$new_forum_id = ideaboard_get_forum_id( $new_forum_id );
 
 	// Update topic forum's ID
-	bbp_update_topic_forum_id( $topic_id, $new_forum_id );
+	ideaboard_update_topic_forum_id( $topic_id, $new_forum_id );
 
 	/** Stickies **************************************************************/
 
 	// Get forum stickies
-	$old_stickies = bbp_get_stickies( $old_forum_id );
+	$old_stickies = ideaboard_get_stickies( $old_forum_id );
 
 	// Only proceed if stickies are found
 	if ( !empty( $old_stickies ) ) {
@@ -1027,26 +1027,26 @@ function bbp_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id ) {
 
 			// No more stickies so delete the meta
 			if ( empty( $updated_stickies ) ) {
-				delete_post_meta( $old_forum_id, '_bbp_sticky_topics' );
+				delete_post_meta( $old_forum_id, '_ideaboard_sticky_topics' );
 
 			// Still stickies so update the meta
 			} else {
-				update_post_meta( $old_forum_id, '_bbp_sticky_topics', $updated_stickies );
+				update_post_meta( $old_forum_id, '_ideaboard_sticky_topics', $updated_stickies );
 			}
 
 			// Topic was sticky, so restick in new forum
-			bbp_stick_topic( $topic_id );
+			ideaboard_stick_topic( $topic_id );
 		}
 	}
 
 	/** Topic Replies *********************************************************/
 
 	// Get the topics replies
-	$replies = bbp_get_all_child_ids( $topic_id, bbp_get_reply_post_type() );
+	$replies = ideaboard_get_all_child_ids( $topic_id, ideaboard_get_reply_post_type() );
 
 	// Update the forum_id of all replies in the topic
 	foreach ( $replies as $reply_id ) {
-		bbp_update_reply_forum_id( $reply_id, $new_forum_id );
+		ideaboard_update_reply_forum_id( $reply_id, $new_forum_id );
 	}
 
 	/** Old forum_id **********************************************************/
@@ -1057,8 +1057,8 @@ function bbp_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id ) {
 	// Loop through ancestors and update them
 	if ( !empty( $old_forum_ancestors ) ) {
 		foreach ( $old_forum_ancestors as $ancestor ) {
-			if ( bbp_is_forum( $ancestor ) ) {
-				bbp_update_forum( array(
+			if ( ideaboard_is_forum( $ancestor ) ) {
+				ideaboard_update_forum( array(
 					'forum_id' => $ancestor,
 				) );
 			}
@@ -1079,8 +1079,8 @@ function bbp_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id ) {
 		// Loop through ancestors and update them
 		if ( !empty( $new_forum_ancestors ) ) {
 			foreach ( $new_forum_ancestors as $ancestor ) {
-				if ( bbp_is_forum( $ancestor ) ) {
-					bbp_update_forum( array(
+				if ( ideaboard_is_forum( $ancestor ) ) {
+					ideaboard_update_forum( array(
 						'forum_id' => $ancestor,
 					) );
 				}
@@ -1097,38 +1097,38 @@ function bbp_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id ) {
  * @since IdeaBoard (r2756)
  *
  * @param string $action The requested action to compare this function to
- * @uses bbp_add_error() To add an error message
- * @uses bbp_get_topic() To get the topics
- * @uses bbp_verify_nonce_request() To verify the nonce and check the request
+ * @uses ideaboard_add_error() To add an error message
+ * @uses ideaboard_get_topic() To get the topics
+ * @uses ideaboard_verify_nonce_request() To verify the nonce and check the request
  * @uses current_user_can() To check if the current user can edit the topics
  * @uses is_wp_error() To check if the value retrieved is a {@link WP_Error}
- * @uses do_action() Calls 'bbp_merge_topic' with the destination and source
+ * @uses do_action() Calls 'ideaboard_merge_topic' with the destination and source
  *                    topic ids
- * @uses bbp_get_topic_subscribers() To get the source topic subscribers
- * @uses bbp_add_user_subscription() To add the user subscription
- * @uses bbp_remove_user_subscription() To remove the user subscription
- * @uses bbp_get_topic_favoriters() To get the source topic favoriters
- * @uses bbp_add_user_favorite() To add the user favorite
- * @uses bbp_remove_user_favorite() To remove the user favorite
+ * @uses ideaboard_get_topic_subscribers() To get the source topic subscribers
+ * @uses ideaboard_add_user_subscription() To add the user subscription
+ * @uses ideaboard_remove_user_subscription() To remove the user subscription
+ * @uses ideaboard_get_topic_favoriters() To get the source topic favoriters
+ * @uses ideaboard_add_user_favorite() To add the user favorite
+ * @uses ideaboard_remove_user_favorite() To remove the user favorite
  * @uses wp_get_post_terms() To get the source topic tags
  * @uses wp_set_post_terms() To set the topic tags
  * @uses wp_delete_object_term_relationships() To delete the topic tags
- * @uses bbp_open_topic() To open the topic
- * @uses bbp_unstick_topic() To unstick the topic
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_open_topic() To open the topic
+ * @uses ideaboard_unstick_topic() To unstick the topic
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses get_posts() To get the replies
  * @uses wp_update_post() To update the topic
- * @uses bbp_update_reply_topic_id() To update the reply topic id
- * @uses bbp_get_topic_forum_id() To get the topic forum id
- * @uses bbp_update_reply_forum_id() To update the reply forum id
- * @uses do_action() Calls 'bbp_merged_topic_reply' with the reply id and
+ * @uses ideaboard_update_reply_topic_id() To update the reply topic id
+ * @uses ideaboard_get_topic_forum_id() To get the topic forum id
+ * @uses ideaboard_update_reply_forum_id() To update the reply forum id
+ * @uses do_action() Calls 'ideaboard_merged_topic_reply' with the reply id and
  *                    destination topic id
- * @uses do_action() Calls 'bbp_merged_topic' with the destination and source
+ * @uses do_action() Calls 'ideaboard_merged_topic' with the destination and source
  *                    topic ids and source topic's forum id
- * @uses bbp_get_topic_permalink() To get the topic permalink
+ * @uses ideaboard_get_topic_permalink() To get the topic permalink
  * @uses wp_safe_redirect() To redirect to the topic link
  */
-function bbp_merge_topic_handler( $action = '' ) {
+function ideaboard_merge_topic_handler( $action = '' ) {
 
 	// Bail if action is not bbp-merge-topic
 	if ( 'bbp-merge-topic' !== $action )
@@ -1142,53 +1142,53 @@ function bbp_merge_topic_handler( $action = '' ) {
 	/** Source Topic **********************************************************/
 
 	// Topic id
-	if ( empty( $_POST['bbp_topic_id'] ) ) {
-		bbp_add_error( 'bbp_merge_topic_source_id', __( '<strong>ERROR</strong>: Topic ID not found.', 'ideaboard' ) );
+	if ( empty( $_POST['ideaboard_topic_id'] ) ) {
+		ideaboard_add_error( 'ideaboard_merge_topic_source_id', __( '<strong>ERROR</strong>: Topic ID not found.', 'ideaboard' ) );
 	} else {
-		$source_topic_id = (int) $_POST['bbp_topic_id'];
+		$source_topic_id = (int) $_POST['ideaboard_topic_id'];
 	}
 
 	// Nonce check
-	if ( ! bbp_verify_nonce_request( 'bbp-merge-topic_' . $source_topic_id ) ) {
-		bbp_add_error( 'bbp_merge_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+	if ( ! ideaboard_verify_nonce_request( 'bbp-merge-topic_' . $source_topic_id ) ) {
+		ideaboard_add_error( 'ideaboard_merge_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 
 	// Source topic not found
-	} elseif ( !$source_topic = bbp_get_topic( $source_topic_id ) ) {
-		bbp_add_error( 'bbp_merge_topic_source_not_found', __( '<strong>ERROR</strong>: The topic you want to merge was not found.', 'ideaboard' ) );
+	} elseif ( !$source_topic = ideaboard_get_topic( $source_topic_id ) ) {
+		ideaboard_add_error( 'ideaboard_merge_topic_source_not_found', __( '<strong>ERROR</strong>: The topic you want to merge was not found.', 'ideaboard' ) );
 		return;
 	}
 
 	// Cannot edit source topic
 	if ( !current_user_can( 'edit_topic', $source_topic->ID ) ) {
-		bbp_add_error( 'bbp_merge_topic_source_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the source topic.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_merge_topic_source_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the source topic.', 'ideaboard' ) );
 		return;
 	}
 
 	/** Destination Topic *****************************************************/
 
 	// Topic id
-	if ( empty( $_POST['bbp_destination_topic'] ) )
-		bbp_add_error( 'bbp_merge_topic_destination_id', __( '<strong>ERROR</strong>: Destination topic ID not found.', 'ideaboard' ) );
+	if ( empty( $_POST['ideaboard_destination_topic'] ) )
+		ideaboard_add_error( 'ideaboard_merge_topic_destination_id', __( '<strong>ERROR</strong>: Destination topic ID not found.', 'ideaboard' ) );
 	else
-		$destination_topic_id = (int) $_POST['bbp_destination_topic'];
+		$destination_topic_id = (int) $_POST['ideaboard_destination_topic'];
 
 	// Destination topic not found
-	if ( !$destination_topic = bbp_get_topic( $destination_topic_id ) )
-		bbp_add_error( 'bbp_merge_topic_destination_not_found', __( '<strong>ERROR</strong>: The topic you want to merge to was not found.', 'ideaboard' ) );
+	if ( !$destination_topic = ideaboard_get_topic( $destination_topic_id ) )
+		ideaboard_add_error( 'ideaboard_merge_topic_destination_not_found', __( '<strong>ERROR</strong>: The topic you want to merge to was not found.', 'ideaboard' ) );
 
 	// Cannot edit destination topic
 	if ( !current_user_can( 'edit_topic', $destination_topic->ID ) )
-		bbp_add_error( 'bbp_merge_topic_destination_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the destination topic.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_merge_topic_destination_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the destination topic.', 'ideaboard' ) );
 
 	// Bail if errors
-	if ( bbp_has_errors() )
+	if ( ideaboard_has_errors() )
 		return;
 
 	/** No Errors *************************************************************/
 
 	// Update counts, etc...
-	do_action( 'bbp_merge_topic', $destination_topic->ID, $source_topic->ID );
+	do_action( 'ideaboard_merge_topic', $destination_topic->ID, $source_topic->ID );
 
 	/** Date Check ************************************************************/
 
@@ -1209,7 +1209,7 @@ function bbp_merge_topic_handler( $action = '' ) {
 	/** Subscriptions *********************************************************/
 
 	// Get subscribers from source topic
-	$subscribers = bbp_get_topic_subscribers( $source_topic->ID );
+	$subscribers = ideaboard_get_topic_subscribers( $source_topic->ID );
 
 	// Remove the topic from everybody's subscriptions
 	if ( !empty( $subscribers ) ) {
@@ -1218,18 +1218,18 @@ function bbp_merge_topic_handler( $action = '' ) {
 		foreach ( (array) $subscribers as $subscriber ) {
 
 			// Shift the subscriber if told to
-			if ( !empty( $_POST['bbp_topic_subscribers'] ) && ( "1" === $_POST['bbp_topic_subscribers'] ) && bbp_is_subscriptions_active() )
-				bbp_add_user_subscription( $subscriber, $destination_topic->ID );
+			if ( !empty( $_POST['ideaboard_topic_subscribers'] ) && ( "1" === $_POST['ideaboard_topic_subscribers'] ) && ideaboard_is_subscriptions_active() )
+				ideaboard_add_user_subscription( $subscriber, $destination_topic->ID );
 
 			// Remove old subscription
-			bbp_remove_user_subscription( $subscriber, $source_topic->ID );
+			ideaboard_remove_user_subscription( $subscriber, $source_topic->ID );
 		}
 	}
 
 	/** Favorites *************************************************************/
 
 	// Get favoriters from source topic
-	$favoriters = bbp_get_topic_favoriters( $source_topic->ID );
+	$favoriters = ideaboard_get_topic_favoriters( $source_topic->ID );
 
 	// Remove the topic from everybody's favorites
 	if ( !empty( $favoriters ) ) {
@@ -1238,42 +1238,42 @@ function bbp_merge_topic_handler( $action = '' ) {
 		foreach ( (array) $favoriters as $favoriter ) {
 
 			// Shift the favoriter if told to
-			if ( !empty( $_POST['bbp_topic_favoriters'] ) && "1" === $_POST['bbp_topic_favoriters'] )
-				bbp_add_user_favorite( $favoriter, $destination_topic->ID );
+			if ( !empty( $_POST['ideaboard_topic_favoriters'] ) && "1" === $_POST['ideaboard_topic_favoriters'] )
+				ideaboard_add_user_favorite( $favoriter, $destination_topic->ID );
 
 			// Remove old favorite
-			bbp_remove_user_favorite( $favoriter, $source_topic->ID );
+			ideaboard_remove_user_favorite( $favoriter, $source_topic->ID );
 		}
 	}
 
 	/** Tags ******************************************************************/
 
 	// Get the source topic tags
-	$source_topic_tags = wp_get_post_terms( $source_topic->ID, bbp_get_topic_tag_tax_id(), array( 'fields' => 'names' ) );
+	$source_topic_tags = wp_get_post_terms( $source_topic->ID, ideaboard_get_topic_tag_tax_id(), array( 'fields' => 'names' ) );
 
 	// Tags to possibly merge
 	if ( !empty( $source_topic_tags ) && !is_wp_error( $source_topic_tags ) ) {
 
 		// Shift the tags if told to
-		if ( !empty( $_POST['bbp_topic_tags'] ) && ( "1" === $_POST['bbp_topic_tags'] ) )
-			wp_set_post_terms( $destination_topic->ID, $source_topic_tags, bbp_get_topic_tag_tax_id(), true );
+		if ( !empty( $_POST['ideaboard_topic_tags'] ) && ( "1" === $_POST['ideaboard_topic_tags'] ) )
+			wp_set_post_terms( $destination_topic->ID, $source_topic_tags, ideaboard_get_topic_tag_tax_id(), true );
 
 		// Delete the tags from the source topic
-		wp_delete_object_term_relationships( $source_topic->ID, bbp_get_topic_tag_tax_id() );
+		wp_delete_object_term_relationships( $source_topic->ID, ideaboard_get_topic_tag_tax_id() );
 	}
 
 	/** Source Topic **********************************************************/
 
 	// Status
-	bbp_open_topic( $source_topic->ID );
+	ideaboard_open_topic( $source_topic->ID );
 
 	// Sticky
-	bbp_unstick_topic( $source_topic->ID );
+	ideaboard_unstick_topic( $source_topic->ID );
 
 	// Get the replies of the source topic
 	$replies = (array) get_posts( array(
 		'post_parent'    => $source_topic->ID,
-		'post_type'      => bbp_get_reply_post_type(),
+		'post_type'      => ideaboard_get_reply_post_type(),
 		'posts_per_page' => -1,
 		'order'          => 'ASC'
 	) );
@@ -1293,40 +1293,40 @@ function bbp_merge_topic_handler( $action = '' ) {
 				'ID'          => $reply->ID,
 				'post_title'  => sprintf( __( 'Reply To: %s', 'ideaboard' ), $destination_topic->post_title ),
 				'post_name'   => false,
-				'post_type'   => bbp_get_reply_post_type(),
+				'post_type'   => ideaboard_get_reply_post_type(),
 				'post_parent' => $destination_topic->ID,
 				'guid'        => ''
 			) );
 
 			// Adjust reply meta values
-			bbp_update_reply_topic_id( $reply->ID, $destination_topic->ID                           );
-			bbp_update_reply_forum_id( $reply->ID, bbp_get_topic_forum_id( $destination_topic->ID ) );
+			ideaboard_update_reply_topic_id( $reply->ID, $destination_topic->ID                           );
+			ideaboard_update_reply_forum_id( $reply->ID, ideaboard_get_topic_forum_id( $destination_topic->ID ) );
 
 			// Adjust reply to values
-			$reply_to = bbp_get_reply_to( $reply->ID );
+			$reply_to = ideaboard_get_reply_to( $reply->ID );
 			if ( empty( $reply_to ) ) {
-				bbp_update_reply_to( $reply->ID, $source_topic->ID );
+				ideaboard_update_reply_to( $reply->ID, $source_topic->ID );
 			}
 
 			// Do additional actions per merged reply
-			do_action( 'bbp_merged_topic_reply', $reply->ID, $destination_topic->ID );
+			do_action( 'ideaboard_merged_topic_reply', $reply->ID, $destination_topic->ID );
 		}
 	}
 
 	/** Successful Merge ******************************************************/
 
 	// Update topic's last meta data
-	bbp_update_topic_last_reply_id   ( $destination_topic->ID );
-	bbp_update_topic_last_active_id  ( $destination_topic->ID );
-	bbp_update_topic_last_active_time( $destination_topic->ID );
+	ideaboard_update_topic_last_reply_id   ( $destination_topic->ID );
+	ideaboard_update_topic_last_active_id  ( $destination_topic->ID );
+	ideaboard_update_topic_last_active_time( $destination_topic->ID );
 
 	// Send the post parent of the source topic as it has been shifted
 	// (possibly to a new forum) so we need to update the counts of the
 	// old forum as well as the new one
-	do_action( 'bbp_merged_topic', $destination_topic->ID, $source_topic->ID, $source_topic->post_parent );
+	do_action( 'ideaboard_merged_topic', $destination_topic->ID, $source_topic->ID, $source_topic->post_parent );
 
 	// Redirect back to new topic
-	wp_safe_redirect( bbp_get_topic_permalink( $destination_topic->ID ) );
+	wp_safe_redirect( ideaboard_get_topic_permalink( $destination_topic->ID ) );
 
 	// For good measure
 	exit();
@@ -1343,37 +1343,37 @@ function bbp_merge_topic_handler( $action = '' ) {
  * @param int $destination_topic_id Destination topic id
  * @param int $source_topic_id Source topic id
  * @param int $source_topic_forum Source topic's forum id
- * @uses bbp_update_forum_topic_count() To update the forum topic counts
- * @uses bbp_update_forum_reply_count() To update the forum reply counts
- * @uses bbp_update_topic_reply_count() To update the topic reply counts
- * @uses bbp_update_topic_voice_count() To update the topic voice counts
- * @uses bbp_update_topic_reply_count_hidden() To update the topic hidden reply
+ * @uses ideaboard_update_forum_topic_count() To update the forum topic counts
+ * @uses ideaboard_update_forum_reply_count() To update the forum reply counts
+ * @uses ideaboard_update_topic_reply_count() To update the topic reply counts
+ * @uses ideaboard_update_topic_voice_count() To update the topic voice counts
+ * @uses ideaboard_update_topic_reply_count_hidden() To update the topic hidden reply
  *                                              count
- * @uses do_action() Calls 'bbp_merge_topic_count' with the destination topic
+ * @uses do_action() Calls 'ideaboard_merge_topic_count' with the destination topic
  *                    id, source topic id & source topic forum id
  */
-function bbp_merge_topic_count( $destination_topic_id, $source_topic_id, $source_topic_forum_id ) {
+function ideaboard_merge_topic_count( $destination_topic_id, $source_topic_id, $source_topic_forum_id ) {
 
 	/** Source Topic **********************************************************/
 
 	// Forum Topic Counts
-	bbp_update_forum_topic_count( $source_topic_forum_id );
+	ideaboard_update_forum_topic_count( $source_topic_forum_id );
 
 	// Forum Reply Counts
-	bbp_update_forum_reply_count( $source_topic_forum_id );
+	ideaboard_update_forum_reply_count( $source_topic_forum_id );
 
 	/** Destination Topic *****************************************************/
 
 	// Topic Reply Counts
-	bbp_update_topic_reply_count( $destination_topic_id );
+	ideaboard_update_topic_reply_count( $destination_topic_id );
 
 	// Topic Hidden Reply Counts
-	bbp_update_topic_reply_count_hidden( $destination_topic_id );
+	ideaboard_update_topic_reply_count_hidden( $destination_topic_id );
 
 	// Topic Voice Counts
-	bbp_update_topic_voice_count( $destination_topic_id );
+	ideaboard_update_topic_voice_count( $destination_topic_id );
 
-	do_action( 'bbp_merge_topic_count', $destination_topic_id, $source_topic_id, $source_topic_forum_id );
+	do_action( 'ideaboard_merge_topic_count', $destination_topic_id, $source_topic_id, $source_topic_forum_id );
 }
 
 /**
@@ -1384,38 +1384,38 @@ function bbp_merge_topic_count( $destination_topic_id, $source_topic_id, $source
  * @since IdeaBoard (r2756)
  *
  * @param string $action The requested action to compare this function to
- * @uses bbp_add_error() To add an error message
- * @uses bbp_get_reply() To get the reply
- * @uses bbp_get_topic() To get the topics
- * @uses bbp_verify_nonce_request() To verify the nonce and check the request
+ * @uses ideaboard_add_error() To add an error message
+ * @uses ideaboard_get_reply() To get the reply
+ * @uses ideaboard_get_topic() To get the topics
+ * @uses ideaboard_verify_nonce_request() To verify the nonce and check the request
  * @uses current_user_can() To check if the current user can edit the topics
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses is_wp_error() To check if the value retrieved is a {@link WP_Error}
- * @uses do_action() Calls 'bbp_pre_split_topic' with the from reply id, source
+ * @uses do_action() Calls 'ideaboard_pre_split_topic' with the from reply id, source
  *                    and destination topic ids
- * @uses bbp_get_topic_subscribers() To get the source topic subscribers
- * @uses bbp_add_user_subscription() To add the user subscription
- * @uses bbp_get_topic_favoriters() To get the source topic favoriters
- * @uses bbp_add_user_favorite() To add the user favorite
+ * @uses ideaboard_get_topic_subscribers() To get the source topic subscribers
+ * @uses ideaboard_add_user_subscription() To add the user subscription
+ * @uses ideaboard_get_topic_favoriters() To get the source topic favoriters
+ * @uses ideaboard_add_user_favorite() To add the user favorite
  * @uses wp_get_post_terms() To get the source topic tags
  * @uses wp_set_post_terms() To set the topic tags
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses wpdb::prepare() To prepare our sql query
  * @uses wpdb::get_results() To execute the sql query and get results
  * @uses wp_update_post() To update the replies
- * @uses bbp_update_reply_topic_id() To update the reply topic id
- * @uses bbp_get_topic_forum_id() To get the topic forum id
- * @uses bbp_update_reply_forum_id() To update the reply forum id
- * @uses do_action() Calls 'bbp_split_topic_reply' with the reply id and
+ * @uses ideaboard_update_reply_topic_id() To update the reply topic id
+ * @uses ideaboard_get_topic_forum_id() To get the topic forum id
+ * @uses ideaboard_update_reply_forum_id() To update the reply forum id
+ * @uses do_action() Calls 'ideaboard_split_topic_reply' with the reply id and
  *                    destination topic id
- * @uses bbp_update_topic_last_reply_id() To update the topic last reply id
- * @uses bbp_update_topic_last_active_time() To update the topic last active meta
- * @uses do_action() Calls 'bbp_post_split_topic' with the destination and
+ * @uses ideaboard_update_topic_last_reply_id() To update the topic last reply id
+ * @uses ideaboard_update_topic_last_active_time() To update the topic last active meta
+ * @uses do_action() Calls 'ideaboard_post_split_topic' with the destination and
  *                    source topic ids and source topic's forum id
- * @uses bbp_get_topic_permalink() To get the topic permalink
+ * @uses ideaboard_get_topic_permalink() To get the topic permalink
  * @uses wp_safe_redirect() To redirect to the topic link
  */
-function bbp_split_topic_handler( $action = '' ) {
+function ideaboard_split_topic_handler( $action = '' ) {
 
 	// Bail if action is not 'bbp-split-topic'
 	if ( 'bbp-split-topic' !== $action )
@@ -1431,43 +1431,43 @@ function bbp_split_topic_handler( $action = '' ) {
 
 	/** Split Reply ***********************************************************/
 
-	if ( empty( $_POST['bbp_reply_id'] ) )
-		bbp_add_error( 'bbp_split_topic_reply_id', __( '<strong>ERROR</strong>: Reply ID to split the topic from not found!', 'ideaboard' ) );
+	if ( empty( $_POST['ideaboard_reply_id'] ) )
+		ideaboard_add_error( 'ideaboard_split_topic_reply_id', __( '<strong>ERROR</strong>: Reply ID to split the topic from not found!', 'ideaboard' ) );
 	else
-		$from_reply_id = (int) $_POST['bbp_reply_id'];
+		$from_reply_id = (int) $_POST['ideaboard_reply_id'];
 
-	$from_reply = bbp_get_reply( $from_reply_id );
+	$from_reply = ideaboard_get_reply( $from_reply_id );
 
 	// Reply exists
 	if ( empty( $from_reply ) )
-		bbp_add_error( 'bbp_split_topic_r_not_found', __( '<strong>ERROR</strong>: The reply you want to split from was not found.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_split_topic_r_not_found', __( '<strong>ERROR</strong>: The reply you want to split from was not found.', 'ideaboard' ) );
 
 	/** Topic to Split ********************************************************/
 
 	// Get the topic being split
-	$source_topic = bbp_get_topic( $from_reply->post_parent );
+	$source_topic = ideaboard_get_topic( $from_reply->post_parent );
 
 	// No topic
 	if ( empty( $source_topic ) )
-		bbp_add_error( 'bbp_split_topic_source_not_found', __( '<strong>ERROR</strong>: The topic you want to split was not found.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_split_topic_source_not_found', __( '<strong>ERROR</strong>: The topic you want to split was not found.', 'ideaboard' ) );
 
 	// Nonce check failed
-	if ( ! bbp_verify_nonce_request( 'bbp-split-topic_' . $source_topic->ID ) ) {
-		bbp_add_error( 'bbp_split_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+	if ( ! ideaboard_verify_nonce_request( 'bbp-split-topic_' . $source_topic->ID ) ) {
+		ideaboard_add_error( 'ideaboard_split_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
 	// Use cannot edit topic
 	if ( !current_user_can( 'edit_topic', $source_topic->ID ) )
-		bbp_add_error( 'bbp_split_topic_source_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the source topic.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_split_topic_source_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the source topic.', 'ideaboard' ) );
 
 	// How to Split
-	if ( !empty( $_POST['bbp_topic_split_option'] ) )
-		$split_option = (string) trim( $_POST['bbp_topic_split_option'] );
+	if ( !empty( $_POST['ideaboard_topic_split_option'] ) )
+		$split_option = (string) trim( $_POST['ideaboard_topic_split_option'] );
 
 	// Invalid split option
 	if ( empty( $split_option ) || !in_array( $split_option, array( 'existing', 'reply' ) ) ) {
-		bbp_add_error( 'bbp_split_topic_option', __( '<strong>ERROR</strong>: You need to choose a valid split option.', 'ideaboard' ) );
+		ideaboard_add_error( 'ideaboard_split_topic_option', __( '<strong>ERROR</strong>: You need to choose a valid split option.', 'ideaboard' ) );
 
 	// Valid Split Option
 	} else {
@@ -1479,21 +1479,21 @@ function bbp_split_topic_handler( $action = '' ) {
 			case 'existing' :
 
 				// Get destination topic id
-				if ( empty( $_POST['bbp_destination_topic'] ) )
-					bbp_add_error( 'bbp_split_topic_destination_id', __( '<strong>ERROR</strong>: Destination topic ID not found!', 'ideaboard' ) );
+				if ( empty( $_POST['ideaboard_destination_topic'] ) )
+					ideaboard_add_error( 'ideaboard_split_topic_destination_id', __( '<strong>ERROR</strong>: Destination topic ID not found!', 'ideaboard' ) );
 				else
-					$destination_topic_id = (int) $_POST['bbp_destination_topic'];
+					$destination_topic_id = (int) $_POST['ideaboard_destination_topic'];
 
 				// Get the destination topic
-				$destination_topic = bbp_get_topic( $destination_topic_id );
+				$destination_topic = ideaboard_get_topic( $destination_topic_id );
 
 				// No destination topic
 				if ( empty( $destination_topic ) )
-					bbp_add_error( 'bbp_split_topic_destination_not_found', __( '<strong>ERROR</strong>: The topic you want to split to was not found!', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_split_topic_destination_not_found', __( '<strong>ERROR</strong>: The topic you want to split to was not found!', 'ideaboard' ) );
 
 				// User cannot edit the destination topic
 				if ( !current_user_can( 'edit_topic', $destination_topic->ID ) )
-					bbp_add_error( 'bbp_split_topic_destination_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the destination topic!', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_split_topic_destination_permission', __( '<strong>ERROR</strong>: You do not have the permissions to edit the destination topic!', 'ideaboard' ) );
 
 				break;
 
@@ -1505,8 +1505,8 @@ function bbp_split_topic_handler( $action = '' ) {
 				if ( current_user_can( 'publish_topics' ) ) {
 
 					// Use the new title that was passed
-					if ( !empty( $_POST['bbp_topic_split_destination_title'] ) ) {
-						$destination_topic_title = esc_attr( strip_tags( $_POST['bbp_topic_split_destination_title'] ) );
+					if ( !empty( $_POST['ideaboard_topic_split_destination_title'] ) ) {
+						$destination_topic_title = esc_attr( strip_tags( $_POST['ideaboard_topic_split_destination_title'] ) );
 
 					// Use the source topic title
 					} else {
@@ -1518,24 +1518,24 @@ function bbp_split_topic_handler( $action = '' ) {
 						'ID'          => $from_reply->ID,
 						'post_title'  => $destination_topic_title,
 						'post_name'   => false,
-						'post_type'   => bbp_get_topic_post_type(),
+						'post_type'   => ideaboard_get_topic_post_type(),
 						'post_parent' => $source_topic->post_parent,
 						'menu_order'  => 0,
 						'guid'        => ''
 					) );
-					$destination_topic = bbp_get_topic( $destination_topic_id );
+					$destination_topic = ideaboard_get_topic( $destination_topic_id );
 
 					// Make sure the new topic knows its a topic
-					bbp_update_topic_topic_id( $from_reply->ID );
+					ideaboard_update_topic_topic_id( $from_reply->ID );
 
 					// Shouldn't happen
 					if ( false === $destination_topic_id || is_wp_error( $destination_topic_id ) || empty( $destination_topic ) ) {
-						bbp_add_error( 'bbp_split_topic_destination_reply', __( '<strong>ERROR</strong>: There was a problem converting the reply into the topic. Please try again.', 'ideaboard' ) );
+						ideaboard_add_error( 'ideaboard_split_topic_destination_reply', __( '<strong>ERROR</strong>: There was a problem converting the reply into the topic. Please try again.', 'ideaboard' ) );
 					}
 
 				// User cannot publish posts
 				} else {
-					bbp_add_error( 'bbp_split_topic_destination_permission', __( '<strong>ERROR</strong>: You do not have the permissions to create new topics. The reply could not be converted into a topic.', 'ideaboard' ) );
+					ideaboard_add_error( 'ideaboard_split_topic_destination_permission', __( '<strong>ERROR</strong>: You do not have the permissions to create new topics. The reply could not be converted into a topic.', 'ideaboard' ) );
 				}
 
 				break;
@@ -1543,13 +1543,13 @@ function bbp_split_topic_handler( $action = '' ) {
 	}
 
 	// Bail if there are errors
-	if ( bbp_has_errors() )
+	if ( ideaboard_has_errors() )
 		return;
 
 	/** No Errors - Do the Spit ***********************************************/
 
 	// Update counts, etc...
-	do_action( 'bbp_pre_split_topic', $from_reply->ID, $source_topic->ID, $destination_topic->ID );
+	do_action( 'ideaboard_pre_split_topic', $from_reply->ID, $source_topic->ID, $destination_topic->ID );
 
 	/** Date Check ************************************************************/
 
@@ -1570,16 +1570,16 @@ function bbp_split_topic_handler( $action = '' ) {
 	/** Subscriptions *********************************************************/
 
 	// Copy the subscribers
-	if ( !empty( $_POST['bbp_topic_subscribers'] ) && "1" === $_POST['bbp_topic_subscribers'] && bbp_is_subscriptions_active() ) {
+	if ( !empty( $_POST['ideaboard_topic_subscribers'] ) && "1" === $_POST['ideaboard_topic_subscribers'] && ideaboard_is_subscriptions_active() ) {
 
 		// Get the subscribers
-		$subscribers = bbp_get_topic_subscribers( $source_topic->ID );
+		$subscribers = ideaboard_get_topic_subscribers( $source_topic->ID );
 
 		if ( !empty( $subscribers ) ) {
 
 			// Add subscribers to new topic
 			foreach ( (array) $subscribers as $subscriber ) {
-				bbp_add_user_subscription( $subscriber, $destination_topic->ID );
+				ideaboard_add_user_subscription( $subscriber, $destination_topic->ID );
 			}
 		}
 	}
@@ -1587,16 +1587,16 @@ function bbp_split_topic_handler( $action = '' ) {
 	/** Favorites *************************************************************/
 
 	// Copy the favoriters if told to
-	if ( !empty( $_POST['bbp_topic_favoriters'] ) && ( "1" === $_POST['bbp_topic_favoriters'] ) ) {
+	if ( !empty( $_POST['ideaboard_topic_favoriters'] ) && ( "1" === $_POST['ideaboard_topic_favoriters'] ) ) {
 
 		// Get the favoriters
-		$favoriters = bbp_get_topic_favoriters( $source_topic->ID );
+		$favoriters = ideaboard_get_topic_favoriters( $source_topic->ID );
 
 		if ( !empty( $favoriters ) ) {
 
 			// Add the favoriters to new topic
 			foreach ( (array) $favoriters as $favoriter ) {
-				bbp_add_user_favorite( $favoriter, $destination_topic->ID );
+				ideaboard_add_user_favorite( $favoriter, $destination_topic->ID );
 			}
 		}
 	}
@@ -1604,13 +1604,13 @@ function bbp_split_topic_handler( $action = '' ) {
 	/** Tags ******************************************************************/
 
 	// Copy the tags if told to
-	if ( !empty( $_POST['bbp_topic_tags'] ) && ( "1" === $_POST['bbp_topic_tags'] ) ) {
+	if ( !empty( $_POST['ideaboard_topic_tags'] ) && ( "1" === $_POST['ideaboard_topic_tags'] ) ) {
 
 		// Get the source topic tags
-		$source_topic_tags = wp_get_post_terms( $source_topic->ID, bbp_get_topic_tag_tax_id(), array( 'fields' => 'names' ) );
+		$source_topic_tags = wp_get_post_terms( $source_topic->ID, ideaboard_get_topic_tag_tax_id(), array( 'fields' => 'names' ) );
 
 		if ( !empty( $source_topic_tags ) ) {
-			wp_set_post_terms( $destination_topic->ID, $source_topic_tags, bbp_get_topic_tag_tax_id(), true );
+			wp_set_post_terms( $destination_topic->ID, $source_topic_tags, ideaboard_get_topic_tag_tax_id(), true );
 		}
 	}
 
@@ -1618,7 +1618,7 @@ function bbp_split_topic_handler( $action = '' ) {
 
 	// get_posts() is not used because it doesn't allow us to use '>='
 	// comparision without a filter.
-	$replies = (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE {$wpdb->posts}.post_date >= %s AND {$wpdb->posts}.post_parent = %d AND {$wpdb->posts}.post_type = %s ORDER BY {$wpdb->posts}.post_date ASC", $from_reply->post_date, $source_topic->ID, bbp_get_reply_post_type() ) );
+	$replies = (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE {$wpdb->posts}.post_date >= %s AND {$wpdb->posts}.post_parent = %d AND {$wpdb->posts}.post_type = %s ORDER BY {$wpdb->posts}.post_date ASC", $from_reply->post_date, $source_topic->ID, ideaboard_get_reply_post_type() ) );
 
 	// Make sure there are replies to loop through
 	if ( !empty( $replies ) && !is_wp_error( $replies ) ) {
@@ -1628,7 +1628,7 @@ function bbp_split_topic_handler( $action = '' ) {
 
 			// Get topic reply count for existing topic
 			case 'existing' :
-				$reply_position = bbp_get_topic_reply_count( $destination_topic->ID );
+				$reply_position = ideaboard_get_topic_reply_count( $destination_topic->ID );
 				break;
 
 			// Account for new lead topic
@@ -1660,29 +1660,29 @@ function bbp_split_topic_handler( $action = '' ) {
 			$reply_ids[] = $reply->ID;
 
 			// Adjust reply meta values
-			bbp_update_reply_topic_id( $reply->ID, $destination_topic->ID                           );
-			bbp_update_reply_forum_id( $reply->ID, bbp_get_topic_forum_id( $destination_topic->ID ) );
+			ideaboard_update_reply_topic_id( $reply->ID, $destination_topic->ID                           );
+			ideaboard_update_reply_forum_id( $reply->ID, ideaboard_get_topic_forum_id( $destination_topic->ID ) );
 
 			// Adjust reply to values
-			$reply_to = bbp_get_reply_to( $reply->ID );
+			$reply_to = ideaboard_get_reply_to( $reply->ID );
 
 			// Not a reply to a reply that moved over
 			if ( !in_array( $reply_to, $reply_ids ) ) {
-				bbp_update_reply_to( $reply->ID, 0 );
+				ideaboard_update_reply_to( $reply->ID, 0 );
 			}
 
 			// New topic from reply can't be a reply to
 			if ( ( $from_reply->ID === $destination_topic->ID ) && ( $from_reply->ID === $reply_to ) ) {
-				bbp_update_reply_to( $reply->ID, 0 );
+				ideaboard_update_reply_to( $reply->ID, 0 );
 			}
 
 			// Do additional actions per split reply
-			do_action( 'bbp_split_topic_reply', $reply->ID, $destination_topic->ID );
+			do_action( 'ideaboard_split_topic_reply', $reply->ID, $destination_topic->ID );
 		}
 
 		// Remove reply to from new topic
 		if ( $from_reply->ID === $destination_topic->ID ) {
-			delete_post_meta( $from_reply->ID, '_bbp_reply_to' );
+			delete_post_meta( $from_reply->ID, '_ideaboard_reply_to' );
 		}
 
 		// Set the last reply ID and freshness
@@ -1696,25 +1696,25 @@ function bbp_split_topic_handler( $action = '' ) {
 	}
 
 	// It is a new topic and we need to set some default metas to make
-	// the topic display in bbp_has_topics() list
+	// the topic display in ideaboard_has_topics() list
 	if ( 'reply' === $split_option ) {
-		bbp_update_topic_last_reply_id   ( $destination_topic->ID, $last_reply_id );
-		bbp_update_topic_last_active_id  ( $destination_topic->ID, $last_reply_id );
-		bbp_update_topic_last_active_time( $destination_topic->ID, $freshness     );
+		ideaboard_update_topic_last_reply_id   ( $destination_topic->ID, $last_reply_id );
+		ideaboard_update_topic_last_active_id  ( $destination_topic->ID, $last_reply_id );
+		ideaboard_update_topic_last_active_time( $destination_topic->ID, $freshness     );
 	}
 
 	// Update source topic ID last active
-	bbp_update_topic_last_reply_id   ( $source_topic->ID );
-	bbp_update_topic_last_active_id  ( $source_topic->ID );
-	bbp_update_topic_last_active_time( $source_topic->ID );
+	ideaboard_update_topic_last_reply_id   ( $source_topic->ID );
+	ideaboard_update_topic_last_active_id  ( $source_topic->ID );
+	ideaboard_update_topic_last_active_time( $source_topic->ID );
 
 	/** Successful Split ******************************************************/
 
 	// Update counts, etc...
-	do_action( 'bbp_post_split_topic', $from_reply->ID, $source_topic->ID, $destination_topic->ID );
+	do_action( 'ideaboard_post_split_topic', $from_reply->ID, $source_topic->ID, $destination_topic->ID );
 
 	// Redirect back to the topic
-	wp_safe_redirect( bbp_get_topic_permalink( $destination_topic->ID ) );
+	wp_safe_redirect( ideaboard_get_topic_permalink( $destination_topic->ID ) );
 
 	// For good measure
 	exit();
@@ -1731,36 +1731,36 @@ function bbp_split_topic_handler( $action = '' ) {
  * @param int $from_reply_id From reply id
  * @param int $source_topic_id Source topic id
  * @param int $destination_topic_id Destination topic id
- * @uses bbp_update_forum_topic_count() To update the forum topic counts
- * @uses bbp_update_forum_reply_count() To update the forum reply counts
- * @uses bbp_update_topic_reply_count() To update the topic reply counts
- * @uses bbp_update_topic_voice_count() To update the topic voice counts
- * @uses bbp_update_topic_reply_count_hidden() To update the topic hidden reply
+ * @uses ideaboard_update_forum_topic_count() To update the forum topic counts
+ * @uses ideaboard_update_forum_reply_count() To update the forum reply counts
+ * @uses ideaboard_update_topic_reply_count() To update the topic reply counts
+ * @uses ideaboard_update_topic_voice_count() To update the topic voice counts
+ * @uses ideaboard_update_topic_reply_count_hidden() To update the topic hidden reply
  *                                              count
- * @uses do_action() Calls 'bbp_split_topic_count' with the from reply id,
+ * @uses do_action() Calls 'ideaboard_split_topic_count' with the from reply id,
  *                    source topic id & destination topic id
  */
-function bbp_split_topic_count( $from_reply_id, $source_topic_id, $destination_topic_id ) {
+function ideaboard_split_topic_count( $from_reply_id, $source_topic_id, $destination_topic_id ) {
 
 	// Forum Topic Counts
-	bbp_update_forum_topic_count( bbp_get_topic_forum_id( $destination_topic_id ) );
+	ideaboard_update_forum_topic_count( ideaboard_get_topic_forum_id( $destination_topic_id ) );
 
 	// Forum Reply Counts
-	bbp_update_forum_reply_count( bbp_get_topic_forum_id( $destination_topic_id ) );
+	ideaboard_update_forum_reply_count( ideaboard_get_topic_forum_id( $destination_topic_id ) );
 
 	// Topic Reply Counts
-	bbp_update_topic_reply_count( $source_topic_id      );
-	bbp_update_topic_reply_count( $destination_topic_id );
+	ideaboard_update_topic_reply_count( $source_topic_id      );
+	ideaboard_update_topic_reply_count( $destination_topic_id );
 
 	// Topic Hidden Reply Counts
-	bbp_update_topic_reply_count_hidden( $source_topic_id      );
-	bbp_update_topic_reply_count_hidden( $destination_topic_id );
+	ideaboard_update_topic_reply_count_hidden( $source_topic_id      );
+	ideaboard_update_topic_reply_count_hidden( $destination_topic_id );
 
 	// Topic Voice Counts
-	bbp_update_topic_voice_count( $source_topic_id      );
-	bbp_update_topic_voice_count( $destination_topic_id );
+	ideaboard_update_topic_voice_count( $source_topic_id      );
+	ideaboard_update_topic_voice_count( $destination_topic_id );
 
-	do_action( 'bbp_split_topic_count', $from_reply_id, $source_topic_id, $destination_topic_id );
+	do_action( 'ideaboard_split_topic_count', $from_reply_id, $source_topic_id, $destination_topic_id );
 }
 
 /**
@@ -1769,9 +1769,9 @@ function bbp_split_topic_count( $from_reply_id, $source_topic_id, $destination_t
  * @since IdeaBoard (r2768)
  *
  * @param string $action The requested action to compare this function to
- * @uses bbp_verify_nonce_request() To verify the nonce and check the request
+ * @uses ideaboard_verify_nonce_request() To verify the nonce and check the request
  * @uses current_user_can() To check if the current user can edit/delete tags
- * @uses bbp_add_error() To add an error message
+ * @uses ideaboard_add_error() To add an error message
  * @uses wp_update_term() To update the topic tag
  * @uses get_term_link() To get the topic tag url
  * @uses term_exists() To check if the topic tag already exists
@@ -1782,7 +1782,7 @@ function bbp_split_topic_count( $from_reply_id, $source_topic_id, $destination_t
  * @uses is_wp_error() To check if the value retrieved is a {@link WP_Error}
  * @uses wp_safe_redirect() To redirect to the url
  */
-function bbp_edit_topic_tag_handler( $action = '' ) {
+function ideaboard_edit_topic_tag_handler( $action = '' ) {
 
 	// Bail if required POST actions aren't passed
 	if ( empty( $_POST['tag-id'] ) )
@@ -1801,11 +1801,11 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
 
 	// Setup vars
 	$tag_id = (int) $_POST['tag-id'];
-	$tag    = get_term( $tag_id, bbp_get_topic_tag_tax_id() );
+	$tag    = get_term( $tag_id, ideaboard_get_topic_tag_tax_id() );
 
 	// Tag does not exist
 	if ( is_wp_error( $tag ) && $tag->get_error_message() ) {
-		bbp_add_error( 'bbp_manage_topic_invalid_tag', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while getting the tag: %s', 'ideaboard' ), $tag->get_error_message() ) );
+		ideaboard_add_error( 'ideaboard_manage_topic_invalid_tag', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while getting the tag: %s', 'ideaboard' ), $tag->get_error_message() ) );
 		return;
 	}
 
@@ -1816,38 +1816,38 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
 		case 'bbp-update-topic-tag' :
 
 			// Nonce check
-			if ( ! bbp_verify_nonce_request( 'update-tag_' . $tag_id ) ) {
-				bbp_add_error( 'bbp_manage_topic_tag_update_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+			if ( ! ideaboard_verify_nonce_request( 'update-tag_' . $tag_id ) ) {
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_update_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 				return;
 			}
 
 			// Can user edit topic tags?
 			if ( !current_user_can( 'edit_topic_tags' ) ) {
-				bbp_add_error( 'bbp_manage_topic_tag_update_permissions', __( '<strong>ERROR</strong>: You do not have the permissions to edit the topic tags.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_update_permissions', __( '<strong>ERROR</strong>: You do not have the permissions to edit the topic tags.', 'ideaboard' ) );
 				return;
 			}
 
 			// No tag name was provided
 			if ( empty( $_POST['tag-name'] ) || !$name = $_POST['tag-name'] ) {
-				bbp_add_error( 'bbp_manage_topic_tag_update_name', __( '<strong>ERROR</strong>: You need to enter a tag name.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_update_name', __( '<strong>ERROR</strong>: You need to enter a tag name.', 'ideaboard' ) );
 				return;
 			}
 
 			// Attempt to update the tag
 			$slug = !empty( $_POST['tag-slug'] ) ? $_POST['tag-slug'] : '';
-			$tag  = wp_update_term( $tag_id, bbp_get_topic_tag_tax_id(), array( 'name' => $name, 'slug' => $slug ) );
+			$tag  = wp_update_term( $tag_id, ideaboard_get_topic_tag_tax_id(), array( 'name' => $name, 'slug' => $slug ) );
 
 			// Cannot update tag
 			if ( is_wp_error( $tag ) && $tag->get_error_message() ) {
-				bbp_add_error( 'bbp_manage_topic_tag_update_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while updating the tag: %s', 'ideaboard' ), $tag->get_error_message() ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_update_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while updating the tag: %s', 'ideaboard' ), $tag->get_error_message() ) );
 				return;
 			}
 
 			// Redirect
-			$redirect = get_term_link( $tag_id, bbp_get_topic_tag_tax_id() );
+			$redirect = get_term_link( $tag_id, ideaboard_get_topic_tag_tax_id() );
 
 			// Update counts, etc...
-			do_action( 'bbp_update_topic_tag', $tag_id, $tag, $name, $slug );
+			do_action( 'ideaboard_update_topic_tag', $tag_id, $tag, $name, $slug );
 
 			break;
 
@@ -1855,30 +1855,30 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
 		case 'bbp-merge-topic-tag'  :
 
 			// Nonce check
-			if ( ! bbp_verify_nonce_request( 'merge-tag_' . $tag_id ) ) {
-				bbp_add_error( 'bbp_manage_topic_tag_merge_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+			if ( ! ideaboard_verify_nonce_request( 'merge-tag_' . $tag_id ) ) {
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_merge_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 				return;
 			}
 
 			// Can user edit topic tags?
 			if ( !current_user_can( 'edit_topic_tags' ) ) {
-				bbp_add_error( 'bbp_manage_topic_tag_merge_permissions', __( '<strong>ERROR</strong>: You do not have the permissions to edit the topic tags.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_merge_permissions', __( '<strong>ERROR</strong>: You do not have the permissions to edit the topic tags.', 'ideaboard' ) );
 				return;
 			}
 
 			// No tag name was provided
 			if ( empty( $_POST['tag-existing-name'] ) || !$name = $_POST['tag-existing-name'] ) {
-				bbp_add_error( 'bbp_manage_topic_tag_merge_name', __( '<strong>ERROR</strong>: You need to enter a tag name.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_merge_name', __( '<strong>ERROR</strong>: You need to enter a tag name.', 'ideaboard' ) );
 				return;
 			}
 
 			// If term does not exist, create it
-			if ( !$tag = term_exists( $name, bbp_get_topic_tag_tax_id() ) )
-				$tag = wp_insert_term( $name, bbp_get_topic_tag_tax_id() );
+			if ( !$tag = term_exists( $name, ideaboard_get_topic_tag_tax_id() ) )
+				$tag = wp_insert_term( $name, ideaboard_get_topic_tag_tax_id() );
 
 			// Problem inserting the new term
 			if ( is_wp_error( $tag ) && $tag->get_error_message() ) {
-				bbp_add_error( 'bbp_manage_topic_tag_merge_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while merging the tags: %s', 'ideaboard' ), $tag->get_error_message() ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_merge_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while merging the tags: %s', 'ideaboard' ), $tag->get_error_message() ) );
 				return;
 			}
 
@@ -1887,24 +1887,24 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
 
 			// Attempting to merge a tag into itself
 			if ( $tag_id === $to_tag ) {
-				bbp_add_error( 'bbp_manage_topic_tag_merge_same', __( '<strong>ERROR</strong>: The tags which are being merged can not be the same.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_merge_same', __( '<strong>ERROR</strong>: The tags which are being merged can not be the same.', 'ideaboard' ) );
 				return;
 			}
 
 			// Delete the old term
-			$tag = wp_delete_term( $tag_id, bbp_get_topic_tag_tax_id(), array( 'default' => $to_tag, 'force_default' => true ) );
+			$tag = wp_delete_term( $tag_id, ideaboard_get_topic_tag_tax_id(), array( 'default' => $to_tag, 'force_default' => true ) );
 
 			// Error merging the terms
 			if ( is_wp_error( $tag ) && $tag->get_error_message() ) {
-				bbp_add_error( 'bbp_manage_topic_tag_merge_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while merging the tags: %s', 'ideaboard' ), $tag->get_error_message() ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_merge_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while merging the tags: %s', 'ideaboard' ), $tag->get_error_message() ) );
 				return;
 			}
 
 			// Redirect
-			$redirect = get_term_link( (int) $to_tag, bbp_get_topic_tag_tax_id() );
+			$redirect = get_term_link( (int) $to_tag, ideaboard_get_topic_tag_tax_id() );
 
 			// Update counts, etc...
-			do_action( 'bbp_merge_topic_tag', $tag_id, $to_tag, $tag );
+			do_action( 'ideaboard_merge_topic_tag', $tag_id, $to_tag, $tag );
 
 			break;
 
@@ -1912,23 +1912,23 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
 		case 'bbp-delete-topic-tag' :
 
 			// Nonce check
-			if ( ! bbp_verify_nonce_request( 'delete-tag_' . $tag_id ) ) {
-				bbp_add_error( 'bbp_manage_topic_tag_delete_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
+			if ( ! ideaboard_verify_nonce_request( 'delete-tag_' . $tag_id ) ) {
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_delete_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 				return;
 			}
 
 			// Can user delete topic tags?
 			if ( !current_user_can( 'delete_topic_tags' ) ) {
-				bbp_add_error( 'bbp_manage_topic_tag_delete_permissions', __( '<strong>ERROR</strong>: You do not have the permissions to delete the topic tags.', 'ideaboard' ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_delete_permissions', __( '<strong>ERROR</strong>: You do not have the permissions to delete the topic tags.', 'ideaboard' ) );
 				return;
 			}
 
 			// Attempt to delete term
-			$tag = wp_delete_term( $tag_id, bbp_get_topic_tag_tax_id() );
+			$tag = wp_delete_term( $tag_id, ideaboard_get_topic_tag_tax_id() );
 
 			// Error deleting term
 			if ( is_wp_error( $tag ) && $tag->get_error_message() ) {
-				bbp_add_error( 'bbp_manage_topic_tag_delete_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while deleting the tag: %s', 'ideaboard' ), $tag->get_error_message() ) );
+				ideaboard_add_error( 'ideaboard_manage_topic_tag_delete_error', sprintf( __( '<strong>ERROR</strong>: The following problem(s) have been found while deleting the tag: %s', 'ideaboard' ), $tag->get_error_message() ) );
 				return;
 			}
 
@@ -1936,7 +1936,7 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
 			$redirect = home_url();
 
 			// Update counts, etc...
-			do_action( 'bbp_delete_topic_tag', $tag_id, $tag );
+			do_action( 'ideaboard_delete_topic_tag', $tag_id, $tag );
 
 			break;
 	}
@@ -1960,13 +1960,13 @@ function bbp_edit_topic_tag_handler( $action = '' ) {
  *
  * @return array
  */
-function bbp_get_topic_statuses() {
-	return apply_filters( 'bbp_get_topic_statuses', array(
-		bbp_get_public_status_id()  => _x( 'Open',    'Open the topic',        'ideaboard' ),
-		bbp_get_closed_status_id()  => _x( 'Closed',  'Close the topic',       'ideaboard' ),
-		bbp_get_spam_status_id()    => _x( 'Spam',    'Spam the topic',        'ideaboard' ),
-		bbp_get_trash_status_id()   => _x( 'Trash',   'Trash the topic',       'ideaboard' ),
-		bbp_get_pending_status_id() => _x( 'Pending', 'Mark topic as pending', 'ideaboard' ),
+function ideaboard_get_topic_statuses() {
+	return apply_filters( 'ideaboard_get_topic_statuses', array(
+		ideaboard_get_public_status_id()  => _x( 'Open',    'Open the topic',        'ideaboard' ),
+		ideaboard_get_closed_status_id()  => _x( 'Closed',  'Close the topic',       'ideaboard' ),
+		ideaboard_get_spam_status_id()    => _x( 'Spam',    'Spam the topic',        'ideaboard' ),
+		ideaboard_get_trash_status_id()   => _x( 'Trash',   'Trash the topic',       'ideaboard' ),
+		ideaboard_get_pending_status_id() => _x( 'Pending', 'Mark topic as pending', 'ideaboard' ),
 	) );
 }
 
@@ -1977,8 +1977,8 @@ function bbp_get_topic_statuses() {
  *
  * @return array
  */
-function bbp_get_topic_types() {
-	return apply_filters( 'bbp_get_topic_types', array(
+function ideaboard_get_topic_types() {
+	return apply_filters( 'ideaboard_get_topic_types', array(
 		'unstick' => _x( 'Normal',       'Unstick a topic',         'ideaboard' ),
 		'stick'   => _x( 'Sticky',       'Make topic sticky',       'ideaboard' ),
 		'super'   => _x( 'Super Sticky', 'Make topic super sticky', 'ideaboard' )
@@ -1993,16 +1993,16 @@ function bbp_get_topic_types() {
  * @since IdeaBoard (r2592)
  *
  * @param int $forum_id Optional. If not passed, super stickies are returned.
- * @uses bbp_get_super_stickies() To get the super stickies
+ * @uses ideaboard_get_super_stickies() To get the super stickies
  * @uses get_post_meta() To get the forum stickies
- * @uses apply_filters() Calls 'bbp_get_stickies' with the stickies and forum id
+ * @uses apply_filters() Calls 'ideaboard_get_stickies' with the stickies and forum id
  * @return array IDs of sticky topics of a forum or super stickies
  */
-function bbp_get_stickies( $forum_id = 0 ) {
-	$stickies = empty( $forum_id ) ? bbp_get_super_stickies() : get_post_meta( $forum_id, '_bbp_sticky_topics', true );
+function ideaboard_get_stickies( $forum_id = 0 ) {
+	$stickies = empty( $forum_id ) ? ideaboard_get_super_stickies() : get_post_meta( $forum_id, '_ideaboard_sticky_topics', true );
 	$stickies = ( empty( $stickies ) || !is_array( $stickies ) ) ? array() : $stickies;
 
-	return apply_filters( 'bbp_get_stickies', $stickies, (int) $forum_id );
+	return apply_filters( 'ideaboard_get_stickies', $stickies, (int) $forum_id );
 }
 
 /**
@@ -2011,14 +2011,14 @@ function bbp_get_stickies( $forum_id = 0 ) {
  * @since IdeaBoard (r2592)
  *
  * @uses get_option() To get super sticky topics
- * @uses apply_filters() Calls 'bbp_get_super_stickies' with the stickies
+ * @uses apply_filters() Calls 'ideaboard_get_super_stickies' with the stickies
  * @return array IDs of super sticky topics
  */
-function bbp_get_super_stickies() {
-	$stickies = get_option( '_bbp_super_sticky_topics', array() );
+function ideaboard_get_super_stickies() {
+	$stickies = get_option( '_ideaboard_super_sticky_topics', array() );
 	$stickies = ( empty( $stickies ) || !is_array( $stickies ) ) ? array() : $stickies;
 
-	return apply_filters( 'bbp_get_super_stickies', $stickies );
+	return apply_filters( 'ideaboard_get_super_stickies', $stickies );
 }
 
 /** Topics Actions ************************************************************/
@@ -2030,31 +2030,31 @@ function bbp_get_super_stickies() {
  * @since IdeaBoard (r2727)
  *
  * @param string $action The requested action to compare this function to
- * @uses bbp_get_topic() To get the topic
+ * @uses ideaboard_get_topic() To get the topic
  * @uses current_user_can() To check if the user is capable of editing or
  *                           deleting the topic
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses check_ajax_referer() To verify the nonce and check the referer
- * @uses bbp_is_topic_open() To check if the topic is open
- * @uses bbp_close_topic() To close the topic
- * @uses bbp_open_topic() To open the topic
- * @uses bbp_is_topic_sticky() To check if the topic is a sticky
- * @uses bbp_unstick_topic() To unstick the topic
- * @uses bbp_stick_topic() To stick the topic
- * @uses bbp_is_topic_spam() To check if the topic is marked as spam
- * @uses bbp_spam_topic() To make the topic as spam
- * @uses bbp_unspam_topic() To unmark the topic as spam
+ * @uses ideaboard_is_topic_open() To check if the topic is open
+ * @uses ideaboard_close_topic() To close the topic
+ * @uses ideaboard_open_topic() To open the topic
+ * @uses ideaboard_is_topic_sticky() To check if the topic is a sticky
+ * @uses ideaboard_unstick_topic() To unstick the topic
+ * @uses ideaboard_stick_topic() To stick the topic
+ * @uses ideaboard_is_topic_spam() To check if the topic is marked as spam
+ * @uses ideaboard_spam_topic() To make the topic as spam
+ * @uses ideaboard_unspam_topic() To unmark the topic as spam
  * @uses wp_trash_post() To trash the topic
  * @uses wp_untrash_post() To untrash the topic
  * @uses wp_delete_post() To delete the topic
- * @uses do_action() Calls 'bbp_toggle_topic_handler' with success, post data
+ * @uses do_action() Calls 'ideaboard_toggle_topic_handler' with success, post data
  *                    and action
- * @uses bbp_get_forum_permalink() To get the forum link
- * @uses bbp_get_topic_permalink() To get the topic link
+ * @uses ideaboard_get_forum_permalink() To get the forum link
+ * @uses ideaboard_get_topic_permalink() To get the topic link
  * @uses wp_safe_redirect() To redirect to the topic
  * @uses IdeaBoard::errors:add() To log the error messages
  */
-function bbp_toggle_topic_handler( $action = '' ) {
+function ideaboard_toggle_topic_handler( $action = '' ) {
 
 	// Bail if required GET actions aren't passed
 	if ( empty( $_GET['topic_id'] ) )
@@ -2062,10 +2062,10 @@ function bbp_toggle_topic_handler( $action = '' ) {
 
 	// Setup possible get actions
 	$possible_actions = array(
-		'bbp_toggle_topic_close',
-		'bbp_toggle_topic_stick',
-		'bbp_toggle_topic_spam',
-		'bbp_toggle_topic_trash'
+		'ideaboard_toggle_topic_close',
+		'ideaboard_toggle_topic_stick',
+		'ideaboard_toggle_topic_spam',
+		'ideaboard_toggle_topic_trash'
 	);
 
 	// Bail if actions aren't meant for this function
@@ -2080,13 +2080,13 @@ function bbp_toggle_topic_handler( $action = '' ) {
 	$redirect  = '';                         // Empty redirect URL
 
 	// Make sure topic exists
-	$topic = bbp_get_topic( $topic_id );
+	$topic = ideaboard_get_topic( $topic_id );
 	if ( empty( $topic ) )
 		return;
 
 	// What is the user doing here?
-	if ( !current_user_can( 'edit_topic', $topic->ID ) || ( 'bbp_toggle_topic_trash' === $action && !current_user_can( 'delete_topic', $topic->ID ) ) ) {
-		bbp_add_error( 'bbp_toggle_topic_permission', __( '<strong>ERROR:</strong> You do not have the permission to do that.', 'ideaboard' ) );
+	if ( !current_user_can( 'edit_topic', $topic->ID ) || ( 'ideaboard_toggle_topic_trash' === $action && !current_user_can( 'delete_topic', $topic->ID ) ) ) {
+		ideaboard_add_error( 'ideaboard_toggle_topic_permission', __( '<strong>ERROR:</strong> You do not have the permission to do that.', 'ideaboard' ) );
 		return;
 	}
 
@@ -2094,39 +2094,39 @@ function bbp_toggle_topic_handler( $action = '' ) {
 	switch ( $action ) {
 
 		// Toggle open/close
-		case 'bbp_toggle_topic_close' :
+		case 'ideaboard_toggle_topic_close' :
 			check_ajax_referer( 'close-topic_' . $topic_id );
 
-			$is_open = bbp_is_topic_open( $topic_id );
-			$success = true === $is_open ? bbp_close_topic( $topic_id ) : bbp_open_topic( $topic_id );
+			$is_open = ideaboard_is_topic_open( $topic_id );
+			$success = true === $is_open ? ideaboard_close_topic( $topic_id ) : ideaboard_open_topic( $topic_id );
 			$failure = true === $is_open ? __( '<strong>ERROR</strong>: There was a problem closing the topic.', 'ideaboard' ) : __( '<strong>ERROR</strong>: There was a problem opening the topic.', 'ideaboard' );
 
 			break;
 
 		// Toggle sticky/super-sticky/unstick
-		case 'bbp_toggle_topic_stick' :
+		case 'ideaboard_toggle_topic_stick' :
 			check_ajax_referer( 'stick-topic_' . $topic_id );
 
-			$is_sticky = bbp_is_topic_sticky( $topic_id );
+			$is_sticky = ideaboard_is_topic_sticky( $topic_id );
 			$is_super  = false === $is_sticky && !empty( $_GET['super'] ) && ( "1" === $_GET['super'] ) ? true : false;
-			$success   = true  === $is_sticky ? bbp_unstick_topic( $topic_id ) : bbp_stick_topic( $topic_id, $is_super );
+			$success   = true  === $is_sticky ? ideaboard_unstick_topic( $topic_id ) : ideaboard_stick_topic( $topic_id, $is_super );
 			$failure   = true  === $is_sticky ? __( '<strong>ERROR</strong>: There was a problem unsticking the topic.', 'ideaboard' ) : __( '<strong>ERROR</strong>: There was a problem sticking the topic.', 'ideaboard' );
 
 			break;
 
 		// Toggle spam
-		case 'bbp_toggle_topic_spam' :
+		case 'ideaboard_toggle_topic_spam' :
 			check_ajax_referer( 'spam-topic_' . $topic_id );
 
-			$is_spam  = bbp_is_topic_spam( $topic_id );
-			$success  = true === $is_spam ? bbp_unspam_topic( $topic_id ) : bbp_spam_topic( $topic_id );
+			$is_spam  = ideaboard_is_topic_spam( $topic_id );
+			$success  = true === $is_spam ? ideaboard_unspam_topic( $topic_id ) : ideaboard_spam_topic( $topic_id );
 			$failure  = true === $is_spam ? __( '<strong>ERROR</strong>: There was a problem unmarking the topic as spam.', 'ideaboard' ) : __( '<strong>ERROR</strong>: There was a problem marking the topic as spam.', 'ideaboard' );
 			$view_all = !$is_spam;
 
 			break;
 
 		// Toggle trash
-		case 'bbp_toggle_topic_trash' :
+		case 'ideaboard_toggle_topic_trash' :
 
 			$sub_action = !empty( $_GET['sub_action'] ) && in_array( $_GET['sub_action'], array( 'trash', 'untrash', 'delete' ) ) ? $_GET['sub_action'] : false;
 
@@ -2135,7 +2135,7 @@ function bbp_toggle_topic_handler( $action = '' ) {
 
 			switch ( $sub_action ) {
 				case 'trash':
-					check_ajax_referer( 'trash-' . bbp_get_topic_post_type() . '_' . $topic_id );
+					check_ajax_referer( 'trash-' . ideaboard_get_topic_post_type() . '_' . $topic_id );
 
 					$view_all = true;
 					$success  = wp_trash_post( $topic_id );
@@ -2144,7 +2144,7 @@ function bbp_toggle_topic_handler( $action = '' ) {
 					break;
 
 				case 'untrash':
-					check_ajax_referer( 'untrash-' . bbp_get_topic_post_type() . '_' . $topic_id );
+					check_ajax_referer( 'untrash-' . ideaboard_get_topic_post_type() . '_' . $topic_id );
 
 					$success = wp_untrash_post( $topic_id );
 					$failure = __( '<strong>ERROR</strong>: There was a problem untrashing the topic.', 'ideaboard' );
@@ -2152,7 +2152,7 @@ function bbp_toggle_topic_handler( $action = '' ) {
 					break;
 
 				case 'delete':
-					check_ajax_referer( 'delete-' . bbp_get_topic_post_type() . '_' . $topic_id );
+					check_ajax_referer( 'delete-' . ideaboard_get_topic_post_type() . '_' . $topic_id );
 
 					$success = wp_delete_post( $topic_id );
 					$failure = __( '<strong>ERROR</strong>: There was a problem deleting the topic.', 'ideaboard' );
@@ -2164,21 +2164,21 @@ function bbp_toggle_topic_handler( $action = '' ) {
 	}
 
 	// Do additional topic toggle actions
-	do_action( 'bbp_toggle_topic_handler', $success, $post_data, $action );
+	do_action( 'ideaboard_toggle_topic_handler', $success, $post_data, $action );
 
 	// No errors
 	if ( false !== $success && !is_wp_error( $success ) ) {
 
 		// Redirect back to the topic's forum
 		if ( isset( $sub_action ) && ( 'delete' === $sub_action ) ) {
-			$redirect = bbp_get_forum_permalink( $success->post_parent );
+			$redirect = ideaboard_get_forum_permalink( $success->post_parent );
 
 		// Redirect back to the topic
 		} else {
 
 			// Get the redirect detination
-			$permalink = bbp_get_topic_permalink( $topic_id );
-			$redirect  = bbp_add_view_all( $permalink, $view_all );
+			$permalink = ideaboard_get_topic_permalink( $topic_id );
+			$redirect  = ideaboard_add_view_all( $permalink, $view_all );
 		}
 
 		wp_safe_redirect( $redirect );
@@ -2188,7 +2188,7 @@ function bbp_toggle_topic_handler( $action = '' ) {
 
 	// Handle errors
 	} else {
-		bbp_add_error( 'bbp_toggle_topic', $failure );
+		ideaboard_add_error( 'ideaboard_toggle_topic', $failure );
 	}
 }
 
@@ -2200,19 +2200,19 @@ function bbp_toggle_topic_handler( $action = '' ) {
  * @since IdeaBoard (r2652)
  *
  * @param int $topic_id Get the topic id to remove
- * @uses bbp_get_topic_id To get the topic id
- * @uses bbp_get_topic_favoriters() To get the topic's favoriters
- * @uses bbp_remove_user_favorite() To remove the topic from user's favorites
+ * @uses ideaboard_get_topic_id To get the topic id
+ * @uses ideaboard_get_topic_favoriters() To get the topic's favoriters
+ * @uses ideaboard_remove_user_favorite() To remove the topic from user's favorites
  */
-function bbp_remove_topic_from_all_favorites( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_remove_topic_from_all_favorites( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
 	// Bail if no topic
 	if ( empty( $topic_id ) )
 		return;
 
 	// Get users
-	$users = (array) bbp_get_topic_favoriters( $topic_id );
+	$users = (array) ideaboard_get_topic_favoriters( $topic_id );
 
 	// Users exist
 	if ( !empty( $users ) ) {
@@ -2221,7 +2221,7 @@ function bbp_remove_topic_from_all_favorites( $topic_id = 0 ) {
 		foreach ( $users as $user ) {
 
 			// Remove each user
-			bbp_remove_user_favorite( $user, $topic_id );
+			ideaboard_remove_user_favorite( $user, $topic_id );
 		}
 	}
 }
@@ -2232,25 +2232,25 @@ function bbp_remove_topic_from_all_favorites( $topic_id = 0 ) {
  * @since IdeaBoard (r2652)
  *
  * @param int $topic_id Get the topic id to remove
- * @uses bbp_is_subscriptions_active() To check if the subscriptions are active
- * @uses bbp_get_topic_id To get the topic id
- * @uses bbp_get_topic_subscribers() To get the topic subscribers
- * @uses bbp_remove_user_subscription() To remove the user subscription
+ * @uses ideaboard_is_subscriptions_active() To check if the subscriptions are active
+ * @uses ideaboard_get_topic_id To get the topic id
+ * @uses ideaboard_get_topic_subscribers() To get the topic subscribers
+ * @uses ideaboard_remove_user_subscription() To remove the user subscription
  */
-function bbp_remove_topic_from_all_subscriptions( $topic_id = 0 ) {
+function ideaboard_remove_topic_from_all_subscriptions( $topic_id = 0 ) {
 
 	// Subscriptions are not active
-	if ( !bbp_is_subscriptions_active() )
+	if ( !ideaboard_is_subscriptions_active() )
 		return;
 
-	$topic_id = bbp_get_topic_id( $topic_id );
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
 	// Bail if no topic
 	if ( empty( $topic_id ) )
 		return;
 
 	// Get users
-	$users = (array) bbp_get_topic_subscribers( $topic_id );
+	$users = (array) ideaboard_get_topic_subscribers( $topic_id );
 
 	// Users exist
 	if ( !empty( $users ) ) {
@@ -2259,7 +2259,7 @@ function bbp_remove_topic_from_all_subscriptions( $topic_id = 0 ) {
 		foreach ( $users as $user ) {
 
 			// Remove each user
-			bbp_remove_user_subscription( $user, $topic_id );
+			ideaboard_remove_user_subscription( $user, $topic_id );
 		}
 	}
 }
@@ -2274,23 +2274,23 @@ function bbp_remove_topic_from_all_subscriptions( $topic_id = 0 ) {
  * @param int $topic_id Optional. Forum id.
  * @param int $difference Optional. Default 1
  * @param bool $update_ancestors Optional. Default true
- * @uses bbp_get_topic_id() To get the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
  * @uses update_post_meta() To update the topic's reply count meta
- * @uses apply_filters() Calls 'bbp_bump_topic_reply_count' with the reply
+ * @uses apply_filters() Calls 'ideaboard_bump_topic_reply_count' with the reply
  *                        count, topic id, and difference
  * @return int Forum reply count
  */
-function bbp_bump_topic_reply_count( $topic_id = 0, $difference = 1 ) {
+function ideaboard_bump_topic_reply_count( $topic_id = 0, $difference = 1 ) {
 
 	// Get counts
-	$topic_id    = bbp_get_topic_id( $topic_id );
-	$reply_count = bbp_get_topic_reply_count( $topic_id, true );
+	$topic_id    = ideaboard_get_topic_id( $topic_id );
+	$reply_count = ideaboard_get_topic_reply_count( $topic_id, true );
 	$new_count   = (int) $reply_count + (int) $difference;
 
 	// Update this topic id's reply count
-	update_post_meta( $topic_id, '_bbp_reply_count', (int) $new_count );
+	update_post_meta( $topic_id, '_ideaboard_reply_count', (int) $new_count );
 
-	return (int) apply_filters( 'bbp_bump_topic_reply_count', (int) $new_count, $topic_id, (int) $difference );
+	return (int) apply_filters( 'ideaboard_bump_topic_reply_count', (int) $new_count, $topic_id, (int) $difference );
 }
 
 /**
@@ -2300,23 +2300,23 @@ function bbp_bump_topic_reply_count( $topic_id = 0, $difference = 1 ) {
  *
  * @param int $topic_id Optional. Forum id.
  * @param int $difference Optional. Default 1
- * @uses bbp_get_topic_id() To get the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
  * @uses update_post_meta() To update the topic's reply count meta
- * @uses apply_filters() Calls 'bbp_bump_topic_reply_count_hidden' with the
+ * @uses apply_filters() Calls 'ideaboard_bump_topic_reply_count_hidden' with the
  *                        reply count, topic id, and difference
  * @return int Forum hidden reply count
  */
-function bbp_bump_topic_reply_count_hidden( $topic_id = 0, $difference = 1 ) {
+function ideaboard_bump_topic_reply_count_hidden( $topic_id = 0, $difference = 1 ) {
 
 	// Get counts
-	$topic_id    = bbp_get_topic_id( $topic_id );
-	$reply_count = bbp_get_topic_reply_count_hidden( $topic_id, true );
+	$topic_id    = ideaboard_get_topic_id( $topic_id );
+	$reply_count = ideaboard_get_topic_reply_count_hidden( $topic_id, true );
 	$new_count   = (int) $reply_count + (int) $difference;
 
 	// Update this topic id's hidder reply count
-	update_post_meta( $topic_id, '_bbp_reply_count_hidden', (int) $new_count );
+	update_post_meta( $topic_id, '_ideaboard_reply_count_hidden', (int) $new_count );
 
-	return (int) apply_filters( 'bbp_bump_topic_reply_count_hidden', (int) $new_count, $topic_id, (int) $difference );
+	return (int) apply_filters( 'ideaboard_bump_topic_reply_count_hidden', (int) $new_count, $topic_id, (int) $difference );
 }
 
 /** Topic Updaters ************************************************************/
@@ -2328,32 +2328,32 @@ function bbp_bump_topic_reply_count_hidden( $topic_id = 0, $difference = 1 ) {
  *
  * @param int $topic_id Optional. Topic id to update
  * @param int $forum_id Optional. Forum id
- * @uses bbp_is_reply() TO check if the passed topic id is a reply
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
+ * @uses ideaboard_is_reply() TO check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
  * @uses get_post_field() To get the post parent of the topic id
- * @uses bbp_get_forum_id() To get the forum id
+ * @uses ideaboard_get_forum_id() To get the forum id
  * @uses update_post_meta() To update the topic forum id meta
- * @uses apply_filters() Calls 'bbp_update_topic_forum_id' with the forum id
+ * @uses apply_filters() Calls 'ideaboard_update_topic_forum_id' with the forum id
  *                        and topic id
  * @return int Forum id
  */
-function bbp_update_topic_forum_id( $topic_id = 0, $forum_id = 0 ) {
+function ideaboard_update_topic_forum_id( $topic_id = 0, $forum_id = 0 ) {
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
 	} else {
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	}
 
 	if ( empty( $forum_id ) ) {
 		$forum_id = get_post_field( 'post_parent', $topic_id );
 	}
 
-	update_post_meta( $topic_id, '_bbp_forum_id', (int) $forum_id );
+	update_post_meta( $topic_id, '_ideaboard_forum_id', (int) $forum_id );
 
-	return apply_filters( 'bbp_update_topic_forum_id', (int) $forum_id, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_forum_id', (int) $forum_id, $topic_id );
 }
 
 /**
@@ -2362,17 +2362,17 @@ function bbp_update_topic_forum_id( $topic_id = 0, $forum_id = 0 ) {
  * @since IdeaBoard (r2954)
  *
  * @param int $topic_id Optional. Topic id to update
- * @uses bbp_get_topic_id() To get the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
  * @uses update_post_meta() To update the topic's topic id meta
- * @uses apply_filters() Calls 'bbp_update_topic_topic_id' with the topic id
+ * @uses apply_filters() Calls 'ideaboard_update_topic_topic_id' with the topic id
  * @return int Topic id
  */
-function bbp_update_topic_topic_id( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_update_topic_topic_id( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	update_post_meta( $topic_id, '_bbp_topic_id', (int) $topic_id );
+	update_post_meta( $topic_id, '_ideaboard_topic_id', (int) $topic_id );
 
-	return apply_filters( 'bbp_update_topic_topic_id', (int) $topic_id );
+	return apply_filters( 'ideaboard_update_topic_topic_id', (int) $topic_id );
 }
 
 /**
@@ -2382,33 +2382,33 @@ function bbp_update_topic_topic_id( $topic_id = 0 ) {
  *
  * @param int $topic_id Optional. Topic id to update
  * @param int $reply_count Optional. Set the reply count manually.
- * @uses bbp_is_reply() To check if the passed topic id is a reply
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_get_public_child_count() To get the reply count
+ * @uses ideaboard_is_reply() To check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_public_child_count() To get the reply count
  * @uses update_post_meta() To update the topic reply count meta
- * @uses apply_filters() Calls 'bbp_update_topic_reply_count' with the reply
+ * @uses apply_filters() Calls 'ideaboard_update_topic_reply_count' with the reply
  *                        count and topic id
  * @return int Topic reply count
  */
-function bbp_update_topic_reply_count( $topic_id = 0, $reply_count = 0 ) {
+function ideaboard_update_topic_reply_count( $topic_id = 0, $reply_count = 0 ) {
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
 	} else {
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	}
 
 	// Get replies of topic if not passed
 	if ( empty( $reply_count ) ) {
-		$reply_count = bbp_get_public_child_count( $topic_id, bbp_get_reply_post_type() );
+		$reply_count = ideaboard_get_public_child_count( $topic_id, ideaboard_get_reply_post_type() );
 	}
 
-	update_post_meta( $topic_id, '_bbp_reply_count', (int) $reply_count );
+	update_post_meta( $topic_id, '_ideaboard_reply_count', (int) $reply_count );
 
-	return apply_filters( 'bbp_update_topic_reply_count', (int) $reply_count, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_reply_count', (int) $reply_count, $topic_id );
 }
 
 /**
@@ -2418,36 +2418,36 @@ function bbp_update_topic_reply_count( $topic_id = 0, $reply_count = 0 ) {
  *
  * @param int $topic_id Optional. Topic id to update
  * @param int $reply_count Optional. Set the reply count manually
- * @uses bbp_is_reply() To check if the passed topic id is a reply
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_is_reply() To check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
  * @uses wpdb::prepare() To prepare our sql query
  * @uses wpdb::get_var() To execute our query and get the var back
  * @uses update_post_meta() To update the topic hidden reply count meta
- * @uses apply_filters() Calls 'bbp_update_topic_reply_count_hidden' with the
+ * @uses apply_filters() Calls 'ideaboard_update_topic_reply_count_hidden' with the
  *                        hidden reply count and topic id
  * @return int Topic hidden reply count
  */
-function bbp_update_topic_reply_count_hidden( $topic_id = 0, $reply_count = 0 ) {
+function ideaboard_update_topic_reply_count_hidden( $topic_id = 0, $reply_count = 0 ) {
 	global $wpdb;
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
 	} else {
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	}
 
 	// Get replies of topic
 	if ( empty( $reply_count ) ) {
-		$post_status = "'" . implode( "','", array( bbp_get_trash_status_id(), bbp_get_spam_status_id() ) ) . "'";
-		$reply_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_parent = %d AND post_status IN ( {$post_status} ) AND post_type = '%s';", $topic_id, bbp_get_reply_post_type() ) );
+		$post_status = "'" . implode( "','", array( ideaboard_get_trash_status_id(), ideaboard_get_spam_status_id() ) ) . "'";
+		$reply_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_parent = %d AND post_status IN ( {$post_status} ) AND post_type = '%s';", $topic_id, ideaboard_get_reply_post_type() ) );
 	}
 
-	update_post_meta( $topic_id, '_bbp_reply_count_hidden', (int) $reply_count );
+	update_post_meta( $topic_id, '_ideaboard_reply_count_hidden', (int) $reply_count );
 
-	return apply_filters( 'bbp_update_topic_reply_count_hidden', (int) $reply_count, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_reply_count_hidden', (int) $reply_count, $topic_id );
 }
 
 /**
@@ -2457,41 +2457,41 @@ function bbp_update_topic_reply_count_hidden( $topic_id = 0, $reply_count = 0 ) 
  *
  * @param int $topic_id Optional. Topic id to update
  * @param int $active_id Optional. active id
- * @uses bbp_is_reply() To check if the passed topic id is a reply
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_get_public_child_last_id() To get the last public reply id
- * @uses bbp_get_active_id() To get the active id
+ * @uses ideaboard_is_reply() To check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_public_child_last_id() To get the last public reply id
+ * @uses ideaboard_get_active_id() To get the active id
  * @uses update_post_meta() To update the topic last active id meta
- * @uses apply_filters() Calls 'bbp_update_topic_last_active_id' with the active
+ * @uses apply_filters() Calls 'ideaboard_update_topic_last_active_id' with the active
  *                        id and topic id
  * @return int Active id
  */
-function bbp_update_topic_last_active_id( $topic_id = 0, $active_id = 0 ) {
+function ideaboard_update_topic_last_active_id( $topic_id = 0, $active_id = 0 ) {
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
 	} else {
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	}
 
 	if ( empty( $active_id ) ) {
-		$active_id = bbp_get_public_child_last_id( $topic_id, bbp_get_reply_post_type() );
+		$active_id = ideaboard_get_public_child_last_id( $topic_id, ideaboard_get_reply_post_type() );
 	}
 
 	// Adjust last_id's based on last_reply post_type
-	if ( empty( $active_id ) || !bbp_is_reply( $active_id ) ) {
+	if ( empty( $active_id ) || !ideaboard_is_reply( $active_id ) ) {
 		$active_id = $topic_id;
 	}
 
 	// Update only if published
-	if ( bbp_get_public_status_id() === get_post_status( $active_id ) ) {
-		update_post_meta( $topic_id, '_bbp_last_active_id', (int) $active_id );
+	if ( ideaboard_get_public_status_id() === get_post_status( $active_id ) ) {
+		update_post_meta( $topic_id, '_ideaboard_last_active_id', (int) $active_id );
 	}
 
-	return apply_filters( 'bbp_update_topic_last_active_id', (int) $active_id, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_last_active_id', (int) $active_id, $topic_id );
 }
 
 /**
@@ -2501,32 +2501,32 @@ function bbp_update_topic_last_active_id( $topic_id = 0, $active_id = 0 ) {
  *
  * @param int $topic_id Optional. Topic id
  * @param string $new_time Optional. New time in mysql format
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
  * @uses current_time() To get the current time
  * @uses update_post_meta() To update the topic last active meta
  * @return bool True on success, false on failure
  */
-function bbp_update_topic_last_active_time( $topic_id = 0, $new_time = '' ) {
+function ideaboard_update_topic_last_active_time( $topic_id = 0, $new_time = '' ) {
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
 	} else {
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	}
 
 	// Check time and use current if empty
 	if ( empty( $new_time ) ) {
-		$new_time = get_post_field( 'post_date', bbp_get_public_child_last_id( $topic_id, bbp_get_reply_post_type() ) );
+		$new_time = get_post_field( 'post_date', ideaboard_get_public_child_last_id( $topic_id, ideaboard_get_reply_post_type() ) );
 	}
 
 	// Update only if published
 	if ( !empty( $new_time ) ) {
-		update_post_meta( $topic_id, '_bbp_last_active_time', $new_time );
+		update_post_meta( $topic_id, '_ideaboard_last_active_time', $new_time );
 	}
 
-	return apply_filters( 'bbp_update_topic_last_active_time', $new_time, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_last_active_time', $new_time, $topic_id );
 }
 
 /**
@@ -2536,43 +2536,43 @@ function bbp_update_topic_last_active_time( $topic_id = 0, $new_time = '' ) {
  *
  * @param int $topic_id Optional. Topic id to update
  * @param int $reply_id Optional. Reply id
- * @uses bbp_is_reply() To check if the passed topic id is a reply
- * @uses bbp_get_reply_id() To get the reply id
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_get_public_child_last_id() To get the last public reply id
+ * @uses ideaboard_is_reply() To check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_id() To get the reply id
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_public_child_last_id() To get the last public reply id
  * @uses update_post_meta() To update the topic last reply id meta
- * @uses apply_filters() Calls 'bbp_update_topic_last_reply_id' with the reply
+ * @uses apply_filters() Calls 'ideaboard_update_topic_last_reply_id' with the reply
  *                        id and topic id
  * @return int Reply id
  */
-function bbp_update_topic_last_reply_id( $topic_id = 0, $reply_id = 0 ) {
+function ideaboard_update_topic_last_reply_id( $topic_id = 0, $reply_id = 0 ) {
 
 	// If it's a reply, then get the parent (topic id)
-	if ( empty( $reply_id ) && bbp_is_reply( $topic_id ) ) {
-		$reply_id = bbp_get_reply_id( $topic_id );
-		$topic_id = bbp_get_reply_topic_id( $reply_id );
+	if ( empty( $reply_id ) && ideaboard_is_reply( $topic_id ) ) {
+		$reply_id = ideaboard_get_reply_id( $topic_id );
+		$topic_id = ideaboard_get_reply_topic_id( $reply_id );
 	} else {
-		$reply_id = bbp_get_reply_id( $reply_id );
-		$topic_id = bbp_get_topic_id( $topic_id );
+		$reply_id = ideaboard_get_reply_id( $reply_id );
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	}
 
 	if ( empty( $reply_id ) ) {
-		$reply_id = bbp_get_public_child_last_id( $topic_id, bbp_get_reply_post_type() );
+		$reply_id = ideaboard_get_public_child_last_id( $topic_id, ideaboard_get_reply_post_type() );
 	}
 
 	// Adjust last_id's based on last_reply post_type
-	if ( empty( $reply_id ) || !bbp_is_reply( $reply_id ) ) {
+	if ( empty( $reply_id ) || !ideaboard_is_reply( $reply_id ) ) {
 		$reply_id = 0;
 	}
 
 	// Update if reply is published
-	if ( bbp_is_reply_published( $reply_id ) ) {
-		update_post_meta( $topic_id, '_bbp_last_reply_id', (int) $reply_id );
+	if ( ideaboard_is_reply_published( $reply_id ) ) {
+		update_post_meta( $topic_id, '_ideaboard_last_reply_id', (int) $reply_id );
 	}
 
-	return apply_filters( 'bbp_update_topic_last_reply_id', (int) $reply_id, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_last_reply_id', (int) $reply_id, $topic_id );
 }
 
 /**
@@ -2581,41 +2581,41 @@ function bbp_update_topic_last_reply_id( $topic_id = 0, $reply_id = 0 ) {
  * @since IdeaBoard (r2567)
  *
  * @param int $topic_id Optional. Topic id to update
- * @uses bbp_is_reply() To check if the passed topic id is a reply
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_is_reply() To check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses wpdb::prepare() To prepare our sql query
  * @uses wpdb::get_col() To execute our query and get the column back
  * @uses update_post_meta() To update the topic voice count meta
- * @uses apply_filters() Calls 'bbp_update_topic_voice_count' with the voice
+ * @uses apply_filters() Calls 'ideaboard_update_topic_voice_count' with the voice
  *                        count and topic id
  * @return int Voice count
  */
-function bbp_update_topic_voice_count( $topic_id = 0 ) {
+function ideaboard_update_topic_voice_count( $topic_id = 0 ) {
 	global $wpdb;
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
-	} elseif ( bbp_is_topic( $topic_id ) ) {
-		$topic_id = bbp_get_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
+	} elseif ( ideaboard_is_topic( $topic_id ) ) {
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	} else {
 		return;
 	}
 
 	// Query the DB to get voices in this topic
-	$voices = $wpdb->get_col( $wpdb->prepare( "SELECT COUNT( DISTINCT post_author ) FROM {$wpdb->posts} WHERE ( post_parent = %d AND post_status = '%s' AND post_type = '%s' ) OR ( ID = %d AND post_type = '%s' );", $topic_id, bbp_get_public_status_id(), bbp_get_reply_post_type(), $topic_id, bbp_get_topic_post_type() ) );
+	$voices = $wpdb->get_col( $wpdb->prepare( "SELECT COUNT( DISTINCT post_author ) FROM {$wpdb->posts} WHERE ( post_parent = %d AND post_status = '%s' AND post_type = '%s' ) OR ( ID = %d AND post_type = '%s' );", $topic_id, ideaboard_get_public_status_id(), ideaboard_get_reply_post_type(), $topic_id, ideaboard_get_topic_post_type() ) );
 
 	// If there's an error, make sure we have at least have 1 voice
 	$voices = ( empty( $voices ) || is_wp_error( $voices ) ) ? 1 : $voices[0];
 
 	// Update the voice count for this topic id
-	update_post_meta( $topic_id, '_bbp_voice_count', (int) $voices );
+	update_post_meta( $topic_id, '_ideaboard_voice_count', (int) $voices );
 
-	return apply_filters( 'bbp_update_topic_voice_count', (int) $voices, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_voice_count', (int) $voices, $topic_id );
 }
 
 /**
@@ -2624,36 +2624,36 @@ function bbp_update_topic_voice_count( $topic_id = 0 ) {
  * @since IdeaBoard (r2567)
  *
  * @param int $topic_id Optional. Topic id to update
- * @uses bbp_is_reply() To check if the passed topic id is a reply
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_get_reply_topic_id() To get the reply topic id
- * @uses bbp_get_reply_post_type() To get the reply post type
- * @uses bbp_get_topic_post_type() To get the topic post type
+ * @uses ideaboard_is_reply() To check if the passed topic id is a reply
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_get_reply_topic_id() To get the reply topic id
+ * @uses ideaboard_get_reply_post_type() To get the reply post type
+ * @uses ideaboard_get_topic_post_type() To get the topic post type
  * @uses wpdb::prepare() To prepare our sql query
  * @uses wpdb::get_col() To execute our query and get the column back
  * @uses update_post_meta() To update the topic anonymous reply count meta
- * @uses apply_filters() Calls 'bbp_update_topic_anonymous_reply_count' with the
+ * @uses apply_filters() Calls 'ideaboard_update_topic_anonymous_reply_count' with the
  *                        anonymous reply count and topic id
  * @return int Anonymous reply count
  */
-function bbp_update_topic_anonymous_reply_count( $topic_id = 0 ) {
+function ideaboard_update_topic_anonymous_reply_count( $topic_id = 0 ) {
 	global $wpdb;
 
 	// If it's a reply, then get the parent (topic id)
-	if ( bbp_is_reply( $topic_id ) ) {
-		$topic_id = bbp_get_reply_topic_id( $topic_id );
-	} elseif ( bbp_is_topic( $topic_id ) ) {
-		$topic_id = bbp_get_topic_id( $topic_id );
+	if ( ideaboard_is_reply( $topic_id ) ) {
+		$topic_id = ideaboard_get_reply_topic_id( $topic_id );
+	} elseif ( ideaboard_is_topic( $topic_id ) ) {
+		$topic_id = ideaboard_get_topic_id( $topic_id );
 	} else {
 		return;
 	}
 
-	$anonymous_replies = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( ID ) FROM {$wpdb->posts} WHERE ( post_parent = %d AND post_status = '%s' AND post_type = '%s' AND post_author = 0 ) OR ( ID = %d AND post_type = '%s' AND post_author = 0 );", $topic_id, bbp_get_public_status_id(), bbp_get_reply_post_type(), $topic_id, bbp_get_topic_post_type() ) );
+	$anonymous_replies = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT( ID ) FROM {$wpdb->posts} WHERE ( post_parent = %d AND post_status = '%s' AND post_type = '%s' AND post_author = 0 ) OR ( ID = %d AND post_type = '%s' AND post_author = 0 );", $topic_id, ideaboard_get_public_status_id(), ideaboard_get_reply_post_type(), $topic_id, ideaboard_get_topic_post_type() ) );
 
-	update_post_meta( $topic_id, '_bbp_anonymous_reply_count', (int) $anonymous_replies );
+	update_post_meta( $topic_id, '_ideaboard_anonymous_reply_count', (int) $anonymous_replies );
 
-	return apply_filters( 'bbp_update_topic_anonymous_reply_count', (int) $anonymous_replies, $topic_id );
+	return apply_filters( 'ideaboard_update_topic_anonymous_reply_count', (int) $anonymous_replies, $topic_id );
 }
 
 /**
@@ -2666,16 +2666,16 @@ function bbp_update_topic_anonymous_reply_count( $topic_id = 0 ) {
  *  - author_id: Author id
  *  - reason: Reason for editing
  *  - revision_id: Revision id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_format_revision_reason() To format the reason
- * @uses bbp_get_topic_raw_revision_log() To get the raw topic revision log
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_format_revision_reason() To format the reason
+ * @uses ideaboard_get_topic_raw_revision_log() To get the raw topic revision log
  * @uses update_post_meta() To update the topic revision log meta
  * @return mixed False on failure, true on success
  */
-function bbp_update_topic_revision_log( $args = '' ) {
+function ideaboard_update_topic_revision_log( $args = '' ) {
 
 	// Parse arguments against default values
-	$r = bbp_parse_args( $args, array(
+	$r = ideaboard_parse_args( $args, array(
 		'reason'      => '',
 		'topic_id'    => 0,
 		'author_id'   => 0,
@@ -2683,17 +2683,17 @@ function bbp_update_topic_revision_log( $args = '' ) {
 	), 'update_topic_revision_log' );
 
 	// Populate the variables
-	$r['reason']      = bbp_format_revision_reason( $r['reason'] );
-	$r['topic_id']    = bbp_get_topic_id( $r['topic_id'] );
-	$r['author_id']   = bbp_get_user_id ( $r['author_id'], false, true );
+	$r['reason']      = ideaboard_format_revision_reason( $r['reason'] );
+	$r['topic_id']    = ideaboard_get_topic_id( $r['topic_id'] );
+	$r['author_id']   = ideaboard_get_user_id ( $r['author_id'], false, true );
 	$r['revision_id'] = (int) $r['revision_id'];
 
 	// Get the logs and append the new one to those
-	$revision_log                      = bbp_get_topic_raw_revision_log( $r['topic_id'] );
+	$revision_log                      = ideaboard_get_topic_raw_revision_log( $r['topic_id'] );
 	$revision_log[ $r['revision_id'] ] = array( 'author' => $r['author_id'], 'reason' => $r['reason'] );
 
 	// Finally, update
-	return update_post_meta( $r['topic_id'], '_bbp_revision_log', $revision_log );
+	return update_post_meta( $r['topic_id'], '_ideaboard_revision_log', $revision_log );
 }
 
 /** Topic Actions *************************************************************/
@@ -2704,32 +2704,32 @@ function bbp_update_topic_revision_log( $args = '' ) {
  * @since IdeaBoard (r2740)
  *
  * @param int $topic_id Topic id
- * @uses bbp_get_topic() To get the topic
- * @uses do_action() Calls 'bbp_close_topic' with the topic id
+ * @uses ideaboard_get_topic() To get the topic
+ * @uses do_action() Calls 'ideaboard_close_topic' with the topic id
  * @uses add_post_meta() To add the previous status to a meta
  * @uses wp_update_post() To update the topic with the new status
- * @uses do_action() Calls 'bbp_opened_topic' with the topic id
+ * @uses do_action() Calls 'ideaboard_opened_topic' with the topic id
  * @return mixed False or {@link WP_Error} on failure, topic id on success
  */
-function bbp_close_topic( $topic_id = 0 ) {
+function ideaboard_close_topic( $topic_id = 0 ) {
 
 	// Get topic
-	$topic = bbp_get_topic( $topic_id );
+	$topic = ideaboard_get_topic( $topic_id );
 	if ( empty( $topic ) )
 		return $topic;
 
 	// Bail if already closed
-	if ( bbp_get_closed_status_id() === $topic->post_status )
+	if ( ideaboard_get_closed_status_id() === $topic->post_status )
 		return false;
 
 	// Execute pre close code
-	do_action( 'bbp_close_topic', $topic_id );
+	do_action( 'ideaboard_close_topic', $topic_id );
 
 	// Add pre close status
-	add_post_meta( $topic_id, '_bbp_status', $topic->post_status );
+	add_post_meta( $topic_id, '_ideaboard_status', $topic->post_status );
 
 	// Set closed status
-	$topic->post_status = bbp_get_closed_status_id();
+	$topic->post_status = ideaboard_get_closed_status_id();
 
 	// No revisions
 	remove_action( 'pre_post_update', 'wp_save_post_revision' );
@@ -2738,7 +2738,7 @@ function bbp_close_topic( $topic_id = 0 ) {
 	$topic_id = wp_update_post( $topic );
 
 	// Execute post close code
-	do_action( 'bbp_closed_topic', $topic_id );
+	do_action( 'ideaboard_closed_topic', $topic_id );
 
 	// Return topic_id
 	return $topic_id;
@@ -2750,36 +2750,36 @@ function bbp_close_topic( $topic_id = 0 ) {
  * @since IdeaBoard (r2740)
  *
  * @param int $topic_id Topic id
- * @uses bbp_get_topic() To get the topic
- * @uses do_action() Calls 'bbp_open_topic' with the topic id
+ * @uses ideaboard_get_topic() To get the topic
+ * @uses do_action() Calls 'ideaboard_open_topic' with the topic id
  * @uses get_post_meta() To get the previous status
  * @uses delete_post_meta() To delete the previous status meta
  * @uses wp_update_post() To update the topic with the new status
- * @uses do_action() Calls 'bbp_opened_topic' with the topic id
+ * @uses do_action() Calls 'ideaboard_opened_topic' with the topic id
  * @return mixed False or {@link WP_Error} on failure, topic id on success
  */
-function bbp_open_topic( $topic_id = 0 ) {
+function ideaboard_open_topic( $topic_id = 0 ) {
 
 	// Get topic
-	$topic = bbp_get_topic( $topic_id );
+	$topic = ideaboard_get_topic( $topic_id );
 	if ( empty( $topic ) )
 		return $topic;
 
 	// Bail if already open
-	if ( bbp_get_closed_status_id() !== $topic->post_status )
+	if ( ideaboard_get_closed_status_id() !== $topic->post_status )
 		return false;
 
 	// Execute pre open code
-	do_action( 'bbp_open_topic', $topic_id );
+	do_action( 'ideaboard_open_topic', $topic_id );
 
 	// Get previous status
-	$topic_status       = get_post_meta( $topic_id, '_bbp_status', true );
+	$topic_status       = get_post_meta( $topic_id, '_ideaboard_status', true );
 
 	// Set previous status
 	$topic->post_status = $topic_status;
 
 	// Remove old status meta
-	delete_post_meta( $topic_id, '_bbp_status' );
+	delete_post_meta( $topic_id, '_ideaboard_status' );
 
 	// No revisions
 	remove_action( 'pre_post_update', 'wp_save_post_revision' );
@@ -2788,7 +2788,7 @@ function bbp_open_topic( $topic_id = 0 ) {
 	$topic_id = wp_update_post( $topic );
 
 	// Execute post open code
-	do_action( 'bbp_opened_topic', $topic_id );
+	do_action( 'ideaboard_opened_topic', $topic_id );
 
 	// Return topic_id
 	return $topic_id;
@@ -2800,34 +2800,34 @@ function bbp_open_topic( $topic_id = 0 ) {
  * @since IdeaBoard (r2740)
  *
  * @param int $topic_id Topic id
- * @uses bbp_get_topic() To get the topic
- * @uses do_action() Calls 'bbp_spam_topic' with the topic id
+ * @uses ideaboard_get_topic() To get the topic
+ * @uses do_action() Calls 'ideaboard_spam_topic' with the topic id
  * @uses add_post_meta() To add the previous status to a meta
  * @uses wp_update_post() To update the topic with the new status
- * @uses do_action() Calls 'bbp_spammed_topic' with the topic id
+ * @uses do_action() Calls 'ideaboard_spammed_topic' with the topic id
  * @return mixed False or {@link WP_Error} on failure, topic id on success
  */
-function bbp_spam_topic( $topic_id = 0 ) {
+function ideaboard_spam_topic( $topic_id = 0 ) {
 
 	// Get the topic
-	$topic = bbp_get_topic( $topic_id );
+	$topic = ideaboard_get_topic( $topic_id );
 	if ( empty( $topic ) )
 		return $topic;
 
 	// Bail if topic is spam
-	if ( bbp_get_spam_status_id() === $topic->post_status )
+	if ( ideaboard_get_spam_status_id() === $topic->post_status )
 		return false;
 
 	// Execute pre spam code
-	do_action( 'bbp_spam_topic', $topic_id );
+	do_action( 'ideaboard_spam_topic', $topic_id );
 
 	/** Trash Replies *********************************************************/
 
 	// Topic is being spammed, so its replies are trashed
 	$replies = new WP_Query( array(
 		'suppress_filters' => true,
-		'post_type'        => bbp_get_reply_post_type(),
-		'post_status'      => bbp_get_public_status_id(),
+		'post_type'        => ideaboard_get_reply_post_type(),
+		'post_status'      => ideaboard_get_public_status_id(),
 		'post_parent'      => $topic_id,
 		'posts_per_page'   => -1,
 		'nopaging'         => true,
@@ -2848,7 +2848,7 @@ function bbp_spam_topic( $topic_id = 0 ) {
 		// Set a post_meta entry of the replies that were trashed by this action.
 		// This is so we can possibly untrash them, without untrashing replies
 		// that were purposefully trashed before.
-		update_post_meta( $topic_id, '_bbp_pre_spammed_replies', $pre_spammed_replies );
+		update_post_meta( $topic_id, '_ideaboard_pre_spammed_replies', $pre_spammed_replies );
 
 		// Reset the $post global
 		wp_reset_postdata();
@@ -2860,10 +2860,10 @@ function bbp_spam_topic( $topic_id = 0 ) {
 	/** Topic Tags ************************************************************/
 
 	// Add the original post status as post meta for future restoration
-	add_post_meta( $topic_id, '_bbp_spam_meta_status', $topic->post_status );
+	add_post_meta( $topic_id, '_ideaboard_spam_meta_status', $topic->post_status );
 
 	// Get topic tags
-	$terms = get_the_terms( $topic_id, bbp_get_topic_tag_tax_id() );
+	$terms = get_the_terms( $topic_id, ideaboard_get_topic_tag_tax_id() );
 
 	// Define local variable(s)
 	$term_names = array();
@@ -2880,15 +2880,15 @@ function bbp_spam_topic( $topic_id = 0 ) {
 		if ( !empty( $term_names ) ) {
 
 			// Add the original post status as post meta for future restoration
-			add_post_meta( $topic_id, '_bbp_spam_topic_tags', $term_names );
+			add_post_meta( $topic_id, '_ideaboard_spam_topic_tags', $term_names );
 
 			// Empty the topic of its tags
-			$topic->tax_input = array( bbp_get_topic_tag_tax_id() => '' );
+			$topic->tax_input = array( ideaboard_get_topic_tag_tax_id() => '' );
 		}
 	}
 
 	// Set post status to spam
-	$topic->post_status = bbp_get_spam_status_id();
+	$topic->post_status = ideaboard_get_spam_status_id();
 
 	// No revisions
 	remove_action( 'pre_post_update', 'wp_save_post_revision' );
@@ -2897,7 +2897,7 @@ function bbp_spam_topic( $topic_id = 0 ) {
 	$topic_id = wp_update_post( $topic );
 
 	// Execute post spam code
-	do_action( 'bbp_spammed_topic', $topic_id );
+	do_action( 'ideaboard_spammed_topic', $topic_id );
 
 	// Return topic_id
 	return $topic_id;
@@ -2909,32 +2909,32 @@ function bbp_spam_topic( $topic_id = 0 ) {
  * @since IdeaBoard (r2740)
  *
  * @param int $topic_id Topic id
- * @uses bbp_get_topic() To get the topic
- * @uses do_action() Calls 'bbp_unspam_topic' with the topic id
+ * @uses ideaboard_get_topic() To get the topic
+ * @uses do_action() Calls 'ideaboard_unspam_topic' with the topic id
  * @uses get_post_meta() To get the previous status
  * @uses delete_post_meta() To delete the previous status meta
  * @uses wp_update_post() To update the topic with the new status
- * @uses do_action() Calls 'bbp_unspammed_topic' with the topic id
+ * @uses do_action() Calls 'ideaboard_unspammed_topic' with the topic id
  * @return mixed False or {@link WP_Error} on failure, topic id on success
  */
-function bbp_unspam_topic( $topic_id = 0 ) {
+function ideaboard_unspam_topic( $topic_id = 0 ) {
 
 	// Get the topic
-	$topic = bbp_get_topic( $topic_id );
+	$topic = ideaboard_get_topic( $topic_id );
 	if ( empty( $topic ) )
 		return $topic;
 
 	// Bail if already not spam
-	if ( bbp_get_spam_status_id() !== $topic->post_status )
+	if ( ideaboard_get_spam_status_id() !== $topic->post_status )
 		return false;
 
 	// Execute pre unspam code
-	do_action( 'bbp_unspam_topic', $topic_id );
+	do_action( 'ideaboard_unspam_topic', $topic_id );
 
 	/** Untrash Replies *******************************************************/
 
 	// Get the replies that were not previously trashed
-	$pre_spammed_replies = get_post_meta( $topic_id, '_bbp_pre_spammed_replies', true );
+	$pre_spammed_replies = get_post_meta( $topic_id, '_ideaboard_pre_spammed_replies', true );
 
 	// There are replies to untrash
 	if ( !empty( $pre_spammed_replies ) ) {
@@ -2952,33 +2952,33 @@ function bbp_unspam_topic( $topic_id = 0 ) {
 	/** Topic Tags ************************************************************/
 
 	// Get pre-spam topic tags
-	$terms = get_post_meta( $topic_id, '_bbp_spam_topic_tags', true );
+	$terms = get_post_meta( $topic_id, '_ideaboard_spam_topic_tags', true );
 
 	// Topic had tags before it was spammed
 	if ( !empty( $terms ) ) {
 
 		// Set the tax_input of the topic
-		$topic->tax_input = array( bbp_get_topic_tag_tax_id() => $terms );
+		$topic->tax_input = array( ideaboard_get_topic_tag_tax_id() => $terms );
 
 		// Delete pre-spam topic tag meta
-		delete_post_meta( $topic_id, '_bbp_spam_topic_tags' );
+		delete_post_meta( $topic_id, '_ideaboard_spam_topic_tags' );
 	}
 
 	/** Topic Status **********************************************************/
 
 	// Get pre spam status
-	$topic_status = get_post_meta( $topic_id, '_bbp_spam_meta_status', true );
+	$topic_status = get_post_meta( $topic_id, '_ideaboard_spam_meta_status', true );
 
 	// If no previous status, default to publish
 	if ( empty( $topic_status ) ) {
-		$topic_status = bbp_get_public_status_id();
+		$topic_status = ideaboard_get_public_status_id();
 	}
 
 	// Set post status to pre spam
 	$topic->post_status = $topic_status;
 
 	// Delete pre spam meta
-	delete_post_meta( $topic_id, '_bbp_spam_meta_status' );
+	delete_post_meta( $topic_id, '_ideaboard_spam_meta_status' );
 
 	// No revisions
 	remove_action( 'pre_post_update', 'wp_save_post_revision' );
@@ -2987,7 +2987,7 @@ function bbp_unspam_topic( $topic_id = 0 ) {
 	$topic_id = wp_update_post( $topic );
 
 	// Execute post unspam code
-	do_action( 'bbp_unspammed_topic', $topic_id );
+	do_action( 'ideaboard_unspammed_topic', $topic_id );
 
 	// Return topic_id
 	return $topic_id;
@@ -3000,32 +3000,32 @@ function bbp_unspam_topic( $topic_id = 0 ) {
  *
  * @param int $topic_id Optional. Topic id
  * @param int $super Should we make the topic a super sticky?
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_unstick_topic() To unstick the topic
- * @uses bbp_get_topic_forum_id() To get the topic forum id
- * @uses bbp_get_stickies() To get the stickies
- * @uses do_action() 'bbp_stick_topic' with topic id and bool super
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_unstick_topic() To unstick the topic
+ * @uses ideaboard_get_topic_forum_id() To get the topic forum id
+ * @uses ideaboard_get_stickies() To get the stickies
+ * @uses do_action() 'ideaboard_stick_topic' with topic id and bool super
  * @uses update_option() To update the super stickies option
  * @uses update_post_meta() To update the forum stickies meta
- * @uses do_action() Calls 'bbp_sticked_topic' with the topic id, bool super
+ * @uses do_action() Calls 'ideaboard_sticked_topic' with the topic id, bool super
  *                    and success
  * @return bool True on success, false on failure
  */
-function bbp_stick_topic( $topic_id = 0, $super = false ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_stick_topic( $topic_id = 0, $super = false ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
 	// Bail if a topic is not a topic (prevents revisions as stickies)
-	if ( ! bbp_is_topic( $topic_id ) )
+	if ( ! ideaboard_is_topic( $topic_id ) )
 		return false;
 
 	// We may have a super sticky to which we want to convert into a normal
 	// sticky and vice versa; unstick the topic first to avoid any possible error.
-	bbp_unstick_topic( $topic_id );
+	ideaboard_unstick_topic( $topic_id );
 
-	$forum_id = empty( $super ) ? bbp_get_topic_forum_id( $topic_id ) : 0;
-	$stickies = bbp_get_stickies( $forum_id );
+	$forum_id = empty( $super ) ? ideaboard_get_topic_forum_id( $topic_id ) : 0;
+	$stickies = ideaboard_get_stickies( $forum_id );
 
-	do_action( 'bbp_stick_topic', $topic_id, $super );
+	do_action( 'ideaboard_stick_topic', $topic_id, $super );
 
 	if ( !is_array( $stickies ) ) {
 		$stickies   = array( $topic_id );
@@ -3038,16 +3038,16 @@ function bbp_stick_topic( $topic_id = 0, $super = false ) {
 
 	// Unset incorrectly stuck revisions
 	foreach ( (array) $stickies as $key => $id ) {
-		if ( ! bbp_is_topic( $id ) ) {
+		if ( ! ideaboard_is_topic( $id ) ) {
 			unset( $stickies[$key] );
 		}
 	}
 
 	// Reset keys
 	$stickies = array_values( $stickies );
-	$success  = !empty( $super ) ? update_option( '_bbp_super_sticky_topics', $stickies ) : update_post_meta( $forum_id, '_bbp_sticky_topics', $stickies );
+	$success  = !empty( $super ) ? update_option( '_ideaboard_super_sticky_topics', $stickies ) : update_post_meta( $forum_id, '_ideaboard_sticky_topics', $stickies );
 
-	do_action( 'bbp_sticked_topic', $topic_id, $super, $success );
+	do_action( 'ideaboard_sticked_topic', $topic_id, $super, $success );
 
 	return (bool) $success;
 }
@@ -3058,26 +3058,26 @@ function bbp_stick_topic( $topic_id = 0, $super = false ) {
  * @since IdeaBoard (r2754)
  *
  * @param int $topic_id Optional. Topic id
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic_super_sticky() To check if the topic is a super sticky
- * @uses bbp_get_topic_forum_id() To get the topic forum id
- * @uses bbp_get_stickies() To get the forum stickies
- * @uses do_action() Calls 'bbp_unstick_topic' with the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic_super_sticky() To check if the topic is a super sticky
+ * @uses ideaboard_get_topic_forum_id() To get the topic forum id
+ * @uses ideaboard_get_stickies() To get the forum stickies
+ * @uses do_action() Calls 'ideaboard_unstick_topic' with the topic id
  * @uses delete_option() To delete the super stickies option
  * @uses update_option() To update the super stickies option
  * @uses delete_post_meta() To delete the forum stickies meta
  * @uses update_post_meta() To update the forum stickies meta
- * @uses do_action() Calls 'bbp_unsticked_topic' with the topic id and success
+ * @uses do_action() Calls 'ideaboard_unsticked_topic' with the topic id and success
  * @return bool Always true.
  */
-function bbp_unstick_topic( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
-	$super    = bbp_is_topic_super_sticky( $topic_id );
-	$forum_id = empty( $super ) ? bbp_get_topic_forum_id( $topic_id ) : 0;
-	$stickies = bbp_get_stickies( $forum_id );
+function ideaboard_unstick_topic( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
+	$super    = ideaboard_is_topic_super_sticky( $topic_id );
+	$forum_id = empty( $super ) ? ideaboard_get_topic_forum_id( $topic_id ) : 0;
+	$stickies = ideaboard_get_stickies( $forum_id );
 	$offset   = array_search( $topic_id, $stickies );
 
-	do_action( 'bbp_unstick_topic', $topic_id );
+	do_action( 'ideaboard_unstick_topic', $topic_id );
 
 	if ( empty( $stickies ) ) {
 		$success = true;
@@ -3088,13 +3088,13 @@ function bbp_unstick_topic( $topic_id = 0 ) {
 	} else {
 		array_splice( $stickies, $offset, 1 );
 		if ( empty( $stickies ) ) {
-			$success = !empty( $super ) ? delete_option( '_bbp_super_sticky_topics'            ) : delete_post_meta( $forum_id, '_bbp_sticky_topics'            );
+			$success = !empty( $super ) ? delete_option( '_ideaboard_super_sticky_topics'            ) : delete_post_meta( $forum_id, '_ideaboard_sticky_topics'            );
 		} else {
-			$success = !empty( $super ) ? update_option( '_bbp_super_sticky_topics', $stickies ) : update_post_meta( $forum_id, '_bbp_sticky_topics', $stickies );
+			$success = !empty( $super ) ? update_option( '_ideaboard_super_sticky_topics', $stickies ) : update_post_meta( $forum_id, '_ideaboard_sticky_topics', $stickies );
 		}
 	}
 
-	do_action( 'bbp_unsticked_topic', $topic_id, $success );
+	do_action( 'ideaboard_unsticked_topic', $topic_id, $success );
 
 	return (bool) $success;
 }
@@ -3108,30 +3108,30 @@ function bbp_unstick_topic( $topic_id = 0 ) {
  * handled by WordPress core API functions. It is used to clean up after
  * a topic that is being deleted.
  *
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic() To check if the passed id is a topic
- * @uses do_action() Calls 'bbp_delete_topic' with the topic id
- * @uses bbp_has_replies() To check if the topic has replies
- * @uses bbp_replies() To loop through the replies
- * @uses bbp_the_reply() To set a reply as the current reply in the loop
- * @uses bbp_get_reply_id() To get the reply id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic() To check if the passed id is a topic
+ * @uses do_action() Calls 'ideaboard_delete_topic' with the topic id
+ * @uses ideaboard_has_replies() To check if the topic has replies
+ * @uses ideaboard_replies() To loop through the replies
+ * @uses ideaboard_the_reply() To set a reply as the current reply in the loop
+ * @uses ideaboard_get_reply_id() To get the reply id
  * @uses wp_delete_post() To delete the reply
  */
-function bbp_delete_topic( $topic_id = 0 ) {
+function ideaboard_delete_topic( $topic_id = 0 ) {
 
 	// Validate topic ID
-	$topic_id = bbp_get_topic_id( $topic_id );
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	if ( empty( $topic_id ) || !bbp_is_topic( $topic_id ) )
+	if ( empty( $topic_id ) || !ideaboard_is_topic( $topic_id ) )
 		return false;
 
-	do_action( 'bbp_delete_topic', $topic_id );
+	do_action( 'ideaboard_delete_topic', $topic_id );
 
 	// Topic is being permanently deleted, so its replies gotta go too
 	// Note that we get all post statuses here
 	$replies = new WP_Query( array(
 		'suppress_filters' => true,
-		'post_type'        => bbp_get_reply_post_type(),
+		'post_type'        => ideaboard_get_reply_post_type(),
 		'post_status'      => array_keys( get_post_stati() ),
 		'post_parent'      => $topic_id,
 		'posts_per_page'   => -1,
@@ -3160,27 +3160,27 @@ function bbp_delete_topic( $topic_id = 0 ) {
  * handled by WordPress core API functions. It is used to clean up after
  * a topic that is being trashed.
  *
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic() To check if the passed id is a topic
- * @uses do_action() Calls 'bbp_trash_topic' with the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic() To check if the passed id is a topic
+ * @uses do_action() Calls 'ideaboard_trash_topic' with the topic id
  * @uses wp_trash_post() To trash the reply
  * @uses update_post_meta() To save a list of just trashed replies for future use
  */
-function bbp_trash_topic( $topic_id = 0 ) {
+function ideaboard_trash_topic( $topic_id = 0 ) {
 
 	// Validate topic ID
-	$topic_id = bbp_get_topic_id( $topic_id );
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	if ( empty( $topic_id ) || !bbp_is_topic( $topic_id ) )
+	if ( empty( $topic_id ) || !ideaboard_is_topic( $topic_id ) )
 		return false;
 
-	do_action( 'bbp_trash_topic', $topic_id );
+	do_action( 'ideaboard_trash_topic', $topic_id );
 
 	// Topic is being trashed, so its replies are trashed too
 	$replies = new WP_Query( array(
 		'suppress_filters' => true,
-		'post_type'        => bbp_get_reply_post_type(),
-		'post_status'      => bbp_get_public_status_id(),
+		'post_type'        => ideaboard_get_reply_post_type(),
+		'post_status'      => ideaboard_get_public_status_id(),
 		'post_parent'      => $topic_id,
 		'posts_per_page'   => -1,
 		'nopaging'         => true,
@@ -3201,7 +3201,7 @@ function bbp_trash_topic( $topic_id = 0 ) {
 		// Set a post_meta entry of the replies that were trashed by this action.
 		// This is so we can possibly untrash them, without untrashing replies
 		// that were purposefully trashed before.
-		update_post_meta( $topic_id, '_bbp_pre_trashed_replies', $pre_trashed_replies );
+		update_post_meta( $topic_id, '_ideaboard_pre_trashed_replies', $pre_trashed_replies );
 
 		// Reset the $post global
 		wp_reset_postdata();
@@ -3214,23 +3214,23 @@ function bbp_trash_topic( $topic_id = 0 ) {
 /**
  * Called before untrashing a topic
  *
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic() To check if the passed id is a topic
- * @uses do_action() Calls 'bbp_untrash_topic' with the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic() To check if the passed id is a topic
+ * @uses do_action() Calls 'ideaboard_untrash_topic' with the topic id
  * @uses get_post_meta() To get the list of replies which were trashed with the
  *                        topic
  * @uses wp_untrash_post() To untrash the reply
  */
-function bbp_untrash_topic( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_untrash_topic( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	if ( empty( $topic_id ) || !bbp_is_topic( $topic_id ) )
+	if ( empty( $topic_id ) || !ideaboard_is_topic( $topic_id ) )
 		return false;
 
-	do_action( 'bbp_untrash_topic', $topic_id );
+	do_action( 'ideaboard_untrash_topic', $topic_id );
 
 	// Get the replies that were not previously trashed
-	$pre_trashed_replies = get_post_meta( $topic_id, '_bbp_pre_trashed_replies', true );
+	$pre_trashed_replies = get_post_meta( $topic_id, '_ideaboard_pre_trashed_replies', true );
 
 	// There are replies to untrash
 	if ( !empty( $pre_trashed_replies ) ) {
@@ -3251,49 +3251,49 @@ function bbp_untrash_topic( $topic_id = 0 ) {
 /**
  * Called after deleting a topic
  *
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic() To check if the passed id is a topic
- * @uses do_action() Calls 'bbp_deleted_topic' with the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic() To check if the passed id is a topic
+ * @uses do_action() Calls 'ideaboard_deleted_topic' with the topic id
  */
-function bbp_deleted_topic( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_deleted_topic( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	if ( empty( $topic_id ) || !bbp_is_topic( $topic_id ) )
+	if ( empty( $topic_id ) || !ideaboard_is_topic( $topic_id ) )
 		return false;
 
-	do_action( 'bbp_deleted_topic', $topic_id );
+	do_action( 'ideaboard_deleted_topic', $topic_id );
 }
 
 /**
  * Called after trashing a topic
  *
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic() To check if the passed id is a topic
- * @uses do_action() Calls 'bbp_trashed_topic' with the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic() To check if the passed id is a topic
+ * @uses do_action() Calls 'ideaboard_trashed_topic' with the topic id
  */
-function bbp_trashed_topic( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_trashed_topic( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	if ( empty( $topic_id ) || !bbp_is_topic( $topic_id ) )
+	if ( empty( $topic_id ) || !ideaboard_is_topic( $topic_id ) )
 		return false;
 
-	do_action( 'bbp_trashed_topic', $topic_id );
+	do_action( 'ideaboard_trashed_topic', $topic_id );
 }
 
 /**
  * Called after untrashing a topic
  *
- * @uses bbp_get_topic_id() To get the topic id
- * @uses bbp_is_topic() To check if the passed id is a topic
- * @uses do_action() Calls 'bbp_untrashed_topic' with the topic id
+ * @uses ideaboard_get_topic_id() To get the topic id
+ * @uses ideaboard_is_topic() To check if the passed id is a topic
+ * @uses do_action() Calls 'ideaboard_untrashed_topic' with the topic id
  */
-function bbp_untrashed_topic( $topic_id = 0 ) {
-	$topic_id = bbp_get_topic_id( $topic_id );
+function ideaboard_untrashed_topic( $topic_id = 0 ) {
+	$topic_id = ideaboard_get_topic_id( $topic_id );
 
-	if ( empty( $topic_id ) || !bbp_is_topic( $topic_id ) )
+	if ( empty( $topic_id ) || !ideaboard_is_topic( $topic_id ) )
 		return false;
 
-	do_action( 'bbp_untrashed_topic', $topic_id );
+	do_action( 'ideaboard_untrashed_topic', $topic_id );
 }
 
 /** Settings ******************************************************************/
@@ -3308,17 +3308,17 @@ function bbp_untrashed_topic( $topic_id = 0 ) {
  * @uses apply_filters() To allow the return value to be manipulated
  * @return int
  */
-function bbp_get_topics_per_page( $default = 15 ) {
+function ideaboard_get_topics_per_page( $default = 15 ) {
 
 	// Get database option and cast as integer
-	$retval = get_option( '_bbp_topics_per_page', $default );
+	$retval = get_option( '_ideaboard_topics_per_page', $default );
 
 	// If return val is empty, set it to default
 	if ( empty( $retval ) )
 		$retval = $default;
 
 	// Filter and return
-	return (int) apply_filters( 'bbp_get_topics_per_page', $retval, $default );
+	return (int) apply_filters( 'ideaboard_get_topics_per_page', $retval, $default );
 }
 
 /**
@@ -3331,17 +3331,17 @@ function bbp_get_topics_per_page( $default = 15 ) {
  * @uses apply_filters() To allow the return value to be manipulated
  * @return int
  */
-function bbp_get_topics_per_rss_page( $default = 25 ) {
+function ideaboard_get_topics_per_rss_page( $default = 25 ) {
 
 	// Get database option and cast as integer
-	$retval = get_option( '_bbp_topics_per_rss_page', $default );
+	$retval = get_option( '_ideaboard_topics_per_rss_page', $default );
 
 	// If return val is empty, set it to default
 	if ( empty( $retval ) )
 		$retval = $default;
 
 	// Filter and return
-	return (int) apply_filters( 'bbp_get_topics_per_rss_page', $retval, $default );
+	return (int) apply_filters( 'ideaboard_get_topics_per_rss_page', $retval, $default );
 }
 
 /** Topic Tags ****************************************************************/
@@ -3355,16 +3355,16 @@ function bbp_get_topics_per_rss_page( $default = 25 ) {
  * @param string $sep
  * @return string
  */
-function bbp_get_topic_tag_names( $topic_id = 0, $sep = ', ' ) {
-	$topic_id   = bbp_get_topic_id( $topic_id );
-	$topic_tags = array_filter( (array) get_the_terms( $topic_id, bbp_get_topic_tag_tax_id() ) );
+function ideaboard_get_topic_tag_names( $topic_id = 0, $sep = ', ' ) {
+	$topic_id   = ideaboard_get_topic_id( $topic_id );
+	$topic_tags = array_filter( (array) get_the_terms( $topic_id, ideaboard_get_topic_tag_tax_id() ) );
 	$terms      = array();
 	foreach ( $topic_tags as $term ) {
 		$terms[] = $term->name;
 	}
 	$terms = !empty( $terms ) ? implode( $sep, $terms ) : '';
 
-	return apply_filters( 'bbp_get_topic_tags', $terms, $topic_id );
+	return apply_filters( 'ideaboard_get_topic_tags', $terms, $topic_id );
 }
 
 /** Autoembed *****************************************************************/
@@ -3375,11 +3375,11 @@ function bbp_get_topic_tag_names( $topic_id = 0, $sep = ', ' ) {
  * @since IdeaBoard (r3752)
  * @global WP_Embed $wp_embed
  */
-function bbp_topic_content_autoembed() {
+function ideaboard_topic_content_autoembed() {
 	global $wp_embed;
 
-	if ( bbp_use_autoembed() && is_a( $wp_embed, 'WP_Embed' ) ) {
-		add_filter( 'bbp_get_topic_content', array( $wp_embed, 'autoembed' ), 2 );
+	if ( ideaboard_use_autoembed() && is_a( $wp_embed, 'WP_Embed' ) ) {
+		add_filter( 'ideaboard_get_topic_content', array( $wp_embed, 'autoembed' ), 2 );
 	}
 }
 
@@ -3390,18 +3390,18 @@ function bbp_topic_content_autoembed() {
  *
  * @since IdeaBoard (r3171)
  *
- * @uses bbp_version()
- * @uses bbp_is_single_topic()
- * @uses bbp_user_can_view_forum()
- * @uses bbp_get_topic_forum_id()
- * @uses bbp_show_load_topic()
- * @uses bbp_topic_permalink()
- * @uses bbp_topic_title()
- * @uses bbp_get_topic_reply_count()
- * @uses bbp_topic_content()
- * @uses bbp_has_topics()
- * @uses bbp_topics()
- * @uses bbp_the_topic()
+ * @uses ideaboard_version()
+ * @uses ideaboard_is_single_topic()
+ * @uses ideaboard_user_can_view_forum()
+ * @uses ideaboard_get_topic_forum_id()
+ * @uses ideaboard_show_load_topic()
+ * @uses ideaboard_topic_permalink()
+ * @uses ideaboard_topic_title()
+ * @uses ideaboard_get_topic_reply_count()
+ * @uses ideaboard_topic_content()
+ * @uses ideaboard_has_topics()
+ * @uses ideaboard_topics()
+ * @uses ideaboard_the_topic()
  * @uses get_wp_title_rss()
  * @uses get_option()
  * @uses bloginfo_rss
@@ -3414,10 +3414,10 @@ function bbp_topic_content_autoembed() {
  *
  * @param array $topics_query
  */
-function bbp_display_topics_feed_rss2( $topics_query = array() ) {
+function ideaboard_display_topics_feed_rss2( $topics_query = array() ) {
 
 	// User cannot access this forum
-	if ( bbp_is_single_forum() && !bbp_user_can_view_forum( array( 'forum_id' => bbp_get_forum_id() ) ) )
+	if ( ideaboard_is_single_forum() && !ideaboard_user_can_view_forum( array( 'forum_id' => ideaboard_get_forum_id() ) ) )
 		return;
 
 	// Display the feed
@@ -3431,7 +3431,7 @@ function bbp_display_topics_feed_rss2( $topics_query = array() ) {
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:atom="http://www.w3.org/2005/Atom"
 
-		<?php do_action( 'bbp_feed' ); ?>
+		<?php do_action( 'ideaboard_feed' ); ?>
 	>
 
 	<channel>
@@ -3441,28 +3441,28 @@ function bbp_display_topics_feed_rss2( $topics_query = array() ) {
 		<link><?php self_link(); ?></link>
 		<description><?php //?></description>
 		<pubDate><?php echo mysql2date( 'D, d M Y H:i:s O', current_time( 'mysql' ), false ); ?></pubDate>
-		<generator>http://ideaboard.org/?v=<?php bbp_version(); ?></generator>
+		<generator>http://ideaboard.org/?v=<?php ideaboard_version(); ?></generator>
 		<language><?php bloginfo_rss( 'language' ); ?></language>
 
-		<?php do_action( 'bbp_feed_head' ); ?>
+		<?php do_action( 'ideaboard_feed_head' ); ?>
 
-		<?php if ( bbp_has_topics( $topics_query ) ) : ?>
+		<?php if ( ideaboard_has_topics( $topics_query ) ) : ?>
 
-			<?php while ( bbp_topics() ) : bbp_the_topic(); ?>
+			<?php while ( ideaboard_topics() ) : ideaboard_the_topic(); ?>
 
 				<item>
-					<guid><?php bbp_topic_permalink(); ?></guid>
-					<title><![CDATA[<?php bbp_topic_title(); ?>]]></title>
-					<link><?php bbp_topic_permalink(); ?></link>
-					<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_meta( bbp_get_topic_id(), '_bbp_last_active_time', true ) ); ?></pubDate>
+					<guid><?php ideaboard_topic_permalink(); ?></guid>
+					<title><![CDATA[<?php ideaboard_topic_title(); ?>]]></title>
+					<link><?php ideaboard_topic_permalink(); ?></link>
+					<pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_meta( ideaboard_get_topic_id(), '_ideaboard_last_active_time', true ) ); ?></pubDate>
 					<dc:creator><?php the_author() ?></dc:creator>
 
 					<?php if ( !post_password_required() ) : ?>
 
 					<description>
 						<![CDATA[
-						<p><?php printf( esc_html__( 'Replies: %s', 'ideaboard' ), bbp_get_topic_reply_count() ); ?></p>
-						<?php bbp_topic_content(); ?>
+						<p><?php printf( esc_html__( 'Replies: %s', 'ideaboard' ), ideaboard_get_topic_reply_count() ); ?></p>
+						<?php ideaboard_topic_content(); ?>
 						]]>
 					</description>
 
@@ -3470,14 +3470,14 @@ function bbp_display_topics_feed_rss2( $topics_query = array() ) {
 
 					<?php endif; ?>
 
-					<?php do_action( 'bbp_feed_item' ); ?>
+					<?php do_action( 'ideaboard_feed_item' ); ?>
 
 				</item>
 
 				<?php endwhile; ?>
 			<?php endif; ?>
 
-		<?php do_action( 'bbp_feed_footer' ); ?>
+		<?php do_action( 'ideaboard_feed_footer' ); ?>
 
 	</channel>
 	</rss>
@@ -3493,21 +3493,21 @@ function bbp_display_topics_feed_rss2( $topics_query = array() ) {
  *
  * @since IdeaBoard (r3605)
  *
- * @uses bbp_is_topic_edit()
+ * @uses ideaboard_is_topic_edit()
  * @uses current_user_can()
- * @uses bbp_get_topic_id()
+ * @uses ideaboard_get_topic_id()
  * @uses wp_safe_redirect()
- * @uses bbp_get_topic_permalink()
+ * @uses ideaboard_get_topic_permalink()
  */
-function bbp_check_topic_edit() {
+function ideaboard_check_topic_edit() {
 
 	// Bail if not editing a topic
-	if ( !bbp_is_topic_edit() )
+	if ( !ideaboard_is_topic_edit() )
 		return;
 
 	// User cannot edit topic, so redirect back to topic
-	if ( !current_user_can( 'edit_topic', bbp_get_topic_id() ) ) {
-		wp_safe_redirect( bbp_get_topic_permalink() );
+	if ( !current_user_can( 'edit_topic', ideaboard_get_topic_id() ) ) {
+		wp_safe_redirect( ideaboard_get_topic_permalink() );
 		exit();
 	}
 }
@@ -3517,21 +3517,21 @@ function bbp_check_topic_edit() {
  *
  * @since IdeaBoard (r3605)
  *
- * @uses bbp_is_topic_tag_edit()
+ * @uses ideaboard_is_topic_tag_edit()
  * @uses current_user_can()
- * @uses bbp_get_topic_tag_id()
+ * @uses ideaboard_get_topic_tag_id()
  * @uses wp_safe_redirect()
- * @uses bbp_get_topic_tag_link()
+ * @uses ideaboard_get_topic_tag_link()
  */
-function bbp_check_topic_tag_edit() {
+function ideaboard_check_topic_tag_edit() {
 
 	// Bail if not editing a topic tag
-	if ( !bbp_is_topic_tag_edit() )
+	if ( !ideaboard_is_topic_tag_edit() )
 		return;
 
 	// Bail if current user cannot edit topic tags
-	if ( !current_user_can( 'edit_topic_tags', bbp_get_topic_tag_id() ) ) {
-		wp_safe_redirect( bbp_get_topic_tag_link() );
+	if ( !current_user_can( 'edit_topic_tags', ideaboard_get_topic_tag_id() ) ) {
+		wp_safe_redirect( ideaboard_get_topic_tag_link() );
 		exit();
 	}
 }

@@ -28,13 +28,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
  *
  * @return array Capabilities for $role
  */
-function bbp_get_caps_for_role( $role = '' ) {
+function ideaboard_get_caps_for_role( $role = '' ) {
 
 	// Which role are we looking for?
 	switch ( $role ) {
 
 		// Keymaster
-		case bbp_get_keymaster_role() :
+		case ideaboard_get_keymaster_role() :
 			$caps = array(
 
 				// Keymasters only
@@ -82,7 +82,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 			break;
 
 		// Moderator
-		case bbp_get_moderator_role() :
+		case ideaboard_get_moderator_role() :
 			$caps = array(
 
 				// Primary caps
@@ -124,7 +124,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 			break;
 
 		// Spectators can only read
-		case bbp_get_spectator_role()   :
+		case ideaboard_get_spectator_role()   :
 			$caps = array(
 
 				// Primary caps
@@ -134,7 +134,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 			break;
 
 		// Explicitly blocked
-		case bbp_get_blocked_role() :
+		case ideaboard_get_blocked_role() :
 			$caps = array(
 
 				// Primary caps
@@ -179,7 +179,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 			break;
 
 		// Participant/Default
-		case bbp_get_participant_role() :
+		case ideaboard_get_participant_role() :
 		default :
 			$caps = array(
 
@@ -205,7 +205,7 @@ function bbp_get_caps_for_role( $role = '' ) {
 			break;
 	}
 
-	return apply_filters( 'bbp_get_caps_for_role', $caps, $role );
+	return apply_filters( 'ideaboard_get_caps_for_role', $caps, $role );
 }
 
 /**
@@ -213,16 +213,16 @@ function bbp_get_caps_for_role( $role = '' ) {
  *
  * @since IdeaBoard (r2608)
  */
-function bbp_add_caps() {
+function ideaboard_add_caps() {
 
 	// Loop through available roles and add caps
-	foreach ( bbp_get_wp_roles()->role_objects as $role ) {
-		foreach ( bbp_get_caps_for_role( $role->name ) as $cap => $value ) {
+	foreach ( ideaboard_get_wp_roles()->role_objects as $role ) {
+		foreach ( ideaboard_get_caps_for_role( $role->name ) as $cap => $value ) {
 			$role->add_cap( $cap, $value );
 		}
 	}
 
-	do_action( 'bbp_add_caps' );
+	do_action( 'ideaboard_add_caps' );
 }
 
 /**
@@ -230,16 +230,16 @@ function bbp_add_caps() {
  *
  * @since IdeaBoard (r2608)
  */
-function bbp_remove_caps() {
+function ideaboard_remove_caps() {
 
 	// Loop through available roles and remove caps
-	foreach ( bbp_get_wp_roles()->role_objects as $role ) {
-		foreach ( array_keys( bbp_get_caps_for_role( $role->name ) ) as $cap ) {
+	foreach ( ideaboard_get_wp_roles()->role_objects as $role ) {
+		foreach ( array_keys( ideaboard_get_caps_for_role( $role->name ) ) as $cap ) {
 			$role->remove_cap( $cap );
 		}
 	}
 
-	do_action( 'bbp_remove_caps' );
+	do_action( 'ideaboard_remove_caps' );
 }
 
 /**
@@ -250,7 +250,7 @@ function bbp_remove_caps() {
  * @global WP_Roles $wp_roles
  * @return WP_Roles
  */
-function bbp_get_wp_roles() {
+function ideaboard_get_wp_roles() {
 	global $wp_roles;
 
 	// Load roles if not set
@@ -265,22 +265,22 @@ function bbp_get_wp_roles() {
  *
  * @since IdeaBoard (r5064)
  *
- * @uses bbp_get_wp_roles() To load and get the $wp_roles global
+ * @uses ideaboard_get_wp_roles() To load and get the $wp_roles global
  * @return array
  */
-function bbp_get_blog_roles() {
+function ideaboard_get_blog_roles() {
 
 	// Get WordPress's roles (returns $wp_roles global)
-	$wp_roles  = bbp_get_wp_roles();
+	$wp_roles  = ideaboard_get_wp_roles();
 
 	// Apply the WordPress 'editable_roles' filter to let plugins ride along.
 	//
-	// We use this internally via bbp_filter_blog_editable_roles() to remove
+	// We use this internally via ideaboard_filter_blog_editable_roles() to remove
 	// any custom IdeaBoard roles that are added to the global.
 	$the_roles = isset( $wp_roles->roles ) ? $wp_roles->roles : false;
 	$all_roles = apply_filters( 'editable_roles', $the_roles );
 
-	return apply_filters( 'bbp_get_blog_roles', $all_roles, $wp_roles );
+	return apply_filters( 'ideaboard_get_blog_roles', $all_roles, $wp_roles );
 }
 
 /** Forum Roles ***************************************************************/
@@ -294,19 +294,19 @@ function bbp_get_blog_roles() {
  *
  * @param WP_Roles $wp_roles The main WordPress roles global
  *
- * @uses bbp_get_wp_roles() To load and get the $wp_roles global
- * @uses bbp_get_dynamic_roles() To get and add IdeaBoard's roles to $wp_roles
+ * @uses ideaboard_get_wp_roles() To load and get the $wp_roles global
+ * @uses ideaboard_get_dynamic_roles() To get and add IdeaBoard's roles to $wp_roles
  * @return WP_Roles The main $wp_roles global
  */
-function bbp_add_forums_roles( $wp_roles = null ) {
+function ideaboard_add_forums_roles( $wp_roles = null ) {
 
 	// Attempt to get global roles if not passed in & not mid-initialization
 	if ( ( null === $wp_roles ) && ! doing_action( 'wp_roles_init' ) ) {
-		$wp_roles = bbp_get_wp_roles();
+		$wp_roles = ideaboard_get_wp_roles();
 	}
 
 	// Loop through dynamic roles and add them to the $wp_roles array
-	foreach ( bbp_get_dynamic_roles() as $role_id => $details ) {
+	foreach ( ideaboard_get_dynamic_roles() as $role_id => $details ) {
 		$wp_roles->roles[$role_id]        = $details;
 		$wp_roles->role_objects[$role_id] = new WP_Role( $role_id, $details['capabilities'] );
 		$wp_roles->role_names[$role_id]   = $details['name'];
@@ -321,16 +321,16 @@ function bbp_add_forums_roles( $wp_roles = null ) {
  *
  * @since IdeaBoard (r4363)
  *
- * @see _bbp_reinit_dynamic_roles()
+ * @see _ideaboard_reinit_dynamic_roles()
  *
  * @global WPDB $wpdb Used to get the database prefix
  */
-function bbp_filter_user_roles_option() {
+function ideaboard_filter_user_roles_option() {
 	global $wpdb;
 
 	$role_key = $wpdb->prefix . 'user_roles';
 
-	add_filter( 'option_' . $role_key, '_bbp_reinit_dynamic_roles' );
+	add_filter( 'option_' . $role_key, '_ideaboard_reinit_dynamic_roles' );
 }
 
 /**
@@ -356,8 +356,8 @@ function bbp_filter_user_roles_option() {
  * @param array $roles
  * @return array Combined array of database roles and dynamic IdeaBoard roles
  */
-function _bbp_reinit_dynamic_roles( $roles = array() ) {
-	foreach ( bbp_get_dynamic_roles() as $role_id => $details ) {
+function _ideaboard_reinit_dynamic_roles( $roles = array() ) {
+	foreach ( ideaboard_get_dynamic_roles() as $role_id => $details ) {
 		$roles[$role_id] = $details;
 	}
 	return $roles;
@@ -380,37 +380,37 @@ function _bbp_reinit_dynamic_roles( $roles = array() ) {
  *
  * @return array
  */
-function bbp_get_dynamic_roles() {
-	return (array) apply_filters( 'bbp_get_dynamic_roles', array(
+function ideaboard_get_dynamic_roles() {
+	return (array) apply_filters( 'ideaboard_get_dynamic_roles', array(
 
 		// Keymaster
-		bbp_get_keymaster_role() => array(
+		ideaboard_get_keymaster_role() => array(
 			'name'         => 'Keymaster',
-			'capabilities' => bbp_get_caps_for_role( bbp_get_keymaster_role() )
+			'capabilities' => ideaboard_get_caps_for_role( ideaboard_get_keymaster_role() )
 		),
 
 		// Moderator
-		bbp_get_moderator_role() => array(
+		ideaboard_get_moderator_role() => array(
 			'name'         => 'Moderator',
-			'capabilities' => bbp_get_caps_for_role( bbp_get_moderator_role() )
+			'capabilities' => ideaboard_get_caps_for_role( ideaboard_get_moderator_role() )
 		),
 
 		// Participant
-		bbp_get_participant_role() => array(
+		ideaboard_get_participant_role() => array(
 			'name'         => 'Participant',
-			'capabilities' => bbp_get_caps_for_role( bbp_get_participant_role() )
+			'capabilities' => ideaboard_get_caps_for_role( ideaboard_get_participant_role() )
 		),
 
 		// Spectator
-		bbp_get_spectator_role() => array(
+		ideaboard_get_spectator_role() => array(
 			'name'         => 'Spectator',
-			'capabilities' => bbp_get_caps_for_role( bbp_get_spectator_role() )
+			'capabilities' => ideaboard_get_caps_for_role( ideaboard_get_spectator_role() )
 		),
 
 		// Blocked
-		bbp_get_blocked_role() => array(
+		ideaboard_get_blocked_role() => array(
 			'name'         => 'Blocked',
-			'capabilities' => bbp_get_caps_for_role( bbp_get_blocked_role() )
+			'capabilities' => ideaboard_get_caps_for_role( ideaboard_get_blocked_role() )
 		)
 	) );
 }
@@ -423,11 +423,11 @@ function bbp_get_dynamic_roles() {
  * @param string $role_id
  * @return string Translated role name
  */
-function bbp_get_dynamic_role_name( $role_id = '' ) {
-	$roles = bbp_get_dynamic_roles();
-	$role  = isset( $roles[$role_id] ) ? bbp_translate_user_role( $roles[$role_id]['name'] ) : '';
+function ideaboard_get_dynamic_role_name( $role_id = '' ) {
+	$roles = ideaboard_get_dynamic_roles();
+	$role  = isset( $roles[$role_id] ) ? ideaboard_translate_user_role( $roles[$role_id]['name'] ) : '';
 
-	return apply_filters( 'bbp_get_dynamic_role_name', $role, $role_id, $roles );
+	return apply_filters( 'ideaboard_get_dynamic_role_name', $role, $role_id, $roles );
 }
 
 /**
@@ -441,16 +441,16 @@ function bbp_get_dynamic_role_name( $role_id = '' ) {
  * @param array $all_roles All registered roles
  * @return array 
  */
-function bbp_filter_blog_editable_roles( $all_roles = array() ) {
+function ideaboard_filter_blog_editable_roles( $all_roles = array() ) {
 
 	// Loop through IdeaBoard roles
-	foreach ( array_keys( bbp_get_dynamic_roles() ) as $bbp_role ) {
+	foreach ( array_keys( ideaboard_get_dynamic_roles() ) as $ideaboard_role ) {
 
 		// Loop through WordPress roles
 		foreach ( array_keys( $all_roles ) as $wp_role ) {
 
 			// If keys match, unset
-			if ( $wp_role === $bbp_role ) {
+			if ( $wp_role === $ideaboard_role ) {
 				unset( $all_roles[$wp_role] );
 			}
 		}
@@ -467,8 +467,8 @@ function bbp_filter_blog_editable_roles( $all_roles = array() ) {
  * @uses apply_filters() Allow override of hardcoded keymaster role
  * @return string
  */
-function bbp_get_keymaster_role() {
-	return apply_filters( 'bbp_get_keymaster_role', 'bbp_keymaster' );
+function ideaboard_get_keymaster_role() {
+	return apply_filters( 'ideaboard_get_keymaster_role', 'ideaboard_keymaster' );
 }
 
 /**
@@ -479,8 +479,8 @@ function bbp_get_keymaster_role() {
  * @uses apply_filters() Allow override of hardcoded moderator role
  * @return string
  */
-function bbp_get_moderator_role() {
-	return apply_filters( 'bbp_get_moderator_role', 'bbp_moderator' );
+function ideaboard_get_moderator_role() {
+	return apply_filters( 'ideaboard_get_moderator_role', 'ideaboard_moderator' );
 }
 
 /**
@@ -491,8 +491,8 @@ function bbp_get_moderator_role() {
  * @uses apply_filters() Allow override of hardcoded participant role
  * @return string
  */
-function bbp_get_participant_role() {
-	return apply_filters( 'bbp_get_participant_role', 'bbp_participant' );
+function ideaboard_get_participant_role() {
+	return apply_filters( 'ideaboard_get_participant_role', 'ideaboard_participant' );
 }
 
 /**
@@ -503,8 +503,8 @@ function bbp_get_participant_role() {
  * @uses apply_filters() Allow override of hardcoded spectator role
  * @return string
  */
-function bbp_get_spectator_role() {
-	return apply_filters( 'bbp_get_spectator_role', 'bbp_spectator' );
+function ideaboard_get_spectator_role() {
+	return apply_filters( 'ideaboard_get_spectator_role', 'ideaboard_spectator' );
 }
 
 /**
@@ -515,8 +515,8 @@ function bbp_get_spectator_role() {
  * @uses apply_filters() Allow override of hardcoded blocked role
  * @return string
  */
-function bbp_get_blocked_role() {
-	return apply_filters( 'bbp_get_blocked_role', 'bbp_blocked' );
+function ideaboard_get_blocked_role() {
+	return apply_filters( 'ideaboard_get_blocked_role', 'ideaboard_blocked' );
 }
 
 /** Deprecated ****************************************************************/
@@ -527,8 +527,8 @@ function bbp_get_blocked_role() {
  * @since IdeaBoard (r2741)
  * @deprecated since version 2.2
  */
-function bbp_add_roles() {
-	_doing_it_wrong( 'bbp_add_roles', __( 'Editable forum roles no longer exist.', 'ideaboard' ), '2.2' );
+function ideaboard_add_roles() {
+	_doing_it_wrong( 'ideaboard_add_roles', __( 'Editable forum roles no longer exist.', 'ideaboard' ), '2.2' );
 }
 
 /**
@@ -537,14 +537,14 @@ function bbp_add_roles() {
  * @since IdeaBoard (r2741)
  * @deprecated since version 2.2
  */
-function bbp_remove_roles() {
+function ideaboard_remove_roles() {
 
 	// Remove the IdeaBoard roles
-	foreach ( array_keys( bbp_get_dynamic_roles() ) as $bbp_role ) {
-		remove_role( $bbp_role );
+	foreach ( array_keys( ideaboard_get_dynamic_roles() ) as $ideaboard_role ) {
+		remove_role( $ideaboard_role );
 	}
 
 	// Some early adopters may have a deprecated visitor role. It was later
 	// replaced by the Spectator role.
-	remove_role( 'bbp_visitor' );
+	remove_role( 'ideaboard_visitor' );
 }

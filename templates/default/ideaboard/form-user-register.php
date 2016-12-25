@@ -9,7 +9,7 @@
 
 ?>
 
-<form method="post" action="<?php bbp_wp_login_action( array( 'context' => 'login_post' ) ); ?>" class="bbp-login-form">
+<form method="post" action="<?php ideaboard_wp_login_action( array( 'context' => 'login_post' ) ); ?>" class="bbp-login-form">
 	<fieldset class="bbp-form">
 		<legend><?php _e( 'Create an Account', 'ideaboard' ); ?></legend>
 
@@ -21,21 +21,21 @@
 
 		<div class="bbp-username">
 			<label for="user_login"><?php _e( 'Username', 'ideaboard' ); ?>: </label>
-			<input type="text" name="user_login" value="<?php bbp_sanitize_val( 'user_login' ); ?>" size="20" id="user_login" tabindex="<?php bbp_tab_index(); ?>" />
+			<input type="text" name="user_login" value="<?php ideaboard_sanitize_val( 'user_login' ); ?>" size="20" id="user_login" tabindex="<?php ideaboard_tab_index(); ?>" />
 		</div>
 
 		<div class="bbp-email">
 			<label for="user_email"><?php _e( 'Email', 'ideaboard' ); ?>: </label>
-			<input type="text" name="user_email" value="<?php bbp_sanitize_val( 'user_email' ); ?>" size="20" id="user_email" tabindex="<?php bbp_tab_index(); ?>" />
+			<input type="text" name="user_email" value="<?php ideaboard_sanitize_val( 'user_email' ); ?>" size="20" id="user_email" tabindex="<?php ideaboard_tab_index(); ?>" />
 		</div>
 
 		<?php do_action( 'register_form' ); ?>
 
 		<div class="bbp-submit-wrapper">
 
-			<button type="submit" tabindex="<?php bbp_tab_index(); ?>" name="user-submit" class="button submit user-submit"><?php _e( 'Register', 'ideaboard' ); ?></button>
+			<button type="submit" tabindex="<?php ideaboard_tab_index(); ?>" name="user-submit" class="button submit user-submit"><?php _e( 'Register', 'ideaboard' ); ?></button>
 
-			<?php bbp_user_register_fields(); ?>
+			<?php ideaboard_user_register_fields(); ?>
 
 		</div>
 	</fieldset>

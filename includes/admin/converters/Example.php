@@ -32,7 +32,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'forums_table',
 			'from_fieldname'  => 'the_forum_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_id'
+			'to_fieldname'    => '_ideaboard_forum_id'
 		);
 
 		// Forum parent id (If no parent, then 0. Stored in postmeta)
@@ -40,7 +40,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'forums_table',
 			'from_fieldname'  => 'the_parent_id',
 			'to_type'         => 'forum',
-			'to_fieldname'    => '_bbp_forum_parent_id'
+			'to_fieldname'    => '_ideaboard_forum_parent_id'
 		);
 
 		// Forum topic count (Stored in postmeta)
@@ -48,7 +48,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename' => 'forums_table',
 			'from_fieldname' => 'the_topic_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_topic_count'
+			'to_fieldname'   => '_ideaboard_topic_count'
 		);
 
 		// Forum reply count (Stored in postmeta)
@@ -56,7 +56,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename' => 'forums_table',
 			'from_fieldname' => 'the_reply_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_reply_count'
+			'to_fieldname'   => '_ideaboard_reply_count'
 		);
 
 		// Forum total topic count (Stored in postmeta)
@@ -64,7 +64,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename' => 'forums_table',
 			'from_fieldname' => 'the_total_topic_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_topic_count'
+			'to_fieldname'   => '_ideaboard_total_topic_count'
 		);
 
 		// Forum total reply count (Stored in postmeta)
@@ -72,7 +72,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename' => 'forums_table',
 			'from_fieldname' => 'the_total_reply_count',
 			'to_type'        => 'forum',
-			'to_fieldname'   => '_bbp_total_reply_count'
+			'to_fieldname'   => '_ideaboard_total_reply_count'
 		);
 
 		// Forum title.
@@ -151,7 +151,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_topic_id',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_topic_id'
+			'to_fieldname'    => '_ideaboard_topic_id'
 		);
 
 		// Topic reply count (Stored in postmeta)
@@ -159,7 +159,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_topic_reply_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_reply_count',
+			'to_fieldname'    => '_ideaboard_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -168,7 +168,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_total_topic_reply_count',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_total_reply_count',
+			'to_fieldname'    => '_ideaboard_total_reply_count',
 			'callback_method' => 'callback_topic_reply_count'
 		);
 
@@ -177,7 +177,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_topic_parent_forum_id',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_forumid'
 		);
 
@@ -195,7 +195,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_topic_author_ip_address',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Topic content.
@@ -238,7 +238,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_topic_sticky_status',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_old_sticky_status',
+			'to_fieldname'    => '_ideaboard_old_sticky_status',
 			'callback_method' => 'callback_sticky_status'
 		);
 
@@ -275,7 +275,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'topics_table',
 			'from_fieldname'  => 'the_topic_modified_date',
 			'to_type'         => 'topic',
-			'to_fieldname'    => '_bbp_last_active_time',
+			'to_fieldname'    => '_ideaboard_last_active_time',
 			'callback_method' => 'callback_datetime'
 		);
 
@@ -355,7 +355,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'replies_table',
 			'from_fieldname'  => 'the_reply_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_post_id'
+			'to_fieldname'    => '_ideaboard_post_id'
 		);
 
 		// Reply parent forum id (If no parent, then 0. Stored in postmeta)
@@ -363,7 +363,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'replies_table',
 			'from_fieldname'  => 'the_reply_parent_forum_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_forum_id',
+			'to_fieldname'    => '_ideaboard_forum_id',
 			'callback_method' => 'callback_topicid_to_forumid'
 		);
 
@@ -372,7 +372,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'replies_table',
 			'from_fieldname'  => 'the_reply_parent_topic_id',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_topic_id',
+			'to_fieldname'    => '_ideaboard_topic_id',
 			'callback_method' => 'callback_topicid'
 		);
 
@@ -381,7 +381,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'replies_table',
 			'from_fieldname'  => 'the_reply_author_ip_address',
 			'to_type'         => 'reply',
-			'to_fieldname'    => '_bbp_author_ip'
+			'to_fieldname'    => '_ideaboard_author_ip'
 		);
 
 		// Reply author.
@@ -486,7 +486,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'users_table',
 			'from_fieldname'  => 'the_users_id',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_user_id'
+			'to_fieldname'    => '_ideaboard_user_id'
 		);
 
 		// Store old User password (Stored in usermeta serialized with salt)
@@ -494,7 +494,7 @@ class Example extends BBP_Converter_Base {
 			'from_tablename'  => 'users_table',
 			'from_fieldname'  => 'the_users_password',
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_password',
+			'to_fieldname'    => '_ideaboard_password',
 			'callback_method' => 'callback_savepass'
 		);
 
@@ -509,7 +509,7 @@ class Example extends BBP_Converter_Base {
 		// User password verify class (Stored in usermeta for verifying password)
 		$this->field_map[] = array(
 			'to_type'         => 'user',
-			'to_fieldname'    => '_bbp_class',
+			'to_fieldname'    => '_ideaboard_class',
 			'default' => 'Example'
 		);
 

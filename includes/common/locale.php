@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
  * @param string $name The role name.
  * @return string Translated role name on success, original name on failure.
  */
-function bbp_translate_user_role( $name ) {
+function ideaboard_translate_user_role( $name ) {
 	return translate_with_gettext_context( before_last_bar( $name ), 'User role', 'ideaboard' );
 }
 
@@ -38,7 +38,7 @@ function bbp_translate_user_role( $name ) {
  *
  * @since 2.6.0 IdeaBoard
  */
-function bbp_dummy_role_names() {
+function ideaboard_dummy_role_names() {
 
 	/* translators: user role */
 	_x( 'Keymaster', 'User role', 'ideaboard' );

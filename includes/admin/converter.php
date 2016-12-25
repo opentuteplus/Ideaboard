@@ -61,10 +61,10 @@ class BBP_Converter {
 	private function setup_actions() {
 
 		// Attach to the admin head with our ajax requests cycle and css
-		add_action( 'bbp_admin_head',              array( $this, 'admin_head'              ) );
+		add_action( 'ideaboard_admin_head',              array( $this, 'admin_head'              ) );
 
 		// Attach the bbConverter admin settings action to the WordPress admin init action.
-		add_action( 'bbp_register_admin_settings', array( $this, 'register_admin_settings' ) );
+		add_action( 'ideaboard_register_admin_settings', array( $this, 'register_admin_settings' ) );
 
 		// Attach to the admin ajax request to process cycles
 		add_action( 'wp_ajax_bbconverter_process', array( $this, 'process_callback'        ) );
@@ -81,58 +81,58 @@ class BBP_Converter {
 	public function register_admin_settings() {
 
 		// Add the main section
-		add_settings_section( 'ideaboard_converter_main',     __( 'Database Settings', 'ideaboard' ),  'bbp_converter_setting_callback_main_section', 'ideaboard_converter' );
+		add_settings_section( 'ideaboard_converter_main',     __( 'Database Settings', 'ideaboard' ),  'ideaboard_converter_setting_callback_main_section', 'ideaboard_converter' );
 
 		// System Select
-		add_settings_field( '_bbp_converter_platform',      __( 'Select Platform',   'ideaboard' ),  'bbp_converter_setting_callback_platform', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_platform',           'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_platform',      __( 'Select Platform',   'ideaboard' ),  'ideaboard_converter_setting_callback_platform', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_platform',           'sanitize_title' );
 
 		// Database Server
-		add_settings_field( '_bbp_converter_db_server',     __( 'Database Server',   'ideaboard' ),  'bbp_converter_setting_callback_dbserver', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_server',          'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_db_server',     __( 'Database Server',   'ideaboard' ),  'ideaboard_converter_setting_callback_dbserver', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_db_server',          'sanitize_title' );
 
 		// Database Server Port
-		add_settings_field( '_bbp_converter_db_port',       __( 'Database Port',     'ideaboard' ),  'bbp_converter_setting_callback_dbport', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_port',            'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_db_port',       __( 'Database Port',     'ideaboard' ),  'ideaboard_converter_setting_callback_dbport', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_db_port',            'sanitize_title' );
 
 		// Database Name
-		add_settings_field( '_bbp_converter_db_name',       __( 'Database Name',     'ideaboard' ),  'bbp_converter_setting_callback_dbname', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_name',            'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_db_name',       __( 'Database Name',     'ideaboard' ),  'ideaboard_converter_setting_callback_dbname', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_db_name',            'sanitize_title' );
 
 		// Database User
-		add_settings_field( '_bbp_converter_db_user',       __( 'Database User',     'ideaboard' ),  'bbp_converter_setting_callback_dbuser', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_user',            'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_db_user',       __( 'Database User',     'ideaboard' ),  'ideaboard_converter_setting_callback_dbuser', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_db_user',            'sanitize_title' );
 
 		// Database Pass
-		add_settings_field( '_bbp_converter_db_pass',       __( 'Database Password', 'ideaboard' ),  'bbp_converter_setting_callback_dbpass', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_pass',            'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_db_pass',       __( 'Database Password', 'ideaboard' ),  'ideaboard_converter_setting_callback_dbpass', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_db_pass',            'sanitize_title' );
 
 		// Database Prefix
-		add_settings_field( '_bbp_converter_db_prefix',     __( 'Table Prefix',      'ideaboard' ),  'bbp_converter_setting_callback_dbprefix', 'ideaboard_converter', 'ideaboard_converter_main' );
-		register_setting  ( 'ideaboard_converter_main',       '_bbp_converter_db_prefix',          'sanitize_title' );
+		add_settings_field( '_ideaboard_converter_db_prefix',     __( 'Table Prefix',      'ideaboard' ),  'ideaboard_converter_setting_callback_dbprefix', 'ideaboard_converter', 'ideaboard_converter_main' );
+		register_setting  ( 'ideaboard_converter_main',       '_ideaboard_converter_db_prefix',          'sanitize_title' );
 
 		// Add the options section
-		add_settings_section( 'ideaboard_converter_opt',      __( 'Options',           'ideaboard' ),  'bbp_converter_setting_callback_options_section', 'ideaboard_converter' );
+		add_settings_section( 'ideaboard_converter_opt',      __( 'Options',           'ideaboard' ),  'ideaboard_converter_setting_callback_options_section', 'ideaboard_converter' );
 
 		// Rows Limit
-		add_settings_field( '_bbp_converter_rows',          __( 'Rows Limit',        'ideaboard' ),  'bbp_converter_setting_callback_rows', 'ideaboard_converter', 'ideaboard_converter_opt' );
-		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_rows',               'intval' );
+		add_settings_field( '_ideaboard_converter_rows',          __( 'Rows Limit',        'ideaboard' ),  'ideaboard_converter_setting_callback_rows', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_ideaboard_converter_rows',               'intval' );
 
 		// Delay Time
-		add_settings_field( '_bbp_converter_delay_time',    __( 'Delay Time',        'ideaboard' ), 'bbp_converter_setting_callback_delay_time', 'ideaboard_converter', 'ideaboard_converter_opt' );
-		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_delay_time',        'intval' );
+		add_settings_field( '_ideaboard_converter_delay_time',    __( 'Delay Time',        'ideaboard' ), 'ideaboard_converter_setting_callback_delay_time', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_ideaboard_converter_delay_time',        'intval' );
 
 		// Convert Users ?
-		add_settings_field( '_bbp_converter_convert_users', __( 'Convert Users',     'ideaboard' ), 'bbp_converter_setting_callback_convert_users', 'ideaboard_converter', 'ideaboard_converter_opt' );
-		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_convert_users',     'intval' );
+		add_settings_field( '_ideaboard_converter_convert_users', __( 'Convert Users',     'ideaboard' ), 'ideaboard_converter_setting_callback_convert_users', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_ideaboard_converter_convert_users',     'intval' );
 
 		// Restart
-		add_settings_field( '_bbp_converter_restart',       __( 'Start Over',        'ideaboard' ), 'bbp_converter_setting_callback_restart', 'ideaboard_converter', 'ideaboard_converter_opt' );
-		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_restart',           'intval' );
+		add_settings_field( '_ideaboard_converter_restart',       __( 'Start Over',        'ideaboard' ), 'ideaboard_converter_setting_callback_restart', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_ideaboard_converter_restart',           'intval' );
 
 		// Clean
-		add_settings_field( '_bbp_converter_clean',         __( 'Purge Previous Import', 'ideaboard' ), 'bbp_converter_setting_callback_clean', 'ideaboard_converter', 'ideaboard_converter_opt' );
-		register_setting  ( 'ideaboard_converter_opt',        '_bbp_converter_clean',             'intval' );
+		add_settings_field( '_ideaboard_converter_clean',         __( 'Purge Previous Import', 'ideaboard' ), 'ideaboard_converter_setting_callback_clean', 'ideaboard_converter', 'ideaboard_converter_opt' );
+		register_setting  ( 'ideaboard_converter_opt',        '_ideaboard_converter_clean',             'intval' );
 	}
 
 	/**
@@ -200,16 +200,16 @@ class BBP_Converter {
 					values[field.name] = field.value;
 				});
 
-				if( values['_bbp_converter_restart'] ) {
-					jQuery('#_bbp_converter_restart').removeAttr("checked");
+				if( values['_ideaboard_converter_restart'] ) {
+					jQuery('#_ideaboard_converter_restart').removeAttr("checked");
 				}
 
-				if( values['_bbp_converter_delay_time'] ) {
-					bbconverter_delay_time = values['_bbp_converter_delay_time'] * 1000;
+				if( values['_ideaboard_converter_delay_time'] ) {
+					bbconverter_delay_time = values['_ideaboard_converter_delay_time'] * 1000;
 				}
 
 				values['action'] = 'bbconverter_process';
-				values['_ajax_nonce'] = '<?php echo  wp_create_nonce( 'bbp_converter_process' ); ?>';
+				values['_ajax_nonce'] = '<?php echo  wp_create_nonce( 'ideaboard_converter_process' ); ?>';
 
 				return values;
 			}
@@ -284,7 +284,7 @@ class BBP_Converter {
 		// Get the last query
 		$before = '<p class="loading">';
 		$after  = '</p>';
-		$query  = get_option( '_bbp_converter_query' );
+		$query  = get_option( '_ideaboard_converter_query' );
 
 		if ( ! empty( $query ) )
 			$before = '<p class="loading" title="' . esc_attr( $query ) . '">';
@@ -300,10 +300,10 @@ class BBP_Converter {
 	public function process_callback() {
 
 		// Verify intent
-		check_ajax_referer( 'bbp_converter_process' );
+		check_ajax_referer( 'ideaboard_converter_process' );
 
 		// Bail if user cannot view import page
-		if ( ! current_user_can( 'bbp_tools_import_page' ) ) {
+		if ( ! current_user_can( 'ideaboard_tools_import_page' ) ) {
 			wp_die( '0' );
 		}
 
@@ -315,84 +315,84 @@ class BBP_Converter {
 		}
 
 		// Save step and count so that it can be restarted.
-		if ( ! get_option( '_bbp_converter_step' ) || ( !empty( $_POST['_bbp_converter_restart'] ) ) ) {
-			update_option( '_bbp_converter_step',  1 );
-			update_option( '_bbp_converter_start', 0 );
+		if ( ! get_option( '_ideaboard_converter_step' ) || ( !empty( $_POST['_ideaboard_converter_restart'] ) ) ) {
+			update_option( '_ideaboard_converter_step',  1 );
+			update_option( '_ideaboard_converter_start', 0 );
 		}
 
-		$step  = (int) get_option( '_bbp_converter_step',  1 );
-		$min   = (int) get_option( '_bbp_converter_start', 0 );
-		$count = (int) ! empty( $_POST['_bbp_converter_rows'] ) ? $_POST['_bbp_converter_rows'] : 100;
+		$step  = (int) get_option( '_ideaboard_converter_step',  1 );
+		$min   = (int) get_option( '_ideaboard_converter_start', 0 );
+		$count = (int) ! empty( $_POST['_ideaboard_converter_rows'] ) ? $_POST['_ideaboard_converter_rows'] : 100;
 		$max   = ( $min + $count ) - 1;
 		$start = $min;
 
 		// Bail if platform did not get saved
-		$platform = !empty( $_POST['_bbp_converter_platform' ] ) ? $_POST['_bbp_converter_platform' ] : get_option( '_bbp_converter_platform' );
+		$platform = !empty( $_POST['_ideaboard_converter_platform' ] ) ? $_POST['_ideaboard_converter_platform' ] : get_option( '_ideaboard_converter_platform' );
 		if ( empty( $platform ) )
 			return;
 
 		// Include the appropriate converter.
-		$converter = bbp_new_converter( $platform );
+		$converter = ideaboard_new_converter( $platform );
 
 		switch ( $step ) {
 
 			// STEP 1. Clean all tables.
 			case 1 :
-				if ( !empty( $_POST['_bbp_converter_clean'] ) ) {
+				if ( !empty( $_POST['_ideaboard_converter_clean'] ) ) {
 					if ( $converter->clean( $start ) ) {
-						update_option( '_bbp_converter_step',  $step + 1 );
-						update_option( '_bbp_converter_start', 0         );
+						update_option( '_ideaboard_converter_step',  $step + 1 );
+						update_option( '_ideaboard_converter_start', 0         );
 						$this->sync_table( true );
 						if ( empty( $start ) ) {
 							$this->converter_output( __( 'No data to clean', 'ideaboard' ) );
 						}
 					} else {
-						update_option( '_bbp_converter_start', $max + 1 );
+						update_option( '_ideaboard_converter_start', $max + 1 );
 						$this->converter_output( sprintf( __( 'Deleting previously converted data (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 					}
 				} else {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 				}
 
 				break;
 
 			// STEP 2. Convert users.
 			case 2 :
-				if ( !empty( $_POST['_bbp_converter_convert_users'] ) ) {
+				if ( !empty( $_POST['_ideaboard_converter_convert_users'] ) ) {
 					if ( $converter->convert_users( $start ) ) {
-						update_option( '_bbp_converter_step',  $step + 1 );
-						update_option( '_bbp_converter_start', 0         );
+						update_option( '_ideaboard_converter_step',  $step + 1 );
+						update_option( '_ideaboard_converter_start', 0         );
 						if ( empty( $start ) ) {
 							$this->converter_output( __( 'No users to convert', 'ideaboard' ) );
 						}
 					} else {
-						update_option( '_bbp_converter_start', $max + 1 );
+						update_option( '_ideaboard_converter_start', $max + 1 );
 						$this->converter_output( sprintf(  __( 'Converting users (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 					}
 				} else {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 				}
 
 				break;
 
 			// STEP 3. Clean passwords.
 			case 3 :
-				if ( !empty( $_POST['_bbp_converter_convert_users'] ) ) {
+				if ( !empty( $_POST['_ideaboard_converter_convert_users'] ) ) {
 					if ( $converter->clean_passwords( $start ) ) {
-						update_option( '_bbp_converter_step',  $step + 1 );
-						update_option( '_bbp_converter_start', 0         );
+						update_option( '_ideaboard_converter_step',  $step + 1 );
+						update_option( '_ideaboard_converter_start', 0         );
 						if ( empty( $start ) ) {
 							$this->converter_output( __( 'No passwords to clear', 'ideaboard' ) );
 						}
 					} else {
-						update_option( '_bbp_converter_start', $max + 1 );
+						update_option( '_ideaboard_converter_start', $max + 1 );
 						$this->converter_output( sprintf( __( 'Delete users WordPress default passwords (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 					}
 				} else {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 				}
 
 				break;
@@ -400,13 +400,13 @@ class BBP_Converter {
 			// STEP 4. Convert forums.
 			case 4 :
 				if ( $converter->convert_forums( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No forums to convert', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Converting forums (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -415,13 +415,13 @@ class BBP_Converter {
 			// STEP 5. Convert forum parents.
 			case 5 :
 				if ( $converter->convert_forum_parents( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No forum parents to convert', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Calculating forum hierarchy (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -430,13 +430,13 @@ class BBP_Converter {
 			// STEP 6. Convert topics.
 			case 6 :
 				if ( $converter->convert_topics( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No topics to convert', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Converting topics (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -445,13 +445,13 @@ class BBP_Converter {
 			// STEP 7. Stick topics.
 			case 7 :
 				if ( $converter->convert_topic_stickies( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No stickies to stick', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Calculating topic stickies (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -460,13 +460,13 @@ class BBP_Converter {
 			// STEP 8. Stick to front topics (Super Sicky).
 			case 8 :
 				if ( $converter->convert_topic_super_stickies( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No super stickies to stick', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Calculating topic super stickies (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -475,13 +475,13 @@ class BBP_Converter {
 			// STEP 9. Convert tags.
 			case 9 :
 				if ( $converter->convert_tags( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No tags to convert', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Converting topic tags (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -490,13 +490,13 @@ class BBP_Converter {
 			// STEP 10. Convert replies.
 			case 10 :
 				if ( $converter->convert_replies( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No replies to convert', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Converting replies (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
@@ -505,22 +505,22 @@ class BBP_Converter {
 			// STEP 11. Convert reply_to parents.
 			case 11 :
 				if ( $converter->convert_reply_to_parents( $start ) ) {
-					update_option( '_bbp_converter_step',  $step + 1 );
-					update_option( '_bbp_converter_start', 0         );
+					update_option( '_ideaboard_converter_step',  $step + 1 );
+					update_option( '_ideaboard_converter_start', 0         );
 					if ( empty( $start ) ) {
 						$this->converter_output( __( 'No reply_to parents to convert', 'ideaboard' ) );
 					}
 				} else {
-					update_option( '_bbp_converter_start', $max + 1 );
+					update_option( '_ideaboard_converter_start', $max + 1 );
 					$this->converter_output( sprintf( __( 'Calculating reply_to parents (%1$s - %2$s)', 'ideaboard' ), $min, $max ) );
 				}
 
 				break;
 
 			default :
-				delete_option( '_bbp_converter_step'  );
-				delete_option( '_bbp_converter_start' );
-				delete_option( '_bbp_converter_query' );
+				delete_option( '_ideaboard_converter_step'  );
+				delete_option( '_ideaboard_converter_start' );
+				delete_option( '_ideaboard_converter_query' );
 
 				$this->converter_output( __( 'Conversion Complete', 'ideaboard' ) );
 
@@ -536,7 +536,7 @@ class BBP_Converter {
 	public function sync_table( $drop = false ) {
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'bbp_converter_translator';
+		$table_name = $wpdb->prefix . 'ideaboard_converter_translator';
 		if ( ! empty( $drop ) && $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) == $table_name )
 			$wpdb->query( "DROP TABLE {$table_name}" );
 
@@ -652,9 +652,9 @@ abstract class BBP_Converter_Base {
 		/** Get database connections ******************************************/
 
 		$this->wpdb         = $wpdb;
-		$this->max_rows     = (int) $_POST['_bbp_converter_rows'];
-		$this->opdb         = new wpdb( $_POST['_bbp_converter_db_user'], $_POST['_bbp_converter_db_pass'], $_POST['_bbp_converter_db_name'], $_POST['_bbp_converter_db_server'] );
-		$this->opdb->prefix = $_POST['_bbp_converter_db_prefix'];
+		$this->max_rows     = (int) $_POST['_ideaboard_converter_rows'];
+		$this->opdb         = new wpdb( $_POST['_ideaboard_converter_db_user'], $_POST['_ideaboard_converter_db_pass'], $_POST['_ideaboard_converter_db_name'], $_POST['_ideaboard_converter_db_server'] );
+		$this->opdb->prefix = $_POST['_ideaboard_converter_db_prefix'];
 
 		/**
 		 * Error Reporting
@@ -665,7 +665,7 @@ abstract class BBP_Converter_Base {
 		/**
 		 * Syncing
 		 */
-		$this->sync_table_name = $this->wpdb->prefix . 'bbp_converter_translator';
+		$this->sync_table_name = $this->wpdb->prefix . 'ideaboard_converter_translator';
 		if ( $this->wpdb->get_var( "SHOW TABLES LIKE '" . $this->sync_table_name . "'" ) == $this->sync_table_name ) {
 			$this->sync_table = true;
 		} else {
@@ -888,7 +888,7 @@ abstract class BBP_Converter_Base {
 			$forum_array = $this->opdb->get_results( $forum_query, ARRAY_A );
 
 			// Set this query as the last one ran
-			update_option( '_bbp_converter_query', $forum_query );
+			update_option( '_ideaboard_converter_query', $forum_query );
 
 			// Query returned some results
 			if ( !empty( $forum_array ) ) {
@@ -916,7 +916,7 @@ abstract class BBP_Converter_Base {
 
 								// Translates a field from the old forum.
 								} elseif ( isset( $row['callback_method'] ) ) {
-									if ( ( 'callback_userid' == $row['callback_method'] ) && empty( $_POST['_bbp_converter_convert_users'] ) ) {
+									if ( ( 'callback_userid' == $row['callback_method'] ) && empty( $_POST['_ideaboard_converter_convert_users'] ) ) {
 										$insert_post[$row['to_fieldname']] = $forum[$row['from_fieldname']];
 									} else {
 										$insert_post[$row['to_fieldname']] = call_user_func_array( array( $this, $row['callback_method'] ), array( $forum[$row['from_fieldname']], $forum ) );
@@ -937,7 +937,7 @@ abstract class BBP_Converter_Base {
 
 								// Translates a field from the old forum.
 								} elseif ( isset( $row['callback_method'] ) ) {
-									if ( ( $row['callback_method'] == 'callback_userid' ) && ( 0 == $_POST['_bbp_converter_convert_users'] ) ) {
+									if ( ( $row['callback_method'] == 'callback_userid' ) && ( 0 == $_POST['_ideaboard_converter_convert_users'] ) ) {
 										$insert_postmeta[$row['to_fieldname']] = $forum[$row['from_fieldname']];
 									} else {
 										$insert_postmeta[$row['to_fieldname']] = call_user_func_array( array( $this, $row['callback_method'] ), array( $forum[$row['from_fieldname']], $forum ) );
@@ -1009,21 +1009,21 @@ abstract class BBP_Converter_Base {
 										add_post_meta( $post_id, $key, $value, true );
 
 										// Forums need to save their old ID for group forum association
-										if ( ( 'forum' == $to_type ) && ( '_bbp_forum_id' == $key ) )
-											add_post_meta( $post_id, '_bbp_old_forum_id', $value );
+										if ( ( 'forum' == $to_type ) && ( '_ideaboard_forum_id' == $key ) )
+											add_post_meta( $post_id, '_ideaboard_old_forum_id', $value );
 
 										// Topics need an extra bit of metadata
 										// to be keyed to the new post_id
-										if ( ( 'topic' == $to_type ) && ( '_bbp_topic_id' == $key ) ) {
+										if ( ( 'topic' == $to_type ) && ( '_ideaboard_topic_id' == $key ) ) {
 
 											// Update the live topic ID
 											update_post_meta( $post_id, $key, $post_id );
 
 											// Save the old topic ID
-											add_post_meta( $post_id, '_bbp_old_topic_id', $value );
+											add_post_meta( $post_id, '_ideaboard_old_topic_id', $value );
 											if ( '_id' == substr( $key, -3 ) && ( true === $this->sync_table ) ) {
-												$this->wpdb->insert( $this->sync_table_name, array( 'value_type' => 'post', 'value_id' => $post_id, 'meta_key' => '_bbp_topic_id',     'meta_value' => $post_id ) );
-												$this->wpdb->insert( $this->sync_table_name, array( 'value_type' => 'post', 'value_id' => $post_id, 'meta_key' => '_bbp_old_topic_id', 'meta_value' => $value   ) );
+												$this->wpdb->insert( $this->sync_table_name, array( 'value_type' => 'post', 'value_id' => $post_id, 'meta_key' => '_ideaboard_topic_id',     'meta_value' => $post_id ) );
+												$this->wpdb->insert( $this->sync_table_name, array( 'value_type' => 'post', 'value_id' => $post_id, 'meta_key' => '_ideaboard_old_topic_id', 'meta_value' => $value   ) );
 											}
 
 										} elseif ( '_id' == substr( $key, -3 ) && ( true === $this->sync_table ) ) {
@@ -1031,8 +1031,8 @@ abstract class BBP_Converter_Base {
 										}
 
 										// Replies need to save their old reply_to ID for hierarchical replies association
-										if ( ( 'reply' == $to_type ) && ( '_bbp_reply_to' == $key ) ) {
-											add_post_meta( $post_id, '_bbp_old_reply_to', $value );
+										if ( ( 'reply' == $to_type ) && ( '_ideaboard_reply_to' == $key ) ) {
+											add_post_meta( $post_id, '_ideaboard_old_reply_to', $value );
 										}
 									}
 								}
@@ -1055,12 +1055,12 @@ abstract class BBP_Converter_Base {
 		$has_update = false;
 
 		if ( !empty( $this->sync_table ) ) {
-			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_forum_parent_id" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_forum_parent_id" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
 		} else {
-			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_forum_parent_id" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_forum_parent_id" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
 		}
 
-		update_option( '_bbp_converter_query', $query );
+		update_option( '_ideaboard_converter_query', $query );
 
 		$forum_array = $this->wpdb->get_results( $query );
 
@@ -1079,7 +1079,7 @@ abstract class BBP_Converter_Base {
 	 * @since IdeaBoard (r)
 	 *
 	 * @uses WPDB $wpdb
-	 * @uses bbp_stick_topic() to set the imported topic as sticky
+	 * @uses ideaboard_stick_topic() to set the imported topic as sticky
 	 *
 	 */
 	public function convert_topic_stickies( $start ) {
@@ -1087,17 +1087,17 @@ abstract class BBP_Converter_Base {
 		$has_update = false;
 
 		if ( !empty( $this->sync_table ) ) {
-			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_old_sticky_status" AND meta_value = "sticky" LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_old_sticky_status" AND meta_value = "sticky" LIMIT ' . $start . ', ' . $this->max_rows;
 		} else {
-			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_old_sticky_status" AND meta_value = "sticky" LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_old_sticky_status" AND meta_value = "sticky" LIMIT ' . $start . ', ' . $this->max_rows;
 		}
 
-		update_option( '_bbp_converter_query', $query );
+		update_option( '_ideaboard_converter_query', $query );
 
 		$sticky_array = $this->wpdb->get_results( $query );
 
 		foreach ( (array) $sticky_array as $row ) {
-			bbp_stick_topic( $row->value_id );
+			ideaboard_stick_topic( $row->value_id );
 			$has_update = true;
 		}
 
@@ -1110,7 +1110,7 @@ abstract class BBP_Converter_Base {
 	 * @since IdeaBoard (r)
 	 *
 	 * @uses WPDB $wpdb
-	 * @uses bbp_stick_topic() to set the imported topic as super sticky
+	 * @uses ideaboard_stick_topic() to set the imported topic as super sticky
 	 *
 	 */
 	public function convert_topic_super_stickies( $start ) {
@@ -1118,18 +1118,18 @@ abstract class BBP_Converter_Base {
 		$has_update = false;
 
 		if ( !empty( $this->sync_table ) ) {
-			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_old_sticky_status" AND meta_value = "super-sticky" LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_old_sticky_status" AND meta_value = "super-sticky" LIMIT ' . $start . ', ' . $this->max_rows;
 		} else {
-			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_old_sticky_status" AND meta_value = "super-sticky" LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_old_sticky_status" AND meta_value = "super-sticky" LIMIT ' . $start . ', ' . $this->max_rows;
 		}
 
-		update_option( '_bbp_converter_query', $query );
+		update_option( '_ideaboard_converter_query', $query );
 
 		$sticky_array = $this->wpdb->get_results( $query );
 
 		foreach ( (array) $sticky_array as $row ) {
 			$super = true;
-			bbp_stick_topic( $row->value_id, $super );
+			ideaboard_stick_topic( $row->value_id, $super );
 			$has_update = true;
 		}
 
@@ -1144,18 +1144,18 @@ abstract class BBP_Converter_Base {
 		$has_update = false;
 
 		if ( !empty( $this->sync_table ) ) {
-			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_old_reply_to" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_old_reply_to" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
 		} else {
-			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_old_reply_to" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
+			$query = 'SELECT post_id AS value_id, meta_value FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_old_reply_to" AND meta_value > 0 LIMIT ' . $start . ', ' . $this->max_rows;
 		}
 
-		update_option( '_bbp_converter_query', $query );
+		update_option( '_ideaboard_converter_query', $query );
 
 		$reply_to_array = $this->wpdb->get_results( $query );
 
 		foreach ( (array) $reply_to_array as $row ) {
 			$reply_to = $this->callback_reply_to( $row->meta_value );
-			$this->wpdb->query( 'UPDATE ' . $this->wpdb->postmeta . ' SET meta_value = "' . $reply_to . '" WHERE meta_key = "_bbp_reply_to" AND post_id = "' . $row->value_id . '" LIMIT 1' );
+			$this->wpdb->query( 'UPDATE ' . $this->wpdb->postmeta . ' SET meta_value = "' . $reply_to . '" WHERE meta_key = "_ideaboard_reply_to" AND post_id = "' . $row->value_id . '" LIMIT 1' );
 			$has_update = true;
 		}
 
@@ -1173,12 +1173,12 @@ abstract class BBP_Converter_Base {
 		/** Delete bbconverter topics/forums/posts ****************************/
 
 		if ( true === $this->sync_table ) {
-			$query = 'SELECT value_id FROM ' . $this->sync_table_name . ' INNER JOIN ' . $this->wpdb->posts . ' ON(value_id = ID) WHERE meta_key LIKE "_bbp_%" AND value_type = "post" GROUP BY value_id ORDER BY value_id DESC LIMIT ' . $this->max_rows;
+			$query = 'SELECT value_id FROM ' . $this->sync_table_name . ' INNER JOIN ' . $this->wpdb->posts . ' ON(value_id = ID) WHERE meta_key LIKE "_ideaboard_%" AND value_type = "post" GROUP BY value_id ORDER BY value_id DESC LIMIT ' . $this->max_rows;
 		} else {
-			$query = 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key LIKE "_bbp_%" GROUP BY post_id ORDER BY post_id DESC LIMIT ' . $this->max_rows;
+			$query = 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key LIKE "_ideaboard_%" GROUP BY post_id ORDER BY post_id DESC LIMIT ' . $this->max_rows;
 		}
 
-		update_option( '_bbp_converter_query', $query );
+		update_option( '_ideaboard_converter_query', $query );
 
 		$posts = $this->wpdb->get_results( $query, ARRAY_A );
 
@@ -1192,12 +1192,12 @@ abstract class BBP_Converter_Base {
 		/** Delete bbconverter users ******************************************/
 
 		if ( true === $this->sync_table ) {
-			$query = 'SELECT value_id FROM ' . $this->sync_table_name . ' INNER JOIN ' . $this->wpdb->users . ' ON(value_id = ID) WHERE meta_key = "_bbp_user_id" AND value_type = "user" LIMIT ' . $this->max_rows;
+			$query = 'SELECT value_id FROM ' . $this->sync_table_name . ' INNER JOIN ' . $this->wpdb->users . ' ON(value_id = ID) WHERE meta_key = "_ideaboard_user_id" AND value_type = "user" LIMIT ' . $this->max_rows;
 		} else {
-			$query = 'SELECT user_id AS value_id FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_bbp_user_id" LIMIT ' . $this->max_rows;
+			$query = 'SELECT user_id AS value_id FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_ideaboard_user_id" LIMIT ' . $this->max_rows;
 		}
 
-		update_option( '_bbp_converter_query', $query );
+		update_option( '_ideaboard_converter_query', $query );
 
 		$users = $this->wpdb->get_results( $query, ARRAY_A );
 
@@ -1225,8 +1225,8 @@ abstract class BBP_Converter_Base {
 
 		/** Delete bbconverter passwords **************************************/
 
-		$query       = 'SELECT user_id, meta_value FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_bbp_password" LIMIT ' . $start . ', ' . $this->max_rows;
-		update_option( '_bbp_converter_query', $query );
+		$query       = 'SELECT user_id, meta_value FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_ideaboard_password" LIMIT ' . $start . ', ' . $this->max_rows;
+		update_option( '_ideaboard_converter_query', $query );
 
 		$bbconverter = $this->wpdb->get_results( $query, ARRAY_A );
 
@@ -1237,7 +1237,7 @@ abstract class BBP_Converter_Base {
 					$this->wpdb->query( 'UPDATE ' . $this->wpdb->users . ' ' . 'SET user_pass = "" ' . 'WHERE ID = "' . $value['user_id'] . '"' );
 				} else {
 					$this->wpdb->query( 'UPDATE ' . $this->wpdb->users . ' ' . 'SET user_pass = "' . $value['meta_value'] . '" ' . 'WHERE ID = "' . $value['user_id'] . '"' );
-					$this->wpdb->query( 'DELETE FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_bbp_password" AND user_id = "' . $value['user_id'] . '"' );
+					$this->wpdb->query( 'DELETE FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_ideaboard_password" AND user_id = "' . $value['user_id'] . '"' );
 				}
 			}
 			$has_delete = true;
@@ -1291,12 +1291,12 @@ abstract class BBP_Converter_Base {
 	public function callback_pass( $username, $password ) {
 		$user = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT * FROM ' . $this->wpdb->users . ' WHERE user_login = "%s" AND user_pass = "" LIMIT 1', $username ) );
 		if ( !empty( $user ) ) {
-			$usermeta = $this->wpdb->get_row( 'SELECT * FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_bbp_password" AND user_id = "' . $user->ID . '" LIMIT 1' );
+			$usermeta = $this->wpdb->get_row( 'SELECT * FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_ideaboard_password" AND user_id = "' . $user->ID . '" LIMIT 1' );
 
 			if ( !empty( $usermeta ) ) {
 				if ( $this->authenticate_pass( $password, $usermeta->meta_value ) ) {
 					$this->wpdb->query( 'UPDATE ' . $this->wpdb->users . ' ' . 'SET user_pass = "' . wp_hash_password( $password ) . '" ' . 'WHERE ID = "' . $user->ID . '"' );
-					$this->wpdb->query( 'DELETE FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_bbp_password" AND user_id = "' . $user->ID . '"' );
+					$this->wpdb->query( 'DELETE FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_ideaboard_password" AND user_id = "' . $user->ID . '"' );
 				}
 			}
 		}
@@ -1311,9 +1311,9 @@ abstract class BBP_Converter_Base {
 	private function callback_forumid( $field ) {
 		if ( !isset( $this->map_forumid[$field] ) ) {
 			if ( !empty( $this->sync_table ) ) {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_forum_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_forum_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			} else {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_forum_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_forum_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			}
 
 			if ( !is_null( $row ) ) {
@@ -1334,9 +1334,9 @@ abstract class BBP_Converter_Base {
 	private function callback_topicid( $field ) {
 		if ( !isset( $this->map_topicid[$field] ) ) {
 			if ( !empty( $this->sync_table ) ) {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_old_topic_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_old_topic_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			} else {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_old_topic_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_old_topic_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			}
 
 			if ( !is_null( $row ) ) {
@@ -1357,9 +1357,9 @@ abstract class BBP_Converter_Base {
 	private function callback_reply_to( $field ) {
 		if ( !isset( $this->map_reply_to[$field] ) ) {
 			if ( !empty( $this->sync_table ) ) {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_post_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_post_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			} else {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_bbp_post_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT post_id AS value_id FROM ' . $this->wpdb->postmeta . ' WHERE meta_key = "_ideaboard_post_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			}
 
 			if ( !is_null( $row ) ) {
@@ -1380,15 +1380,15 @@ abstract class BBP_Converter_Base {
 	private function callback_userid( $field ) {
 		if ( !isset( $this->map_userid[$field] ) ) {
 			if ( !empty( $this->sync_table ) ) {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_bbp_user_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT value_id, meta_value FROM ' . $this->sync_table_name . ' WHERE meta_key = "_ideaboard_user_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			} else {
-				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT user_id AS value_id FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_bbp_user_id" AND meta_value = "%s" LIMIT 1', $field ) );
+				$row = $this->wpdb->get_row( $this->wpdb->prepare( 'SELECT user_id AS value_id FROM ' . $this->wpdb->usermeta . ' WHERE meta_key = "_ideaboard_user_id" AND meta_value = "%s" LIMIT 1', $field ) );
 			}
 
 			if ( !is_null( $row ) ) {
 				$this->map_userid[$field] = $row->value_id;
 			} else {
-				if ( !empty( $_POST['_bbp_converter_convert_users'] ) && ( $_POST['_bbp_converter_convert_users'] == 1 ) ) {
+				if ( !empty( $_POST['_ideaboard_converter_convert_users'] ) && ( $_POST['_ideaboard_converter_convert_users'] == 1 ) ) {
 					$this->map_userid[$field] = 0;
 				} else {
 					$this->map_userid[$field] = $field;
@@ -1463,7 +1463,7 @@ abstract class BBP_Converter_Base {
  *
  * @param string $platform Name of valid platform class.
  */
-function bbp_new_converter( $platform ) {
+function ideaboard_new_converter( $platform ) {
 	$found = false;
 
 	if ( $curdir = opendir( ideaboard()->admin->admin_dir . 'converters/' ) ) {

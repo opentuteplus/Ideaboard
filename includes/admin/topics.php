@@ -51,14 +51,14 @@ class BBP_Topics_Admin {
 	 *
 	 * @uses add_action() To add various actions
 	 * @uses add_filter() To add various filters
-	 * @uses bbp_get_forum_post_type() To get the forum post type
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_forum_post_type() To get the forum post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
 	 */
 	private function setup_actions() {
 
 		// Add some general styling to the admin area
-		add_action( 'bbp_admin_head',        array( $this, 'admin_head'       ) );
+		add_action( 'ideaboard_admin_head',        array( $this, 'admin_head'       ) );
 
 		// Messages
 		add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
@@ -74,7 +74,7 @@ class BBP_Topics_Admin {
 		add_action( 'add_meta_boxes', array( $this, 'attributes_metabox'      ) );
 		add_action( 'save_post',      array( $this, 'attributes_metabox_save' ) );
 
-		// Check if there are any bbp_toggle_topic_* requests on admin_init, also have a message displayed
+		// Check if there are any ideaboard_toggle_topic_* requests on admin_init, also have a message displayed
 		add_action( 'load-edit.php',  array( $this, 'toggle_topic'        ) );
 		add_action( 'admin_notices',  array( $this, 'toggle_topic_notice' ) );
 
@@ -83,7 +83,7 @@ class BBP_Topics_Admin {
 
 		// Add ability to filter topics and replies per forum
 		add_filter( 'restrict_manage_posts', array( $this, 'filter_dropdown'  ) );
-		add_filter( 'bbp_request',           array( $this, 'filter_post_rows' ) );
+		add_filter( 'ideaboard_request',           array( $this, 'filter_post_rows' ) );
 
 		// Contextual Help
 		add_action( 'load-edit.php',     array( $this, 'edit_help' ) );
@@ -111,7 +111,7 @@ class BBP_Topics_Admin {
 	 * @access private
 	 */
 	private function setup_globals() {
-		$this->post_type = bbp_get_topic_post_type();
+		$this->post_type = ideaboard_get_topic_post_type();
 	}
 
 	/** Contextual Help *******************************************************/
@@ -242,24 +242,24 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2744)
 	 *
-	 * @uses bbp_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
 	 * @uses add_meta_box() To add the metabox
-	 * @uses do_action() Calls 'bbp_topic_attributes_metabox'
+	 * @uses do_action() Calls 'ideaboard_topic_attributes_metabox'
 	 */
 	public function attributes_metabox() {
 
 		if ( $this->bail() ) return;
 
 		add_meta_box (
-			'bbp_topic_attributes',
+			'ideaboard_topic_attributes',
 			__( 'Topic Attributes', 'ideaboard' ),
-			'bbp_topic_metabox',
+			'ideaboard_topic_metabox',
 			$this->post_type,
 			'side',
 			'high'
 		);
 
-		do_action( 'bbp_topic_attributes_metabox' );
+		do_action( 'ideaboard_topic_attributes_metabox' );
 	}
 
 	/**
@@ -270,7 +270,7 @@ class BBP_Topics_Admin {
 	 * @param int $topic_id Topic id
 	 * @uses current_user_can() To check if the current user is capable of
 	 *                           editing the topic
-	 * @uses do_action() Calls 'bbp_topic_attributes_metabox_save' with the
+	 * @uses do_action() Calls 'ideaboard_topic_attributes_metabox_save' with the
 	 *                    topic id and parent id
 	 * @return int Parent id
 	 */
@@ -283,11 +283,11 @@ class BBP_Topics_Admin {
 			return $topic_id;
 
 		// Bail if not a post request
-		if ( ! bbp_is_post_request() )
+		if ( ! ideaboard_is_post_request() )
 			return $topic_id;
 
 		// Nonce check
-		if ( empty( $_POST['bbp_topic_metabox'] ) || !wp_verify_nonce( $_POST['bbp_topic_metabox'], 'bbp_topic_metabox_save' ) )
+		if ( empty( $_POST['ideaboard_topic_metabox'] ) || !wp_verify_nonce( $_POST['ideaboard_topic_metabox'], 'ideaboard_topic_metabox_save' ) )
 			return $topic_id;
 
 		// Bail if current user cannot edit this topic
@@ -298,40 +298,40 @@ class BBP_Topics_Admin {
 		$forum_id = !empty( $_POST['parent_id'] ) ? (int) $_POST['parent_id'] : 0;
 
 		// Get topic author data
-		$anonymous_data = bbp_filter_anonymous_post_data();
-		$author_id      = bbp_get_topic_author_id( $topic_id );
+		$anonymous_data = ideaboard_filter_anonymous_post_data();
+		$author_id      = ideaboard_get_topic_author_id( $topic_id );
 		$is_edit        = (bool) isset( $_POST['save'] );
 
 		// Formally update the topic
-		bbp_update_topic( $topic_id, $forum_id, $anonymous_data, $author_id, $is_edit );
+		ideaboard_update_topic( $topic_id, $forum_id, $anonymous_data, $author_id, $is_edit );
 
 		// Stickies
-		if ( !empty( $_POST['bbp_stick_topic'] ) && in_array( $_POST['bbp_stick_topic'], array( 'stick', 'super', 'unstick' ) ) ) {
+		if ( !empty( $_POST['ideaboard_stick_topic'] ) && in_array( $_POST['ideaboard_stick_topic'], array( 'stick', 'super', 'unstick' ) ) ) {
 
 			// What's the haps?
-			switch ( $_POST['bbp_stick_topic'] ) {
+			switch ( $_POST['ideaboard_stick_topic'] ) {
 
 				// Sticky in this forum
 				case 'stick'   :
-					bbp_stick_topic( $topic_id );
+					ideaboard_stick_topic( $topic_id );
 					break;
 
 				// Super sticky in all forums
 				case 'super'   :
-					bbp_stick_topic( $topic_id, true );
+					ideaboard_stick_topic( $topic_id, true );
 					break;
 
 				// Normal
 				case 'unstick' :
 				default        :
-					bbp_unstick_topic( $topic_id );
+					ideaboard_unstick_topic( $topic_id );
 					break;
 			}
 		}
 
 		// Allow other fun things to happen
-		do_action( 'bbp_topic_attributes_metabox_save', $topic_id, $forum_id       );
-		do_action( 'bbp_author_metabox_save',           $topic_id, $anonymous_data );
+		do_action( 'ideaboard_topic_attributes_metabox_save', $topic_id, $forum_id       );
+		do_action( 'ideaboard_author_metabox_save',           $topic_id, $anonymous_data );
 
 		return $topic_id;
 	}
@@ -341,12 +341,12 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2828)
 	 *
-	 * @uses bbp_get_topic() To get the topic
-	 * @uses bbp_get_reply() To get the reply
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_topic() To get the topic
+	 * @uses ideaboard_get_reply() To get the reply
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
 	 * @uses add_meta_box() To add the metabox
-	 * @uses do_action() Calls 'bbp_author_metabox' with the topic/reply
+	 * @uses do_action() Calls 'ideaboard_author_metabox' with the topic/reply
 	 *                    id
 	 */
 	public function author_metabox() {
@@ -359,15 +359,15 @@ class BBP_Topics_Admin {
 
 		// Add the metabox
 		add_meta_box(
-			'bbp_author_metabox',
+			'ideaboard_author_metabox',
 			__( 'Author Information', 'ideaboard' ),
-			'bbp_author_metabox',
+			'ideaboard_author_metabox',
 			$this->post_type,
 			'side',
 			'high'
 		);
 
-		do_action( 'bbp_author_metabox', get_the_ID() );
+		do_action( 'ideaboard_author_metabox', get_the_ID() );
 	}
 
 	/**
@@ -375,11 +375,11 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2464)
 	 *
-	 * @uses bbp_get_forum_post_type() To get the forum post type
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_forum_post_type() To get the forum post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
 	 * @uses sanitize_html_class() To sanitize the classes
-	 * @uses do_action() Calls 'bbp_admin_head'
+	 * @uses do_action() Calls 'ideaboard_admin_head'
 	 */
 	public function admin_head() {
 
@@ -395,33 +395,33 @@ class BBP_Topics_Admin {
 				width: 60px;
 			}
 
-			.column-bbp_forum_topic_count,
-			.column-bbp_forum_reply_count,
-			.column-bbp_topic_reply_count,
-			.column-bbp_topic_voice_count {
+			.column-ideaboard_forum_topic_count,
+			.column-ideaboard_forum_reply_count,
+			.column-ideaboard_topic_reply_count,
+			.column-ideaboard_topic_voice_count {
 				width: 8% !important;
 			}
 
 			.column-author,
-			.column-bbp_reply_author,
-			.column-bbp_topic_author {
+			.column-ideaboard_reply_author,
+			.column-ideaboard_topic_author {
 				width: 10% !important;
 			}
 
-			.column-bbp_topic_forum,
-			.column-bbp_reply_forum,
-			.column-bbp_reply_topic {
+			.column-ideaboard_topic_forum,
+			.column-ideaboard_reply_forum,
+			.column-ideaboard_reply_topic {
 				width: 10% !important;
 			}
 
-			.column-bbp_forum_freshness,
-			.column-bbp_topic_freshness {
+			.column-ideaboard_forum_freshness,
+			.column-ideaboard_topic_freshness {
 				width: 10% !important;
 			}
 
-			.column-bbp_forum_created,
-			.column-bbp_topic_created,
-			.column-bbp_reply_created {
+			.column-ideaboard_forum_created,
+			.column-ideaboard_topic_created,
+			.column-ideaboard_reply_created {
 				width: 15% !important;
 			}
 
@@ -447,23 +447,23 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2727)
 	 *
-	 * @uses bbp_get_topic() To get the topic
+	 * @uses ideaboard_get_topic() To get the topic
 	 * @uses current_user_can() To check if the user is capable of editing
 	 *                           the topic
 	 * @uses wp_die() To die if the user isn't capable or the post wasn't
 	 *                 found
 	 * @uses check_admin_referer() To verify the nonce and check referer
-	 * @uses bbp_is_topic_open() To check if the topic is open
-	 * @uses bbp_close_topic() To close the topic
-	 * @uses bbp_open_topic() To open the topic
-	 * @uses bbp_is_topic_sticky() To check if the topic is a sticky or
+	 * @uses ideaboard_is_topic_open() To check if the topic is open
+	 * @uses ideaboard_close_topic() To close the topic
+	 * @uses ideaboard_open_topic() To open the topic
+	 * @uses ideaboard_is_topic_sticky() To check if the topic is a sticky or
 	 *                              super sticky
-	 * @uses bbp_unstick_topic() To unstick the topic
-	 * @uses bbp_stick_topic() To stick the topic
-	 * @uses bbp_is_topic_spam() To check if the topic is marked as spam
-	 * @uses bbp_unspam_topic() To unmark the topic as spam
-	 * @uses bbp_spam_topic() To mark the topic as spam
-	 * @uses do_action() Calls 'bbp_toggle_topic_admin' with success, post
+	 * @uses ideaboard_unstick_topic() To unstick the topic
+	 * @uses ideaboard_stick_topic() To stick the topic
+	 * @uses ideaboard_is_topic_spam() To check if the topic is marked as spam
+	 * @uses ideaboard_unspam_topic() To unmark the topic as spam
+	 * @uses ideaboard_spam_topic() To mark the topic as spam
+	 * @uses do_action() Calls 'ideaboard_toggle_topic_admin' with success, post
 	 *                    data, action and message
 	 * @uses add_query_arg() To add custom args to the url
 	 * @uses wp_safe_redirect() Redirect the page to custom url
@@ -473,12 +473,12 @@ class BBP_Topics_Admin {
 		if ( $this->bail() ) return;
 
 		// Only proceed if GET is a topic toggle action
-		if ( bbp_is_get_request() && !empty( $_GET['action'] ) && in_array( $_GET['action'], array( 'bbp_toggle_topic_close', 'bbp_toggle_topic_stick', 'bbp_toggle_topic_spam' ) ) && !empty( $_GET['topic_id'] ) ) {
+		if ( ideaboard_is_get_request() && !empty( $_GET['action'] ) && in_array( $_GET['action'], array( 'ideaboard_toggle_topic_close', 'ideaboard_toggle_topic_stick', 'ideaboard_toggle_topic_spam' ) ) && !empty( $_GET['topic_id'] ) ) {
 			$action    = $_GET['action'];            // What action is taking place?
 			$topic_id  = (int) $_GET['topic_id'];    // What's the topic id?
 			$success   = false;                      // Flag
 			$post_data = array( 'ID' => $topic_id ); // Prelim array
-			$topic     = bbp_get_topic( $topic_id );
+			$topic     = ideaboard_get_topic( $topic_id );
 
 			// Bail if topic is missing
 			if ( empty( $topic ) )
@@ -488,43 +488,43 @@ class BBP_Topics_Admin {
 				wp_die( __( 'You do not have the permission to do that!', 'ideaboard' ) );
 
 			switch ( $action ) {
-				case 'bbp_toggle_topic_close' :
+				case 'ideaboard_toggle_topic_close' :
 					check_admin_referer( 'close-topic_' . $topic_id );
 
-					$is_open = bbp_is_topic_open( $topic_id );
+					$is_open = ideaboard_is_topic_open( $topic_id );
 					$message = true === $is_open ? 'closed' : 'opened';
-					$success = true === $is_open ? bbp_close_topic( $topic_id ) : bbp_open_topic( $topic_id );
+					$success = true === $is_open ? ideaboard_close_topic( $topic_id ) : ideaboard_open_topic( $topic_id );
 
 					break;
 
-				case 'bbp_toggle_topic_stick' :
+				case 'ideaboard_toggle_topic_stick' :
 					check_admin_referer( 'stick-topic_' . $topic_id );
 
-					$is_sticky = bbp_is_topic_sticky( $topic_id );
+					$is_sticky = ideaboard_is_topic_sticky( $topic_id );
 					$is_super  = false === $is_sticky && !empty( $_GET['super'] ) && ( "1" === $_GET['super'] ) ? true : false;
 					$message   = true  === $is_sticky ? 'unsticked'     : 'sticked';
 					$message   = true  === $is_super  ? 'super_sticked' : $message;
-					$success   = true  === $is_sticky ? bbp_unstick_topic( $topic_id ) : bbp_stick_topic( $topic_id, $is_super );
+					$success   = true  === $is_sticky ? ideaboard_unstick_topic( $topic_id ) : ideaboard_stick_topic( $topic_id, $is_super );
 
 					break;
 
-				case 'bbp_toggle_topic_spam'  :
+				case 'ideaboard_toggle_topic_spam'  :
 					check_admin_referer( 'spam-topic_' . $topic_id );
 
-					$is_spam = bbp_is_topic_spam( $topic_id );
+					$is_spam = ideaboard_is_topic_spam( $topic_id );
 					$message = true === $is_spam ? 'unspammed' : 'spammed';
-					$success = true === $is_spam ? bbp_unspam_topic( $topic_id ) : bbp_spam_topic( $topic_id );
+					$success = true === $is_spam ? ideaboard_unspam_topic( $topic_id ) : ideaboard_spam_topic( $topic_id );
 
 					break;
 			}
 
-			$message = array( 'bbp_topic_toggle_notice' => $message, 'topic_id' => $topic->ID );
+			$message = array( 'ideaboard_topic_toggle_notice' => $message, 'topic_id' => $topic->ID );
 
 			if ( false === $success || is_wp_error( $success ) )
 				$message['failed'] = '1';
 
 			// Do additional topic toggle actions (admin side)
-			do_action( 'bbp_toggle_topic_admin', $success, $post_data, $action, $message );
+			do_action( 'ideaboard_toggle_topic_admin', $success, $post_data, $action, $message );
 
 			// Redirect back to the topic
 			$redirect = add_query_arg( $message, remove_query_arg( array( 'action', 'topic_id' ) ) );
@@ -543,10 +543,10 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2727)
 	 *
-	 * @uses bbp_get_topic() To get the topic
-	 * @uses bbp_get_topic_title() To get the topic title of the topic
+	 * @uses ideaboard_get_topic() To get the topic
+	 * @uses ideaboard_get_topic_title() To get the topic title of the topic
 	 * @uses esc_html() To sanitize the topic title
-	 * @uses apply_filters() Calls 'bbp_toggle_topic_notice_admin' with
+	 * @uses apply_filters() Calls 'ideaboard_toggle_topic_notice_admin' with
 	 *                        message, topic id, notice and is it a failure
 	 */
 	public function toggle_topic_notice() {
@@ -554,8 +554,8 @@ class BBP_Topics_Admin {
 		if ( $this->bail() ) return;
 
 		// Only proceed if GET is a topic toggle action
-		if ( bbp_is_get_request() && !empty( $_GET['bbp_topic_toggle_notice'] ) && in_array( $_GET['bbp_topic_toggle_notice'], array( 'opened', 'closed', 'super_sticked', 'sticked', 'unsticked', 'spammed', 'unspammed' ) ) && !empty( $_GET['topic_id'] ) ) {
-			$notice     = $_GET['bbp_topic_toggle_notice'];         // Which notice?
+		if ( ideaboard_is_get_request() && !empty( $_GET['ideaboard_topic_toggle_notice'] ) && in_array( $_GET['ideaboard_topic_toggle_notice'], array( 'opened', 'closed', 'super_sticked', 'sticked', 'unsticked', 'spammed', 'unspammed' ) ) && !empty( $_GET['topic_id'] ) ) {
+			$notice     = $_GET['ideaboard_topic_toggle_notice'];         // Which notice?
 			$topic_id   = (int) $_GET['topic_id'];                  // What's the topic id?
 			$is_failure = !empty( $_GET['failed'] ) ? true : false; // Was that a failure?
 
@@ -564,11 +564,11 @@ class BBP_Topics_Admin {
 				return;
 
 			// Bail if topic is missing
-			$topic = bbp_get_topic( $topic_id );
+			$topic = ideaboard_get_topic( $topic_id );
 			if ( empty( $topic ) )
 				return;
 
-			$topic_title = bbp_get_topic_title( $topic->ID );
+			$topic_title = ideaboard_get_topic_title( $topic->ID );
 
 			switch ( $notice ) {
 				case 'opened'    :
@@ -601,7 +601,7 @@ class BBP_Topics_Admin {
 			}
 
 			// Do additional topic toggle notice filters (admin side)
-			$message = apply_filters( 'bbp_toggle_topic_notice_admin', $message, $topic->ID, $notice, $is_failure );
+			$message = apply_filters( 'ideaboard_toggle_topic_notice_admin', $message, $topic->ID, $notice, $is_failure );
 
 			?>
 
@@ -619,7 +619,7 @@ class BBP_Topics_Admin {
 	 * @since IdeaBoard (r2485)
 	 *
 	 * @param array $columns The columns
-	 * @uses apply_filters() Calls 'bbp_admin_topics_column_headers' with
+	 * @uses apply_filters() Calls 'ideaboard_admin_topics_column_headers' with
 	 *                        the columns
 	 * @return array $columns IdeaBoard topic columns
 	 */
@@ -630,15 +630,15 @@ class BBP_Topics_Admin {
 		$columns = array(
 			'cb'                    => '<input type="checkbox" />',
 			'title'                 => __( 'Topics',    'ideaboard' ),
-			'bbp_topic_forum'       => __( 'Forum',     'ideaboard' ),
-			'bbp_topic_reply_count' => __( 'Replies',   'ideaboard' ),
-			'bbp_topic_voice_count' => __( 'Voices',    'ideaboard' ),
-			'bbp_topic_author'      => __( 'Author',    'ideaboard' ),
-			'bbp_topic_created'     => __( 'Created',   'ideaboard' ),
-			'bbp_topic_freshness'   => __( 'Freshness', 'ideaboard' )
+			'ideaboard_topic_forum'       => __( 'Forum',     'ideaboard' ),
+			'ideaboard_topic_reply_count' => __( 'Replies',   'ideaboard' ),
+			'ideaboard_topic_voice_count' => __( 'Voices',    'ideaboard' ),
+			'ideaboard_topic_author'      => __( 'Author',    'ideaboard' ),
+			'ideaboard_topic_created'     => __( 'Created',   'ideaboard' ),
+			'ideaboard_topic_freshness'   => __( 'Freshness', 'ideaboard' )
 		);
 
-		return apply_filters( 'bbp_admin_topics_column_headers', $columns );
+		return apply_filters( 'ideaboard_admin_topics_column_headers', $columns );
 	}
 
 	/**
@@ -648,21 +648,21 @@ class BBP_Topics_Admin {
 	 *
 	 * @param string $column Column
 	 * @param int $topic_id Topic id
-	 * @uses bbp_get_topic_forum_id() To get the forum id of the topic
-	 * @uses bbp_forum_title() To output the topic's forum title
+	 * @uses ideaboard_get_topic_forum_id() To get the forum id of the topic
+	 * @uses ideaboard_forum_title() To output the topic's forum title
 	 * @uses apply_filters() Calls 'topic_forum_row_actions' with an array
 	 *                        of topic forum actions
-	 * @uses bbp_get_forum_permalink() To get the forum permalink
+	 * @uses ideaboard_get_forum_permalink() To get the forum permalink
 	 * @uses admin_url() To get the admin url of post.php
-	 * @uses bbp_topic_reply_count() To output the topic reply count
-	 * @uses bbp_topic_voice_count() To output the topic voice count
-	 * @uses bbp_topic_author_display_name() To output the topic author name
+	 * @uses ideaboard_topic_reply_count() To output the topic reply count
+	 * @uses ideaboard_topic_voice_count() To output the topic voice count
+	 * @uses ideaboard_topic_author_display_name() To output the topic author name
 	 * @uses get_the_date() Get the topic creation date
 	 * @uses get_the_time() Get the topic creation time
 	 * @uses esc_attr() To sanitize the topic creation time
-	 * @uses bbp_get_topic_last_active_time() To get the time when the topic was
+	 * @uses ideaboard_get_topic_last_active_time() To get the time when the topic was
 	 *                                    last active
-	 * @uses do_action() Calls 'bbp_admin_topics_column_data' with the
+	 * @uses do_action() Calls 'ideaboard_admin_topics_column_data' with the
 	 *                    column and topic id
 	 */
 	public function column_data( $column, $topic_id ) {
@@ -670,19 +670,19 @@ class BBP_Topics_Admin {
 		if ( $this->bail() ) return;
 
 		// Get topic forum ID
-		$forum_id = bbp_get_topic_forum_id( $topic_id );
+		$forum_id = ideaboard_get_topic_forum_id( $topic_id );
 
 		// Populate column data
 		switch ( $column ) {
 
 			// Forum
-			case 'bbp_topic_forum' :
+			case 'ideaboard_topic_forum' :
 
 				// Output forum name
 				if ( !empty( $forum_id ) ) {
 
 					// Forum Title
-					$forum_title = bbp_get_forum_title( $forum_id );
+					$forum_title = ideaboard_get_forum_title( $forum_id );
 					if ( empty( $forum_title ) ) {
 						$forum_title = esc_html__( 'No Forum', 'ideaboard' );
 					}
@@ -697,22 +697,22 @@ class BBP_Topics_Admin {
 				break;
 
 			// Reply Count
-			case 'bbp_topic_reply_count' :
-				bbp_topic_reply_count( $topic_id );
+			case 'ideaboard_topic_reply_count' :
+				ideaboard_topic_reply_count( $topic_id );
 				break;
 
 			// Reply Count
-			case 'bbp_topic_voice_count' :
-				bbp_topic_voice_count( $topic_id );
+			case 'ideaboard_topic_voice_count' :
+				ideaboard_topic_voice_count( $topic_id );
 				break;
 
 			// Author
-			case 'bbp_topic_author' :
-				bbp_topic_author_display_name( $topic_id );
+			case 'ideaboard_topic_author' :
+				ideaboard_topic_author_display_name( $topic_id );
 				break;
 
 			// Freshness
-			case 'bbp_topic_created':
+			case 'ideaboard_topic_created':
 				printf( '%1$s <br /> %2$s',
 					get_the_date(),
 					esc_attr( get_the_time() )
@@ -721,8 +721,8 @@ class BBP_Topics_Admin {
 				break;
 
 			// Freshness
-			case 'bbp_topic_freshness' :
-				$last_active = bbp_get_topic_last_active_time( $topic_id, false );
+			case 'ideaboard_topic_freshness' :
+				$last_active = ideaboard_get_topic_last_active_time( $topic_id, false );
 				if ( !empty( $last_active ) ) {
 					echo esc_html( $last_active );
 				} else {
@@ -733,7 +733,7 @@ class BBP_Topics_Admin {
 
 			// Do an action for anything else
 			default :
-				do_action( 'bbp_admin_topics_column_data', $column, $topic_id );
+				do_action( 'ideaboard_admin_topics_column_data', $column, $topic_id );
 				break;
 		}
 	}
@@ -748,15 +748,15 @@ class BBP_Topics_Admin {
 	 *
 	 * @param array $actions Actions
 	 * @param array $topic Topic object
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_topic_content() To output topic content
-	 * @uses bbp_get_topic_permalink() To get the topic link
-	 * @uses bbp_get_topic_title() To get the topic title
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_topic_content() To output topic content
+	 * @uses ideaboard_get_topic_permalink() To get the topic link
+	 * @uses ideaboard_get_topic_title() To get the topic title
 	 * @uses current_user_can() To check if the current user can edit or
 	 *                           delete the topic
-	 * @uses bbp_is_topic_open() To check if the topic is open
-	 * @uses bbp_is_topic_spam() To check if the topic is marked as spam
-	 * @uses bbp_is_topic_sticky() To check if the topic is a sticky or a
+	 * @uses ideaboard_is_topic_open() To check if the topic is open
+	 * @uses ideaboard_is_topic_spam() To check if the topic is marked as spam
+	 * @uses ideaboard_is_topic_sticky() To check if the topic is a sticky or a
 	 *                              super sticky
 	 * @uses get_post_type_object() To get the topic post type object
 	 * @uses add_query_arg() To add custom args to the url
@@ -772,38 +772,38 @@ class BBP_Topics_Admin {
 		unset( $actions['inline hide-if-no-js'] );
 
 		// Show view link if it's not set, the topic is trashed and the user can view trashed topics
-		if ( empty( $actions['view'] ) && ( bbp_get_trash_status_id() === $topic->post_status ) && current_user_can( 'view_trash' ) )
-			$actions['view'] = '<a href="' . esc_url( bbp_get_topic_permalink( $topic->ID ) ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'ideaboard' ), bbp_get_topic_title( $topic->ID ) ) ) . '" rel="permalink">' . esc_html__( 'View', 'ideaboard' ) . '</a>';
+		if ( empty( $actions['view'] ) && ( ideaboard_get_trash_status_id() === $topic->post_status ) && current_user_can( 'view_trash' ) )
+			$actions['view'] = '<a href="' . esc_url( ideaboard_get_topic_permalink( $topic->ID ) ) . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'ideaboard' ), ideaboard_get_topic_title( $topic->ID ) ) ) . '" rel="permalink">' . esc_html__( 'View', 'ideaboard' ) . '</a>';
 
 		// Only show the actions if the user is capable of viewing them :)
 		if ( current_user_can( 'moderate', $topic->ID ) ) {
 
 			// Close
 			// Show the 'close' and 'open' link on published and closed posts only
-			if ( in_array( $topic->post_status, array( bbp_get_public_status_id(), bbp_get_closed_status_id() ) ) ) {
-				$close_uri = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'bbp_toggle_topic_close' ), remove_query_arg( array( 'bbp_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'close-topic_' . $topic->ID );
-				if ( bbp_is_topic_open( $topic->ID ) )
+			if ( in_array( $topic->post_status, array( ideaboard_get_public_status_id(), ideaboard_get_closed_status_id() ) ) ) {
+				$close_uri = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'ideaboard_toggle_topic_close' ), remove_query_arg( array( 'ideaboard_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'close-topic_' . $topic->ID );
+				if ( ideaboard_is_topic_open( $topic->ID ) )
 					$actions['closed'] = '<a href="' . esc_url( $close_uri ) . '" title="' . esc_attr__( 'Close this topic', 'ideaboard' ) . '">' . _x( 'Close', 'Close a Topic', 'ideaboard' ) . '</a>';
 				else
 					$actions['closed'] = '<a href="' . esc_url( $close_uri ) . '" title="' . esc_attr__( 'Open this topic',  'ideaboard' ) . '">' . _x( 'Open',  'Open a Topic',  'ideaboard' ) . '</a>';
 			}
 
 			// Dont show sticky if topic links is spam or trash
-			if ( !bbp_is_topic_spam( $topic->ID ) && !bbp_is_topic_trash( $topic->ID ) ) {
+			if ( !ideaboard_is_topic_spam( $topic->ID ) && !ideaboard_is_topic_trash( $topic->ID ) ) {
 
 				// Sticky
-				$stick_uri  = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'bbp_toggle_topic_stick' ), remove_query_arg( array( 'bbp_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'stick-topic_'  . $topic->ID );
-				if ( bbp_is_topic_sticky( $topic->ID ) ) {
+				$stick_uri  = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'ideaboard_toggle_topic_stick' ), remove_query_arg( array( 'ideaboard_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'stick-topic_'  . $topic->ID );
+				if ( ideaboard_is_topic_sticky( $topic->ID ) ) {
 					$actions['stick'] = '<a href="' . esc_url( $stick_uri ) . '" title="' . esc_attr__( 'Unstick this topic', 'ideaboard' ) . '">' . esc_html__( 'Unstick', 'ideaboard' ) . '</a>';
 				} else {
-					$super_uri        = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'bbp_toggle_topic_stick', 'super' => '1' ), remove_query_arg( array( 'bbp_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'stick-topic_'  . $topic->ID );
+					$super_uri        = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'ideaboard_toggle_topic_stick', 'super' => '1' ), remove_query_arg( array( 'ideaboard_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'stick-topic_'  . $topic->ID );
 					$actions['stick'] = '<a href="' . esc_url( $stick_uri ) . '" title="' . esc_attr__( 'Stick this topic to its forum', 'ideaboard' ) . '">' . esc_html__( 'Stick', 'ideaboard' ) . '</a> <a href="' . esc_url( $super_uri ) . '" title="' . esc_attr__( 'Stick this topic to front', 'ideaboard' ) . '">' . esc_html__( '(to front)', 'ideaboard' ) . '</a>';
 				}
 			}
 
 			// Spam
-			$spam_uri  = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'bbp_toggle_topic_spam' ), remove_query_arg( array( 'bbp_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'spam-topic_'  . $topic->ID );
-			if ( bbp_is_topic_spam( $topic->ID ) )
+			$spam_uri  = wp_nonce_url( add_query_arg( array( 'topic_id' => $topic->ID, 'action' => 'ideaboard_toggle_topic_spam' ), remove_query_arg( array( 'ideaboard_topic_toggle_notice', 'topic_id', 'failed', 'super' ) ) ), 'spam-topic_'  . $topic->ID );
+			if ( ideaboard_is_topic_spam( $topic->ID ) )
 				$actions['spam'] = '<a href="' . esc_url( $spam_uri ) . '" title="' . esc_attr__( 'Mark the topic as not spam', 'ideaboard' ) . '">' . esc_html__( 'Not spam', 'ideaboard' ) . '</a>';
 			else
 				$actions['spam'] = '<a href="' . esc_url( $spam_uri ) . '" title="' . esc_attr__( 'Mark this topic as spam',    'ideaboard' ) . '">' . esc_html__( 'Spam',     'ideaboard' ) . '</a>';
@@ -812,16 +812,16 @@ class BBP_Topics_Admin {
 
 		// Do not show trash links for spam topics, or spam links for trashed topics
 		if ( current_user_can( 'delete_topic', $topic->ID ) ) {
-			if ( bbp_get_trash_status_id() === $topic->post_status ) {
-				$post_type_object   = get_post_type_object( bbp_get_topic_post_type() );
-				$actions['untrash'] = "<a title='" . esc_attr__( 'Restore this item from the Trash', 'ideaboard' ) . "' href='" . esc_url( wp_nonce_url( add_query_arg( array( '_wp_http_referer' => add_query_arg( array( 'post_type' => bbp_get_topic_post_type() ), admin_url( 'edit.php' ) ) ), admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $topic->ID ) ) ), 'untrash-' . $topic->post_type . '_' . $topic->ID ) ) . "'>" . esc_html__( 'Restore', 'ideaboard' ) . "</a>";
+			if ( ideaboard_get_trash_status_id() === $topic->post_status ) {
+				$post_type_object   = get_post_type_object( ideaboard_get_topic_post_type() );
+				$actions['untrash'] = "<a title='" . esc_attr__( 'Restore this item from the Trash', 'ideaboard' ) . "' href='" . esc_url( wp_nonce_url( add_query_arg( array( '_wp_http_referer' => add_query_arg( array( 'post_type' => ideaboard_get_topic_post_type() ), admin_url( 'edit.php' ) ) ), admin_url( sprintf( $post_type_object->_edit_link . '&amp;action=untrash', $topic->ID ) ) ), 'untrash-' . $topic->post_type . '_' . $topic->ID ) ) . "'>" . esc_html__( 'Restore', 'ideaboard' ) . "</a>";
 			} elseif ( EMPTY_TRASH_DAYS ) {
-				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr__( 'Move this item to the Trash', 'ideaboard' ) . "' href='" . esc_url( add_query_arg( array( '_wp_http_referer' => add_query_arg( array( 'post_type' => bbp_get_topic_post_type() ), admin_url( 'edit.php' ) ) ), get_delete_post_link( $topic->ID ) ) ) . "'>" . esc_html__( 'Trash', 'ideaboard' ) . "</a>";
+				$actions['trash'] = "<a class='submitdelete' title='" . esc_attr__( 'Move this item to the Trash', 'ideaboard' ) . "' href='" . esc_url( add_query_arg( array( '_wp_http_referer' => add_query_arg( array( 'post_type' => ideaboard_get_topic_post_type() ), admin_url( 'edit.php' ) ) ), get_delete_post_link( $topic->ID ) ) ) . "'>" . esc_html__( 'Trash', 'ideaboard' ) . "</a>";
 			}
 
-			if ( bbp_get_trash_status_id() === $topic->post_status || !EMPTY_TRASH_DAYS ) {
-				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr__( 'Delete this item permanently', 'ideaboard' ) . "' href='" . esc_url( add_query_arg( array( '_wp_http_referer' => add_query_arg( array( 'post_type' => bbp_get_topic_post_type() ), admin_url( 'edit.php' ) ) ), get_delete_post_link( $topic->ID, '', true ) ) ) . "'>" . esc_html__( 'Delete Permanently', 'ideaboard' ) . "</a>";
-			} elseif ( bbp_get_spam_status_id() === $topic->post_status ) {
+			if ( ideaboard_get_trash_status_id() === $topic->post_status || !EMPTY_TRASH_DAYS ) {
+				$actions['delete'] = "<a class='submitdelete' title='" . esc_attr__( 'Delete this item permanently', 'ideaboard' ) . "' href='" . esc_url( add_query_arg( array( '_wp_http_referer' => add_query_arg( array( 'post_type' => ideaboard_get_topic_post_type() ), admin_url( 'edit.php' ) ) ), get_delete_post_link( $topic->ID, '', true ) ) ) . "'>" . esc_html__( 'Delete Permanently', 'ideaboard' ) . "</a>";
+			} elseif ( ideaboard_get_spam_status_id() === $topic->post_status ) {
 				unset( $actions['trash'] );
 			}
 		}
@@ -834,9 +834,9 @@ class BBP_Topics_Admin {
 	 *
 	 * @since IdeaBoard (r2991)
 	 *
-	 * @uses bbp_get_reply_post_type() To get the reply post type
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_dropdown() To generate a forum dropdown
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_dropdown() To generate a forum dropdown
 	 * @return bool False. If post type is not topic or reply
 	 */
 	public function filter_dropdown() {
@@ -844,17 +844,17 @@ class BBP_Topics_Admin {
 		if ( $this->bail() ) return;
 
 		// Add Empty Spam button
-		if ( !empty( $_GET['post_status'] ) && ( bbp_get_spam_status_id() === $_GET['post_status'] ) && current_user_can( 'moderate' ) ) {
+		if ( !empty( $_GET['post_status'] ) && ( ideaboard_get_spam_status_id() === $_GET['post_status'] ) && current_user_can( 'moderate' ) ) {
 			wp_nonce_field( 'bulk-destroy', '_destroy_nonce' );
 			$title = esc_attr__( 'Empty Spam', 'ideaboard' );
 			submit_button( $title, 'button-secondary apply', 'delete_all', false );
 		}
 
 		// Get which forum is selected
-		$selected = !empty( $_GET['bbp_forum_id'] ) ? $_GET['bbp_forum_id'] : '';
+		$selected = !empty( $_GET['ideaboard_forum_id'] ) ? $_GET['ideaboard_forum_id'] : '';
 
 		// Show the forums dropdown
-		bbp_dropdown( array(
+		ideaboard_dropdown( array(
 			'selected'  => $selected,
 			'show_none' => __( 'In all forums', 'ideaboard' )
 		) );
@@ -867,8 +867,8 @@ class BBP_Topics_Admin {
 	 *
 	 * @param array $query_vars Query variables from {@link WP_Query}
 	 * @uses is_admin() To check if it's the admin section
-	 * @uses bbp_get_topic_post_type() To get the topic post type
-	 * @uses bbp_get_reply_post_type() To get the reply post type
+	 * @uses ideaboard_get_topic_post_type() To get the topic post type
+	 * @uses ideaboard_get_reply_post_type() To get the reply post type
 	 * @return array Processed Query Vars
 	 */
 	function filter_post_rows( $query_vars ) {
@@ -876,9 +876,9 @@ class BBP_Topics_Admin {
 		if ( $this->bail() ) return $query_vars;
 
 		// Add post_parent query_var if one is present
-		if ( !empty( $_GET['bbp_forum_id'] ) ) {
-			$query_vars['meta_key']   = '_bbp_forum_id';
-			$query_vars['meta_value'] = $_GET['bbp_forum_id'];
+		if ( !empty( $_GET['ideaboard_forum_id'] ) ) {
+			$query_vars['meta_key']   = '_ideaboard_forum_id';
+			$query_vars['meta_value'] = $_GET['ideaboard_forum_id'];
 		}
 
 		// Return manipulated query_vars
@@ -891,7 +891,7 @@ class BBP_Topics_Admin {
 	 * @since IdeaBoard (r3080)
 	 *
 	 * @global int $post_ID
-	 * @uses bbp_get_topic_permalink()
+	 * @uses ideaboard_get_topic_permalink()
 	 * @uses wp_post_revision_title()
 	 * @uses esc_url()
 	 * @uses add_query_arg()
@@ -906,10 +906,10 @@ class BBP_Topics_Admin {
 		if ( $this->bail() ) return $messages;
 
 		// URL for the current topic
-		$topic_url = bbp_get_topic_permalink( $post_ID );
+		$topic_url = ideaboard_get_topic_permalink( $post_ID );
 
 		// Current topic's post_date
-		$post_date = bbp_get_global_post_field( 'post_date', 'raw' );
+		$post_date = ideaboard_get_global_post_field( 'post_date', 'raw' );
 
 		// Messages array
 		$messages[$this->post_type] = array(
@@ -968,6 +968,6 @@ endif; // class_exists check
  *
  * @uses BBP_Forums_Admin
  */
-function bbp_admin_topics() {
+function ideaboard_admin_topics() {
 	ideaboard()->admin->topics = new BBP_Topics_Admin();
 }

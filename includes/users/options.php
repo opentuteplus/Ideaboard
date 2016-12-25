@@ -16,15 +16,15 @@ if ( !defined( 'ABSPATH' ) ) exit;
  * @since IdeaBoard (r3910)
  * @return array Filtered user option names and values
  */
-function bbp_get_default_user_options() {
+function ideaboard_get_default_user_options() {
 
 	// Default options
-	return apply_filters( 'bbp_get_default_user_options', array(
-		'_bbp_last_posted'   => '0', // For checking flooding
-		'_bbp_topic_count'   => '0', // Total topics per site
-		'_bbp_reply_count'   => '0', // Total replies per site
-		'_bbp_favorites'     => '',  // Favorite topics per site
-		'_bbp_subscriptions' => ''   // Subscribed topics per site
+	return apply_filters( 'ideaboard_get_default_user_options', array(
+		'_ideaboard_last_posted'   => '0', // For checking flooding
+		'_ideaboard_topic_count'   => '0', // Total topics per site
+		'_ideaboard_reply_count'   => '0', // Total replies per site
+		'_ideaboard_favorites'     => '',  // Favorite topics per site
+		'_ideaboard_subscriptions' => ''   // Subscribed topics per site
 	) );
 }
 
@@ -34,49 +34,49 @@ function bbp_get_default_user_options() {
  * This is destructive, so existing IdeaBoard user options will be overridden.
  *
  * @since IdeaBoard (r3910)
- * @uses bbp_get_default_user_options() To get default options
+ * @uses ideaboard_get_default_user_options() To get default options
  * @uses update_user_option() Adds default options
- * @uses do_action() Calls 'bbp_add_user_options'
+ * @uses do_action() Calls 'ideaboard_add_user_options'
  */
-function bbp_add_user_options( $user_id = 0 ) {
+function ideaboard_add_user_options( $user_id = 0 ) {
 
 	// Validate user id
-	$user_id = bbp_get_user_id( $user_id );
+	$user_id = ideaboard_get_user_id( $user_id );
 	if ( empty( $user_id ) )
 		return;
 
 	// Add default options
-	foreach ( bbp_get_default_user_options() as $key => $value )
+	foreach ( ideaboard_get_default_user_options() as $key => $value )
 		update_user_option( $user_id, $key, $value );
 
 	// Allow previously activated plugins to append their own user options.
-	do_action( 'bbp_add_user_options', $user_id );
+	do_action( 'ideaboard_add_user_options', $user_id );
 }
 
 /**
  * Delete default user options
  *
- * Hooked to bbp_uninstall, it is only called once when IdeaBoard is uninstalled.
+ * Hooked to ideaboard_uninstall, it is only called once when IdeaBoard is uninstalled.
  * This is destructive, so existing IdeaBoard user options will be destroyed.
  *
  * @since IdeaBoard (r3910)
- * @uses bbp_get_default_user_options() To get default options
+ * @uses ideaboard_get_default_user_options() To get default options
  * @uses delete_user_option() Removes default options
- * @uses do_action() Calls 'bbp_delete_options'
+ * @uses do_action() Calls 'ideaboard_delete_options'
  */
-function bbp_delete_user_options( $user_id = 0 ) {
+function ideaboard_delete_user_options( $user_id = 0 ) {
 
 	// Validate user id
-	$user_id = bbp_get_user_id( $user_id );
+	$user_id = ideaboard_get_user_id( $user_id );
 	if ( empty( $user_id ) )
 		return;
 
 	// Add default options
-	foreach ( array_keys( bbp_get_default_user_options() ) as $key )
+	foreach ( array_keys( ideaboard_get_default_user_options() ) as $key )
 		delete_user_option( $user_id, $key );
 
 	// Allow previously activated plugins to append their own options.
-	do_action( 'bbp_delete_user_options', $user_id );
+	do_action( 'ideaboard_delete_user_options', $user_id );
 }
 
 /**
@@ -84,18 +84,18 @@ function bbp_delete_user_options( $user_id = 0 ) {
  * inside the $bbp->options array.
  *
  * @since IdeaBoard (r3910)
- * @uses bbp_get_default_user_options() To get default options
+ * @uses ideaboard_get_default_user_options() To get default options
  * @uses add_filter() To add filters to 'pre_option_{$key}'
- * @uses do_action() Calls 'bbp_add_option_filters'
+ * @uses do_action() Calls 'ideaboard_add_option_filters'
  */
-function bbp_setup_user_option_filters() {
+function ideaboard_setup_user_option_filters() {
 
 	// Add filters to each IdeaBoard option
-	foreach ( array_keys( bbp_get_default_user_options() ) as $key )
-		add_filter( 'get_user_option_' . $key, 'bbp_filter_get_user_option', 10, 3 );
+	foreach ( array_keys( ideaboard_get_default_user_options() ) as $key )
+		add_filter( 'get_user_option_' . $key, 'ideaboard_filter_get_user_option', 10, 3 );
 
 	// Allow previously activated plugins to append their own options.
-	do_action( 'bbp_setup_user_option_filters' );
+	do_action( 'ideaboard_setup_user_option_filters' );
 }
 
 /**
@@ -106,7 +106,7 @@ function bbp_setup_user_option_filters() {
  * @param bool $value Optional. Default value false
  * @return mixed false if not overloaded, mixed if set
  */
-function bbp_filter_get_user_option( $value = false, $option = '', $user = 0 ) {
+function ideaboard_filter_get_user_option( $value = false, $option = '', $user = 0 ) {
 	$bbp = ideaboard();
 
 	// Check the options global for preset value
@@ -126,11 +126,11 @@ function bbp_filter_get_user_option( $value = false, $option = '', $user = 0 ) {
  *
  * @param int $user_id
  * @param boolean $integer Optional. Whether or not to format the result
- * @uses bbp_get_user_topic_count()
+ * @uses ideaboard_get_user_topic_count()
  * @return string
  */
-function bbp_user_topic_count( $user_id = 0, $integer = false ) {
-	echo bbp_get_user_topic_count( $user_id, $integer );
+function ideaboard_user_topic_count( $user_id = 0, $integer = false ) {
+	echo ideaboard_get_user_topic_count( $user_id, $integer );
 }
 	/**
 	 * Return a users reply count
@@ -139,20 +139,20 @@ function bbp_user_topic_count( $user_id = 0, $integer = false ) {
 	 *
 	 * @param int $user_id
 	 * @param boolean $integer Optional. Whether or not to format the result
-	 * @uses bbp_get_user_id()
+	 * @uses ideaboard_get_user_id()
 	 * @uses get_user_option()
 	 * @uses apply_filters()
 	 * @return string
 	 */
-	function bbp_get_user_topic_count( $user_id = 0, $integer = false ) {
+	function ideaboard_get_user_topic_count( $user_id = 0, $integer = false ) {
 
 		// Validate user id
-		$user_id = bbp_get_user_id( $user_id );
+		$user_id = ideaboard_get_user_id( $user_id );
 		if ( empty( $user_id ) )
 			return false;
 
-		$count  = (int) get_user_option( '_bbp_topic_count', $user_id );
-		$filter = ( false === $integer ) ? 'bbp_get_user_topic_count_int' : 'bbp_get_user_topic_count';
+		$count  = (int) get_user_option( '_ideaboard_topic_count', $user_id );
+		$filter = ( false === $integer ) ? 'ideaboard_get_user_topic_count_int' : 'ideaboard_get_user_topic_count';
 
 		return apply_filters( $filter, $count, $user_id );
 	}
@@ -164,11 +164,11 @@ function bbp_user_topic_count( $user_id = 0, $integer = false ) {
  *
  * @param int $user_id
  * @param boolean $integer Optional. Whether or not to format the result
- * @uses bbp_get_user_reply_count()
+ * @uses ideaboard_get_user_reply_count()
  * @return string
  */
-function bbp_user_reply_count( $user_id = 0, $integer = false ) {
-	echo bbp_get_user_reply_count( $user_id, $integer );
+function ideaboard_user_reply_count( $user_id = 0, $integer = false ) {
+	echo ideaboard_get_user_reply_count( $user_id, $integer );
 }
 	/**
 	 * Return a users reply count
@@ -177,20 +177,20 @@ function bbp_user_reply_count( $user_id = 0, $integer = false ) {
 	 *
 	 * @param int $user_id
 	 * @param boolean $integer Optional. Whether or not to format the result
-	 * @uses bbp_get_user_id()
+	 * @uses ideaboard_get_user_id()
 	 * @uses get_user_option()
 	 * @uses apply_filters()
 	 * @return string
 	 */
-	function bbp_get_user_reply_count( $user_id = 0, $integer = false ) {
+	function ideaboard_get_user_reply_count( $user_id = 0, $integer = false ) {
 
 		// Validate user id
-		$user_id = bbp_get_user_id( $user_id );
+		$user_id = ideaboard_get_user_id( $user_id );
 		if ( empty( $user_id ) )
 			return false;
 
-		$count  = (int) get_user_option( '_bbp_reply_count', $user_id );
-		$filter = ( true === $integer ) ? 'bbp_get_user_topic_count_int' : 'bbp_get_user_topic_count';
+		$count  = (int) get_user_option( '_ideaboard_reply_count', $user_id );
+		$filter = ( true === $integer ) ? 'ideaboard_get_user_topic_count_int' : 'ideaboard_get_user_topic_count';
 
 		return apply_filters( $filter, $count, $user_id );
 	}
@@ -202,11 +202,11 @@ function bbp_user_reply_count( $user_id = 0, $integer = false ) {
  *
  * @param int $user_id
  * @param boolean $integer Optional. Whether or not to format the result
- * @uses bbp_get_user_post_count()
+ * @uses ideaboard_get_user_post_count()
  * @return string
  */
-function bbp_user_post_count( $user_id = 0, $integer = false ) {
-	echo bbp_get_user_post_count( $user_id, $integer );
+function ideaboard_user_post_count( $user_id = 0, $integer = false ) {
+	echo ideaboard_get_user_post_count( $user_id, $integer );
 }
 	/**
 	 * Return a users total post count
@@ -215,22 +215,22 @@ function bbp_user_post_count( $user_id = 0, $integer = false ) {
 	 *
 	 * @param int $user_id
 	 * @param boolean $integer Optional. Whether or not to format the result
-	 * @uses bbp_get_user_id()
+	 * @uses ideaboard_get_user_id()
 	 * @uses get_user_option()
 	 * @uses apply_filters()
 	 * @return string
 	 */
-	function bbp_get_user_post_count( $user_id = 0, $integer = false ) {
+	function ideaboard_get_user_post_count( $user_id = 0, $integer = false ) {
 
 		// Validate user id
-		$user_id = bbp_get_user_id( $user_id );
+		$user_id = ideaboard_get_user_id( $user_id );
 		if ( empty( $user_id ) )
 			return false;
 
-		$topics  = bbp_get_user_topic_count( $user_id, true );
-		$replies = bbp_get_user_reply_count( $user_id, true );
+		$topics  = ideaboard_get_user_topic_count( $user_id, true );
+		$replies = ideaboard_get_user_reply_count( $user_id, true );
 		$count   = (int) $topics + $replies;
-		$filter  = ( true === $integer ) ? 'bbp_get_user_post_count_int' : 'bbp_get_user_post_count';
+		$filter  = ( true === $integer ) ? 'ideaboard_get_user_post_count_int' : 'ideaboard_get_user_post_count';
 
 		return apply_filters( $filter, $count, $user_id );
 	}
@@ -245,10 +245,10 @@ function bbp_user_post_count( $user_id = 0, $integer = false ) {
  * @param int $time Time in time() format
  * @return bool False if no user or failure, true if successful
  */
-function bbp_update_user_last_posted( $user_id = 0, $time = 0 ) {
+function ideaboard_update_user_last_posted( $user_id = 0, $time = 0 ) {
 
 	// Validate user id
-	$user_id = bbp_get_user_id( $user_id );
+	$user_id = ideaboard_get_user_id( $user_id );
 	if ( empty( $user_id ) )
 		return false;
 
@@ -256,7 +256,7 @@ function bbp_update_user_last_posted( $user_id = 0, $time = 0 ) {
 	if ( empty( $time ) )
 		$time = time();
 
-	return update_user_option( $user_id, '_bbp_last_posted', $time );
+	return update_user_option( $user_id, '_ideaboard_last_posted', $time );
 }
 
 /**
@@ -264,10 +264,10 @@ function bbp_update_user_last_posted( $user_id = 0, $time = 0 ) {
  *
  * @since IdeaBoard (r3910)
  * @param int $user_id User ID to retrieve value for
- * @uses bbp_get_user_last_posted() To output the last posted time
+ * @uses ideaboard_get_user_last_posted() To output the last posted time
  */
-function bbp_user_last_posted( $user_id = 0 ) {
-	echo bbp_get_user_last_posted( $user_id );
+function ideaboard_user_last_posted( $user_id = 0 ) {
+	echo ideaboard_get_user_last_posted( $user_id );
 }
 
 	/**
@@ -277,14 +277,14 @@ function bbp_user_last_posted( $user_id = 0 ) {
 	 * @param int $user_id User ID to retrieve value for
 	 * @return mixed False if no user, time() format if exists
 	 */
-	function bbp_get_user_last_posted( $user_id = 0 ) {
+	function ideaboard_get_user_last_posted( $user_id = 0 ) {
 
 		// Validate user id
-		$user_id = bbp_get_user_id( $user_id );
+		$user_id = ideaboard_get_user_id( $user_id );
 		if ( empty( $user_id ) )
 			return false;
 
-		$time = get_user_option( '_bbp_last_posted', $user_id );
+		$time = get_user_option( '_ideaboard_last_posted', $user_id );
 
-		return apply_filters( 'bbp_get_user_last_posted', $time, $user_id );
+		return apply_filters( 'ideaboard_get_user_last_posted', $time, $user_id );
 	}
