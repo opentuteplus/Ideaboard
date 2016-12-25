@@ -1508,19 +1508,19 @@ function ideaboard_converter_settings() {
 
 		<h2 class="nav-tab-wrapper"><?php ideaboard_tools_admin_tabs( esc_html__( 'Import Forums', 'ideaboard' ) ); ?></h2>
 
-		<form action="#" method="post" id="bbp-converter-settings">
+		<form action="#" method="post" id="ideaboard-converter-settings">
 
 			<?php settings_fields( 'ideaboard_converter' ); ?>
 
 			<?php do_settings_sections( 'ideaboard_converter' ); ?>
 
 			<p class="submit">
-				<input type="button" name="submit" class="button-primary" id="bbp-converter-start" value="<?php esc_attr_e( 'Start', 'ideaboard' ); ?>" onclick="bbconverter_start();" />
-				<input type="button" name="submit" class="button-primary" id="bbp-converter-stop" value="<?php esc_attr_e( 'Stop', 'ideaboard' ); ?>" onclick="bbconverter_stop();" />
-				<img id="bbp-converter-progress" src="">
+				<input type="button" name="submit" class="button-primary" id="ideaboard-converter-start" value="<?php esc_attr_e( 'Start', 'ideaboard' ); ?>" onclick="bbconverter_start();" />
+				<input type="button" name="submit" class="button-primary" id="ideaboard-converter-stop" value="<?php esc_attr_e( 'Stop', 'ideaboard' ); ?>" onclick="bbconverter_stop();" />
+				<img id="ideaboard-converter-progress" src="">
 			</p>
 
-			<div class="bbp-converter-updated" id="bbp-converter-message"></div>
+			<div class="ideaboard-converter-updated" id="ideaboard-converter-message"></div>
 		</form>
 	</div>
 

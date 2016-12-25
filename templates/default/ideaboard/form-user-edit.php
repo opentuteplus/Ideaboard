@@ -9,13 +9,13 @@
 
 ?>
 
-<form id="bbp-your-profile" action="<?php ideaboard_user_profile_edit_url( ideaboard_get_displayed_user_id() ); ?>" method="post" enctype="multipart/form-data">
+<form id="ideaboard-your-profile" action="<?php ideaboard_user_profile_edit_url( ideaboard_get_displayed_user_id() ); ?>" method="post" enctype="multipart/form-data">
 
 	<h2 class="entry-title"><?php _e( 'Name', 'ideaboard' ) ?></h2>
 
 	<?php do_action( 'ideaboard_user_edit_before' ); ?>
 
-	<fieldset class="bbp-form">
+	<fieldset class="ideaboard-form">
 		<legend><?php _e( 'Name', 'ideaboard' ) ?></legend>
 
 		<?php do_action( 'ideaboard_user_edit_before_name' ); ?>
@@ -48,7 +48,7 @@
 
 	<h2 class="entry-title"><?php _e( 'Contact Info', 'ideaboard' ) ?></h2>
 
-	<fieldset class="bbp-form">
+	<fieldset class="ideaboard-form">
 		<legend><?php _e( 'Contact Info', 'ideaboard' ) ?></legend>
 
 		<?php do_action( 'ideaboard_user_edit_before_contact' ); ?>
@@ -73,7 +73,7 @@
 
 	<h2 class="entry-title"><?php ideaboard_is_user_home_edit() ? _e( 'About Yourself', 'ideaboard' ) : _e( 'About the user', 'ideaboard' ); ?></h2>
 
-	<fieldset class="bbp-form">
+	<fieldset class="ideaboard-form">
 		<legend><?php ideaboard_is_user_home_edit() ? _e( 'About Yourself', 'ideaboard' ) : _e( 'About the user', 'ideaboard' ); ?></legend>
 
 		<?php do_action( 'ideaboard_user_edit_before_about' ); ?>
@@ -89,7 +89,7 @@
 
 	<h2 class="entry-title"><?php _e( 'Account', 'ideaboard' ) ?></h2>
 
-	<fieldset class="bbp-form">
+	<fieldset class="ideaboard-form">
 		<legend><?php _e( 'Account', 'ideaboard' ) ?></legend>
 
 		<?php do_action( 'ideaboard_user_edit_before_account' ); ?>
@@ -122,7 +122,7 @@
 
 		<div id="password">
 			<label for="pass1"><?php _e( 'New Password', 'ideaboard' ); ?></label>
-			<fieldset class="bbp-form password">
+			<fieldset class="ideaboard-form password">
 				<input type="password" name="pass1" id="pass1" size="16" value="" autocomplete="off" tabindex="<?php ideaboard_tab_index(); ?>" />
 				<span class="description"><?php _e( 'If you would like to change the password type a new one. Otherwise leave this blank.', 'ideaboard' ); ?></span>
 
@@ -142,7 +142,7 @@
 
 		<h2 class="entry-title"><?php _e( 'User Role', 'ideaboard' ) ?></h2>
 
-		<fieldset class="bbp-form">
+		<fieldset class="ideaboard-form">
 			<legend><?php _e( 'User Role', 'ideaboard' ); ?></legend>
 
 			<?php do_action( 'ideaboard_user_edit_before_role' ); ?>

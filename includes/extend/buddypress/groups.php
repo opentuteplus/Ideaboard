@@ -280,7 +280,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 
 			<div class="field-group">
 				<div class="checkbox">
-					<label><input type="checkbox" name="bbp-edit-group-forum" id="bbp-edit-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'ideaboard' ); ?></label>
+					<label><input type="checkbox" name="ideaboard-edit-group-forum" id="ideaboard-edit-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'ideaboard' ); ?></label>
 				</div>
 
 				<p class="description"><?php esc_html_e( 'Saying no will not delete existing forum content.', 'ideaboard' ); ?></p>
@@ -340,7 +340,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			return;
  		}
 
-		$edit_forum = !empty( $_POST['bbp-edit-group-forum'] ) ? true : false;
+		$edit_forum = !empty( $_POST['ideaboard-edit-group-forum'] ) ? true : false;
 		$forum_id   = 0;
 		$group_id   = !empty( $group_id ) ? $group_id : bp_get_current_group_id();
 
@@ -480,7 +480,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		<p><?php esc_html_e( 'Create a discussion forum to allow members of this group to communicate in a structured, bulletin-board style fashion.', 'ideaboard' ); ?></p>
 
 		<div class="checkbox">
-			<label><input type="checkbox" name="bbp-create-group-forum" id="bbp-create-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'ideaboard' ); ?></label>
+			<label><input type="checkbox" name="ideaboard-create-group-forum" id="ideaboard-create-group-forum" value="1"<?php checked( $checked ); ?> /> <?php esc_html_e( 'Yes. I want this group to have a forum.', 'ideaboard' ); ?></label>
 		</div>
 
 		<?php
@@ -504,7 +504,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 			$group_id = bp_get_new_group_id();
 		}
 
-		$create_forum = !empty( $_POST['bbp-create-group-forum'] ) ? true : false;
+		$create_forum = !empty( $_POST['ideaboard-create-group-forum'] ) ? true : false;
 		$forum_id     = 0;
 		$forum_ids    = ideaboard_get_group_forum_ids( $group_id );
 
@@ -722,7 +722,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		do_action( 'ideaboard_before_group_forum_display' );
 
 		// Load up IdeaBoard once
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		/** Query Resets ******************************************************/
 
@@ -738,7 +738,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 		) );
 
 		// Set the global forum ID
-		$bbp->current_forum_id = $forum_id;
+		$ideaboard->current_forum_id = $forum_id;
 
 		// Assume forum query
 		ideaboard_set_query_name( 'ideaboard_single_forum' ); ?>
@@ -819,7 +819,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 						$wp_query->ideaboard_is_topic_edit = true;
 
 						// Setup the global forum ID
-						$bbp->current_topic_id       = get_the_ID();
+						$ideaboard->current_topic_id       = get_the_ID();
 
 						// Merge
 						if ( !empty( $_GET['action'] ) && 'merge' === $_GET['action'] ) :
@@ -875,7 +875,7 @@ class BBP_Forums_Group_Extension extends BP_Group_Extension {
 						$wp_query->ideaboard_is_reply_edit = true;
 
 						// Setup the global reply ID
-						$bbp->current_reply_id       = get_the_ID();
+						$ideaboard->current_reply_id       = get_the_ID();
 
 						// Move
 						if ( !empty( $_GET['action'] ) && ( 'move' === $_GET['action'] ) ) :

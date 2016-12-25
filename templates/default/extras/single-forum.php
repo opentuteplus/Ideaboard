@@ -17,7 +17,7 @@ get_header(); ?>
 
 		<?php if ( ideaboard_user_can_view_forum() ) : ?>
 
-			<div id="forum-<?php ideaboard_forum_id(); ?>" class="bbp-forum-content">
+			<div id="forum-<?php ideaboard_forum_id(); ?>" class="ideaboard-forum-content">
 				<h1 class="entry-title"><?php ideaboard_forum_title(); ?></h1>
 				<div class="entry-content">
 

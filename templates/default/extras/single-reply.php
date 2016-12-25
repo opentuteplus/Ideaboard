@@ -17,14 +17,14 @@ get_header(); ?>
 
 		<?php while ( have_posts() ) : the_post(); ?>
 
-			<div id="bbp-reply-wrapper-<?php ideaboard_reply_id(); ?>" class="bbp-reply-wrapper">
+			<div id="ideaboard-reply-wrapper-<?php ideaboard_reply_id(); ?>" class="ideaboard-reply-wrapper">
 				<h1 class="entry-title"><?php ideaboard_reply_title(); ?></h1>
 				<div class="entry-content">
 
 					<?php ideaboard_get_template_part( 'content', 'single-reply' ); ?>
 
 				</div><!-- .entry-content -->
-			</div><!-- #bbp-reply-wrapper-<?php ideaboard_reply_id(); ?> -->
+			</div><!-- #ideaboard-reply-wrapper-<?php ideaboard_reply_id(); ?> -->
 
 		<?php endwhile; ?>
 

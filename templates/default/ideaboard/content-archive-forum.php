@@ -13,7 +13,7 @@
 
 	<?php if ( ideaboard_allow_search() ) : ?>
 
-		<div class="bbp-search-form">
+		<div class="ideaboard-search-form">
 
 			<?php ideaboard_get_template_part( 'form', 'search' ); ?>
 

@@ -39,9 +39,9 @@ body.reply-edit .reply {
 	width: 100%;
 }
 
-#ideaboard-forums div.bbp-forum-header,
-#ideaboard-forums div.bbp-topic-header,
-#ideaboard-forums div.bbp-reply-header {
+#ideaboard-forums div.ideaboard-forum-header,
+#ideaboard-forums div.ideaboard-topic-header,
+#ideaboard-forums div.ideaboard-reply-header {
 	background-color: #f4f4f4;
 }
 
@@ -66,7 +66,7 @@ body.reply-edit .reply {
 	padding: 0;
 }
 
-#ideaboard-forums ul.bbp-threaded-replies {
+#ideaboard-forums ul.ideaboard-threaded-replies {
 	margin-left: 50px;
 }
 
@@ -76,11 +76,11 @@ body.reply-edit .reply {
 	list-style: none;
 }
 
-#ideaboard-forums ul.bbp-lead-topic,
-#ideaboard-forums ul.bbp-topics,
-#ideaboard-forums ul.bbp-forums,
-#ideaboard-forums ul.bbp-replies,
-#ideaboard-forums ul.bbp-search-results {
+#ideaboard-forums ul.ideaboard-lead-topic,
+#ideaboard-forums ul.ideaboard-topics,
+#ideaboard-forums ul.ideaboard-forums,
+#ideaboard-forums ul.ideaboard-replies,
+#ideaboard-forums ul.ideaboard-search-results {
 	font-size: 12px;
 	overflow: hidden;
 	border: 1px solid #eee;
@@ -88,14 +88,14 @@ body.reply-edit .reply {
 	clear: both;
 }
 
-#ideaboard-forums li.bbp-header,
-#ideaboard-forums li.bbp-body,
-#ideaboard-forums li.bbp-footer {
+#ideaboard-forums li.ideaboard-header,
+#ideaboard-forums li.ideaboard-body,
+#ideaboard-forums li.ideaboard-footer {
 	clear: both;
 }
 
-#ideaboard-forums li.bbp-header,
-#ideaboard-forums li.bbp-footer {
+#ideaboard-forums li.ideaboard-header,
+#ideaboard-forums li.ideaboard-footer {
 	background: #f3f3f3;
 	border-top: 1px solid #eee;
 	font-weight: bold;
@@ -103,69 +103,69 @@ body.reply-edit .reply {
 	text-align: center;
 }
 
-#ideaboard-forums li.bbp-header {
+#ideaboard-forums li.ideaboard-header {
 	background: #eaeaea;
 }
 
-#ideaboard-forums li.bbp-header ul {
+#ideaboard-forums li.ideaboard-header ul {
 	overflow: hidden;
 }
 
-#ideaboard-forums .bbp-forums-list {
+#ideaboard-forums .ideaboard-forums-list {
 	margin: 0 0 0 5px;
 	padding-left: 15px;
 	border-left: 1px solid #ddd;
 }
 
-#ideaboard-forums .bbp-forums-list li {
+#ideaboard-forums .ideaboard-forums-list li {
 	display: inline;
 	font-size: 11px;
 }
 
-#ideaboard-forums li.bbp-footer p {
+#ideaboard-forums li.ideaboard-footer p {
 	margin: 0;
 	line-height: 1em;
 }
 
-li.bbp-forum-info,
-li.bbp-topic-title {
+li.ideaboard-forum-info,
+li.ideaboard-topic-title {
 	float: left;
 	text-align: left;
 	width: 55%;
 }
-li.bbp-forum-topic-count,
-li.bbp-topic-voice-count,
-li.bbp-forum-reply-count,
-li.bbp-topic-reply-count {
+li.ideaboard-forum-topic-count,
+li.ideaboard-topic-voice-count,
+li.ideaboard-forum-reply-count,
+li.ideaboard-topic-reply-count {
 	float: left;
 	text-align: center;
 	width: 10%;
 }
 
-li.bbp-forum-freshness,
-li.bbp-topic-freshness {
+li.ideaboard-forum-freshness,
+li.ideaboard-topic-freshness {
 	text-align: center;
 	float: left;
 	width: 22%;
 }
 
-#ideaboard-forums li.bbp-body ul.forum,
-#ideaboard-forums li.bbp-body ul.topic {
+#ideaboard-forums li.ideaboard-body ul.forum,
+#ideaboard-forums li.ideaboard-body ul.topic {
 	border-top: 1px solid #eee;
 	overflow: hidden;
 	padding: 8px;
 }
 
-li.bbp-header div.bbp-topic-content span#subscription-toggle,
-li.bbp-header div.bbp-topic-content span#favorite-toggle,
-li.bbp-header div.bbp-reply-content span#subscription-toggle,
-li.bbp-header div.bbp-reply-content span#favorite-toggle {
+li.ideaboard-header div.ideaboard-topic-content span#subscription-toggle,
+li.ideaboard-header div.ideaboard-topic-content span#favorite-toggle,
+li.ideaboard-header div.ideaboard-reply-content span#subscription-toggle,
+li.ideaboard-header div.ideaboard-reply-content span#favorite-toggle {
 	float: right;
 }
 
-#ideaboard-forums div.bbp-forum-title h3,
-#ideaboard-forums div.bbp-topic-title h3,
-#ideaboard-forums div.bbp-reply-title h3 {
+#ideaboard-forums div.ideaboard-forum-title h3,
+#ideaboard-forums div.ideaboard-topic-title h3,
+#ideaboard-forums div.ideaboard-reply-title h3 {
 	background: none;
 	border: none;
 	font-size: 16px;
@@ -175,17 +175,17 @@ li.bbp-header div.bbp-reply-content span#favorite-toggle {
 	text-transform: none;
 }
 
-#ideaboard-forums div.bbp-forum-author,
-#ideaboard-forums div.bbp-topic-author,
-#ideaboard-forums div.bbp-reply-author {
+#ideaboard-forums div.ideaboard-forum-author,
+#ideaboard-forums div.ideaboard-topic-author,
+#ideaboard-forums div.ideaboard-reply-author {
 	float: left;
 	text-align: center;
 	width: 115px;
 }
 
-#ideaboard-forums div.bbp-forum-author img.avatar,
-#ideaboard-forums div.bbp-topic-author img.avatar,
-#ideaboard-forums div.bbp-reply-author img.avatar {
+#ideaboard-forums div.ideaboard-forum-author img.avatar,
+#ideaboard-forums div.ideaboard-topic-author img.avatar,
+#ideaboard-forums div.ideaboard-reply-author img.avatar {
 	border: none;
 	max-width: 80px;
 	padding: 0;
@@ -193,71 +193,71 @@ li.bbp-header div.bbp-reply-content span#favorite-toggle {
 	float: none;
 }
 
-#ideaboard-forums div.bbp-forum-author a.bbp-author-name,
-#ideaboard-forums div.bbp-topic-author a.bbp-author-name,
-#ideaboard-forums div.bbp-reply-author a.bbp-author-name {
+#ideaboard-forums div.ideaboard-forum-author a.ideaboard-author-name,
+#ideaboard-forums div.ideaboard-topic-author a.ideaboard-author-name,
+#ideaboard-forums div.ideaboard-reply-author a.ideaboard-author-name {
 	margin: 0 12px;
 	word-break: break-word;
 	display: inline-block;
 }
 
-#ideaboard-forums div.bbp-topic-author a.bbp-author-name,
-#ideaboard-forums div.bbp-reply-author a.bbp-author-name {
+#ideaboard-forums div.ideaboard-topic-author a.ideaboard-author-name,
+#ideaboard-forums div.ideaboard-reply-author a.ideaboard-author-name {
 	clear: left;
 	display: block;
 }
 
-#ideaboard-forums div.bbp-forum-author .bbp-author-role,
-#ideaboard-forums div.bbp-topic-author .bbp-author-role,
-#ideaboard-forums div.bbp-reply-author .bbp-author-role {
+#ideaboard-forums div.ideaboard-forum-author .ideaboard-author-role,
+#ideaboard-forums div.ideaboard-topic-author .ideaboard-author-role,
+#ideaboard-forums div.ideaboard-reply-author .ideaboard-author-role {
 	font-size: 11px;
 	font-style: italic;
 }
 
-#ideaboard-forums li.bbp-header .bbp-search-author,
-#ideaboard-forums li.bbp-footer .bbp-search-author,
-#ideaboard-forums li.bbp-header .bbp-forum-author,
-#ideaboard-forums li.bbp-footer .bbp-forum-author,
-#ideaboard-forums li.bbp-header .bbp-topic-author,
-#ideaboard-forums li.bbp-footer .bbp-topic-author,
-#ideaboard-forums li.bbp-header .bbp-reply-author,
-#ideaboard-forums li.bbp-footer .bbp-reply-author {
+#ideaboard-forums li.ideaboard-header .ideaboard-search-author,
+#ideaboard-forums li.ideaboard-footer .ideaboard-search-author,
+#ideaboard-forums li.ideaboard-header .ideaboard-forum-author,
+#ideaboard-forums li.ideaboard-footer .ideaboard-forum-author,
+#ideaboard-forums li.ideaboard-header .ideaboard-topic-author,
+#ideaboard-forums li.ideaboard-footer .ideaboard-topic-author,
+#ideaboard-forums li.ideaboard-header .ideaboard-reply-author,
+#ideaboard-forums li.ideaboard-footer .ideaboard-reply-author {
 	float: left;
 	margin: 0;
 	padding: 0;
 	width: 120px;
 }
 
-#ideaboard-forums li.bbp-header .bbp-search-content,
-#ideaboard-forums li.bbp-footer .bbp-search-content,
-#ideaboard-forums li.bbp-header .bbp-forum-content,
-#ideaboard-forums li.bbp-footer .bbp-forum-content,
-#ideaboard-forums li.bbp-header .bbp-topic-content,
-#ideaboard-forums li.bbp-footer .bbp-topic-content,
-#ideaboard-forums li.bbp-header .bbp-reply-content,
-#ideaboard-forums li.bbp-footer .bbp-reply-content {
+#ideaboard-forums li.ideaboard-header .ideaboard-search-content,
+#ideaboard-forums li.ideaboard-footer .ideaboard-search-content,
+#ideaboard-forums li.ideaboard-header .ideaboard-forum-content,
+#ideaboard-forums li.ideaboard-footer .ideaboard-forum-content,
+#ideaboard-forums li.ideaboard-header .ideaboard-topic-content,
+#ideaboard-forums li.ideaboard-footer .ideaboard-topic-content,
+#ideaboard-forums li.ideaboard-header .ideaboard-reply-content,
+#ideaboard-forums li.ideaboard-footer .ideaboard-reply-content {
 	margin-left: 140px;
 	padding: 0;
 	text-align: left;
 }
 
-div.bbp-forum-header,
-div.bbp-topic-header,
-div.bbp-reply-header,
-li.bbp-body div.hentry {
+div.ideaboard-forum-header,
+div.ideaboard-topic-header,
+div.ideaboard-reply-header,
+li.ideaboard-body div.hentry {
 	margin-bottom: 0;
 	overflow: hidden;
 	padding: 8px;
 }
 
-div.bbp-forum-header,
-div.bbp-topic-header,
-div.bbp-reply-header {
+div.ideaboard-forum-header,
+div.ideaboard-topic-header,
+div.ideaboard-reply-header {
 	border-top: 1px solid #ddd;
 	clear: both;
 }
 
-span.bbp-author-ip {
+span.ideaboard-author-ip {
 	font-family: 'Helvetica Neue', Arial, Helvetica, 'Nimbus Sans L', sans-serif;
 	font-size: 11px;
 	font-weight: bold;
@@ -267,18 +267,18 @@ span.bbp-author-ip {
 /* =Topic and reply content
 -------------------------------------------------------------- */
 
-#ideaboard-forums div.bbp-forum-content,
-#ideaboard-forums div.bbp-topic-content,
-#ideaboard-forums div.bbp-reply-content {
+#ideaboard-forums div.ideaboard-forum-content,
+#ideaboard-forums div.ideaboard-topic-content,
+#ideaboard-forums div.ideaboard-reply-content {
 	margin-left: 130px;
 	padding: 12px 12px 12px 0;
 	text-align: left;
 }
 
 /* Clearing hack */
-#ideaboard-forums div.bbp-forum-content:after,
-#ideaboard-forums div.bbp-topic-content:after,
-#ideaboard-forums div.bbp-reply-content:after {
+#ideaboard-forums div.ideaboard-forum-content:after,
+#ideaboard-forums div.ideaboard-topic-content:after,
+#ideaboard-forums div.ideaboard-reply-content:after {
 	clear: both;
 	content: ".";
 	display: block;
@@ -288,8 +288,8 @@ span.bbp-author-ip {
 	visibility: hidden;
 }
 
-#ideaboard-forums div.bbp-topic-content a,
-#ideaboard-forums div.bbp-reply-content a {
+#ideaboard-forums div.ideaboard-topic-content a,
+#ideaboard-forums div.ideaboard-reply-content a {
 	background: none;
 	border: none;
 	display: inline;
@@ -298,61 +298,61 @@ span.bbp-author-ip {
 	padding: 0;
 }
 
-#ideaboard-forums div.bbp-topic-content h1,
-#ideaboard-forums div.bbp-reply-content h1,
-#ideaboard-forums div.bbp-topic-content h2,
-#ideaboard-forums div.bbp-reply-content h2,
-#ideaboard-forums div.bbp-topic-content h3,
-#ideaboard-forums div.bbp-reply-content h3,
-#ideaboard-forums div.bbp-topic-content h4,
-#ideaboard-forums div.bbp-reply-content h4,
-#ideaboard-forums div.bbp-topic-content h5,
-#ideaboard-forums div.bbp-reply-content h5,
-#ideaboard-forums div.bbp-topic-content h6,
-#ideaboard-forums div.bbp-reply-content h6 {
+#ideaboard-forums div.ideaboard-topic-content h1,
+#ideaboard-forums div.ideaboard-reply-content h1,
+#ideaboard-forums div.ideaboard-topic-content h2,
+#ideaboard-forums div.ideaboard-reply-content h2,
+#ideaboard-forums div.ideaboard-topic-content h3,
+#ideaboard-forums div.ideaboard-reply-content h3,
+#ideaboard-forums div.ideaboard-topic-content h4,
+#ideaboard-forums div.ideaboard-reply-content h4,
+#ideaboard-forums div.ideaboard-topic-content h5,
+#ideaboard-forums div.ideaboard-reply-content h5,
+#ideaboard-forums div.ideaboard-topic-content h6,
+#ideaboard-forums div.ideaboard-reply-content h6 {
 	clear: none;
 	line-height: 1em;
 	margin: 24px 0;
 	padding: 0;
 }
 
-#ideaboard-forums div.bbp-topic-content img,
-#ideaboard-forums div.bbp-reply-content img {
+#ideaboard-forums div.ideaboard-topic-content img,
+#ideaboard-forums div.ideaboard-reply-content img {
 	max-width: 100%;
 }
 
-#ideaboard-forums div.bbp-topic-content ul,
-#ideaboard-forums div.bbp-reply-content ul,
-#ideaboard-forums div.bbp-topic-content ol,
-#ideaboard-forums div.bbp-reply-content ol {
+#ideaboard-forums div.ideaboard-topic-content ul,
+#ideaboard-forums div.ideaboard-reply-content ul,
+#ideaboard-forums div.ideaboard-topic-content ol,
+#ideaboard-forums div.ideaboard-reply-content ol {
 	margin: 0 15px 15px;
 	padding: 0;
 }
 
-#ideaboard-forums div.bbp-topic-content ul li,
-#ideaboard-forums div.bbp-reply-content ul li {
+#ideaboard-forums div.ideaboard-topic-content ul li,
+#ideaboard-forums div.ideaboard-reply-content ul li {
 	list-style-type: disc;
 }
 
-#ideaboard-forums div.bbp-topic-content ol li,
-#ideaboard-forums div.bbp-reply-content ol li {
+#ideaboard-forums div.ideaboard-topic-content ol li,
+#ideaboard-forums div.ideaboard-reply-content ol li {
 	list-style-type: decimal;
 }
 
-#ideaboard-forums div.bbp-topic-content ol li li,
-#ideaboard-forums div.bbp-reply-content ol li li {
+#ideaboard-forums div.ideaboard-topic-content ol li li,
+#ideaboard-forums div.ideaboard-reply-content ol li li {
 	list-style-type: lower-alpha;
 }
 
-#ideaboard-forums div.bbp-topic-content ol li li li,
-#ideaboard-forums div.bbp-reply-content ol li li li {
+#ideaboard-forums div.ideaboard-topic-content ol li li li,
+#ideaboard-forums div.ideaboard-reply-content ol li li li {
 	list-style-type: upper-roman;
 }
 
-#ideaboard-forums div.bbp-topic-content code,
-#ideaboard-forums div.bbp-reply-content code,
-#ideaboard-forums div.bbp-topic-content pre,
-#ideaboard-forums div.bbp-reply-content pre {
+#ideaboard-forums div.ideaboard-topic-content code,
+#ideaboard-forums div.ideaboard-reply-content code,
+#ideaboard-forums div.ideaboard-topic-content pre,
+#ideaboard-forums div.ideaboard-reply-content pre {
 	font-family: Inconsolata, Consolas, Monaco, Lucida Console, monospace;
 	display: inline-block;
 	background-color: #f9f9f9;
@@ -363,8 +363,8 @@ span.bbp-author-ip {
 	margin-top: -3px;
 }
 
-#ideaboard-forums div.bbp-topic-content pre,
-#ideaboard-forums div.bbp-reply-content pre {
+#ideaboard-forums div.ideaboard-topic-content pre,
+#ideaboard-forums div.ideaboard-reply-content pre {
 	display: block;
 	line-height: 18px;
 	margin: 0 0 24px;
@@ -373,8 +373,8 @@ span.bbp-author-ip {
 	overflow: auto;
 }
 
-#ideaboard-forums div.bbp-topic-content pre code,
-#ideaboard-forums div.bbp-reply-content pre code {
+#ideaboard-forums div.ideaboard-topic-content pre code,
+#ideaboard-forums div.ideaboard-reply-content pre code {
 	display: block;
 	border: none;
 	padding: 0;
@@ -388,49 +388,49 @@ span.bbp-author-ip {
 /* =Reply to
 -------------------------------------------------------------- */
 
-#ideaboard-forums div.bbp-reply-to {
+#ideaboard-forums div.ideaboard-reply-to {
 	margin-left: 130px;
 	padding: 12px 12px 12px 0;
 	text-align: right;
 }
 
-#ideaboard-forums div#bbp-cancel-reply-to {
+#ideaboard-forums div#ideaboard-cancel-reply-to {
 	text-align: right;
 }
 
 /* =Breadcrumb and Tags
 -------------------------------------------------------------- */
 
-div.bbp-breadcrumb {
+div.ideaboard-breadcrumb {
 	float: left;
 }
 
-div.bbp-breadcrumb,
-div.bbp-topic-tags {
+div.ideaboard-breadcrumb,
+div.ideaboard-topic-tags {
 	font-size: 12px;
 }
 
-#ideaboard-forums div.bbp-breadcrumb p,
-#ideaboard-forums div.bbp-topic-tags p {
+#ideaboard-forums div.ideaboard-breadcrumb p,
+#ideaboard-forums div.ideaboard-topic-tags p {
 	margin-bottom: 10px
 }
 
-#ideaboard-forums div.bbp-topic-tags {
+#ideaboard-forums div.ideaboard-topic-tags {
 	float: right;
 }
 
-#bbp-topic-hot-tags {
+#ideaboard-topic-hot-tags {
 	clear: both;
 }
 
 /* =Search
 -------------------------------------------------------------- */
 
-#ideaboard-forums #bbp-search-form {
+#ideaboard-forums #ideaboard-search-form {
 	clear: left;
 }
 
-	#ideaboard-forums #bbp-search-form .hidden {
+	#ideaboard-forums #ideaboard-search-form .hidden {
 		height: 0;
 		width: 0;
 		overflow: hidden;
@@ -439,43 +439,43 @@ div.bbp-topic-tags {
 		left: -999em;
 	}
 
-	#ideaboard-forums #bbp-search-form #ideaboard_search {
+	#ideaboard-forums #ideaboard-search-form #ideaboard_search {
 		display: inline-block;
 		width: auto;
 	}
 
-#ideaboard-forums div.bbp-search-form {
+#ideaboard-forums div.ideaboard-search-form {
 	float: right;
 }
 
 /* =Admin Links
 -------------------------------------------------------------- */
 
-span.bbp-admin-links {
+span.ideaboard-admin-links {
 	float: right;
 	color: #ddd;
 }
-span.bbp-admin-links a {
+span.ideaboard-admin-links a {
 	color: #bbb;
 	font-weight: normal;
 	font-size: 10px;
 	text-transform: uppercase;
 	text-decoration: none;
 }
-fieldset span.bbp-admin-links {
+fieldset span.ideaboard-admin-links {
 	float: left;
 }
-tr td span.bbp-admin-links a:hover {
+tr td span.ideaboard-admin-links a:hover {
 	color: #ff4b33;
 }
-td.bbp-topic-admin-links,
-td.bbp-topic-counts {
+td.ideaboard-topic-admin-links,
+td.ideaboard-topic-counts {
 	width: 50%;
 }
 
-.bbp-forum-header a.bbp-forum-permalink,
-.bbp-topic-header a.bbp-topic-permalink,
-.bbp-reply-header a.bbp-reply-permalink {
+.ideaboard-forum-header a.ideaboard-forum-permalink,
+.ideaboard-topic-header a.ideaboard-topic-permalink,
+.ideaboard-reply-header a.ideaboard-reply-permalink {
 	float: right;
 	margin-left: 10px;
 	color: #ccc;
@@ -484,7 +484,7 @@ td.bbp-topic-counts {
 /* =Toggles
 -------------------------------------------------------------- */
 
-.bbp-row-actions #favorite-toggle a {
+.ideaboard-row-actions #favorite-toggle a {
 	text-decoration: none;
 	padding: 0 3px 1px;
 	color: #7c7;
@@ -493,23 +493,23 @@ td.bbp-topic-counts {
 	font-weight: bold;
 	font-size: 13px;
 	}
-	.bbp-row-actions #favorite-toggle a:hover {
+	.ideaboard-row-actions #favorite-toggle a:hover {
 		color: #5a5;
 		border-color: #7c7;
 		background-color: #beb;
 	}
-	.bbp-row-actions #favorite-toggle span.is-favorite a {
+	.ideaboard-row-actions #favorite-toggle span.is-favorite a {
 		color: #faa;
 		border: 1px solid #faa;
 		background-color: #fee;
 		}
-		.bbp-row-actions #favorite-toggle span.is-favorite a:hover {
+		.ideaboard-row-actions #favorite-toggle span.is-favorite a:hover {
 			color: #c88;
 			border-color: #c88;
 			background-color: #fdd;
 		}
 
-.bbp-row-actions #subscription-toggle a {
+.ideaboard-row-actions #subscription-toggle a {
 	text-decoration: none;
 	padding: 0 3px 1px;
 	color: #7c7;
@@ -518,49 +518,49 @@ td.bbp-topic-counts {
 	font-weight: bold;
 	font-size: 13px;
 	}
-	.bbp-row-actions #subscription-toggle a:hover {
+	.ideaboard-row-actions #subscription-toggle a:hover {
 		color: #5a5;
 		border-color: #7c7;
 		background-color: #beb;
 	}
-	.bbp-row-actions #subscription-toggle span.is-subscribed a {
+	.ideaboard-row-actions #subscription-toggle span.is-subscribed a {
 		color: #faa;
 		border: 1px solid #faa;
 		background-color: #fee;
 		}
-		.bbp-row-actions #subscription-toggle span.is-subscribed a:hover {
+		.ideaboard-row-actions #subscription-toggle span.is-subscribed a:hover {
 			color: #c88;
 			border-color: #c88;
 			background-color: #fdd;
 		}
 
-#ideaboard-forums .bbp-forum-info .bbp-forum-content,
-#ideaboard-forums p.bbp-topic-meta {
+#ideaboard-forums .ideaboard-forum-info .ideaboard-forum-content,
+#ideaboard-forums p.ideaboard-topic-meta {
 	font-size: 11px;
 	margin: 5px 0 5px;
 	padding: 0;
 	word-wrap: break-word;
 }
 
-#ideaboard-forums p.bbp-topic-meta span {
+#ideaboard-forums p.ideaboard-topic-meta span {
 	white-space: nowrap;
 }
 
 /* =Pagination
 -------------------------------------------------------------- */
 
-.bbp-pagination-count {
+.ideaboard-pagination-count {
 	float: left;
 	border: 1px solid transparent;
 }
 
-.bbp-pagination-links {
+.ideaboard-pagination-links {
 	float: right;
 	list-style: none;
 	display: inline;
 	}
-	.bbp-pagination-links a,
-	.bbp-pagination-links span.current {
+	.ideaboard-pagination-links a,
+	.ideaboard-pagination-links span.current {
 		display: block;
 		float: left;
 		padding: 0px 5px;
@@ -568,32 +568,32 @@ td.bbp-topic-counts {
 		border: 1px solid #efefef;
 		text-decoration: none;
 		}
-		.bbp-pagination-links a:hover,
-		.bbp-pagination-links span.current {
+		.ideaboard-pagination-links a:hover,
+		.ideaboard-pagination-links span.current {
 			background: #eee;
 			opacity: 0.8;
 			border: 1px solid #ddd;
 		}
 
-	.bbp-pagination-links span.dots {
+	.ideaboard-pagination-links span.dots {
 		display: block;
 		float: left;
 		padding: 1px 4px;
 		margin-left: 5px;
 	}
 
-.bbp-pagination {
+.ideaboard-pagination {
 	float: left;
 	width: 100%;
 	margin-bottom: 15px;
 }
 
-.bbp-topic-pagination {
+.ideaboard-topic-pagination {
 	display: inline-block;
 	margin-left: 5px;
 	margin-bottom: 2px;
 	}
-	.bbp-topic-pagination a {
+	.ideaboard-topic-pagination a {
 		font-size: 10px;
 		line-height: 10px;
 		padding: 1px 3px;
@@ -605,36 +605,36 @@ td.bbp-topic-counts {
 /* =Forms
 -------------------------------------------------------------- */
 
-#ideaboard-forums fieldset.bbp-form {
+#ideaboard-forums fieldset.ideaboard-form {
 	clear: left;
 }
 
-#ideaboard-forums fieldset.bbp-form {
+#ideaboard-forums fieldset.ideaboard-form {
 	border: 1px solid #eee;
 	padding: 10px 20px;
 	margin-bottom: 10px;
 }
 
-#ideaboard-forums fieldset.bbp-form legend {
+#ideaboard-forums fieldset.ideaboard-form legend {
 	padding: 5px;
 }
 
-#ideaboard-forums fieldset.bbp-form label {
+#ideaboard-forums fieldset.ideaboard-form label {
 	margin: 0;
 	display: inline-block;
 }
 
-#bbp-edit-topic-tag.bbp-form fieldset.bbp-form label,
-#bbp-login fieldset label,
-#bbp-register fieldset label,
-#bbp-lost-pass fieldset label {
+#ideaboard-edit-topic-tag.ideaboard-form fieldset.ideaboard-form label,
+#ideaboard-login fieldset label,
+#ideaboard-register fieldset label,
+#ideaboard-lost-pass fieldset label {
 	width: 100px;
 }
 
-#ideaboard-forums fieldset.bbp-form p,
-#ideaboard-forums fieldset.bbp-form textarea,
-#ideaboard-forums fieldset.bbp-form select,
-#ideaboard-forums fieldset.bbp-form input {
+#ideaboard-forums fieldset.ideaboard-form p,
+#ideaboard-forums fieldset.ideaboard-form textarea,
+#ideaboard-forums fieldset.ideaboard-form select,
+#ideaboard-forums fieldset.ideaboard-form input {
 	margin: 0 0 8px;
 }
 
@@ -649,7 +649,7 @@ textarea#ideaboard_forum_content {
 	height: 210px;
 }
 
-#ideaboard-forums fieldset.bbp-forum-form-attributes {
+#ideaboard-forums fieldset.ideaboard-forum-form-attributes {
 	width: 200px;
 	float: right;
 	clear: none;
@@ -663,15 +663,15 @@ textarea#ideaboard_forum_content {
 	max-width: 200px;
 }
 
-.bbp-topic-form,
-.bbp-reply-form,
-.bbp-topic-tag-form {
+.ideaboard-topic-form,
+.ideaboard-reply-form,
+.ideaboard-topic-tag-form {
 	clear: left;
 }
-body.topic-edit .bbp-topic-form div.avatar img,
-body.reply-edit .bbp-reply-form div.avatar img,
-body.single-forum .bbp-topic-form div.avatar img,
-body.single-reply .bbp-reply-form div.avatar img {
+body.topic-edit .ideaboard-topic-form div.avatar img,
+body.reply-edit .ideaboard-reply-form div.avatar img,
+body.single-forum .ideaboard-topic-form div.avatar img,
+body.single-reply .ideaboard-reply-form div.avatar img {
 	margin-right: 0;
 	padding: 10px;
 	border: 1px solid #ddd;
@@ -679,12 +679,12 @@ body.single-reply .bbp-reply-form div.avatar img {
 	background-color: #efefef;
 }
 
-body.page .bbp-reply-form code,
-body.page .bbp-topic-form code,
-body.single-topic .bbp-reply-form code,
-body.single-forum .bbp-topic-form code,
-body.topic-edit .bbp-topic-form code,
-body.reply-edit .bbp-reply-form code {
+body.page .ideaboard-reply-form code,
+body.page .ideaboard-topic-form code,
+body.single-topic .ideaboard-reply-form code,
+body.single-forum .ideaboard-topic-form code,
+body.topic-edit .ideaboard-topic-form code,
+body.reply-edit .ideaboard-reply-form code {
 	font-size: 10px;
 	background-color: #f0fff8;
 	border: 1px solid #CEEFE1;
@@ -699,7 +699,7 @@ body.reply-edit .bbp-reply-form code {
 	display: inline;
 }
 
-div.bbp-submit-wrapper {
+div.ideaboard-submit-wrapper {
 	margin-top: 15px;
 	float: right;
 	clear: both;
@@ -711,20 +711,20 @@ p.form-allowed-tags {
 
 /* =TinyMCE in themes
 -------------------------------------------------------------- */
-#ideaboard-forums div.bbp-the-content-wrapper {
+#ideaboard-forums div.ideaboard-the-content-wrapper {
 	margin-bottom: 10px;
 }
 
-#ideaboard-forums div.bbp-the-content-wrapper textarea.bbp-the-content {
+#ideaboard-forums div.ideaboard-the-content-wrapper textarea.ideaboard-the-content {
 	width: 100%;
 	margin: 0;
 	font-size: 12px;
 }
 
-#ideaboard-forums div.bbp-the-content-wrapper table,
-#ideaboard-forums div.bbp-the-content-wrapper tbody,
-#ideaboard-forums div.bbp-the-content-wrapper tr,
-#ideaboard-forums div.bbp-the-content-wrapper td {
+#ideaboard-forums div.ideaboard-the-content-wrapper table,
+#ideaboard-forums div.ideaboard-the-content-wrapper tbody,
+#ideaboard-forums div.ideaboard-the-content-wrapper tr,
+#ideaboard-forums div.ideaboard-the-content-wrapper td {
 	border: none;
 	padding: 0;
 	margin: 0;
@@ -732,18 +732,18 @@ p.form-allowed-tags {
 	line-height: 1em;
 }
 
-#ideaboard-forums div.bbp-the-content-wrapper input {
+#ideaboard-forums div.ideaboard-the-content-wrapper input {
 	font-size: 12px;
 	padding: 5px;
 	margin: 0 2px 0 0;
 	line-height: 1em;
 }
 
-#ideaboard-forums div.bbp-the-content-wrapper div.quicktags-toolbar {
+#ideaboard-forums div.ideaboard-the-content-wrapper div.quicktags-toolbar {
 	padding: 5px;
 	min-height: 26px;
 }
-#ideaboard-forums div.bbp-the-content-wrapper td.mceToolbar {
+#ideaboard-forums div.ideaboard-the-content-wrapper td.mceToolbar {
 	padding: 4px 4px 8px;
 }
 
@@ -753,27 +753,27 @@ p.form-allowed-tags {
 	line-height: 0;
 }
 
-#ideaboard-forums div.bbp-the-content-wrapper td.mceStatusbar {
+#ideaboard-forums div.ideaboard-the-content-wrapper td.mceStatusbar {
 	line-height: 16px;
 }
 
 /* =Edit User
 -------------------------------------------------------------- */
 
-#ideaboard-forums #bbp-your-profile fieldset {
+#ideaboard-forums #ideaboard-your-profile fieldset {
 	padding: 20px 20px 0 20px;
 }
-	#ideaboard-forums #bbp-your-profile fieldset div {
+	#ideaboard-forums #ideaboard-your-profile fieldset div {
 		margin-bottom: 20px;
 		float: left;
 		width: 100%;
 		clear: left;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset select {
+	#ideaboard-forums #ideaboard-your-profile fieldset select {
 		margin-bottom: 0;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset input,
-	#ideaboard-forums #bbp-your-profile fieldset textarea {
+	#ideaboard-forums #ideaboard-your-profile fieldset input,
+	#ideaboard-forums #ideaboard-your-profile fieldset textarea {
 		margin-bottom: 0;
 		width: 60%;
 		background: #f9f9f9;
@@ -782,30 +782,30 @@ p.form-allowed-tags {
 		padding: 5px 8px;
 		border-radius: 0;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset input:focus,
-	#ideaboard-forums #bbp-your-profile fieldset textarea:focus {
+	#ideaboard-forums #ideaboard-your-profile fieldset input:focus,
+	#ideaboard-forums #ideaboard-your-profile fieldset textarea:focus {
 		border: 1px solid #ccc;
 		box-shadow: inset 1px 1px 1px rgba(0,0,0,0.1);
 		outline-color: rgba(240,255,240,0.1);
 	}
-	#ideaboard-forums #bbp-your-profile fieldset.bbp-form input.checkbox {
+	#ideaboard-forums #ideaboard-your-profile fieldset.ideaboard-form input.checkbox {
 		width: auto;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset legend {
+	#ideaboard-forums #ideaboard-your-profile fieldset legend {
 		display: none;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset label[for] {
+	#ideaboard-forums #ideaboard-your-profile fieldset label[for] {
 		float: left;
 		width: 20%;
 		padding: 5px 20px 5px 0;
 		text-align: right;
 		cursor: pointer;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset dl label[for] {
+	#ideaboard-forums #ideaboard-your-profile fieldset dl label[for] {
 		text-align: left;
 		width: 60%;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset span.description {
+	#ideaboard-forums #ideaboard-your-profile fieldset span.description {
 		margin: 5px 0 0 20%;
 		font-size: 12px;
 		font-style: italic;
@@ -817,37 +817,37 @@ p.form-allowed-tags {
 		background-color: #f0f8ff;
 	}
 
-	#ideaboard-forums #bbp-your-profile fieldset fieldset {
+	#ideaboard-forums #ideaboard-your-profile fieldset fieldset {
 		margin: 0;
 		border: none;
 		padding: 0;
 		clear: none;
 		float: none;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset fieldset.password {
+	#ideaboard-forums #ideaboard-your-profile fieldset fieldset.password {
 		width: 60%;
 		display: inline;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset fieldset.password input,
-	#ideaboard-forums #bbp-your-profile fieldset fieldset.password span {
+	#ideaboard-forums #ideaboard-your-profile fieldset fieldset.password input,
+	#ideaboard-forums #ideaboard-your-profile fieldset fieldset.password span {
 		width: 100%;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset fieldset.capabilities dl {
+	#ideaboard-forums #ideaboard-your-profile fieldset fieldset.capabilities dl {
 		margin: 0;
 	}
-	#ideaboard-forums #bbp-your-profile fieldset fieldset.password span.description {
+	#ideaboard-forums #ideaboard-your-profile fieldset fieldset.password span.description {
 		margin-left: 0;
 		margin-bottom: 20px;
 	}
 
-	#ideaboard-forums #bbp-your-profile fieldset.submit button {
+	#ideaboard-forums #ideaboard-your-profile fieldset.submit button {
 		float: right;
 	}
 
 /* =Notices
 -------------------------------------------------------------- */
 
-div.bbp-template-notice,
+div.ideaboard-template-notice,
 div.indicator-hint {
 	border-width: 1px;
 	border-style: solid;
@@ -859,31 +859,31 @@ div.indicator-hint {
 	color: #000;
 	clear: both;
 }
-div.bbp-template-notice a {
+div.ideaboard-template-notice a {
 	color: #555;
 	text-decoration: none;
 }
-	div.bbp-template-notice a:hover {
+	div.ideaboard-template-notice a:hover {
 		color: #000;
 	}
-	div.bbp-template-notice.info {
+	div.ideaboard-template-notice.info {
 		border: #cee1ef 1px solid;
 		background-color: #f0f8ff;
 	}
-	div.bbp-template-notice.important {
+	div.ideaboard-template-notice.important {
 		border: #e6db55 1px solid;
 		background-color: #fffbcc;
 	}
-	div.bbp-template-notice.error,
-	div.bbp-template-notice.warning {
+	div.ideaboard-template-notice.error,
+	div.ideaboard-template-notice.warning {
 		background-color: #ffebe8;
 		border-color: #c00;
 	}
-	div.bbp-template-notice.error a,
-	div.bbp-template-notice.warning a {
+	div.ideaboard-template-notice.error a,
+	div.ideaboard-template-notice.warning a {
 		color: #c00;
 	}
-	div.bbp-template-notice p {
+	div.ideaboard-template-notice p {
 		margin: 0.5em 0 6px 0 !important;
 		padding: 2px;
 		font-size: 12px;
@@ -893,10 +893,10 @@ div.bbp-template-notice a {
 /* =Stickies
 -------------------------------------------------------------- */
 
-.bbp-topics-front ul.super-sticky,
-.bbp-topics ul.super-sticky,
-.bbp-topics ul.sticky,
-.bbp-forum-content ul.sticky {
+.ideaboard-topics-front ul.super-sticky,
+.ideaboard-topics ul.super-sticky,
+.ideaboard-topics ul.sticky,
+.ideaboard-forum-content ul.sticky {
 	background-color: #ffffe0 !important;
 	font-size: 1.1em;
 }
@@ -904,9 +904,9 @@ div.bbp-template-notice a {
 /* =Revisions
 -------------------------------------------------------------- */
 
-#ideaboard-forums .bbp-topic-content ul.bbp-topic-revision-log,
-#ideaboard-forums .bbp-reply-content ul.bbp-topic-revision-log,
-#ideaboard-forums .bbp-reply-content ul.bbp-reply-revision-log {
+#ideaboard-forums .ideaboard-topic-content ul.ideaboard-topic-revision-log,
+#ideaboard-forums .ideaboard-reply-content ul.ideaboard-topic-revision-log,
+#ideaboard-forums .ideaboard-reply-content ul.ideaboard-reply-revision-log {
 	border-top: 1px dotted #ddd;
 	width: 100%;
 	margin: 0;
@@ -915,64 +915,64 @@ div.bbp-template-notice a {
 	color: #aaa;
 }
 
-#ideaboard-forums .bbp-topic-content ul.bbp-topic-revision-log li,
-#ideaboard-forums .bbp-reply-content ul.bbp-topic-revision-log li,
-#ideaboard-forums .bbp-reply-content ul.bbp-reply-revision-log li {
+#ideaboard-forums .ideaboard-topic-content ul.ideaboard-topic-revision-log li,
+#ideaboard-forums .ideaboard-reply-content ul.ideaboard-topic-revision-log li,
+#ideaboard-forums .ideaboard-reply-content ul.ideaboard-reply-revision-log li {
 	list-style-type: none;
 }
 
 /* =Widgets
 -------------------------------------------------------------- */
 
-.bbp-login-form fieldset legend {
+.ideaboard-login-form fieldset legend {
 	display: none;
 }
 
-.bbp-login-form .bbp-username input,
-.bbp-login-form .bbp-email input,
-.bbp-login-form .bbp-password input {
+.ideaboard-login-form .ideaboard-username input,
+.ideaboard-login-form .ideaboard-email input,
+.ideaboard-login-form .ideaboard-password input {
 	padding: 5px;
 }
 
-.bbp-login-form label {
+.ideaboard-login-form label {
 	width: 140px;
 	display: inline-block;
 }
 
-#sidebar .bbp-login-form label {
+#sidebar .ideaboard-login-form label {
 	width: 70px;
 }
 
-.bbp-login-form .bbp-username,
-.bbp-login-form .bbp-email,
-.bbp-login-form .bbp-password,
-.bbp-login-form .bbp-remember-me,
-.bbp-login-form .bbp-submit-wrapper {
+.ideaboard-login-form .ideaboard-username,
+.ideaboard-login-form .ideaboard-email,
+.ideaboard-login-form .ideaboard-password,
+.ideaboard-login-form .ideaboard-remember-me,
+.ideaboard-login-form .ideaboard-submit-wrapper {
 	margin-top: 10px;
 }
 
-.bbp-login-form .bbp-remember-me {
+.ideaboard-login-form .ideaboard-remember-me {
 
 }
 
-.bbp-login-form .bbp-submit-wrapper {
+.ideaboard-login-form .ideaboard-submit-wrapper {
 	text-align: right;
 }
 
-.bbp-login-form .bbp-login-links {
+.ideaboard-login-form .ideaboard-login-links {
 }
 
-.bbp-login-form .bbp-login-links a {
+.ideaboard-login-form .ideaboard-login-links a {
 	float: left;
 	clear: left;
 }
 
-.bbp-logged-in img.avatar {
+.ideaboard-logged-in img.avatar {
 	float: left;
 	margin: 0 15px 0 0;
 }
 
-.bbp-logged-in h4 {
+.ideaboard-logged-in h4 {
 	font-weight: bold;
 	font-size: 1.3em;
 	clear: none;
@@ -982,10 +982,10 @@ div.bbp-template-notice a {
 /* =Avatars
 -------------------------------------------------------------- */
 
-#ideaboard-forums p.bbp-topic-meta img.avatar,
-#ideaboard-forums ul.bbp-reply-revision-log img.avatar,
-#ideaboard-forums ul.bbp-topic-revision-log img.avatar,
-#ideaboard-forums div.bbp-template-notice img.avatar,
+#ideaboard-forums p.ideaboard-topic-meta img.avatar,
+#ideaboard-forums ul.ideaboard-reply-revision-log img.avatar,
+#ideaboard-forums ul.ideaboard-topic-revision-log img.avatar,
+#ideaboard-forums div.ideaboard-template-notice img.avatar,
 #ideaboard-forums .widget_display_topics img.avatar,
 #ideaboard-forums .widget_display_replies img.avatar {
 	float: none;
@@ -1017,16 +1017,16 @@ fieldset div.avatar {
 	padding-bottom: 10px;
 }
 
-#ideaboard-forums #bbp-user-wrapper {
+#ideaboard-forums #ideaboard-user-wrapper {
 	float: left;
 	width: 100%;
 }
 
-#ideaboard-forums .bbp-user-section {
+#ideaboard-forums .ideaboard-user-section {
 	overflow: auto;
 }
 
-#ideaboard-forums #bbp-user-wrapper h2.entry-title {
+#ideaboard-forums #ideaboard-user-wrapper h2.entry-title {
 	font-size: 1.4em;
 	margin: 0;
 	padding-bottom: 10px;
@@ -1034,27 +1034,27 @@ fieldset div.avatar {
 	clear: none;
 }
 
-#ideaboard-forums #bbp-user-wrapper ul.bbp-lead-topic,
-#ideaboard-forums #bbp-user-wrapper ul.bbp-topics,
-#ideaboard-forums #bbp-user-wrapper ul.bbp-forums,
-#ideaboard-forums #bbp-user-wrapper ul.bbp-replies,
-#ideaboard-forums #bbp-user-wrapper fieldset.bbp-form {
+#ideaboard-forums #ideaboard-user-wrapper ul.ideaboard-lead-topic,
+#ideaboard-forums #ideaboard-user-wrapper ul.ideaboard-topics,
+#ideaboard-forums #ideaboard-user-wrapper ul.ideaboard-forums,
+#ideaboard-forums #ideaboard-user-wrapper ul.ideaboard-replies,
+#ideaboard-forums #ideaboard-user-wrapper fieldset.ideaboard-form {
 	clear: none;
 }
 
-#ideaboard-forums #bbp-single-user-details {
+#ideaboard-forums #ideaboard-single-user-details {
 	margin: 0;
 	width: 150px;
 	float: left;
 	overflow: hidden;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-avatar {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-avatar {
 	margin: 0;
 	width: 150px;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-avatar img.avatar {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-avatar img.avatar {
 	border: none;
 	height: 150px;
 	padding: 0;
@@ -1062,33 +1062,33 @@ fieldset div.avatar {
 	width: 150px;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-description {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-description {
 	float: none;
 	margin-left: 180px;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-navigation {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-navigation {
 	float: none;
 	margin: 0;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-navigation li {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-navigation li {
 	margin: 0;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-navigation a {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-navigation a {
 	padding: 5px 8px;
 	display: block;
 	border: 1px solid transparent;
 	text-decoration: none;
 }
 
-#ideaboard-forums #bbp-single-user-details #bbp-user-navigation li.current a {
+#ideaboard-forums #ideaboard-single-user-details #ideaboard-user-navigation li.current a {
 	background: #eee;
 	opacity: 0.8;
 }
 
-#ideaboard-forums #bbp-user-body {
+#ideaboard-forums #ideaboard-user-body {
 	margin-left: 180px;
 }
 
@@ -1101,17 +1101,17 @@ body.my-account #ideaboard-forums {
 /* =User Capabilities
 -------------------------------------------------------------- */
 
-#ideaboard-forums dl.bbp-user-capabilities {
+#ideaboard-forums dl.ideaboard-user-capabilities {
 	display: inline-block;
 	vertical-align: top;
 }
 
-#ideaboard-forums dl.bbp-user-capabilities dt {
+#ideaboard-forums dl.ideaboard-user-capabilities dt {
 	margin: 0 0 10px;
 	text-transform: capitalize;
 }
 
-#ideaboard-forums dl.bbp-user-capabilities dd {
+#ideaboard-forums dl.ideaboard-user-capabilities dd {
 	margin: 0;
 	padding: 0;
 }
@@ -1138,37 +1138,37 @@ body.my-account #ideaboard-forums {
 	-webkit-text-size-adjust: none;
 }
 @media only screen and (max-width: 480px) {
-	#ideaboard-forums div.bbp-topic-tags {
+	#ideaboard-forums div.ideaboard-topic-tags {
 		clear: left;
 		float: left;
 	}
-	div.bbp-search-form input,
-	div.bbp-search-form button {
+	div.ideaboard-search-form input,
+	div.ideaboard-search-form button {
 		font-size: 11px;
 		padding: 2px;
 	}
-	li.bbp-forum-info,
-	li.bbp-topic-title {
+	li.ideaboard-forum-info,
+	li.ideaboard-topic-title {
 		width: 45%;
 	}
-	li.bbp-forum-topic-count,
-	li.bbp-forum-reply-count,
-	li.bbp-topic-voice-count,
-	li.bbp-topic-reply-count {
+	li.ideaboard-forum-topic-count,
+	li.ideaboard-forum-reply-count,
+	li.ideaboard-topic-voice-count,
+	li.ideaboard-topic-reply-count {
 		width: 15%;
 	}
-	span.bbp-reply-post-date {
+	span.ideaboard-reply-post-date {
 		float: left;
 	}
-	span.bbp-admin-links {
+	span.ideaboard-admin-links {
 		clear: left;
 		float: left;
 	}
-	#ideaboard-forums .bbp-forums-list li {
+	#ideaboard-forums .ideaboard-forums-list li {
 		display: block;
 		font-size: 11px;
 	}
-	#ideaboard-forums .bbp-body div.bbp-reply-author {
+	#ideaboard-forums .ideaboard-body div.ideaboard-reply-author {
 		margin: -15px 10px 10px;
 		min-height: 100px;
 		padding-left: 80px;
@@ -1176,38 +1176,38 @@ body.my-account #ideaboard-forums {
 		text-align: left;
 		width: 100%;
 	}
-	#ideaboard-forums div.bbp-reply-author a.bbp-author-name {
+	#ideaboard-forums div.ideaboard-reply-author a.ideaboard-author-name {
 		clear: none;
 		display: inline-block;
 		margin-left: 0;
 		word-wrap: break-word;
 	}
-	#ideaboard-forums div.bbp-reply-author img.avatar {
+	#ideaboard-forums div.ideaboard-reply-author img.avatar {
 		position: absolute;
 		top: 15px;
 		left: 0;
 		width: 60px;
 		height: auto;
 	}
-	#ideaboard-forums div.bbp-reply-author .bbp-author-role {
+	#ideaboard-forums div.ideaboard-reply-author .ideaboard-author-role {
 		font-size: 12px;
 		font-style: normal;
 	}
-	#ideaboard-forums .bbp-body div.bbp-reply-content {
+	#ideaboard-forums .ideaboard-body div.ideaboard-reply-content {
 		clear: both;
 		margin: 10px;
 		padding: 0;
 	}
-	#ideaboard-forums div.bbp-reply-content p {
+	#ideaboard-forums div.ideaboard-reply-content p {
 		margin-bottom: 1em;
 	}
-	div.bbp-submit-wrapper {
+	div.ideaboard-submit-wrapper {
 		float: left;
 	}
-	#ideaboard-forums fieldset.bbp-form {
+	#ideaboard-forums fieldset.ideaboard-form {
 		padding: 0 10px 10px;
 	}
-	#ideaboard-forums #bbp-user-body {
+	#ideaboard-forums #ideaboard-user-body {
 		clear: both;
 		margin-left: 0;
 		word-wrap: break-word;
@@ -1217,64 +1217,64 @@ body.my-account #ideaboard-forums {
 /* =Standard Mobile Portrait
 -------------------------------------------------------------- */
 @media only screen and (max-width: 320px) {
-	#ideaboard-forums div.bbp-search-form {
+	#ideaboard-forums div.ideaboard-search-form {
 		margin-bottom: 10px;
 	}
-	#ideaboard-forums li.bbp-header li.bbp-forum-info,
-	#ideaboard-forums li.bbp-body li.bbp-forum-info,
-	#ideaboard-forums li.bbp-header li.bbp-topic-title,
-	#ideaboard-forums li.bbp-body li.bbp-topic-title {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-info,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-info,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-title,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-title {
 		width: 100%;
 	}
-	#ideaboard-forums li.bbp-header li.bbp-forum-info,
-	#ideaboard-forums li.bbp-header li.bbp-topic-title {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-info,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-title {
 		text-align: center;
 		text-transform: uppercase;
 	}
-	#ideaboard-forums li.bbp-header li.bbp-forum-topic-count,
-	#ideaboard-forums li.bbp-header li.bbp-forum-reply-count,
-	#ideaboard-forums li.bbp-body li.bbp-forum-topic-count,
-	#ideaboard-forums li.bbp-body li.bbp-forum-reply-count,
-	#ideaboard-forums li.bbp-header li.bbp-topic-voice-count,
-	#ideaboard-forums li.bbp-header li.bbp-topic-reply-count,
-	#ideaboard-forums li.bbp-body li.bbp-topic-voice-count,
-	#ideaboard-forums li.bbp-body li.bbp-topic-reply-count {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-topic-count,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-reply-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-topic-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-reply-count,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-voice-count,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-reply-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-voice-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-reply-count {
 		width: 20%;
 	}
-	#ideaboard-forums li.bbp-header li.bbp-forum-freshness,
-	#ideaboard-forums li.bbp-body li.bbp-forum-freshness,
-	#ideaboard-forums li.bbp-header li.bbp-topic-freshness,
-	#ideaboard-forums li.bbp-body li.bbp-topic-freshness {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-freshness,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-freshness,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-freshness,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-freshness {
 		width: 58%;
 	}
-	#ideaboard-forums li.bbp-body li.bbp-forum-topic-count,
-	#ideaboard-forums li.bbp-body li.bbp-forum-reply-count,
-	#ideaboard-forums li.bbp-body li.bbp-forum-freshness,
-	#ideaboard-forums li.bbp-body li.bbp-topic-voice-count,
-	#ideaboard-forums li.bbp-body li.bbp-topic-reply-count,
-	#ideaboard-forums li.bbp-body li.bbp-topic-freshness {
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-topic-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-reply-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-freshness,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-voice-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-reply-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-freshness {
 		margin-top: 7px;
 	}
-	#ideaboard-forums li.bbp-header,
-	#ideaboard-forums li.bbp-footer {
+	#ideaboard-forums li.ideaboard-header,
+	#ideaboard-forums li.ideaboard-footer {
 		font-size: 10px;
 	}
-	#ideaboard-forums li.bbp-header div.bbp-reply-author {
+	#ideaboard-forums li.ideaboard-header div.ideaboard-reply-author {
 		text-align: left;
 		width: 25%;
 	}
-	#ideaboard-forums li.bbp-header div.bbp-reply-content {
+	#ideaboard-forums li.ideaboard-header div.ideaboard-reply-content {
 		margin-left: 25%;
 	}
-	#ideaboard-forums div.bbp-template-notice img.avatar,
-	#ideaboard-forums p.bbp-topic-meta img.avatar {
+	#ideaboard-forums div.ideaboard-template-notice img.avatar,
+	#ideaboard-forums p.ideaboard-topic-meta img.avatar {
 		width: 14px;
 		height: auto;
 	}
-	#ideaboard-forums div.bbp-the-content-wrapper td.mceToolbar {
+	#ideaboard-forums div.ideaboard-the-content-wrapper td.mceToolbar {
 		padding: 1px;
 	}
-	#ideaboard-forums div.bbp-the-content-wrapper td.mceToolbar td {
+	#ideaboard-forums div.ideaboard-the-content-wrapper td.mceToolbar td {
 		width: 20px;
 		height: 20px;
 	}
@@ -1291,51 +1291,51 @@ body.my-account #ideaboard-forums {
 /* =Extra Small Mobile
 -------------------------------------------------------------- */
 @media only screen and (max-width: 240px) {
-	#ideaboard-forums li.bbp-header li.bbp-forum-topic-count,
-	#ideaboard-forums li.bbp-header li.bbp-forum-reply-count,
-	#ideaboard-forums li.bbp-body li.bbp-forum-topic-count,
-	#ideaboard-forums li.bbp-body li.bbp-forum-reply-count,
-	#ideaboard-forums li.bbp-header li.bbp-topic-voice-count,
-	#ideaboard-forums li.bbp-header li.bbp-topic-reply-count,
-	#ideaboard-forums li.bbp-body li.bbp-topic-voice-count,
-	#ideaboard-forums li.bbp-body li.bbp-topic-reply-count,
-	#ideaboard-forums li.bbp-footer div.bbp-reply-author,
-	#ideaboard-forums li.bbp-footer div.bbp-reply-content {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-topic-count,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-reply-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-topic-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-reply-count,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-voice-count,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-reply-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-voice-count,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-reply-count,
+	#ideaboard-forums li.ideaboard-footer div.ideaboard-reply-author,
+	#ideaboard-forums li.ideaboard-footer div.ideaboard-reply-content {
 		width: 45%;
 	}
-	#ideaboard-forums li.bbp-header li.bbp-forum-freshness,
-	#ideaboard-forums li.bbp-body li.bbp-forum-freshness,
-	#ideaboard-forums li.bbp-header li.bbp-topic-freshness,
-	#ideaboard-forums li.bbp-body li.bbp-topic-freshness,
-	#ideaboard-forums li.bbp-header div.bbp-reply-author,
-	#ideaboard-forums li.bbp-header div.bbp-reply-content {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-freshness,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-forum-freshness,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-freshness,
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-freshness,
+	#ideaboard-forums li.ideaboard-header div.ideaboard-reply-author,
+	#ideaboard-forums li.ideaboard-header div.ideaboard-reply-content {
 		clear: both;
 		width: 100%;
 	}
-	#ideaboard-forums li.bbp-header li.bbp-forum-freshness,
-	#ideaboard-forums li.bbp-header li.bbp-topic-freshness {
+	#ideaboard-forums li.ideaboard-header li.ideaboard-forum-freshness,
+	#ideaboard-forums li.ideaboard-header li.ideaboard-topic-freshness {
 		text-align: center;
 	}
-	#ideaboard-forums li.bbp-body li.bbp-topic-freshness,
-	#ideaboard-forums li.bbp-header div.bbp-reply-content {
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-freshness,
+	#ideaboard-forums li.ideaboard-header div.ideaboard-reply-content {
 		margin-left: 0;
 		text-align: left;
 	}
-	#ideaboard-forums li.bbp-body li.bbp-topic-freshness p.bbp-topic-meta {
+	#ideaboard-forums li.ideaboard-body li.ideaboard-topic-freshness p.ideaboard-topic-meta {
 		display: inline-block;
 	}
-	#ideaboard-forums li.bbp-header {
+	#ideaboard-forums li.ideaboard-header {
 		overflow: hidden;
 	}
-	#ideaboard-forums li.bbp-footer div.bbp-reply-content {
+	#ideaboard-forums li.ideaboard-footer div.ideaboard-reply-content {
 		display: inline-block;
 		margin-left: 0;
 	}
-	#ideaboard-forums li.bbp-body div.bbp-reply-author {
+	#ideaboard-forums li.ideaboard-body div.ideaboard-reply-author {
 		min-height: 60px;
 		padding-left: 60px;
 	}
-	#ideaboard-forums div.bbp-reply-author img.avatar {
+	#ideaboard-forums div.ideaboard-reply-author img.avatar {
 		width: 40px;
 		height: auto;
 	}

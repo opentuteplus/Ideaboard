@@ -81,7 +81,7 @@ function ideaboard_delete_user_options( $user_id = 0 ) {
 
 /**
  * Add filters to each IdeaBoard option and allow them to be overloaded from
- * inside the $bbp->options array.
+ * inside the $ideaboard->options array.
  *
  * @since IdeaBoard (r3910)
  * @uses ideaboard_get_default_user_options() To get default options
@@ -100,18 +100,18 @@ function ideaboard_setup_user_option_filters() {
 
 /**
  * Filter default options and allow them to be overloaded from inside the
- * $bbp->user_options array.
+ * $ideaboard->user_options array.
  *
  * @since IdeaBoard (r3910)
  * @param bool $value Optional. Default value false
  * @return mixed false if not overloaded, mixed if set
  */
 function ideaboard_filter_get_user_option( $value = false, $option = '', $user = 0 ) {
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Check the options global for preset value
-	if ( isset( $user->ID ) && isset( $bbp->user_options[$user->ID] ) && !empty( $bbp->user_options[$user->ID][$option] ) )
-		$value = $bbp->user_options[$user->ID][$option];
+	if ( isset( $user->ID ) && isset( $ideaboard->user_options[$user->ID] ) && !empty( $ideaboard->user_options[$user->ID][$option] ) )
+		$value = $ideaboard->user_options[$user->ID][$option];
 
 	// Always return a value, even if false
 	return $value;

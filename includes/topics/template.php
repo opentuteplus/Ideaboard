@@ -197,10 +197,10 @@ function ideaboard_has_topics( $args = '' ) {
 	$r = ideaboard_parse_args( $args, $default, 'has_topics' );
 
 	// Get IdeaBoard
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Call the query
-	$bbp->topic_query = new WP_Query( $r );
+	$ideaboard->topic_query = new WP_Query( $r );
 
 	// Set post_parent back to 0 if originally set to 'any'
 	if ( 'any' === $r['post_parent'] )
@@ -208,7 +208,7 @@ function ideaboard_has_topics( $args = '' ) {
 
 	// Limited the number of pages shown
 	if ( !empty( $r['max_num_pages'] ) )
-		$bbp->topic_query->max_num_pages = $r['max_num_pages'];
+		$ideaboard->topic_query->max_num_pages = $r['max_num_pages'];
 
 	/** Stickies **************************************************************/
 
@@ -236,7 +236,7 @@ function ideaboard_has_topics( $args = '' ) {
 			foreach ( $stickies as $sticky_index => $sticky_ID ) {
 
 				// Get the post offset from the posts array
-				$post_offsets = wp_filter_object_list( $bbp->topic_query->posts, array( 'ID' => $sticky_ID ), 'OR', 'ID' );
+				$post_offsets = wp_filter_object_list( $ideaboard->topic_query->posts, array( 'ID' => $sticky_ID ), 'OR', 'ID' );
 
 				// Continue if no post offsets
 				if ( empty( $post_offsets ) ) {
@@ -247,13 +247,13 @@ function ideaboard_has_topics( $args = '' ) {
 				foreach ( array_keys( $post_offsets ) as $post_offset ) {
 					$sticky_offset++;
 
-					$sticky = $bbp->topic_query->posts[$post_offset];
+					$sticky = $ideaboard->topic_query->posts[$post_offset];
 
 					// Remove sticky from current position
-					array_splice( $bbp->topic_query->posts, $post_offset, 1 );
+					array_splice( $ideaboard->topic_query->posts, $post_offset, 1 );
 
 					// Move to front, after other stickies
-					array_splice( $bbp->topic_query->posts, $sticky_offset, 0, array( $sticky ) );
+					array_splice( $ideaboard->topic_query->posts, $sticky_offset, 0, array( $sticky ) );
 
 					// Cleanup
 					unset( $stickies[$sticky_index] );
@@ -311,11 +311,11 @@ function ideaboard_has_topics( $args = '' ) {
 					$sticky_count = count( $sticky_posts );
 
 					// Merge the stickies topics with the query topics .
-					$bbp->topic_query->posts       = array_merge( $sticky_posts, $bbp->topic_query->posts );
+					$ideaboard->topic_query->posts       = array_merge( $sticky_posts, $ideaboard->topic_query->posts );
 
 					// Adjust loop and counts for new sticky positions
-					$bbp->topic_query->found_posts = (int) $bbp->topic_query->found_posts + (int) $sticky_count;
-					$bbp->topic_query->post_count  = (int) $bbp->topic_query->post_count  + (int) $sticky_count;
+					$ideaboard->topic_query->found_posts = (int) $ideaboard->topic_query->found_posts + (int) $sticky_count;
+					$ideaboard->topic_query->post_count  = (int) $ideaboard->topic_query->post_count  + (int) $sticky_count;
 
 					// Cleanup
 					unset( $sticky_posts );
@@ -326,18 +326,18 @@ function ideaboard_has_topics( $args = '' ) {
 
 	// If no limit to posts per page, set it to the current post_count
 	if ( -1 === $r['posts_per_page'] )
-		$r['posts_per_page'] = $bbp->topic_query->post_count;
+		$r['posts_per_page'] = $ideaboard->topic_query->post_count;
 
 	// Add pagination values to query object
-	$bbp->topic_query->posts_per_page = $r['posts_per_page'];
-	$bbp->topic_query->paged          = $r['paged'];
+	$ideaboard->topic_query->posts_per_page = $r['posts_per_page'];
+	$ideaboard->topic_query->paged          = $r['paged'];
 
 	// Only add pagination if query returned results
-	if ( ( (int) $bbp->topic_query->post_count || (int) $bbp->topic_query->found_posts ) && (int) $bbp->topic_query->posts_per_page ) {
+	if ( ( (int) $ideaboard->topic_query->post_count || (int) $ideaboard->topic_query->found_posts ) && (int) $ideaboard->topic_query->posts_per_page ) {
 
 		// Limit the number of topics shown based on maximum allowed pages
-		if ( ( !empty( $r['max_num_pages'] ) ) && $bbp->topic_query->found_posts > $bbp->topic_query->max_num_pages * $bbp->topic_query->post_count )
-			$bbp->topic_query->found_posts = $bbp->topic_query->max_num_pages * $bbp->topic_query->post_count;
+		if ( ( !empty( $r['max_num_pages'] ) ) && $ideaboard->topic_query->found_posts > $ideaboard->topic_query->max_num_pages * $ideaboard->topic_query->post_count )
+			$ideaboard->topic_query->found_posts = $ideaboard->topic_query->max_num_pages * $ideaboard->topic_query->post_count;
 
 		// If pretty permalinks are enabled, make our pagination pretty
 		if ( $wp_rewrite->using_permalinks() ) {
@@ -395,22 +395,22 @@ function ideaboard_has_topics( $args = '' ) {
 		$ideaboard_topic_pagination = apply_filters( 'ideaboard_topic_pagination', array (
 			'base'      => $base,
 			'format'    => '',
-			'total'     => $r['posts_per_page'] === $bbp->topic_query->found_posts ? 1 : ceil( (int) $bbp->topic_query->found_posts / (int) $r['posts_per_page'] ),
-			'current'   => (int) $bbp->topic_query->paged,
+			'total'     => $r['posts_per_page'] === $ideaboard->topic_query->found_posts ? 1 : ceil( (int) $ideaboard->topic_query->found_posts / (int) $r['posts_per_page'] ),
+			'current'   => (int) $ideaboard->topic_query->paged,
 			'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
 			'next_text' => is_rtl() ? '&larr;' : '&rarr;',
 			'mid_size'  => 1
 		) );
 
 		// Add pagination to query object
-		$bbp->topic_query->pagination_links = paginate_links( $ideaboard_topic_pagination );
+		$ideaboard->topic_query->pagination_links = paginate_links( $ideaboard_topic_pagination );
 
 		// Remove first page from pagination
-		$bbp->topic_query->pagination_links = str_replace( $wp_rewrite->pagination_base . "/1/'", "'", $bbp->topic_query->pagination_links );
+		$ideaboard->topic_query->pagination_links = str_replace( $wp_rewrite->pagination_base . "/1/'", "'", $ideaboard->topic_query->pagination_links );
 	}
 
 	// Return object
-	return apply_filters( 'ideaboard_has_topics', $bbp->topic_query->have_posts(), $bbp->topic_query );
+	return apply_filters( 'ideaboard_has_topics', $ideaboard->topic_query->have_posts(), $ideaboard->topic_query );
 }
 
 /**
@@ -478,23 +478,23 @@ function ideaboard_topic_id( $topic_id = 0) {
 	function ideaboard_get_topic_id( $topic_id = 0 ) {
 		global $wp_query;
 
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Easy empty checking
 		if ( !empty( $topic_id ) && is_numeric( $topic_id ) ) {
 			$ideaboard_topic_id = $topic_id;
 
 		// Currently inside a topic loop
-		} elseif ( !empty( $bbp->topic_query->in_the_loop ) && isset( $bbp->topic_query->post->ID ) ) {
-			$ideaboard_topic_id = $bbp->topic_query->post->ID;
+		} elseif ( !empty( $ideaboard->topic_query->in_the_loop ) && isset( $ideaboard->topic_query->post->ID ) ) {
+			$ideaboard_topic_id = $ideaboard->topic_query->post->ID;
 
 		// Currently inside a search loop
-		} elseif ( !empty( $bbp->search_query->in_the_loop ) && isset( $bbp->search_query->post->ID ) && ideaboard_is_topic( $bbp->search_query->post->ID ) ) {
-			$ideaboard_topic_id = $bbp->search_query->post->ID;
+		} elseif ( !empty( $ideaboard->search_query->in_the_loop ) && isset( $ideaboard->search_query->post->ID ) && ideaboard_is_topic( $ideaboard->search_query->post->ID ) ) {
+			$ideaboard_topic_id = $ideaboard->search_query->post->ID;
 
 		// Currently viewing/editing a topic, likely alone
-		} elseif ( ( ideaboard_is_single_topic() || ideaboard_is_topic_edit() ) && !empty( $bbp->current_topic_id ) ) {
-			$ideaboard_topic_id = $bbp->current_topic_id;
+		} elseif ( ( ideaboard_is_single_topic() || ideaboard_is_topic_edit() ) && !empty( $ideaboard->current_topic_id ) ) {
+			$ideaboard_topic_id = $ideaboard->current_topic_id;
 
 		// Currently viewing/editing a topic, likely in a loop
 		} elseif ( ( ideaboard_is_single_topic() || ideaboard_is_topic_edit() ) && isset( $wp_query->post->ID ) ) {
@@ -858,7 +858,7 @@ function ideaboard_topic_pagination( $args = '' ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'topic_id' => ideaboard_get_topic_id(),
-			'before'   => '<span class="bbp-topic-pagination">',
+			'before'   => '<span class="ideaboard-topic-pagination">',
 			'after'    => '</span>',
 		), 'get_topic_pagination' );
 
@@ -970,7 +970,7 @@ function ideaboard_topic_revision_log( $topic_id = 0 ) {
 		if ( empty( $revisions ) )
 			return false;
 
-		$r = "\n\n" . '<ul id="bbp-topic-revision-log-' . esc_attr( $topic_id ) . '" class="bbp-topic-revision-log">' . "\n\n";
+		$r = "\n\n" . '<ul id="ideaboard-topic-revision-log-' . esc_attr( $topic_id ) . '" class="ideaboard-topic-revision-log">' . "\n\n";
 
 		// Loop through revisions
 		foreach ( (array) $revisions as $revision ) {
@@ -986,7 +986,7 @@ function ideaboard_topic_revision_log( $topic_id = 0 ) {
 			$author = ideaboard_get_author_link( array( 'size' => 14, 'link_text' => ideaboard_get_topic_author_display_name( $revision->ID ), 'post_id' => $revision->ID ) );
 			$since  = ideaboard_get_time_since( ideaboard_convert_date( $revision->post_modified ) );
 
-			$r .= "\t" . '<li id="bbp-topic-revision-log-' . esc_attr( $topic_id ) . '-item-' . esc_attr( $revision->ID ) . '" class="bbp-topic-revision-log-item">' . "\n";
+			$r .= "\t" . '<li id="ideaboard-topic-revision-log-' . esc_attr( $topic_id ) . '-item-' . esc_attr( $revision->ID ) . '" class="ideaboard-topic-revision-log-item">' . "\n";
 			if ( !empty( $reason ) ) {
 				$r .= "\t\t" . sprintf( __( 'This topic was modified %1$s by %2$s. Reason: %3$s', 'ideaboard' ), esc_html( $since ), $author, esc_html( $reason ) ) . "\n";
 			} else {
@@ -1500,14 +1500,14 @@ function ideaboard_topic_author_link( $args = '' ) {
 			}
 
 			// Link class
-			$link_class = ' class="bbp-author-' . esc_attr( $r['type'] ) . '"';
+			$link_class = ' class="ideaboard-author-' . esc_attr( $r['type'] ) . '"';
 
 			// Add links if not anonymous
 			if ( empty( $anonymous ) && ideaboard_user_has_profile( ideaboard_get_topic_author_id( $topic_id ) ) ) {
 
 				// Assemble the links
 				foreach ( $author_links as $link => $link_text ) {
-					$link_class = ' class="bbp-author-' . esc_attr( $link ) . '"';
+					$link_class = ' class="ideaboard-author-' . esc_attr( $link ) . '"';
 					$author_link[] = sprintf( '<a href="%1$s"%2$s%3$s>%4$s</a>', esc_url( $author_url ), $link_title, $link_class, $link_text );
 				}
 
@@ -1658,7 +1658,7 @@ function ideaboard_topic_author_role( $args = array() ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'topic_id' => 0,
-			'class'    => 'bbp-author-role',
+			'class'    => 'ideaboard-author-role',
 			'before'   => '',
 			'after'    => ''
 		), 'get_topic_author_role' );
@@ -2292,7 +2292,7 @@ function ideaboard_topic_tag_list( $topic_id = 0, $args = '' ) {
 
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
-			'before' => '<div class="bbp-topic-tags"><p>' . esc_html__( 'Tagged:', 'ideaboard' ) . '&nbsp;',
+			'before' => '<div class="ideaboard-topic-tags"><p>' . esc_html__( 'Tagged:', 'ideaboard' ) . '&nbsp;',
 			'sep'    => ', ',
 			'after'  => '</p></div>'
 		), 'get_topic_tag_list' );
@@ -2351,14 +2351,14 @@ function ideaboard_topic_class( $topic_id = 0, $classes = array() ) {
 	 * @return string Row class of a topic
 	 */
 	function ideaboard_get_topic_class( $topic_id = 0, $classes = array() ) {
-		$bbp       = ideaboard();
+		$ideaboard       = ideaboard();
 		$topic_id  = ideaboard_get_topic_id( $topic_id );
-		$count     = isset( $bbp->topic_query->current_post ) ? $bbp->topic_query->current_post : 1;
+		$count     = isset( $ideaboard->topic_query->current_post ) ? $ideaboard->topic_query->current_post : 1;
 		$classes   = (array) $classes;
 		$classes[] = ( (int) $count % 2 )                    ? 'even'         : 'odd';
 		$classes[] = ideaboard_is_topic_sticky( $topic_id, false ) ? 'sticky'       : '';
 		$classes[] = ideaboard_is_topic_super_sticky( $topic_id  ) ? 'super-sticky' : '';
-		$classes[] = 'bbp-parent-forum-' . ideaboard_get_topic_forum_id( $topic_id );
+		$classes[] = 'ideaboard-parent-forum-' . ideaboard_get_topic_forum_id( $topic_id );
 		$classes[] = 'user-id-' . ideaboard_get_topic_author_id( $topic_id );
 		$classes   = array_filter( $classes );
 		$classes   = get_post_class( $classes, $topic_id );
@@ -2408,7 +2408,7 @@ function ideaboard_topic_admin_links( $args = array() ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array (
 			'id'     => ideaboard_get_topic_id(),
-			'before' => '<span class="bbp-admin-links">',
+			'before' => '<span class="ideaboard-admin-links">',
 			'after'  => '</span>',
 			'sep'    => ' | ',
 			'links'  => array()
@@ -2509,7 +2509,7 @@ function ideaboard_topic_edit_link( $args = '' ) {
 		if ( empty( $uri ) )
 			return;
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="ideaboard-topic-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_topic_edit_link', $retval, $r );
 	}
@@ -2541,7 +2541,7 @@ function ideaboard_topic_edit_url( $topic_id = 0 ) {
 	function ideaboard_get_topic_edit_url( $topic_id = 0 ) {
 		global $wp_rewrite;
 
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		$topic = ideaboard_get_topic( ideaboard_get_topic_id( $topic_id ) );
 		if ( empty( $topic ) )
@@ -2552,12 +2552,12 @@ function ideaboard_topic_edit_url( $topic_id = 0 ) {
 
 		// Pretty permalinks
 		if ( $wp_rewrite->using_permalinks() ) {
-			$url = trailingslashit( $topic_link ) . $bbp->edit_id;
+			$url = trailingslashit( $topic_link ) . $ideaboard->edit_id;
 			$url = trailingslashit( $url );
 
 		// Unpretty permalinks
 		} else {
-			$url = add_query_arg( array( ideaboard_get_topic_post_type() => $topic->post_name, $bbp->edit_id => '1' ), $topic_link );
+			$url = add_query_arg( array( ideaboard_get_topic_post_type() => $topic->post_name, $ideaboard->edit_id => '1' ), $topic_link );
 		}
 
 		// Maybe add view=all
@@ -2625,13 +2625,13 @@ function ideaboard_topic_trash_link( $args = '' ) {
 		}
 
 		if ( ideaboard_is_topic_trash( $topic->ID ) ) {
-			$actions['untrash'] = '<a title="' . esc_attr__( 'Restore this item from the Trash', 'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_topic_trash', 'sub_action' => 'untrash', 'topic_id' => $topic->ID ) ), 'untrash-' . $topic->post_type . '_' . $topic->ID ) ) . '" class="bbp-topic-restore-link">' . $r['restore_text'] . '</a>';
+			$actions['untrash'] = '<a title="' . esc_attr__( 'Restore this item from the Trash', 'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_topic_trash', 'sub_action' => 'untrash', 'topic_id' => $topic->ID ) ), 'untrash-' . $topic->post_type . '_' . $topic->ID ) ) . '" class="ideaboard-topic-restore-link">' . $r['restore_text'] . '</a>';
 		} elseif ( EMPTY_TRASH_DAYS ) {
-			$actions['trash']   = '<a title="' . esc_attr__( 'Move this item to the Trash',      'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_topic_trash', 'sub_action' => 'trash',   'topic_id' => $topic->ID ) ), 'trash-'   . $topic->post_type . '_' . $topic->ID ) ) . '" class="bbp-topic-trash-link">'   . $r['trash_text']   . '</a>';
+			$actions['trash']   = '<a title="' . esc_attr__( 'Move this item to the Trash',      'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_topic_trash', 'sub_action' => 'trash',   'topic_id' => $topic->ID ) ), 'trash-'   . $topic->post_type . '_' . $topic->ID ) ) . '" class="ideaboard-topic-trash-link">'   . $r['trash_text']   . '</a>';
 		}
 
 		if ( ideaboard_is_topic_trash( $topic->ID ) || !EMPTY_TRASH_DAYS ) {
-			$actions['delete']  = '<a title="' . esc_attr__( 'Delete this item permanently',     'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_topic_trash', 'sub_action' => 'delete',  'topic_id' => $topic->ID ) ), 'delete-'  . $topic->post_type . '_' . $topic->ID ) ) . '" onclick="return confirm(\'' . esc_js( __( 'Are you sure you want to delete that permanently?', 'ideaboard' ) ) . '\' );" class="bbp-topic-delete-link">' . $r['delete_text'] . '</a>';
+			$actions['delete']  = '<a title="' . esc_attr__( 'Delete this item permanently',     'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_topic_trash', 'sub_action' => 'delete',  'topic_id' => $topic->ID ) ), 'delete-'  . $topic->post_type . '_' . $topic->ID ) ) . '" onclick="return confirm(\'' . esc_js( __( 'Are you sure you want to delete that permanently?', 'ideaboard' ) ) . '\' );" class="ideaboard-topic-delete-link">' . $r['delete_text'] . '</a>';
 		}
 
 		// Process the admin links
@@ -2694,7 +2694,7 @@ function ideaboard_topic_close_link( $args = '' ) {
 		$display = ideaboard_is_topic_open( $topic->ID ) ? $r['close_text'] : $r['open_text'];
 		$uri     = add_query_arg( array( 'action' => 'ideaboard_toggle_topic_close', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'close-topic_' . $topic->ID );
-		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-close-link">' . $display . '</a>' . $r['link_after'];
+		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="ideaboard-topic-close-link">' . $display . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_topic_close_link', $retval, $r );
 	}
@@ -2758,13 +2758,13 @@ function ideaboard_topic_stick_link( $args = '' ) {
 		$stick_uri = wp_nonce_url( $stick_uri, 'stick-topic_' . $topic->ID );
 
 		$stick_display = ( true === $is_sticky ) ? $r['unstick_text'] : $r['stick_text'];
-		$stick_display = '<a href="' . esc_url( $stick_uri ) . '" class="bbp-topic-sticky-link">' . $stick_display . '</a>';
+		$stick_display = '<a href="' . esc_url( $stick_uri ) . '" class="ideaboard-topic-sticky-link">' . $stick_display . '</a>';
 
 		if ( empty( $is_sticky ) ) {
 			$super_uri = add_query_arg( array( 'action' => 'ideaboard_toggle_topic_stick', 'topic_id' => $topic->ID, 'super' => 1 ) );
 			$super_uri = wp_nonce_url( $super_uri, 'stick-topic_' . $topic->ID );
 
-			$super_display = ' <a href="' . esc_url( $super_uri ) . '" class="bbp-topic-super-sticky-link">' . $r['super_text'] . '</a>';
+			$super_display = ' <a href="' . esc_url( $super_uri ) . '" class="ideaboard-topic-super-sticky-link">' . $r['super_text'] . '</a>';
 		} else {
 			$super_display = '';
 		}
@@ -2822,7 +2822,7 @@ function ideaboard_topic_merge_link( $args = '' ) {
 			return;
 
 		$uri    = add_query_arg( array( 'action' => 'merge' ), ideaboard_get_topic_edit_url( $topic->ID ) );
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="ideaboard-topic-merge-link">' . $r['merge_text'] . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_topic_merge_link', $retval, $args );
 	}
@@ -2881,7 +2881,7 @@ function ideaboard_topic_spam_link( $args = '' ) {
 		$display = ideaboard_is_topic_spam( $topic->ID ) ? $r['unspam_text'] : $r['spam_text'];
 		$uri     = add_query_arg( array( 'action' => 'ideaboard_toggle_topic_spam', 'topic_id' => $topic->ID ) );
 		$uri     = wp_nonce_url( $uri, 'spam-topic_' . $topic->ID );
-		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-topic-spam-link">' . $display . '</a>' . $r['link_after'];
+		$retval  = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="ideaboard-topic-spam-link">' . $display . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_topic_spam_link', $retval, $r );
 	}
@@ -2932,7 +2932,7 @@ function ideaboard_topic_reply_link( $args = array() ) {
 
 		// Add $uri to the array, to be passed through the filter
 		$r['uri'] = $uri;
-		$retval   = $r['link_before'] . '<a href="' . esc_url( $r['uri'] ) . '" class="bbp-topic-reply-link">' . $r['reply_text'] . '</a>' . $r['link_after'];
+		$retval   = $r['link_before'] . '<a href="' . esc_url( $r['uri'] ) . '" class="ideaboard-topic-reply-link">' . $r['reply_text'] . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_topic_reply_link', $retval, $r, $args );
 	}
@@ -2960,16 +2960,16 @@ function ideaboard_forum_pagination_count() {
 	 * @return string Forum Pagintion count
 	 */
 	function ideaboard_get_forum_pagination_count() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
-		if ( empty( $bbp->topic_query ) )
+		if ( empty( $ideaboard->topic_query ) )
 			return false;
 
 		// Set pagination values
-		$start_num = intval( ( $bbp->topic_query->paged - 1 ) * $bbp->topic_query->posts_per_page ) + 1;
+		$start_num = intval( ( $ideaboard->topic_query->paged - 1 ) * $ideaboard->topic_query->posts_per_page ) + 1;
 		$from_num  = ideaboard_number_format( $start_num );
-		$to_num    = ideaboard_number_format( ( $start_num + ( $bbp->topic_query->posts_per_page - 1 ) > $bbp->topic_query->found_posts ) ? $bbp->topic_query->found_posts : $start_num + ( $bbp->topic_query->posts_per_page - 1 ) );
-		$total_int = (int) !empty( $bbp->topic_query->found_posts ) ? $bbp->topic_query->found_posts : $bbp->topic_query->post_count;
+		$to_num    = ideaboard_number_format( ( $start_num + ( $ideaboard->topic_query->posts_per_page - 1 ) > $ideaboard->topic_query->found_posts ) ? $ideaboard->topic_query->found_posts : $start_num + ( $ideaboard->topic_query->posts_per_page - 1 ) );
+		$total_int = (int) !empty( $ideaboard->topic_query->found_posts ) ? $ideaboard->topic_query->found_posts : $ideaboard->topic_query->post_count;
 		$total     = ideaboard_number_format( $total_int );
 
 		// Several topics in a forum with a single page
@@ -2978,7 +2978,7 @@ function ideaboard_forum_pagination_count() {
 
 		// Several topics in a forum with several pages
 		} else {
-			$retstr = sprintf( _n( 'Viewing topic %2$s (of %4$s total)', 'Viewing %1$s topics - %2$s through %3$s (of %4$s total)', $total_int, 'ideaboard' ), $bbp->topic_query->post_count, $from_num, $to_num, $total );
+			$retstr = sprintf( _n( 'Viewing topic %2$s (of %4$s total)', 'Viewing %1$s topics - %2$s through %3$s (of %4$s total)', $total_int, 'ideaboard' ), $ideaboard->topic_query->post_count, $from_num, $to_num, $total );
 		}
 
 		// Filter and return
@@ -3004,12 +3004,12 @@ function ideaboard_forum_pagination_links() {
 	 * @return string Pagination links
 	 */
 	function ideaboard_get_forum_pagination_links() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
-		if ( empty( $bbp->topic_query ) )
+		if ( empty( $ideaboard->topic_query ) )
 			return false;
 
-		return apply_filters( 'ideaboard_get_forum_pagination_links', $bbp->topic_query->pagination_links );
+		return apply_filters( 'ideaboard_get_forum_pagination_links', $ideaboard->topic_query->pagination_links );
 	}
 
 /**
@@ -3285,7 +3285,7 @@ function ideaboard_single_topic_description( $args = '' ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'topic_id'  => 0,
-			'before'    => '<div class="bbp-template-notice info"><p class="bbp-topic-description">',
+			'before'    => '<div class="ideaboard-template-notice info"><p class="ideaboard-topic-description">',
 			'after'     => '</p></div>',
 			'size'      => 14
 		), 'get_single_topic_description' );
@@ -3602,15 +3602,15 @@ function ideaboard_topic_tag_edit_link( $tag = '' ) {
 		// Add before and after if description exists
 		if ( !empty( $term->term_id ) ) {
 
-			$bbp = ideaboard();
+			$ideaboard = ideaboard();
 
 			// Pretty
 			if ( $wp_rewrite->using_permalinks() ) {
-				$retval = user_trailingslashit( trailingslashit( ideaboard_get_topic_tag_link() ) . $bbp->edit_id );
+				$retval = user_trailingslashit( trailingslashit( ideaboard_get_topic_tag_link() ) . $ideaboard->edit_id );
 
 			// Ugly
 			} else {
-				$retval = add_query_arg( array( $bbp->edit_id => '1' ), ideaboard_get_topic_tag_link() );
+				$retval = add_query_arg( array( $ideaboard->edit_id => '1' ), ideaboard_get_topic_tag_link() );
 			}
 
 		// No link
@@ -3648,7 +3648,7 @@ function ideaboard_topic_tag_description( $args = array() ) {
 
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
-			'before' => '<div class="bbp-topic-tag-description"><p>',
+			'before' => '<div class="ideaboard-topic-tag-description"><p>',
 			'after'  => '</p></div>',
 			'tag'    => ''
 		), 'get_topic_tag_description' );

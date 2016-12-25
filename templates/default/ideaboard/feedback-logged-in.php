@@ -9,6 +9,6 @@
 
 ?>
 
-<div class="bbp-template-notice info">
+<div class="ideaboard-template-notice info">
 	<p><?php _e( 'You are already logged in.', 'ideaboard' ); ?></p>
 </div>

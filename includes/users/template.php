@@ -38,19 +38,19 @@ function ideaboard_user_id( $user_id = 0, $displayed_user_fallback = true, $curr
 	 * @return int Validated user id
 	 */
 	function ideaboard_get_user_id( $user_id = 0, $displayed_user_fallback = true, $current_user_fallback = false ) {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Easy empty checking
 		if ( !empty( $user_id ) && is_numeric( $user_id ) ) {
 			$ideaboard_user_id = $user_id;
 
 		// Currently viewing or editing a user
-		} elseif ( ( true === $displayed_user_fallback ) && !empty( $bbp->displayed_user->ID ) ) {
-			$ideaboard_user_id = $bbp->displayed_user->ID;
+		} elseif ( ( true === $displayed_user_fallback ) && !empty( $ideaboard->displayed_user->ID ) ) {
+			$ideaboard_user_id = $ideaboard->displayed_user->ID;
 
 		// Maybe fallback on the current_user ID
-		} elseif ( ( true === $current_user_fallback ) && !empty( $bbp->current_user->ID ) ) {
-			$ideaboard_user_id = $bbp->current_user->ID;
+		} elseif ( ( true === $current_user_fallback ) && !empty( $ideaboard->current_user->ID ) ) {
+			$ideaboard_user_id = $ideaboard->current_user->ID;
 
 		// Failsafe
 		} else {
@@ -440,14 +440,14 @@ function ideaboard_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 	function ideaboard_get_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 		global $wp_rewrite;
 
-		$bbp     = ideaboard();
+		$ideaboard     = ideaboard();
 		$user_id = ideaboard_get_user_id( $user_id );
 		if ( empty( $user_id ) )
 			return false;
 
 		// Pretty permalinks
 		if ( $wp_rewrite->using_permalinks() ) {
-			$url = $wp_rewrite->root . ideaboard_get_user_slug() . '/%' . $bbp->user_id . '%/' . $bbp->edit_id;
+			$url = $wp_rewrite->root . ideaboard_get_user_slug() . '/%' . $ideaboard->user_id . '%/' . $ideaboard->edit_id;
 
 			// Get username if not passed
 			if ( empty( $user_nicename ) ) {
@@ -457,12 +457,12 @@ function ideaboard_user_profile_edit_url( $user_id = 0, $user_nicename = '' ) {
 				}
 			}
 
-			$url = str_replace( '%' . $bbp->user_id . '%', $user_nicename, $url );
+			$url = str_replace( '%' . $ideaboard->user_id . '%', $user_nicename, $url );
 			$url = home_url( user_trailingslashit( $url ) );
 
 		// Unpretty permalinks
 		} else {
-			$url = add_query_arg( array( $bbp->user_id => $user_id, $bbp->edit_id => '1' ), home_url( '/' ) );
+			$url = add_query_arg( array( $ideaboard->user_id => $user_id, $ideaboard->edit_id => '1' ), home_url( '/' ) );
 		}
 
 		return apply_filters( 'ideaboard_get_user_edit_profile_url', $url, $user_id, $user_nicename );
@@ -594,7 +594,7 @@ function ideaboard_author_ip( $args = '' ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'post_id' => $post_id,
-			'before'  => '<span class="bbp-author-ip">(',
+			'before'  => '<span class="ideaboard-author-ip">(',
 			'after'   => ')</span>'
 		), 'get_author_ip' );
 
@@ -1159,7 +1159,7 @@ function ideaboard_user_subscribe_link( $args = '', $user_id = 0, $wrap = true )
 function ideaboard_notice_edit_user_success() {
 	if ( isset( $_GET['updated'] ) && ( ideaboard_is_single_user() || ideaboard_is_single_user_edit() ) ) : ?>
 
-	<div class="bbp-template-notice updated">
+	<div class="ideaboard-template-notice updated">
 		<p><?php esc_html_e( 'User updated.', 'ideaboard' ); ?></p>
 	</div>
 
@@ -1184,7 +1184,7 @@ function ideaboard_notice_edit_user_success() {
 function ideaboard_notice_edit_user_is_super_admin() {
 	if ( is_multisite() && ( ideaboard_is_single_user() || ideaboard_is_single_user_edit() ) && current_user_can( 'manage_network_options' ) && is_super_admin( ideaboard_get_displayed_user_id() ) ) : ?>
 
-	<div class="bbp-template-notice important">
+	<div class="ideaboard-template-notice important">
 		<p><?php ideaboard_is_user_home() || ideaboard_is_user_home_edit() ? esc_html_e( 'You have super admin privileges.', 'ideaboard' ) : esc_html_e( 'This user has super admin privileges.', 'ideaboard' ); ?></p>
 	</div>
 
@@ -1197,26 +1197,26 @@ function ideaboard_notice_edit_user_is_super_admin() {
  * @since IdeaBoard (r2688)
  */
 function ideaboard_edit_user_display_name() {
-	$bbp            = ideaboard();
+	$ideaboard            = ideaboard();
 	$public_display = array();
-	$public_display['display_username'] = $bbp->displayed_user->user_login;
+	$public_display['display_username'] = $ideaboard->displayed_user->user_login;
 
-	if ( !empty( $bbp->displayed_user->nickname ) )
-		$public_display['display_nickname']  = $bbp->displayed_user->nickname;
+	if ( !empty( $ideaboard->displayed_user->nickname ) )
+		$public_display['display_nickname']  = $ideaboard->displayed_user->nickname;
 
-	if ( !empty( $bbp->displayed_user->first_name ) )
-		$public_display['display_firstname'] = $bbp->displayed_user->first_name;
+	if ( !empty( $ideaboard->displayed_user->first_name ) )
+		$public_display['display_firstname'] = $ideaboard->displayed_user->first_name;
 
-	if ( !empty( $bbp->displayed_user->last_name ) )
-		$public_display['display_lastname']  = $bbp->displayed_user->last_name;
+	if ( !empty( $ideaboard->displayed_user->last_name ) )
+		$public_display['display_lastname']  = $ideaboard->displayed_user->last_name;
 
-	if ( !empty( $bbp->displayed_user->first_name ) && !empty( $bbp->displayed_user->last_name ) ) {
-		$public_display['display_firstlast'] = $bbp->displayed_user->first_name . ' ' . $bbp->displayed_user->last_name;
-		$public_display['display_lastfirst'] = $bbp->displayed_user->last_name  . ' ' . $bbp->displayed_user->first_name;
+	if ( !empty( $ideaboard->displayed_user->first_name ) && !empty( $ideaboard->displayed_user->last_name ) ) {
+		$public_display['display_firstlast'] = $ideaboard->displayed_user->first_name . ' ' . $ideaboard->displayed_user->last_name;
+		$public_display['display_lastfirst'] = $ideaboard->displayed_user->last_name  . ' ' . $ideaboard->displayed_user->first_name;
 	}
 
-	if ( !in_array( $bbp->displayed_user->display_name, $public_display ) ) // Only add this if it isn't duplicated elsewhere
-		$public_display = array( 'display_displayname' => $bbp->displayed_user->display_name ) + $public_display;
+	if ( !in_array( $ideaboard->displayed_user->display_name, $public_display ) ) // Only add this if it isn't duplicated elsewhere
+		$public_display = array( 'display_displayname' => $ideaboard->displayed_user->display_name ) + $public_display;
 
 	$public_display = array_map( 'trim', $public_display );
 	$public_display = array_unique( $public_display ); ?>
@@ -1225,7 +1225,7 @@ function ideaboard_edit_user_display_name() {
 
 	<?php foreach ( $public_display as $id => $item ) : ?>
 
-		<option id="<?php echo $id; ?>" value="<?php echo esc_attr( $item ); ?>"<?php selected( $bbp->displayed_user->display_name, $item ); ?>><?php echo $item; ?></option>
+		<option id="<?php echo $id; ?>" value="<?php echo esc_attr( $item ); ?>"<?php selected( $ideaboard->displayed_user->display_name, $item ); ?>><?php echo $item; ?></option>
 
 	<?php endforeach; ?>
 
@@ -1286,7 +1286,7 @@ function ideaboard_edit_user_forums_role() {
 	if ( ! ideaboard_is_user_keymaster() )
 		unset( $dynamic_roles[ ideaboard_get_keymaster_role() ] ); ?>
 
-	<select name="bbp-forums-role" id="bbp-forums-role">
+	<select name="ideaboard-forums-role" id="ideaboard-forums-role">
 		<option value=""><?php esc_html_e( '&mdash; No role for these forums &mdash;', 'ideaboard' ); ?></option>
 
 		<?php foreach ( $dynamic_roles as $role => $details ) : ?>
@@ -1528,7 +1528,7 @@ function ideaboard_user_login_fields() {
 		ideaboard_redirect_to_field( $redirect_to );
 
 		// Prevent intention hi-jacking of log-in form
-		wp_nonce_field( 'bbp-user-login' );
+		wp_nonce_field( 'ideaboard-user-login' );
 }
 
 /** Register ******************************************************************/
@@ -1557,7 +1557,7 @@ function ideaboard_user_register_fields() {
 		ideaboard_redirect_to_field( add_query_arg( array( 'checkemail' => 'registered' ), $redirect_to ) );
 
 		// Prevent intention hi-jacking of sign-up form
-		wp_nonce_field( 'bbp-user-register' );
+		wp_nonce_field( 'ideaboard-user-register' );
 }
 
 /** Lost Password *************************************************************/
@@ -1583,7 +1583,7 @@ function ideaboard_user_lost_pass_fields() {
 		ideaboard_redirect_to_field( add_query_arg( array( 'checkemail' => 'confirm' ), $redirect_to ) );
 
 		// Prevent intention hi-jacking of lost pass form
-		wp_nonce_field( 'bbp-user-lost-pass' );
+		wp_nonce_field( 'ideaboard-user-lost-pass' );
 }
 
 /** Author Avatar *************************************************************/

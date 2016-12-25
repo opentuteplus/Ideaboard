@@ -113,12 +113,12 @@ function ideaboard_insert_topic( $topic_data = array(), $topic_meta = array() ) 
  */
 function ideaboard_new_topic_handler( $action = '' ) {
 
-	// Bail if action is not bbp-new-topic
-	if ( 'bbp-new-topic' !== $action )
+	// Bail if action is not ideaboard-new-topic
+	if ( 'ideaboard-new-topic' !== $action )
 		return;
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-new-topic' ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-new-topic' ) ) {
 		ideaboard_add_error( 'ideaboard_new_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
@@ -156,7 +156,7 @@ function ideaboard_new_topic_handler( $action = '' ) {
 	}
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_topic'] ) && wp_create_nonce( 'bbp-unfiltered-html-topic_new' ) === $_POST['_ideaboard_unfiltered_html_topic'] ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_topic'] ) && wp_create_nonce( 'ideaboard-unfiltered-html-topic_new' ) === $_POST['_ideaboard_unfiltered_html_topic'] ) {
 		remove_filter( 'ideaboard_new_topic_pre_title',   'wp_filter_kses'      );
 		remove_filter( 'ideaboard_new_topic_pre_content', 'ideaboard_encode_bad',  10 );
 		remove_filter( 'ideaboard_new_topic_pre_content', 'ideaboard_filter_kses', 30 );
@@ -466,8 +466,8 @@ function ideaboard_new_topic_handler( $action = '' ) {
  */
 function ideaboard_edit_topic_handler( $action = '' ) {
 
-	// Bail if action is not bbp-edit-topic
-	if ( 'bbp-edit-topic' !== $action )
+	// Bail if action is not ideaboard-edit-topic
+	if ( 'ideaboard-edit-topic' !== $action )
 		return;
 
 	// Define local variable(s)
@@ -516,13 +516,13 @@ function ideaboard_edit_topic_handler( $action = '' ) {
 	}
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-edit-topic_' . $topic_id ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-edit-topic_' . $topic_id ) ) {
 		ideaboard_add_error( 'ideaboard_edit_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_topic'] ) && ( wp_create_nonce( 'bbp-unfiltered-html-topic_' . $topic_id ) === $_POST['_ideaboard_unfiltered_html_topic'] ) ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_topic'] ) && ( wp_create_nonce( 'ideaboard-unfiltered-html-topic_' . $topic_id ) === $_POST['_ideaboard_unfiltered_html_topic'] ) ) {
 		remove_filter( 'ideaboard_edit_topic_pre_title',   'wp_filter_kses'      );
 		remove_filter( 'ideaboard_edit_topic_pre_content', 'ideaboard_encode_bad',  10 );
 		remove_filter( 'ideaboard_edit_topic_pre_content', 'ideaboard_filter_kses', 30 );
@@ -1130,8 +1130,8 @@ function ideaboard_move_topic_handler( $topic_id, $old_forum_id, $new_forum_id )
  */
 function ideaboard_merge_topic_handler( $action = '' ) {
 
-	// Bail if action is not bbp-merge-topic
-	if ( 'bbp-merge-topic' !== $action )
+	// Bail if action is not ideaboard-merge-topic
+	if ( 'ideaboard-merge-topic' !== $action )
 		return;
 
 	// Define local variable(s)
@@ -1149,7 +1149,7 @@ function ideaboard_merge_topic_handler( $action = '' ) {
 	}
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-merge-topic_' . $source_topic_id ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-merge-topic_' . $source_topic_id ) ) {
 		ideaboard_add_error( 'ideaboard_merge_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 
@@ -1417,8 +1417,8 @@ function ideaboard_merge_topic_count( $destination_topic_id, $source_topic_id, $
  */
 function ideaboard_split_topic_handler( $action = '' ) {
 
-	// Bail if action is not 'bbp-split-topic'
-	if ( 'bbp-split-topic' !== $action )
+	// Bail if action is not 'ideaboard-split-topic'
+	if ( 'ideaboard-split-topic' !== $action )
 		return;
 
 	global $wpdb;
@@ -1452,7 +1452,7 @@ function ideaboard_split_topic_handler( $action = '' ) {
 		ideaboard_add_error( 'ideaboard_split_topic_source_not_found', __( '<strong>ERROR</strong>: The topic you want to split was not found.', 'ideaboard' ) );
 
 	// Nonce check failed
-	if ( ! ideaboard_verify_nonce_request( 'bbp-split-topic_' . $source_topic->ID ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-split-topic_' . $source_topic->ID ) ) {
 		ideaboard_add_error( 'ideaboard_split_topic_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
@@ -1790,9 +1790,9 @@ function ideaboard_edit_topic_tag_handler( $action = '' ) {
 
 	// Setup possible get actions
 	$possible_actions = array(
-		'bbp-update-topic-tag',
-		'bbp-merge-topic-tag',
-		'bbp-delete-topic-tag'
+		'ideaboard-update-topic-tag',
+		'ideaboard-merge-topic-tag',
+		'ideaboard-delete-topic-tag'
 	);
 
 	// Bail if actions aren't meant for this function
@@ -1813,7 +1813,7 @@ function ideaboard_edit_topic_tag_handler( $action = '' ) {
 	switch ( $action ) {
 
 		// Update tag
-		case 'bbp-update-topic-tag' :
+		case 'ideaboard-update-topic-tag' :
 
 			// Nonce check
 			if ( ! ideaboard_verify_nonce_request( 'update-tag_' . $tag_id ) ) {
@@ -1852,7 +1852,7 @@ function ideaboard_edit_topic_tag_handler( $action = '' ) {
 			break;
 
 		// Merge two tags
-		case 'bbp-merge-topic-tag'  :
+		case 'ideaboard-merge-topic-tag'  :
 
 			// Nonce check
 			if ( ! ideaboard_verify_nonce_request( 'merge-tag_' . $tag_id ) ) {
@@ -1909,7 +1909,7 @@ function ideaboard_edit_topic_tag_handler( $action = '' ) {
 			break;
 
 		// Delete tag
-		case 'bbp-delete-topic-tag' :
+		case 'ideaboard-delete-topic-tag' :
 
 			// Nonce check
 			if ( ! ideaboard_verify_nonce_request( 'delete-tag_' . $tag_id ) ) {

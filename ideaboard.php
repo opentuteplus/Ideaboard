@@ -368,9 +368,9 @@ final class IdeaBoard {
 			'register_post_types',      // Register post types (forum|topic|reply)
 			'register_post_statuses',   // Register post statuses (closed|spam|orphan|hidden)
 			'register_taxonomies',      // Register taxonomies (topic-tag)
-			'register_shortcodes',      // Register shortcodes (bbp-login)
+			'register_shortcodes',      // Register shortcodes (ideaboard-login)
 			'register_views',           // Register the views (no-replies)
-			'register_theme_packages',  // Register bundled theme packages (bbp-theme-compat/bbp-themes)
+			'register_theme_packages',  // Register bundled theme packages (ideaboard-theme-compat/ideaboard-themes)
 			'load_textdomain',          // Load textdomain (ideaboard)
 			'add_rewrite_tags',         // Add rewrite tags (view|user|edit|search)
 			'add_rewrite_rules',        // Generate rewrite rules (view|edit|paged|search)
@@ -381,7 +381,7 @@ final class IdeaBoard {
 		foreach ( $actions as $class_action )
 			add_action( 'ideaboard_' . $class_action, array( $this, $class_action ), 5 );
 
-		// All IdeaBoard actions are setup (includes bbp-core-hooks.php)
+		// All IdeaBoard actions are setup (includes ideaboard-core-hooks.php)
 		do_action_ref_array( 'ideaboard_after_setup_actions', array( &$this ) );
 	}
 
@@ -390,8 +390,8 @@ final class IdeaBoard {
 	/**
 	 * Register bundled theme packages
 	 *
-	 * Note that since we currently have complete control over bbp-themes and
-	 * the bbp-theme-compat folders, it's fine to hardcode these here. If at a
+	 * Note that since we currently have complete control over ideaboard-themes and
+	 * the ideaboard-theme-compat folders, it's fine to hardcode these here. If at a
 	 * later date we need to automate this, and API will need to be built.
 	 *
 	 * @since IdeaBoard (r3829)
@@ -455,7 +455,7 @@ final class IdeaBoard {
 		// Look in global /wp-content/languages/ideaboard folder
 		load_textdomain( $this->domain, $mofile_global );
 
-		// Look in local /wp-content/plugins/ideaboard/bbp-languages/ folder
+		// Look in local /wp-content/plugins/ideaboard/ideaboard-languages/ folder
 		load_textdomain( $this->domain, $mofile_local );
 
 		// Look in global /wp-content/languages/plugins/
@@ -904,7 +904,7 @@ final class IdeaBoard {
  * Use this function like you would a global variable, except without needing
  * to declare the global.
  *
- * Example: <?php $bbp = ideaboard(); ?>
+ * Example: <?php $ideaboard = ideaboard(); ?>
  *
  * @return The one true IdeaBoard Instance
  */

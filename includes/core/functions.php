@@ -127,7 +127,7 @@ function ideaboard_update_reply_id( $post_id, $reply_id ) {
 /**
  * Get the registered views
  *
- * Does nothing much other than return the {@link $bbp->views} variable
+ * Does nothing much other than return the {@link $ideaboard->views} variable
  *
  * @since IdeaBoard (r2789)
  *
@@ -159,7 +159,7 @@ function ideaboard_register_view( $view, $title, $query_args = '', $feed = true,
 	if ( ! empty( $capability ) && ! current_user_can( $capability ) )
 		return false;
 
-	$bbp   = ideaboard();
+	$ideaboard   = ideaboard();
 	$view  = sanitize_title( $view );
 	$title = esc_html( $title );
 
@@ -172,13 +172,13 @@ function ideaboard_register_view( $view, $title, $query_args = '', $feed = true,
 	if ( !isset( $query_args['show_stickies'] ) )
 		$query_args['show_stickies'] = false;
 
-	$bbp->views[$view] = array(
+	$ideaboard->views[$view] = array(
 		'title'  => $title,
 		'query'  => $query_args,
 		'feed'   => $feed
 	);
 
-	return $bbp->views[$view];
+	return $ideaboard->views[$view];
 }
 
 /**
@@ -191,13 +191,13 @@ function ideaboard_register_view( $view, $title, $query_args = '', $feed = true,
  * @return bool False if the view doesn't exist, true on success
  */
 function ideaboard_deregister_view( $view ) {
-	$bbp  = ideaboard();
+	$ideaboard  = ideaboard();
 	$view = sanitize_title( $view );
 
-	if ( !isset( $bbp->views[$view] ) )
+	if ( !isset( $ideaboard->views[$view] ) )
 		return false;
 
-	unset( $bbp->views[$view] );
+	unset( $ideaboard->views[$view] );
 
 	return true;
 }

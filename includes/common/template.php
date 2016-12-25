@@ -952,53 +952,53 @@ function ideaboard_body_class( $wp_classes, $custom_classes = false ) {
 		$ideaboard_classes[] = ideaboard_get_reply_post_type() . '-move';
 
 	} elseif ( ideaboard_is_single_view() ) {
-		$ideaboard_classes[] = 'bbp-view';
+		$ideaboard_classes[] = 'ideaboard-view';
 
 	/** User ******************************************************************/
 
 	} elseif ( ideaboard_is_single_user_edit() ) {
-		$ideaboard_classes[] = 'bbp-user-edit';
+		$ideaboard_classes[] = 'ideaboard-user-edit';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	} elseif ( ideaboard_is_single_user() ) {
-		$ideaboard_classes[] = 'bbp-user-page';
+		$ideaboard_classes[] = 'ideaboard-user-page';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	} elseif ( ideaboard_is_user_home() ) {
-		$ideaboard_classes[] = 'bbp-user-home';
+		$ideaboard_classes[] = 'ideaboard-user-home';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	} elseif ( ideaboard_is_user_home_edit() ) {
-		$ideaboard_classes[] = 'bbp-user-home-edit';
+		$ideaboard_classes[] = 'ideaboard-user-home-edit';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	} elseif ( ideaboard_is_topics_created() ) {
-		$ideaboard_classes[] = 'bbp-topics-created';
+		$ideaboard_classes[] = 'ideaboard-topics-created';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	} elseif ( ideaboard_is_favorites() ) {
-		$ideaboard_classes[] = 'bbp-favorites';
+		$ideaboard_classes[] = 'ideaboard-favorites';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	} elseif ( ideaboard_is_subscriptions() ) {
-		$ideaboard_classes[] = 'bbp-subscriptions';
+		$ideaboard_classes[] = 'ideaboard-subscriptions';
 		$ideaboard_classes[] = 'single';
 		$ideaboard_classes[] = 'singular';
 
 	/** Search ****************************************************************/
 
 	} elseif ( ideaboard_is_search() ) {
-		$ideaboard_classes[] = 'bbp-search';
+		$ideaboard_classes[] = 'ideaboard-search';
 		$ideaboard_classes[] = 'forum-search';
 
 	} elseif ( ideaboard_is_search_results() ) {
-		$ideaboard_classes[] = 'bbp-search-results';
+		$ideaboard_classes[] = 'ideaboard-search-results';
 		$ideaboard_classes[] = 'forum-search-results';
 	}
 
@@ -1297,15 +1297,15 @@ function ideaboard_tab_index( $auto_increment = true ) {
 	 * @uses apply_filters Allows return value to be filtered
 	 * @param int $auto_increment Optional. Default true. Set to false to
 	 *                             prevent the increment
-	 * @return int $bbp->tab_index The global tab index
+	 * @return int $ideaboard->tab_index The global tab index
 	 */
 	function ideaboard_get_tab_index( $auto_increment = true ) {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		if ( true === $auto_increment )
-			++$bbp->tab_index;
+			++$ideaboard->tab_index;
 
-		return apply_filters( 'ideaboard_get_tab_index', (int) $bbp->tab_index );
+		return apply_filters( 'ideaboard_get_tab_index', (int) $ideaboard->tab_index );
 	}
 
 /**
@@ -1501,17 +1501,17 @@ function ideaboard_forum_form_fields() {
 
 	if ( ideaboard_is_forum_edit() ) : ?>
 
-		<input type="hidden" name="action"       id="ideaboard_post_action" value="bbp-edit-forum" />
+		<input type="hidden" name="action"       id="ideaboard_post_action" value="ideaboard-edit-forum" />
 		<input type="hidden" name="ideaboard_forum_id" id="ideaboard_forum_id"    value="<?php ideaboard_forum_id(); ?>" />
 
 		<?php
 
 		if ( current_user_can( 'unfiltered_html' ) )
-			wp_nonce_field( 'bbp-unfiltered-html-forum_' . ideaboard_get_forum_id(), '_ideaboard_unfiltered_html_forum', false );
+			wp_nonce_field( 'ideaboard-unfiltered-html-forum_' . ideaboard_get_forum_id(), '_ideaboard_unfiltered_html_forum', false );
 
 		?>
 
-		<?php wp_nonce_field( 'bbp-edit-forum_' . ideaboard_get_forum_id() );
+		<?php wp_nonce_field( 'ideaboard-edit-forum_' . ideaboard_get_forum_id() );
 
 	else :
 
@@ -1521,16 +1521,16 @@ function ideaboard_forum_form_fields() {
 
 		<?php endif; ?>
 
-		<input type="hidden" name="action" id="ideaboard_post_action" value="bbp-new-forum" />
+		<input type="hidden" name="action" id="ideaboard_post_action" value="ideaboard-new-forum" />
 
 		<?php
 
 		if ( current_user_can( 'unfiltered_html' ) )
-			wp_nonce_field( 'bbp-unfiltered-html-forum_new', '_ideaboard_unfiltered_html_forum', false );
+			wp_nonce_field( 'ideaboard-unfiltered-html-forum_new', '_ideaboard_unfiltered_html_forum', false );
 
 		?>
 
-		<?php wp_nonce_field( 'bbp-new-forum' );
+		<?php wp_nonce_field( 'ideaboard-new-forum' );
 
 	endif;
 }
@@ -1550,17 +1550,17 @@ function ideaboard_topic_form_fields() {
 
 	if ( ideaboard_is_topic_edit() ) : ?>
 
-		<input type="hidden" name="action"       id="ideaboard_post_action" value="bbp-edit-topic" />
+		<input type="hidden" name="action"       id="ideaboard_post_action" value="ideaboard-edit-topic" />
 		<input type="hidden" name="ideaboard_topic_id" id="ideaboard_topic_id"    value="<?php ideaboard_topic_id(); ?>" />
 
 		<?php
 
 		if ( current_user_can( 'unfiltered_html' ) )
-			wp_nonce_field( 'bbp-unfiltered-html-topic_' . ideaboard_get_topic_id(), '_ideaboard_unfiltered_html_topic', false );
+			wp_nonce_field( 'ideaboard-unfiltered-html-topic_' . ideaboard_get_topic_id(), '_ideaboard_unfiltered_html_topic', false );
 
 		?>
 
-		<?php wp_nonce_field( 'bbp-edit-topic_' . ideaboard_get_topic_id() );
+		<?php wp_nonce_field( 'ideaboard-edit-topic_' . ideaboard_get_topic_id() );
 
 	else :
 
@@ -1570,12 +1570,12 @@ function ideaboard_topic_form_fields() {
 
 		<?php endif; ?>
 
-		<input type="hidden" name="action" id="ideaboard_post_action" value="bbp-new-topic" />
+		<input type="hidden" name="action" id="ideaboard_post_action" value="ideaboard-new-topic" />
 
 		<?php if ( current_user_can( 'unfiltered_html' ) )
-			wp_nonce_field( 'bbp-unfiltered-html-topic_new', '_ideaboard_unfiltered_html_topic', false ); ?>
+			wp_nonce_field( 'ideaboard-unfiltered-html-topic_new', '_ideaboard_unfiltered_html_topic', false ); ?>
 
-		<?php wp_nonce_field( 'bbp-new-topic' );
+		<?php wp_nonce_field( 'ideaboard-new-topic' );
 
 	endif;
 }
@@ -1597,23 +1597,23 @@ function ideaboard_reply_form_fields() {
 
 		<input type="hidden" name="ideaboard_reply_id"    id="ideaboard_reply_id"    value="<?php ideaboard_reply_id(); ?>" />
 		<input type="hidden" name="ideaboard_reply_to"    id="ideaboard_reply_to"    value="<?php ideaboard_form_reply_to(); ?>" />
-		<input type="hidden" name="action"          id="ideaboard_post_action" value="bbp-edit-reply" />
+		<input type="hidden" name="action"          id="ideaboard_post_action" value="ideaboard-edit-reply" />
 
 		<?php if ( current_user_can( 'unfiltered_html' ) )
-			wp_nonce_field( 'bbp-unfiltered-html-reply_' . ideaboard_get_reply_id(), '_ideaboard_unfiltered_html_reply', false ); ?>
+			wp_nonce_field( 'ideaboard-unfiltered-html-reply_' . ideaboard_get_reply_id(), '_ideaboard_unfiltered_html_reply', false ); ?>
 
-		<?php wp_nonce_field( 'bbp-edit-reply_' . ideaboard_get_reply_id() );
+		<?php wp_nonce_field( 'ideaboard-edit-reply_' . ideaboard_get_reply_id() );
 
 	else : ?>
 
 		<input type="hidden" name="ideaboard_topic_id"    id="ideaboard_topic_id"    value="<?php ideaboard_topic_id(); ?>" />
 		<input type="hidden" name="ideaboard_reply_to"    id="ideaboard_reply_to"    value="<?php ideaboard_form_reply_to(); ?>" />
-		<input type="hidden" name="action"          id="ideaboard_post_action" value="bbp-new-reply" />
+		<input type="hidden" name="action"          id="ideaboard_post_action" value="ideaboard-new-reply" />
 
 		<?php if ( current_user_can( 'unfiltered_html' ) )
-			wp_nonce_field( 'bbp-unfiltered-html-reply_' . ideaboard_get_topic_id(), '_ideaboard_unfiltered_html_reply', false ); ?>
+			wp_nonce_field( 'ideaboard-unfiltered-html-reply_' . ideaboard_get_topic_id(), '_ideaboard_unfiltered_html_reply', false ); ?>
 
-		<?php wp_nonce_field( 'bbp-new-reply' );
+		<?php wp_nonce_field( 'ideaboard-new-reply' );
 
 		// Show redirect field if not viewing a specific topic
 		if ( ideaboard_is_query_name( 'ideaboard_single_topic' ) ) :
@@ -1634,7 +1634,7 @@ function ideaboard_reply_form_fields() {
 function ideaboard_edit_user_form_fields() {
 ?>
 
-	<input type="hidden" name="action"  id="ideaboard_post_action" value="bbp-update-user" />
+	<input type="hidden" name="action"  id="ideaboard_post_action" value="ideaboard-update-user" />
 	<input type="hidden" name="user_id" id="user_id"         value="<?php ideaboard_displayed_user_id(); ?>" />
 
 	<?php wp_nonce_field( 'update-user_' . ideaboard_get_displayed_user_id() );
@@ -1653,10 +1653,10 @@ function ideaboard_edit_user_form_fields() {
 function ideaboard_merge_topic_form_fields() {
 ?>
 
-	<input type="hidden" name="action"       id="ideaboard_post_action" value="bbp-merge-topic" />
+	<input type="hidden" name="action"       id="ideaboard_post_action" value="ideaboard-merge-topic" />
 	<input type="hidden" name="ideaboard_topic_id" id="ideaboard_topic_id"    value="<?php ideaboard_topic_id(); ?>" />
 
-	<?php wp_nonce_field( 'bbp-merge-topic_' . ideaboard_get_topic_id() );
+	<?php wp_nonce_field( 'ideaboard-merge-topic_' . ideaboard_get_topic_id() );
 }
 
 /**
@@ -1671,10 +1671,10 @@ function ideaboard_merge_topic_form_fields() {
 function ideaboard_split_topic_form_fields() {
 ?>
 
-	<input type="hidden" name="action"       id="ideaboard_post_action" value="bbp-split-topic" />
+	<input type="hidden" name="action"       id="ideaboard_post_action" value="ideaboard-split-topic" />
 	<input type="hidden" name="ideaboard_reply_id" id="ideaboard_reply_id"    value="<?php echo absint( $_GET['reply_id'] ); ?>" />
 
-	<?php wp_nonce_field( 'bbp-split-topic_' . ideaboard_get_topic_id() );
+	<?php wp_nonce_field( 'ideaboard-split-topic_' . ideaboard_get_topic_id() );
 }
 
 /**
@@ -1687,10 +1687,10 @@ function ideaboard_split_topic_form_fields() {
 function ideaboard_move_reply_form_fields() {
 ?>
 
-	<input type="hidden" name="action"       id="ideaboard_post_action" value="bbp-move-reply" />
+	<input type="hidden" name="action"       id="ideaboard_post_action" value="ideaboard-move-reply" />
 	<input type="hidden" name="ideaboard_reply_id" id="ideaboard_reply_id"    value="<?php echo absint( $_GET['reply_id'] ); ?>" />
 
-	<?php wp_nonce_field( 'bbp-move-reply_' . ideaboard_get_reply_id() );
+	<?php wp_nonce_field( 'ideaboard-move-reply_' . ideaboard_get_reply_id() );
 }
 
 /**
@@ -1724,14 +1724,14 @@ function ideaboard_the_content( $args = array() ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'context'           => 'topic',
-			'before'            => '<div class="bbp-the-content-wrapper">',
+			'before'            => '<div class="ideaboard-the-content-wrapper">',
 			'after'             => '</div>',
 			'wpautop'           => true,
 			'media_buttons'     => false,
 			'textarea_rows'     => '12',
 			'tabindex'          => ideaboard_get_tab_index(),
 			'tabfocus_elements' => 'ideaboard_topic_title,ideaboard_topic_tags',
-			'editor_class'      => 'bbp-the-content',
+			'editor_class'      => 'ideaboard-the-content',
 			'tinymce'           => false,
 			'teeny'             => true,
 			'quicktags'         => true,
@@ -1913,17 +1913,17 @@ function ideaboard_view_id( $view = '' ) {
 	 * @return bool|string ID on success, false on failure
 	 */
 	function ideaboard_get_view_id( $view = '' ) {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		if ( !empty( $view ) ) {
 			$view = sanitize_title( $view );
-		} elseif ( ! empty( $bbp->current_view_id ) ) {
-			$view = $bbp->current_view_id;
+		} elseif ( ! empty( $ideaboard->current_view_id ) ) {
+			$view = $ideaboard->current_view_id;
 		} else {
 			$view = get_query_var( ideaboard_get_view_rewrite_id() );
 		}
 
-		if ( array_key_exists( $view, $bbp->views ) ) {
+		if ( array_key_exists( $view, $ideaboard->views ) ) {
 			return $view;
 		}
 
@@ -1955,13 +1955,13 @@ function ideaboard_view_title( $view = '' ) {
 	 * @return bool|string Title on success, false on failure
 	 */
 	function ideaboard_get_view_title( $view = '' ) {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		$view = ideaboard_get_view_id( $view );
 		if ( empty( $view ) )
 			return false;
 
-		return $bbp->views[$view]['title'];
+		return $ideaboard->views[$view]['title'];
 	}
 
 /**
@@ -2205,7 +2205,7 @@ function ideaboard_breadcrumb( $args = array() ) {
 
 			// If capable, include a link to edit the tag
 			if ( current_user_can( 'manage_topic_tags' ) ) {
-				$tag_data[] = '<a href="' . esc_url( ideaboard_get_topic_tag_edit_link() ) . '" class="bbp-edit-topic-tag-link">' . esc_html__( '(Edit)', 'ideaboard' ) . '</a>';
+				$tag_data[] = '<a href="' . esc_url( ideaboard_get_topic_tag_edit_link() ) . '" class="ideaboard-edit-topic-tag-link">' . esc_html__( '(Edit)', 'ideaboard' ) . '</a>';
 			}
 
 			// Implode the results of the tag data
@@ -2226,13 +2226,13 @@ function ideaboard_breadcrumb( $args = array() ) {
 		$r = ideaboard_parse_args( $args, array(
 
 			// HTML
-			'before'          => '<div class="bbp-breadcrumb"><p>',
+			'before'          => '<div class="ideaboard-breadcrumb"><p>',
 			'after'           => '</p></div>',
 
 			// Separator
 			'sep'             => is_rtl() ? __( '&lsaquo;', 'ideaboard' ) : __( '&rsaquo;', 'ideaboard' ),
 			'pad_sep'         => 1,
-			'sep_before'      => '<span class="bbp-breadcrumb-sep">',
+			'sep_before'      => '<span class="ideaboard-breadcrumb-sep">',
 			'sep_after'       => '</span>',
 
 			// Crumbs
@@ -2250,7 +2250,7 @@ function ideaboard_breadcrumb( $args = array() ) {
 			// Current
 			'include_current' => $pre_include_current,
 			'current_text'    => $pre_current_text,
-			'current_before'  => '<span class="bbp-breadcrumb-current">',
+			'current_before'  => '<span class="ideaboard-breadcrumb-current">',
 			'current_after'   => '</span>',
 		), 'get_breadcrumb' );
 
@@ -2263,7 +2263,7 @@ function ideaboard_breadcrumb( $args = array() ) {
 
 		// Do we want to include a link to home?
 		if ( !empty( $r['include_home'] ) || empty( $r['home_text'] ) ) {
-			$crumbs[] = '<a href="' . trailingslashit( home_url() ) . '" class="bbp-breadcrumb-home">' . $r['home_text'] . '</a>';
+			$crumbs[] = '<a href="' . trailingslashit( home_url() ) . '" class="ideaboard-breadcrumb-home">' . $r['home_text'] . '</a>';
 		}
 
 		// Do we want to include a link to the forum root?
@@ -2280,7 +2280,7 @@ function ideaboard_breadcrumb( $args = array() ) {
 			}
 
 			// Add the breadcrumb
-			$crumbs[] = '<a href="' . esc_url( $root_url ) . '" class="bbp-breadcrumb-root">' . $r['root_text'] . '</a>';
+			$crumbs[] = '<a href="' . esc_url( $root_url ) . '" class="ideaboard-breadcrumb-root">' . $r['root_text'] . '</a>';
 		}
 
 		// Ancestors exist
@@ -2301,33 +2301,33 @@ function ideaboard_breadcrumb( $args = array() ) {
 
 					// Forum
 					case ideaboard_get_forum_post_type() :
-						$crumbs[] = '<a href="' . esc_url( ideaboard_get_forum_permalink( $parent->ID ) ) . '" class="bbp-breadcrumb-forum">' . ideaboard_get_forum_title( $parent->ID ) . '</a>';
+						$crumbs[] = '<a href="' . esc_url( ideaboard_get_forum_permalink( $parent->ID ) ) . '" class="ideaboard-breadcrumb-forum">' . ideaboard_get_forum_title( $parent->ID ) . '</a>';
 						break;
 
 					// Topic
 					case ideaboard_get_topic_post_type() :
-						$crumbs[] = '<a href="' . esc_url( ideaboard_get_topic_permalink( $parent->ID ) ) . '" class="bbp-breadcrumb-topic">' . ideaboard_get_topic_title( $parent->ID ) . '</a>';
+						$crumbs[] = '<a href="' . esc_url( ideaboard_get_topic_permalink( $parent->ID ) ) . '" class="ideaboard-breadcrumb-topic">' . ideaboard_get_topic_title( $parent->ID ) . '</a>';
 						break;
 
 					// Reply (Note: not in most themes)
 					case ideaboard_get_reply_post_type() :
-						$crumbs[] = '<a href="' . esc_url( ideaboard_get_reply_permalink( $parent->ID ) ) . '" class="bbp-breadcrumb-reply">' . ideaboard_get_reply_title( $parent->ID ) . '</a>';
+						$crumbs[] = '<a href="' . esc_url( ideaboard_get_reply_permalink( $parent->ID ) ) . '" class="ideaboard-breadcrumb-reply">' . ideaboard_get_reply_title( $parent->ID ) . '</a>';
 						break;
 
 					// WordPress Post/Page/Other
 					default :
-						$crumbs[] = '<a href="' . esc_url( get_permalink( $parent->ID ) ) . '" class="bbp-breadcrumb-item">' . get_the_title( $parent->ID ) . '</a>';
+						$crumbs[] = '<a href="' . esc_url( get_permalink( $parent->ID ) ) . '" class="ideaboard-breadcrumb-item">' . get_the_title( $parent->ID ) . '</a>';
 						break;
 				}
 			}
 
 		// Edit topic tag
 		} elseif ( ideaboard_is_topic_tag_edit() ) {
-			$crumbs[] = '<a href="' . esc_url( get_term_link( ideaboard_get_topic_tag_id(), ideaboard_get_topic_tag_tax_id() ) ) . '" class="bbp-breadcrumb-topic-tag">' . sprintf( __( 'Topic Tag: %s', 'ideaboard' ), ideaboard_get_topic_tag_name() ) . '</a>';
+			$crumbs[] = '<a href="' . esc_url( get_term_link( ideaboard_get_topic_tag_id(), ideaboard_get_topic_tag_tax_id() ) ) . '" class="ideaboard-breadcrumb-topic-tag">' . sprintf( __( 'Topic Tag: %s', 'ideaboard' ), ideaboard_get_topic_tag_name() ) . '</a>';
 
 		// Search
 		} elseif ( ideaboard_is_search() && ideaboard_get_search_terms() ) {
-			$crumbs[] = '<a href="' . esc_url( ideaboard_get_search_url() ) . '" class="bbp-breadcrumb-search">' . esc_html__( 'Search', 'ideaboard' ) . '</a>';
+			$crumbs[] = '<a href="' . esc_url( ideaboard_get_search_url() ) . '" class="ideaboard-breadcrumb-search">' . esc_html__( 'Search', 'ideaboard' ) . '</a>';
 		}
 
 		/** Current ***********************************************************/
@@ -2432,16 +2432,16 @@ function ideaboard_template_notices() {
 	$errors = $messages = array();
 
 	// Get IdeaBoard
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Loop through notices
-	foreach ( $bbp->errors->get_error_codes() as $code ) {
+	foreach ( $ideaboard->errors->get_error_codes() as $code ) {
 
 		// Get notice severity
-		$severity = $bbp->errors->get_error_data( $code );
+		$severity = $ideaboard->errors->get_error_data( $code );
 
 		// Loop through notices and separate errors from messages
-		foreach ( $bbp->errors->get_error_messages( $code ) as $error ) {
+		foreach ( $ideaboard->errors->get_error_messages( $code ) as $error ) {
 			if ( 'message' === $severity ) {
 				$messages[] = $error;
 			} else {
@@ -2453,7 +2453,7 @@ function ideaboard_template_notices() {
 	// Display errors first...
 	if ( !empty( $errors ) ) : ?>
 
-		<div class="bbp-template-notice error">
+		<div class="ideaboard-template-notice error">
 			<p>
 				<?php echo implode( "</p>\n<p>", $errors ); ?>
 			</p>
@@ -2464,7 +2464,7 @@ function ideaboard_template_notices() {
 	// ...and messages last
 	if ( !empty( $messages ) ) : ?>
 
-		<div class="bbp-template-notice">
+		<div class="ideaboard-template-notice">
 			<p>
 				<?php echo implode( "</p>\n<p>", $messages ); ?>
 			</p>

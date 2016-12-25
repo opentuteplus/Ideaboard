@@ -13,7 +13,7 @@
 
 	<?php do_action( 'ideaboard_theme_before_anonymous_form' ); ?>
 
-	<fieldset class="bbp-form">
+	<fieldset class="ideaboard-form">
 		<legend><?php ( ideaboard_is_topic_edit() || ideaboard_is_reply_edit() ) ? _e( 'Author Information', 'ideaboard' ) : _e( 'Your information:', 'ideaboard' ); ?></legend>
 
 		<?php do_action( 'ideaboard_theme_anonymous_form_extras_top' ); ?>

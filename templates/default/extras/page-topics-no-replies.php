@@ -15,7 +15,7 @@ get_header(); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<div id="topics-front" class="bbp-topics-front">
+		<div id="topics-front" class="ideaboard-topics-front">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="entry-content">
 

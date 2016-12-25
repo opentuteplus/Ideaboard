@@ -107,12 +107,12 @@ function ideaboard_insert_reply( $reply_data = array(), $reply_meta = array() ) 
  */
 function ideaboard_new_reply_handler( $action = '' ) {
 
-	// Bail if action is not bbp-new-reply
-	if ( 'bbp-new-reply' !== $action )
+	// Bail if action is not ideaboard-new-reply
+	if ( 'ideaboard-new-reply' !== $action )
 		return;
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-new-reply' ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-new-reply' ) ) {
 		ideaboard_add_error( 'ideaboard_new_reply_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
@@ -252,7 +252,7 @@ function ideaboard_new_reply_handler( $action = '' ) {
 	/** Unfiltered HTML *******************************************************/
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_reply'] ) && wp_create_nonce( 'bbp-unfiltered-html-reply_' . $topic_id ) === $_POST['_ideaboard_unfiltered_html_reply'] ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_reply'] ) && wp_create_nonce( 'ideaboard-unfiltered-html-reply_' . $topic_id ) === $_POST['_ideaboard_unfiltered_html_reply'] ) {
 		remove_filter( 'ideaboard_new_reply_pre_title',   'wp_filter_kses'      );
 		remove_filter( 'ideaboard_new_reply_pre_content', 'ideaboard_encode_bad',  10 );
 		remove_filter( 'ideaboard_new_reply_pre_content', 'ideaboard_filter_kses', 30 );
@@ -489,8 +489,8 @@ function ideaboard_new_reply_handler( $action = '' ) {
  */
 function ideaboard_edit_reply_handler( $action = '' ) {
 
-	// Bail if action is not bbp-edit-reply
-	if ( 'bbp-edit-reply' !== $action )
+	// Bail if action is not ideaboard-edit-reply
+	if ( 'ideaboard-edit-reply' !== $action )
 		return;
 
 	// Define local variable(s)
@@ -512,7 +512,7 @@ function ideaboard_edit_reply_handler( $action = '' ) {
 	}
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-edit-reply_' . $reply_id ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-edit-reply_' . $reply_id ) ) {
 		ideaboard_add_error( 'ideaboard_edit_reply_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
@@ -546,7 +546,7 @@ function ideaboard_edit_reply_handler( $action = '' ) {
 	}
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_reply'] ) && wp_create_nonce( 'bbp-unfiltered-html-reply_' . $reply_id ) === $_POST['_ideaboard_unfiltered_html_reply'] ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_reply'] ) && wp_create_nonce( 'ideaboard-unfiltered-html-reply_' . $reply_id ) === $_POST['_ideaboard_unfiltered_html_reply'] ) {
 		remove_filter( 'ideaboard_edit_reply_pre_title',   'wp_filter_kses'      );
 		remove_filter( 'ideaboard_edit_reply_pre_content', 'ideaboard_encode_bad',  10 );
 		remove_filter( 'ideaboard_edit_reply_pre_content', 'ideaboard_filter_kses', 30 );
@@ -1208,8 +1208,8 @@ function ideaboard_update_reply_revision_log( $args = '' ) {
  */
 function ideaboard_move_reply_handler( $action = '' ) {
 
-	// Bail if action is not 'bbp-move-reply'
-	if ( 'bbp-move-reply' !== $action )
+	// Bail if action is not 'ideaboard-move-reply'
+	if ( 'ideaboard-move-reply' !== $action )
 		return;
 
 	// Prevent debug notices
@@ -1242,7 +1242,7 @@ function ideaboard_move_reply_handler( $action = '' ) {
 	}
 
 	// Nonce check failed
-	if ( ! ideaboard_verify_nonce_request( 'bbp-move-reply_' . $move_reply->ID ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-move-reply_' . $move_reply->ID ) ) {
 		ideaboard_add_error( 'ideaboard_move_reply_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}

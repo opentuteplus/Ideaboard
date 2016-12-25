@@ -13,14 +13,14 @@ get_header(); ?>
 
 	<?php do_action( 'ideaboard_template_notices' ); ?>
 
-	<div id="bbp-view-<?php ideaboard_view_id(); ?>" class="bbp-view">
+	<div id="ideaboard-view-<?php ideaboard_view_id(); ?>" class="ideaboard-view">
 		<h1 class="entry-title"><?php ideaboard_view_title(); ?></h1>
 		<div class="entry-content">
 
 			<?php ideaboard_get_template_part( 'content', 'single-view' ); ?>
 
 		</div>
-	</div><!-- #bbp-view-<?php ideaboard_view_id(); ?> -->
+	</div><!-- #ideaboard-view-<?php ideaboard_view_id(); ?> -->
 
 	<?php do_action( 'ideaboard_after_main_content' ); ?>
 

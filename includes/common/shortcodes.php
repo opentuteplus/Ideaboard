@@ -55,44 +55,44 @@ class BBP_Shortcodes {
 
 			/** Forums ********************************************************/
 
-			'bbp-forum-index'      => array( $this, 'display_forum_index'   ), // Forum Index
-			'bbp-forum-form'       => array( $this, 'display_forum_form'    ), // Topic form
-			'bbp-single-forum'     => array( $this, 'display_forum'         ), // Specific forum - pass an 'id' attribute
+			'ideaboard-forum-index'      => array( $this, 'display_forum_index'   ), // Forum Index
+			'ideaboard-forum-form'       => array( $this, 'display_forum_form'    ), // Topic form
+			'ideaboard-single-forum'     => array( $this, 'display_forum'         ), // Specific forum - pass an 'id' attribute
 
 			/** Topics ********************************************************/
 
-			'bbp-topic-index'      => array( $this, 'display_topic_index'   ), // Topic index
-			'bbp-topic-form'       => array( $this, 'display_topic_form'    ), // Topic form
-			'bbp-single-topic'     => array( $this, 'display_topic'         ), // Specific topic - pass an 'id' attribute
+			'ideaboard-topic-index'      => array( $this, 'display_topic_index'   ), // Topic index
+			'ideaboard-topic-form'       => array( $this, 'display_topic_form'    ), // Topic form
+			'ideaboard-single-topic'     => array( $this, 'display_topic'         ), // Specific topic - pass an 'id' attribute
 
 			/** Topic Tags ****************************************************/
 
-			'bbp-topic-tags'       => array( $this, 'display_topic_tags'    ), // All topic tags in a cloud
-			'bbp-single-tag'       => array( $this, 'display_topics_of_tag' ), // Topics of Tag
+			'ideaboard-topic-tags'       => array( $this, 'display_topic_tags'    ), // All topic tags in a cloud
+			'ideaboard-single-tag'       => array( $this, 'display_topics_of_tag' ), // Topics of Tag
 
 			/** Replies *******************************************************/
 
-			'bbp-reply-form'       => array( $this, 'display_reply_form'    ), // Reply form
-			'bbp-single-reply'     => array( $this, 'display_reply'         ), // Specific reply - pass an 'id' attribute
+			'ideaboard-reply-form'       => array( $this, 'display_reply_form'    ), // Reply form
+			'ideaboard-single-reply'     => array( $this, 'display_reply'         ), // Specific reply - pass an 'id' attribute
 
 			/** Views *********************************************************/
 
-			'bbp-single-view'      => array( $this, 'display_view'          ), // Single view
+			'ideaboard-single-view'      => array( $this, 'display_view'          ), // Single view
 
 			/** Search ********************************************************/
 
-			'bbp-search-form'      => array( $this, 'display_search_form'   ), // Search form
-			'bbp-search'           => array( $this, 'display_search'        ), // Search
+			'ideaboard-search-form'      => array( $this, 'display_search_form'   ), // Search form
+			'ideaboard-search'           => array( $this, 'display_search'        ), // Search
 
 			/** Account *******************************************************/
 
-			'bbp-login'            => array( $this, 'display_login'         ), // Login
-			'bbp-register'         => array( $this, 'display_register'      ), // Register
-			'bbp-lost-pass'        => array( $this, 'display_lost_pass'     ), // Lost Password
+			'ideaboard-login'            => array( $this, 'display_login'         ), // Login
+			'ideaboard-register'         => array( $this, 'display_register'      ), // Register
+			'ideaboard-lost-pass'        => array( $this, 'display_lost_pass'     ), // Lost Password
 
 			/** Others *******************************************************/
 
-			'bbp-stats'            => array( $this, 'display_stats'         ), // Stats
+			'ideaboard-stats'            => array( $this, 'display_stats'         ), // Stats
 		) );
 	}
 
@@ -111,25 +111,25 @@ class BBP_Shortcodes {
 	}
 
 	/**
-	 * Unset some globals in the $bbp object that hold query related info
+	 * Unset some globals in the $ideaboard object that hold query related info
 	 *
 	 * @since IdeaBoard (r3034)
 	 */
 	private function unset_globals() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Unset global queries
-		$bbp->forum_query  = new WP_Query();
-		$bbp->topic_query  = new WP_Query();
-		$bbp->reply_query  = new WP_Query();
-		$bbp->search_query = new WP_Query();
+		$ideaboard->forum_query  = new WP_Query();
+		$ideaboard->topic_query  = new WP_Query();
+		$ideaboard->reply_query  = new WP_Query();
+		$ideaboard->search_query = new WP_Query();
 
 		// Unset global ID's
-		$bbp->current_view_id      = 0;
-		$bbp->current_forum_id     = 0;
-		$bbp->current_topic_id     = 0;
-		$bbp->current_reply_id     = 0;
-		$bbp->current_topic_tag_id = 0;
+		$ideaboard->current_view_id      = 0;
+		$ideaboard->current_forum_id     = 0;
+		$ideaboard->current_topic_id     = 0;
+		$ideaboard->current_reply_id     = 0;
+		$ideaboard->current_topic_tag_id = 0;
 
 		// Reset the post data
 		wp_reset_postdata();
@@ -334,17 +334,17 @@ class BBP_Shortcodes {
 		// Reset the queries if not in theme compat
 		if ( !ideaboard_is_theme_compat_active() ) {
 
-			$bbp = ideaboard();
+			$ideaboard = ideaboard();
 
 			// Reset necessary forum_query attributes for topics loop to function
-			$bbp->forum_query->query_vars['post_type'] = ideaboard_get_forum_post_type();
-			$bbp->forum_query->in_the_loop             = true;
-			$bbp->forum_query->post                    = get_post( $forum_id );
+			$ideaboard->forum_query->query_vars['post_type'] = ideaboard_get_forum_post_type();
+			$ideaboard->forum_query->in_the_loop             = true;
+			$ideaboard->forum_query->post                    = get_post( $forum_id );
 
 			// Reset necessary topic_query attributes for topics loop to function
-			$bbp->topic_query->query_vars['post_type'] = ideaboard_get_topic_post_type();
-			$bbp->topic_query->in_the_loop             = true;
-			$bbp->topic_query->post                    = get_post( $topic_id );
+			$ideaboard->topic_query->query_vars['post_type'] = ideaboard_get_topic_post_type();
+			$ideaboard->topic_query->in_the_loop             = true;
+			$ideaboard->topic_query->post                    = get_post( $topic_id );
 		}
 
 		// Start output buffer
@@ -452,17 +452,17 @@ class BBP_Shortcodes {
 		// Reset the queries if not in theme compat
 		if ( !ideaboard_is_theme_compat_active() ) {
 
-			$bbp = ideaboard();
+			$ideaboard = ideaboard();
 
 			// Reset necessary forum_query attributes for replys loop to function
-			$bbp->forum_query->query_vars['post_type'] = ideaboard_get_forum_post_type();
-			$bbp->forum_query->in_the_loop             = true;
-			$bbp->forum_query->post                    = get_post( $forum_id );
+			$ideaboard->forum_query->query_vars['post_type'] = ideaboard_get_forum_post_type();
+			$ideaboard->forum_query->in_the_loop             = true;
+			$ideaboard->forum_query->post                    = get_post( $forum_id );
 
 			// Reset necessary reply_query attributes for replys loop to function
-			$bbp->reply_query->query_vars['post_type'] = ideaboard_get_reply_post_type();
-			$bbp->reply_query->in_the_loop             = true;
-			$bbp->reply_query->post                    = get_post( $reply_id );
+			$ideaboard->reply_query->query_vars['post_type'] = ideaboard_get_reply_post_type();
+			$ideaboard->reply_query->in_the_loop             = true;
+			$ideaboard->reply_query->post                    = get_post( $reply_id );
 		}
 
 		// Start output buffer

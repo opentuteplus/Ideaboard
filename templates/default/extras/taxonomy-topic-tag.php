@@ -13,7 +13,7 @@ get_header(); ?>
 
 	<?php do_action( 'ideaboard_template_notices' ); ?>
 
-	<div id="topic-tag" class="bbp-topic-tag">
+	<div id="topic-tag" class="ideaboard-topic-tag">
 		<h1 class="entry-title"><?php printf( __( 'Topic Tag: %s', 'ideaboard' ), '<span>' . ideaboard_get_topic_tag_name() . '</span>' ); ?></h1>
 		<div class="entry-content">
 

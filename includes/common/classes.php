@@ -307,11 +307,11 @@ class BBP_Walker_Reply extends Walker {
 			case 'div':
 				break;
 			case 'ol':
-				echo "<ol class='bbp-threaded-replies'>\n";
+				echo "<ol class='ideaboard-threaded-replies'>\n";
 				break;
 			case 'ul':
 			default:
-				echo "<ul class='bbp-threaded-replies'>\n";
+				echo "<ul class='ideaboard-threaded-replies'>\n";
 				break;
 		}
 	}

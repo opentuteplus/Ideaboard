@@ -84,26 +84,26 @@ class BBP_Login_Widget extends WP_Widget {
 
 		if ( !is_user_logged_in() ) : ?>
 
-			<form method="post" action="<?php ideaboard_wp_login_action( array( 'context' => 'login_post' ) ); ?>" class="bbp-login-form">
+			<form method="post" action="<?php ideaboard_wp_login_action( array( 'context' => 'login_post' ) ); ?>" class="ideaboard-login-form">
 				<fieldset>
 					<legend><?php _e( 'Log In', 'ideaboard' ); ?></legend>
 
-					<div class="bbp-username">
+					<div class="ideaboard-username">
 						<label for="user_login"><?php _e( 'Username', 'ideaboard' ); ?>: </label>
 						<input type="text" name="log" value="<?php ideaboard_sanitize_val( 'user_login', 'text' ); ?>" size="20" id="user_login" tabindex="<?php ideaboard_tab_index(); ?>" />
 					</div>
 
-					<div class="bbp-password">
+					<div class="ideaboard-password">
 						<label for="user_pass"><?php _e( 'Password', 'ideaboard' ); ?>: </label>
 						<input type="password" name="pwd" value="<?php ideaboard_sanitize_val( 'user_pass', 'password' ); ?>" size="20" id="user_pass" tabindex="<?php ideaboard_tab_index(); ?>" />
 					</div>
 
-					<div class="bbp-remember-me">
+					<div class="ideaboard-remember-me">
 						<input type="checkbox" name="rememberme" value="forever" <?php checked( ideaboard_get_sanitize_val( 'rememberme', 'checkbox' ), true, true ); ?> id="rememberme" tabindex="<?php ideaboard_tab_index(); ?>" />
 						<label for="rememberme"><?php _e( 'Remember Me', 'ideaboard' ); ?></label>
 					</div>
 
-					<div class="bbp-submit-wrapper">
+					<div class="ideaboard-submit-wrapper">
 
 						<?php do_action( 'login_form' ); ?>
 
@@ -115,17 +115,17 @@ class BBP_Login_Widget extends WP_Widget {
 
 					<?php if ( !empty( $settings['register'] ) || !empty( $settings['lostpass'] ) ) : ?>
 
-						<div class="bbp-login-links">
+						<div class="ideaboard-login-links">
 
 							<?php if ( !empty( $settings['register'] ) ) : ?>
 
-								<a href="<?php echo esc_url( $settings['register'] ); ?>" title="<?php esc_attr_e( 'Register', 'ideaboard' ); ?>" class="bbp-register-link"><?php _e( 'Register', 'ideaboard' ); ?></a>
+								<a href="<?php echo esc_url( $settings['register'] ); ?>" title="<?php esc_attr_e( 'Register', 'ideaboard' ); ?>" class="ideaboard-register-link"><?php _e( 'Register', 'ideaboard' ); ?></a>
 
 							<?php endif; ?>
 
 							<?php if ( !empty( $settings['lostpass'] ) ) : ?>
 
-								<a href="<?php echo esc_url( $settings['lostpass'] ); ?>" title="<?php esc_attr_e( 'Lost Password', 'ideaboard' ); ?>" class="bbp-lostpass-link"><?php _e( 'Lost Password', 'ideaboard' ); ?></a>
+								<a href="<?php echo esc_url( $settings['lostpass'] ); ?>" title="<?php esc_attr_e( 'Lost Password', 'ideaboard' ); ?>" class="ideaboard-lostpass-link"><?php _e( 'Lost Password', 'ideaboard' ); ?></a>
 
 							<?php endif; ?>
 
@@ -138,7 +138,7 @@ class BBP_Login_Widget extends WP_Widget {
 
 		<?php else : ?>
 
-			<div class="bbp-logged-in">
+			<div class="ideaboard-logged-in">
 				<a href="<?php ideaboard_user_profile_url( ideaboard_get_current_user_id() ); ?>" class="submit user-submit"><?php echo get_avatar( ideaboard_get_current_user_id(), '40' ); ?></a>
 				<h4><?php ideaboard_user_profile_link( ideaboard_get_current_user_id() ); ?></h4>
 
@@ -295,7 +295,7 @@ class BBP_Views_Widget extends WP_Widget {
 
 			<?php foreach ( array_keys( ideaboard_get_views() ) as $view ) : ?>
 
-				<li><a class="bbp-view-title" href="<?php ideaboard_view_url( $view ); ?>"><?php ideaboard_view_title( $view ); ?></a></li>
+				<li><a class="ideaboard-view-title" href="<?php ideaboard_view_url( $view ); ?>"><?php ideaboard_view_title( $view ); ?></a></li>
 
 			<?php endforeach; ?>
 
@@ -583,7 +583,7 @@ class BBP_Forums_Widget extends WP_Widget {
 
 			<?php while ( $widget_query->have_posts() ) : $widget_query->the_post(); ?>
 
-				<li><a class="bbp-forum-title" href="<?php ideaboard_forum_permalink( $widget_query->post->ID ); ?>"><?php ideaboard_forum_title( $widget_query->post->ID ); ?></a></li>
+				<li><a class="ideaboard-forum-title" href="<?php ideaboard_forum_permalink( $widget_query->post->ID ); ?>"><?php ideaboard_forum_title( $widget_query->post->ID ); ?></a></li>
 
 			<?php endwhile; ?>
 
@@ -808,7 +808,7 @@ class BBP_Topics_Widget extends WP_Widget {
 				endif; ?>
 
 				<li>
-					<a class="bbp-forum-title" href="<?php ideaboard_topic_permalink( $topic_id ); ?>"><?php ideaboard_topic_title( $topic_id ); ?></a>
+					<a class="ideaboard-forum-title" href="<?php ideaboard_topic_permalink( $topic_id ); ?>"><?php ideaboard_topic_title( $topic_id ); ?></a>
 
 					<?php if ( ! empty( $author_link ) ) : ?>
 
@@ -1150,7 +1150,7 @@ class BBP_Replies_Widget extends WP_Widget {
 
 					// Verify the reply ID
 					$reply_id   = ideaboard_get_reply_id( $widget_query->post->ID );
-					$reply_link = '<a class="bbp-reply-topic-title" href="' . esc_url( ideaboard_get_reply_url( $reply_id ) ) . '" title="' . esc_attr( ideaboard_get_reply_excerpt( $reply_id, 50 ) ) . '">' . ideaboard_get_reply_topic_title( $reply_id ) . '</a>';
+					$reply_link = '<a class="ideaboard-reply-topic-title" href="' . esc_url( ideaboard_get_reply_url( $reply_id ) ) . '" title="' . esc_attr( ideaboard_get_reply_excerpt( $reply_id, 50 ) ) . '">' . ideaboard_get_reply_topic_title( $reply_id ) . '</a>';
 
 					// Only query user if showing them
 					if ( ! empty( $settings['show_user'] ) ) :

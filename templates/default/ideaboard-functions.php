@@ -96,8 +96,8 @@ class BBP_Default extends BBP_Theme_Compat {
 	public function before_main_content() {
 	?>
 
-		<div id="bbp-container">
-			<div id="bbp-content" role="main">
+		<div id="ideaboard-container">
+			<div id="ideaboard-content" role="main">
 
 	<?php
 	}
@@ -111,8 +111,8 @@ class BBP_Default extends BBP_Theme_Compat {
 	public function after_main_content() {
 	?>
 
-			</div><!-- #bbp-content -->
-		</div><!-- #bbp-container -->
+			</div><!-- #ideaboard-content -->
+		</div><!-- #ideaboard-container -->
 
 	<?php
 	}
@@ -130,16 +130,16 @@ class BBP_Default extends BBP_Theme_Compat {
 		$styles = array();
 
 		// LTR
-		$styles['bbp-default'] = array(
+		$styles['ideaboard-default'] = array(
 			'file'         => 'css/ideaboard.css',
 			'dependencies' => array()
 		);
 
 		// RTL helpers
 		if ( is_rtl() ) {
-			$styles['bbp-default-rtl'] = array(
+			$styles['ideaboard-default-rtl'] = array(
 				'file'         => 'css/ideaboard-rtl.css',
-				'dependencies' => array( 'bbp-default' )
+				'dependencies' => array( 'ideaboard-default' )
 			);
 		}
 
@@ -243,7 +243,7 @@ class BBP_Default extends BBP_Theme_Compat {
 
 		// Single forum
 		if ( ideaboard_is_single_forum() ) {
-			wp_localize_script( 'ideaboard-forum', 'bbpForumJS', array(
+			wp_localize_script( 'ideaboard-forum', 'ideaboardForumJS', array(
 				'ideaboard_ajaxurl'        => ideaboard_get_ajax_url(),
 				'generic_ajax_error' => __( 'Something went wrong. Refresh your browser and try again.', 'ideaboard' ),
 				'is_user_logged_in'  => is_user_logged_in(),
@@ -252,7 +252,7 @@ class BBP_Default extends BBP_Theme_Compat {
 
 		// Single topic
 		} elseif ( ideaboard_is_single_topic() ) {
-			wp_localize_script( 'ideaboard-topic', 'bbpTopicJS', array(
+			wp_localize_script( 'ideaboard-topic', 'ideaboardTopicJS', array(
 				'ideaboard_ajaxurl'        => ideaboard_get_ajax_url(),
 				'generic_ajax_error' => __( 'Something went wrong. Refresh your browser and try again.', 'ideaboard' ),
 				'is_user_logged_in'  => is_user_logged_in(),

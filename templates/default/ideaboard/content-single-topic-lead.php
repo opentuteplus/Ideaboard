@@ -11,13 +11,13 @@
 
 <?php do_action( 'ideaboard_template_before_lead_topic' ); ?>
 
-<ul id="bbp-topic-<?php ideaboard_topic_id(); ?>-lead" class="bbp-lead-topic">
+<ul id="ideaboard-topic-<?php ideaboard_topic_id(); ?>-lead" class="ideaboard-lead-topic">
 
-	<li class="bbp-header">
+	<li class="ideaboard-header">
 
-		<div class="bbp-topic-author"><?php  _e( 'Creator',  'ideaboard' ); ?></div><!-- .bbp-topic-author -->
+		<div class="ideaboard-topic-author"><?php  _e( 'Creator',  'ideaboard' ); ?></div><!-- .ideaboard-topic-author -->
 
-		<div class="bbp-topic-content">
+		<div class="ideaboard-topic-content">
 
 			<?php _e( 'Topic', 'ideaboard' ); ?>
 
@@ -25,19 +25,19 @@
 
 			<?php ideaboard_topic_favorite_link(); ?>
 
-		</div><!-- .bbp-topic-content -->
+		</div><!-- .ideaboard-topic-content -->
 
-	</li><!-- .bbp-header -->
+	</li><!-- .ideaboard-header -->
 
-	<li class="bbp-body">
+	<li class="ideaboard-body">
 
-		<div class="bbp-topic-header">
+		<div class="ideaboard-topic-header">
 
-			<div class="bbp-meta">
+			<div class="ideaboard-meta">
 
-				<span class="bbp-topic-post-date"><?php ideaboard_topic_post_date(); ?></span>
+				<span class="ideaboard-topic-post-date"><?php ideaboard_topic_post_date(); ?></span>
 
-				<a href="<?php ideaboard_topic_permalink(); ?>" class="bbp-topic-permalink">#<?php ideaboard_topic_id(); ?></a>
+				<a href="<?php ideaboard_topic_permalink(); ?>" class="ideaboard-topic-permalink">#<?php ideaboard_topic_id(); ?></a>
 
 				<?php do_action( 'ideaboard_theme_before_topic_admin_links' ); ?>
 
@@ -45,13 +45,13 @@
 
 				<?php do_action( 'ideaboard_theme_after_topic_admin_links' ); ?>
 
-			</div><!-- .bbp-meta -->
+			</div><!-- .ideaboard-meta -->
 
-		</div><!-- .bbp-topic-header -->
+		</div><!-- .ideaboard-topic-header -->
 
 		<div id="post-<?php ideaboard_topic_id(); ?>" <?php ideaboard_topic_class(); ?>>
 
-			<div class="bbp-topic-author">
+			<div class="ideaboard-topic-author">
 
 				<?php do_action( 'ideaboard_theme_before_topic_author_details' ); ?>
 
@@ -61,7 +61,7 @@
 
 					<?php do_action( 'ideaboard_theme_before_topic_author_admin_details' ); ?>
 
-					<div class="bbp-topic-ip"><?php ideaboard_author_ip( ideaboard_get_topic_id() ); ?></div>
+					<div class="ideaboard-topic-ip"><?php ideaboard_author_ip( ideaboard_get_topic_id() ); ?></div>
 
 					<?php do_action( 'ideaboard_theme_after_topic_author_admin_details' ); ?>
 
@@ -69,9 +69,9 @@
 
 				<?php do_action( 'ideaboard_theme_after_topic_author_details' ); ?>
 
-			</div><!-- .bbp-topic-author -->
+			</div><!-- .ideaboard-topic-author -->
 
-			<div class="bbp-topic-content">
+			<div class="ideaboard-topic-content">
 
 				<?php do_action( 'ideaboard_theme_before_topic_content' ); ?>
 
@@ -79,24 +79,24 @@
 
 				<?php do_action( 'ideaboard_theme_after_topic_content' ); ?>
 
-			</div><!-- .bbp-topic-content -->
+			</div><!-- .ideaboard-topic-content -->
 
 		</div><!-- #post-<?php ideaboard_topic_id(); ?> -->
 
-	</li><!-- .bbp-body -->
+	</li><!-- .ideaboard-body -->
 
-	<li class="bbp-footer">
+	<li class="ideaboard-footer">
 
-		<div class="bbp-topic-author"><?php  _e( 'Creator',  'ideaboard' ); ?></div>
+		<div class="ideaboard-topic-author"><?php  _e( 'Creator',  'ideaboard' ); ?></div>
 
-		<div class="bbp-topic-content">
+		<div class="ideaboard-topic-content">
 
 			<?php _e( 'Topic', 'ideaboard' ); ?>
 
-		</div><!-- .bbp-topic-content -->
+		</div><!-- .ideaboard-topic-content -->
 
 	</li>
 
-</ul><!-- #bbp-topic-<?php ideaboard_topic_id(); ?>-lead -->
+</ul><!-- #ideaboard-topic-<?php ideaboard_topic_id(); ?>-lead -->
 
 <?php do_action( 'ideaboard_template_after_lead_topic' ); ?>

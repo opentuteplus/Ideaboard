@@ -191,7 +191,7 @@ We're keeping things as small and light as possible while still allowing for gre
 
 = 2.1 =
 * WordPress 3.4 compatibility
-* Deprecate $bbp global, use ideaboard() singleton
+* Deprecate $ideaboard global, use ideaboard() singleton
 * Private forums now visible to registered users
 * Updated forum converter
 * Topic and reply edits now ran through Akismet

@@ -178,28 +178,28 @@ function ideaboard_has_replies( $args = '' ) {
 	}
 
 	// Get IdeaBoard
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Call the query
-	$bbp->reply_query = new WP_Query( $r );
+	$ideaboard->reply_query = new WP_Query( $r );
 
 	// Add pagination values to query object
-	$bbp->reply_query->posts_per_page = $replies_per_page;
-	$bbp->reply_query->paged          = $r['paged'];
+	$ideaboard->reply_query->posts_per_page = $replies_per_page;
+	$ideaboard->reply_query->paged          = $r['paged'];
 
 	// Never home, regardless of what parse_query says
-	$bbp->reply_query->is_home        = false;
+	$ideaboard->reply_query->is_home        = false;
 
 	// Reset is_single if single topic
 	if ( ideaboard_is_single_topic() ) {
-		$bbp->reply_query->is_single = true;
+		$ideaboard->reply_query->is_single = true;
 	}
 
 	// Only add reply to if query returned results
-	if ( (int) $bbp->reply_query->found_posts ) {
+	if ( (int) $ideaboard->reply_query->found_posts ) {
 
 		// Get reply to for each reply
-		foreach ( $bbp->reply_query->posts as &$post ) {
+		foreach ( $ideaboard->reply_query->posts as &$post ) {
 
 			// Check for reply post type
 			if ( ideaboard_get_reply_post_type() === $post->post_type ) {
@@ -217,7 +217,7 @@ function ideaboard_has_replies( $args = '' ) {
 	}
 
 	// Only add pagination if query returned results
-	if ( (int) $bbp->reply_query->found_posts && (int) $bbp->reply_query->posts_per_page ) {
+	if ( (int) $ideaboard->reply_query->found_posts && (int) $ideaboard->reply_query->posts_per_page ) {
 
 		// If pretty permalinks are enabled, make our pagination pretty
 		if ( $wp_rewrite->using_permalinks() ) {
@@ -249,16 +249,16 @@ function ideaboard_has_replies( $args = '' ) {
 		// Figure out total pages
 		if ( true === $r['hierarchical'] ) {
 			$walker      = new BBP_Walker_Reply;
-			$total_pages = ceil( (int) $walker->get_number_of_root_elements( $bbp->reply_query->posts ) / (int) $replies_per_page );
+			$total_pages = ceil( (int) $walker->get_number_of_root_elements( $ideaboard->reply_query->posts ) / (int) $replies_per_page );
 		} else {
-			$total_pages = ceil( (int) $bbp->reply_query->found_posts / (int) $replies_per_page );
+			$total_pages = ceil( (int) $ideaboard->reply_query->found_posts / (int) $replies_per_page );
 
 			// Add pagination to query object
-			$bbp->reply_query->pagination_links = paginate_links( apply_filters( 'ideaboard_replies_pagination', array(
+			$ideaboard->reply_query->pagination_links = paginate_links( apply_filters( 'ideaboard_replies_pagination', array(
 				'base'      => $base,
 				'format'    => '',
 				'total'     => $total_pages,
-				'current'   => (int) $bbp->reply_query->paged,
+				'current'   => (int) $ideaboard->reply_query->paged,
 				'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
 				'next_text' => is_rtl() ? '&larr;' : '&rarr;',
 				'mid_size'  => 1,
@@ -267,15 +267,15 @@ function ideaboard_has_replies( $args = '' ) {
 
 			// Remove first page from pagination
 			if ( $wp_rewrite->using_permalinks() ) {
-				$bbp->reply_query->pagination_links = str_replace( $wp_rewrite->pagination_base . '/1/', '', $bbp->reply_query->pagination_links );
+				$ideaboard->reply_query->pagination_links = str_replace( $wp_rewrite->pagination_base . '/1/', '', $ideaboard->reply_query->pagination_links );
 			} else {
-				$bbp->reply_query->pagination_links = str_replace( '&#038;paged=1', '', $bbp->reply_query->pagination_links );
+				$ideaboard->reply_query->pagination_links = str_replace( '&#038;paged=1', '', $ideaboard->reply_query->pagination_links );
 			}
 		}
 	}
 
 	// Return object
-	return apply_filters( 'ideaboard_has_replies', $bbp->reply_query->have_posts(), $bbp->reply_query );
+	return apply_filters( 'ideaboard_has_replies', $ideaboard->reply_query->have_posts(), $ideaboard->reply_query );
 }
 
 /**
@@ -342,23 +342,23 @@ function ideaboard_reply_id( $reply_id = 0 ) {
 	function ideaboard_get_reply_id( $reply_id = 0 ) {
 		global $wp_query;
 
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Easy empty checking
 		if ( !empty( $reply_id ) && is_numeric( $reply_id ) ) {
 			$ideaboard_reply_id = $reply_id;
 
 		// Currently inside a replies loop
-		} elseif ( !empty( $bbp->reply_query->in_the_loop ) && isset( $bbp->reply_query->post->ID ) ) {
-			$ideaboard_reply_id = $bbp->reply_query->post->ID;
+		} elseif ( !empty( $ideaboard->reply_query->in_the_loop ) && isset( $ideaboard->reply_query->post->ID ) ) {
+			$ideaboard_reply_id = $ideaboard->reply_query->post->ID;
 
 		// Currently inside a search loop
-		} elseif ( !empty( $bbp->search_query->in_the_loop ) && isset( $bbp->search_query->post->ID ) && ideaboard_is_reply( $bbp->search_query->post->ID ) ) {
-			$ideaboard_reply_id = $bbp->search_query->post->ID;
+		} elseif ( !empty( $ideaboard->search_query->in_the_loop ) && isset( $ideaboard->search_query->post->ID ) && ideaboard_is_reply( $ideaboard->search_query->post->ID ) ) {
+			$ideaboard_reply_id = $ideaboard->search_query->post->ID;
 
 		// Currently viewing a forum
-		} elseif ( ( ideaboard_is_single_reply() || ideaboard_is_reply_edit() ) && !empty( $bbp->current_reply_id ) ) {
-			$ideaboard_reply_id = $bbp->current_reply_id;
+		} elseif ( ( ideaboard_is_single_reply() || ideaboard_is_reply_edit() ) && !empty( $ideaboard->current_reply_id ) ) {
+			$ideaboard_reply_id = $ideaboard->current_reply_id;
 
 		// Currently viewing a reply
 		} elseif ( ( ideaboard_is_single_reply() || ideaboard_is_reply_edit() ) && isset( $wp_query->post->ID ) ) {
@@ -783,7 +783,7 @@ function ideaboard_reply_revision_log( $reply_id = 0 ) {
 		if ( empty( $revisions ) )
 			return false;
 
-		$r = "\n\n" . '<ul id="bbp-reply-revision-log-' . esc_attr( $reply_id ) . '" class="bbp-reply-revision-log">' . "\n\n";
+		$r = "\n\n" . '<ul id="ideaboard-reply-revision-log-' . esc_attr( $reply_id ) . '" class="ideaboard-reply-revision-log">' . "\n\n";
 
 		// Loop through revisions
 		foreach ( (array) $revisions as $revision ) {
@@ -799,7 +799,7 @@ function ideaboard_reply_revision_log( $reply_id = 0 ) {
 			$author = ideaboard_get_author_link( array( 'size' => 14, 'link_text' => ideaboard_get_reply_author_display_name( $revision->ID ), 'post_id' => $revision->ID ) );
 			$since  = ideaboard_get_time_since( ideaboard_convert_date( $revision->post_modified ) );
 
-			$r .= "\t" . '<li id="bbp-reply-revision-log-' . esc_attr( $reply_id ) . '-item-' . esc_attr( $revision->ID ) . '" class="bbp-reply-revision-log-item">' . "\n";
+			$r .= "\t" . '<li id="ideaboard-reply-revision-log-' . esc_attr( $reply_id ) . '-item-' . esc_attr( $revision->ID ) . '" class="ideaboard-reply-revision-log-item">' . "\n";
 			if ( !empty( $reason ) ) {
 				$r .= "\t\t" . sprintf( esc_html__( 'This reply was modified %1$s by %2$s. Reason: %3$s', 'ideaboard' ), esc_html( $since ), $author, esc_html( $reason ) ) . "\n";
 			} else {
@@ -1229,14 +1229,14 @@ function ideaboard_reply_author_link( $args = '' ) {
 			}
 
 			// Link class
-			$link_class = ' class="bbp-author-' . esc_attr( $r['type'] ) . '"';
+			$link_class = ' class="ideaboard-author-' . esc_attr( $r['type'] ) . '"';
 
 			// Add links if not anonymous and existing user
 			if ( empty( $anonymous ) && ideaboard_user_has_profile( ideaboard_get_reply_author_id( $reply_id ) ) ) {
 
 				// Assemble the links
 				foreach ( $author_links as $link => $link_text ) {
-					$link_class = ' class="bbp-author-' . $link . '"';
+					$link_class = ' class="ideaboard-author-' . $link . '"';
 					$author_link[] = sprintf( '<a href="%1$s"%2$s%3$s>%4$s</a>', esc_url( $author_url ), $link_title, $link_class, $link_text );
 				}
 
@@ -1385,7 +1385,7 @@ function ideaboard_reply_author_role( $args = array() ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'reply_id' => 0,
-			'class'    => 'bbp-author-role',
+			'class'    => 'ideaboard-author-role',
 			'before'   => '',
 			'after'    => ''
 		), 'get_reply_author_role' );
@@ -1658,7 +1658,7 @@ function ideaboard_reply_to_link( $args = array() ) {
 
 		// Add $uri to the array, to be passed through the filter
 		$r['uri'] = $uri;
-		$retval   = $r['link_before'] . '<a href="' . esc_url( $r['uri'] ) . '" class="bbp-reply-to-link"' . $onclick . '>' . esc_html( $r['reply_text'] ) . '</a>' . $r['link_after'];
+		$retval   = $r['link_before'] . '<a href="' . esc_url( $r['uri'] ) . '" class="ideaboard-reply-to-link"' . $onclick . '>' . esc_html( $r['reply_text'] ) . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_reply_to_link', $retval, $r, $args );
 	}
@@ -1700,7 +1700,7 @@ function ideaboard_cancel_reply_to_link( $text = '' ) {
 		// Set visibility
 		$style  = !empty( $reply_to ) ? '' : ' style="display:none;"';
 		$link   = remove_query_arg( array( 'ideaboard_reply_to', '_wpnonce' ) ) . '#post-' . $reply_to;
-		$retval = '<a rel="nofollow" id="bbp-cancel-reply-to-link" href="' . esc_url( $link ) . '"' . $style . '>' . esc_html( $text ) . '</a>';
+		$retval = '<a rel="nofollow" id="ideaboard-cancel-reply-to-link" href="' . esc_url( $link ) . '"' . $style . '>' . esc_html( $text ) . '</a>';
 
 		return apply_filters( 'ideaboard_get_cancel_reply_to_link', $retval, $link, $text );
 	}
@@ -1789,7 +1789,7 @@ function ideaboard_reply_admin_links( $args = array() ) {
 	 * @param array $args This function supports these arguments:
 	 *  - id: Optional. Reply id
 	 *  - before: HTML before the links. Defaults to
-	 *             '<span class="bbp-admin-links">'
+	 *             '<span class="ideaboard-admin-links">'
 	 *  - after: HTML after the links. Defaults to '</span>'
 	 *  - sep: Separator. Defaults to ' | '
 	 *  - links: Array of the links to display. By default, edit, trash,
@@ -1813,7 +1813,7 @@ function ideaboard_reply_admin_links( $args = array() ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'id'     => 0,
-			'before' => '<span class="bbp-admin-links">',
+			'before' => '<span class="ideaboard-admin-links">',
 			'after'  => '</span>',
 			'sep'    => ' | ',
 			'links'  => array()
@@ -1928,7 +1928,7 @@ function ideaboard_reply_edit_link( $args = '' ) {
 		if ( empty( $uri ) )
 			return;
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="ideaboard-reply-edit-link">' . $r['edit_text'] . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_reply_edit_link', $retval, $r );
 	}
@@ -1961,7 +1961,7 @@ function ideaboard_reply_edit_url( $reply_id = 0 ) {
 	function ideaboard_get_reply_edit_url( $reply_id = 0 ) {
 		global $wp_rewrite;
 
-		$bbp   = ideaboard();
+		$ideaboard   = ideaboard();
 		$reply = ideaboard_get_reply( ideaboard_get_reply_id( $reply_id ) );
 		if ( empty( $reply ) )
 			return;
@@ -1970,12 +1970,12 @@ function ideaboard_reply_edit_url( $reply_id = 0 ) {
 
 		// Pretty permalinks
 		if ( $wp_rewrite->using_permalinks() ) {
-			$url = trailingslashit( $reply_link ) . $bbp->edit_id;
+			$url = trailingslashit( $reply_link ) . $ideaboard->edit_id;
 			$url = trailingslashit( $url );
 
 		// Unpretty permalinks
 		} else {
-			$url = add_query_arg( array( ideaboard_get_reply_post_type() => $reply->post_name, $bbp->edit_id => '1' ), $reply_link );
+			$url = add_query_arg( array( ideaboard_get_reply_post_type() => $reply->post_name, $ideaboard->edit_id => '1' ), $reply_link );
 		}
 
 		// Maybe add view all
@@ -2044,13 +2044,13 @@ function ideaboard_reply_trash_link( $args = '' ) {
 		}
 
 		if ( ideaboard_is_reply_trash( $reply->ID ) ) {
-			$actions['untrash'] = '<a title="' . esc_attr__( 'Restore this item from the Trash', 'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_reply_trash', 'sub_action' => 'untrash', 'reply_id' => $reply->ID ) ), 'untrash-' . $reply->post_type . '_' . $reply->ID ) ) . '" class="bbp-reply-restore-link">' . $r['restore_text'] . '</a>';
+			$actions['untrash'] = '<a title="' . esc_attr__( 'Restore this item from the Trash', 'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_reply_trash', 'sub_action' => 'untrash', 'reply_id' => $reply->ID ) ), 'untrash-' . $reply->post_type . '_' . $reply->ID ) ) . '" class="ideaboard-reply-restore-link">' . $r['restore_text'] . '</a>';
 		} elseif ( EMPTY_TRASH_DAYS ) {
-			$actions['trash']   = '<a title="' . esc_attr__( 'Move this item to the Trash',      'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_reply_trash', 'sub_action' => 'trash',   'reply_id' => $reply->ID ) ), 'trash-'   . $reply->post_type . '_' . $reply->ID ) ) . '" class="bbp-reply-trash-link">'   . $r['trash_text']   . '</a>';
+			$actions['trash']   = '<a title="' . esc_attr__( 'Move this item to the Trash',      'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_reply_trash', 'sub_action' => 'trash',   'reply_id' => $reply->ID ) ), 'trash-'   . $reply->post_type . '_' . $reply->ID ) ) . '" class="ideaboard-reply-trash-link">'   . $r['trash_text']   . '</a>';
 		}
 
 		if ( ideaboard_is_reply_trash( $reply->ID ) || !EMPTY_TRASH_DAYS ) {
-			$actions['delete']  = '<a title="' . esc_attr__( 'Delete this item permanently',     'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_reply_trash', 'sub_action' => 'delete',  'reply_id' => $reply->ID ) ), 'delete-'  . $reply->post_type . '_' . $reply->ID ) ) . '" onclick="return confirm(\'' . esc_js( __( 'Are you sure you want to delete that permanently?', 'ideaboard' ) ) . '\' );" class="bbp-reply-delete-link">' . $r['delete_text'] . '</a>';
+			$actions['delete']  = '<a title="' . esc_attr__( 'Delete this item permanently',     'ideaboard' ) . '" href="' . esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'ideaboard_toggle_reply_trash', 'sub_action' => 'delete',  'reply_id' => $reply->ID ) ), 'delete-'  . $reply->post_type . '_' . $reply->ID ) ) . '" onclick="return confirm(\'' . esc_js( __( 'Are you sure you want to delete that permanently?', 'ideaboard' ) ) . '\' );" class="ideaboard-reply-delete-link">' . $r['delete_text'] . '</a>';
 		}
 
 		// Process the admin links
@@ -2114,7 +2114,7 @@ function ideaboard_reply_spam_link( $args = '' ) {
 		$display  = ideaboard_is_reply_spam( $reply->ID ) ? $r['unspam_text'] : $r['spam_text'];
 		$uri      = add_query_arg( array( 'action' => 'ideaboard_toggle_reply_spam', 'reply_id' => $reply->ID ) );
 		$uri      = wp_nonce_url( $uri, 'spam-reply_' . $reply->ID );
-		$retval   = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="bbp-reply-spam-link">' . $display . '</a>' . $r['link_after'];
+		$retval   = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" class="ideaboard-reply-spam-link">' . $display . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_reply_spam_link', $retval, $r );
 	}
@@ -2181,7 +2181,7 @@ function ideaboard_reply_move_link( $args = '' ) {
 			'reply_id' => $reply_id
 		), ideaboard_get_reply_edit_url( $reply_id ) );
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="bbp-reply-move-link">' . $r['split_text'] . '</a>' . $r['link_after'];
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="ideaboard-reply-move-link">' . $r['split_text'] . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_reply_move_link', $retval, $r );
 	}
@@ -2248,7 +2248,7 @@ function ideaboard_topic_split_link( $args = '' ) {
 			'reply_id' => $reply_id
 		), ideaboard_get_topic_edit_url( $topic_id ) );
 
-		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="bbp-topic-split-link">' . $r['split_text'] . '</a>' . $r['link_after'];
+		$retval = $r['link_before'] . '<a href="' . esc_url( $uri ) . '" title="' . $r['split_title'] . '" class="ideaboard-topic-split-link">' . $r['split_text'] . '</a>' . $r['link_after'];
 
 		return apply_filters( 'ideaboard_get_topic_split_link', $retval, $r );
 	}
@@ -2280,14 +2280,14 @@ function ideaboard_reply_class( $reply_id = 0, $classes = array() ) {
 	 * @return string Row class of the reply
 	 */
 	function ideaboard_get_reply_class( $reply_id = 0, $classes = array() ) {
-		$bbp       = ideaboard();
+		$ideaboard       = ideaboard();
 		$reply_id  = ideaboard_get_reply_id( $reply_id );
-		$count     = isset( $bbp->reply_query->current_post ) ? $bbp->reply_query->current_post : 1;
+		$count     = isset( $ideaboard->reply_query->current_post ) ? $ideaboard->reply_query->current_post : 1;
 		$classes   = (array) $classes;
 		$classes[] = ( (int) $count % 2 ) ? 'even' : 'odd';
-		$classes[] = 'bbp-parent-forum-'   . ideaboard_get_reply_forum_id( $reply_id );
-		$classes[] = 'bbp-parent-topic-'   . ideaboard_get_reply_topic_id( $reply_id );
-		$classes[] = 'bbp-reply-position-' . ideaboard_get_reply_position( $reply_id );
+		$classes[] = 'ideaboard-parent-forum-'   . ideaboard_get_reply_forum_id( $reply_id );
+		$classes[] = 'ideaboard-parent-topic-'   . ideaboard_get_reply_topic_id( $reply_id );
+		$classes[] = 'ideaboard-reply-position-' . ideaboard_get_reply_position( $reply_id );
 		$classes[] = 'user-id-' . ideaboard_get_reply_author_id( $reply_id );
 		$classes[] = ( ideaboard_get_reply_author_id( $reply_id ) === ideaboard_get_topic_author_id( ideaboard_get_reply_topic_id( $reply_id ) ) ? 'topic-author' : '' );
 		$classes   = array_filter( $classes );
@@ -2320,23 +2320,23 @@ function ideaboard_topic_pagination_count() {
 	 * @return string Topic pagination count
 	 */
 	function ideaboard_get_topic_pagination_count() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Define local variable(s)
 		$retstr = '';
 
 		// Set pagination values
-		$start_num = intval( ( $bbp->reply_query->paged - 1 ) * $bbp->reply_query->posts_per_page ) + 1;
+		$start_num = intval( ( $ideaboard->reply_query->paged - 1 ) * $ideaboard->reply_query->posts_per_page ) + 1;
 		$from_num  = ideaboard_number_format( $start_num );
-		$to_num    = ideaboard_number_format( ( $start_num + ( $bbp->reply_query->posts_per_page - 1 ) > $bbp->reply_query->found_posts ) ? $bbp->reply_query->found_posts : $start_num + ( $bbp->reply_query->posts_per_page - 1 ) );
-		$total_int = (int) $bbp->reply_query->found_posts;
+		$to_num    = ideaboard_number_format( ( $start_num + ( $ideaboard->reply_query->posts_per_page - 1 ) > $ideaboard->reply_query->found_posts ) ? $ideaboard->reply_query->found_posts : $start_num + ( $ideaboard->reply_query->posts_per_page - 1 ) );
+		$total_int = (int) $ideaboard->reply_query->found_posts;
 		$total     = ideaboard_number_format( $total_int );
 
 		// We are threading replies
 		if ( ideaboard_thread_replies() && ideaboard_is_single_topic() ) {
 			return;
 			$walker  = new BBP_Walker_Reply;
-			$threads = (int) $walker->get_number_of_root_elements( $bbp->reply_query->posts );
+			$threads = (int) $walker->get_number_of_root_elements( $ideaboard->reply_query->posts );
 
 			// Adjust for topic
 			$threads--;
@@ -2351,7 +2351,7 @@ function ideaboard_topic_pagination_count() {
 
 			// Several replies in a topic with several pages
 			} else {
-				$retstr = sprintf( _n( 'Viewing %2$s replies (of %4$s total)', 'Viewing %1$s replies - %2$s through %3$s (of %4$s total)', $bbp->reply_query->post_count, 'ideaboard' ), $bbp->reply_query->post_count, $from_num, $to_num, $total );
+				$retstr = sprintf( _n( 'Viewing %2$s replies (of %4$s total)', 'Viewing %1$s replies - %2$s through %3$s (of %4$s total)', $ideaboard->reply_query->post_count, 'ideaboard' ), $ideaboard->reply_query->post_count, $from_num, $to_num, $total );
 			}
 
 		// We are including the lead topic
@@ -2363,7 +2363,7 @@ function ideaboard_topic_pagination_count() {
 
 			// Several posts in a topic with several pages
 			} else {
-				$retstr = sprintf( _n( 'Viewing %2$s post (of %4$s total)', 'Viewing %1$s posts - %2$s through %3$s (of %4$s total)', $bbp->reply_query->post_count, 'ideaboard' ), $bbp->reply_query->post_count, $from_num, $to_num, $total );
+				$retstr = sprintf( _n( 'Viewing %2$s post (of %4$s total)', 'Viewing %1$s posts - %2$s through %3$s (of %4$s total)', $ideaboard->reply_query->post_count, 'ideaboard' ), $ideaboard->reply_query->post_count, $from_num, $to_num, $total );
 			}
 		}
 
@@ -2391,12 +2391,12 @@ function ideaboard_topic_pagination_links() {
 	 * @return string Topic pagination links
 	 */
 	function ideaboard_get_topic_pagination_links() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
-		if ( !isset( $bbp->reply_query->pagination_links ) || empty( $bbp->reply_query->pagination_links ) )
+		if ( !isset( $ideaboard->reply_query->pagination_links ) || empty( $ideaboard->reply_query->pagination_links ) )
 			return false;
 
-		return apply_filters( 'ideaboard_get_topic_pagination_links', $bbp->reply_query->pagination_links );
+		return apply_filters( 'ideaboard_get_topic_pagination_links', $ideaboard->reply_query->pagination_links );
 	}
 
 /** Forms *********************************************************************/

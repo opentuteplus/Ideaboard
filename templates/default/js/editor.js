@@ -17,10 +17,10 @@ jQuery(document).ready( function() {
 					var editor = tinymce.activeEditor.editorContainer;
 					jQuery( '#' + editor + ' td.mceToolbar > a' ).focus();
 				} else {
-					jQuery( 'textarea.bbp-the-content' ).focus();
+					jQuery( 'textarea.ideaboard-the-content' ).focus();
 				}
 			} else {
-				jQuery( 'textarea.bbp-the-content' ).focus();
+				jQuery( 'textarea.ideaboard-the-content' ).focus();
 			}
 
 			e.preventDefault();
@@ -38,10 +38,10 @@ jQuery(document).ready( function() {
 					var editor = tinymce.activeEditor.editorContainer;
 					jQuery( '#' + editor + ' td.mceToolbar > a' ).focus();
 				} else {
-					jQuery( 'textarea.bbp-the-content' ).focus();
+					jQuery( 'textarea.ideaboard-the-content' ).focus();
 				}
 			} else {
-				jQuery( 'textarea.bbp-the-content' ).focus();
+				jQuery( 'textarea.ideaboard-the-content' ).focus();
 			}
 
 			e.preventDefault();

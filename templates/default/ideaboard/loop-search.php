@@ -11,21 +11,21 @@
 
 <?php do_action( 'ideaboard_template_before_search_results_loop' ); ?>
 
-<ul id="bbp-search-results" class="forums bbp-search-results">
+<ul id="ideaboard-search-results" class="forums ideaboard-search-results">
 
-	<li class="bbp-header">
+	<li class="ideaboard-header">
 
-		<div class="bbp-search-author"><?php  _e( 'Author',  'ideaboard' ); ?></div><!-- .bbp-reply-author -->
+		<div class="ideaboard-search-author"><?php  _e( 'Author',  'ideaboard' ); ?></div><!-- .ideaboard-reply-author -->
 
-		<div class="bbp-search-content">
+		<div class="ideaboard-search-content">
 
 			<?php _e( 'Search Results', 'ideaboard' ); ?>
 
-		</div><!-- .bbp-search-content -->
+		</div><!-- .ideaboard-search-content -->
 
-	</li><!-- .bbp-header -->
+	</li><!-- .ideaboard-header -->
 
-	<li class="bbp-body">
+	<li class="ideaboard-body">
 
 		<?php while ( ideaboard_search_results() ) : ideaboard_the_search_result(); ?>
 
@@ -33,20 +33,20 @@
 
 		<?php endwhile; ?>
 
-	</li><!-- .bbp-body -->
+	</li><!-- .ideaboard-body -->
 
-	<li class="bbp-footer">
+	<li class="ideaboard-footer">
 
-		<div class="bbp-search-author"><?php  _e( 'Author',  'ideaboard' ); ?></div>
+		<div class="ideaboard-search-author"><?php  _e( 'Author',  'ideaboard' ); ?></div>
 
-		<div class="bbp-search-content">
+		<div class="ideaboard-search-content">
 
 			<?php _e( 'Search Results', 'ideaboard' ); ?>
 
-		</div><!-- .bbp-search-content -->
+		</div><!-- .ideaboard-search-content -->
 
-	</li><!-- .bbp-footer -->
+	</li><!-- .ideaboard-footer -->
 
-</ul><!-- #bbp-search-results -->
+</ul><!-- #ideaboard-search-results -->
 
 <?php do_action( 'ideaboard_template_after_search_results_loop' ); ?>

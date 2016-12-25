@@ -19,7 +19,7 @@ get_header(); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<div id="bbp-login" class="bbp-login">
+		<div id="ideaboard-login" class="ideaboard-login">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="entry-content">
 
@@ -33,7 +33,7 @@ get_header(); ?>
 
 				</div>
 			</div>
-		</div><!-- #bbp-login -->
+		</div><!-- #ideaboard-login -->
 
 	<?php endwhile; ?>
 

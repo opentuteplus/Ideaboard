@@ -109,12 +109,12 @@ function ideaboard_insert_forum( $forum_data = array(), $forum_meta = array() ) 
  */
 function ideaboard_new_forum_handler( $action = '' ) {
 
-	// Bail if action is not bbp-new-forum
-	if ( 'bbp-new-forum' !== $action )
+	// Bail if action is not ideaboard-new-forum
+	if ( 'ideaboard-new-forum' !== $action )
 		return;
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-new-forum' ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-new-forum' ) ) {
 		ideaboard_add_error( 'ideaboard_new_forum_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 	}
@@ -136,7 +136,7 @@ function ideaboard_new_forum_handler( $action = '' ) {
 	$forum_author = ideaboard_get_current_user_id();
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_forum'] ) && wp_create_nonce( 'bbp-unfiltered-html-forum_new' ) === $_POST['_ideaboard_unfiltered_html_forum'] ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_forum'] ) && wp_create_nonce( 'ideaboard-unfiltered-html-forum_new' ) === $_POST['_ideaboard_unfiltered_html_forum'] ) {
 		remove_filter( 'ideaboard_new_forum_pre_title',   'wp_filter_kses'      );
 		remove_filter( 'ideaboard_new_forum_pre_content', 'ideaboard_encode_bad',  10 );
 		remove_filter( 'ideaboard_new_forum_pre_content', 'ideaboard_filter_kses', 30 );
@@ -368,8 +368,8 @@ function ideaboard_new_forum_handler( $action = '' ) {
  */
 function ideaboard_edit_forum_handler( $action = '' ) {
 
-	// Bail if action is not bbp-edit-forum
-	if ( 'bbp-edit-forum' !== $action )
+	// Bail if action is not ideaboard-edit-forum
+	if ( 'ideaboard-edit-forum' !== $action )
 		return;
 
 	// Define local variable(s)
@@ -391,7 +391,7 @@ function ideaboard_edit_forum_handler( $action = '' ) {
 	}
 
 	// Nonce check
-	if ( ! ideaboard_verify_nonce_request( 'bbp-edit-forum_' . $forum_id ) ) {
+	if ( ! ideaboard_verify_nonce_request( 'ideaboard-edit-forum_' . $forum_id ) ) {
 		ideaboard_add_error( 'ideaboard_edit_forum_nonce', __( '<strong>ERROR</strong>: Are you sure you wanted to do that?', 'ideaboard' ) );
 		return;
 
@@ -407,7 +407,7 @@ function ideaboard_edit_forum_handler( $action = '' ) {
 	}
 
 	// Remove kses filters from title and content for capable users and if the nonce is verified
-	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_forum'] ) && ( wp_create_nonce( 'bbp-unfiltered-html-forum_' . $forum_id ) === $_POST['_ideaboard_unfiltered_html_forum'] ) ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty( $_POST['_ideaboard_unfiltered_html_forum'] ) && ( wp_create_nonce( 'ideaboard-unfiltered-html-forum_' . $forum_id ) === $_POST['_ideaboard_unfiltered_html_forum'] ) ) {
 		remove_filter( 'ideaboard_edit_forum_pre_title',   'wp_filter_kses'      );
 		remove_filter( 'ideaboard_edit_forum_pre_content', 'ideaboard_encode_bad',  10 );
 		remove_filter( 'ideaboard_edit_forum_pre_content', 'ideaboard_filter_kses', 30 );

@@ -86,22 +86,22 @@ function ideaboard_has_search_results( $args = '' ) {
 	$r = ideaboard_parse_args( $args, $default, 'has_search_results' );
 
 	// Get IdeaBoard
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Call the query
 	if ( ! empty( $r['s'] ) ) {
-		$bbp->search_query = new WP_Query( $r );
+		$ideaboard->search_query = new WP_Query( $r );
 	}
 
 	// Add pagination values to query object
-	$bbp->search_query->posts_per_page = $r['posts_per_page'];
-	$bbp->search_query->paged          = $r['paged'];
+	$ideaboard->search_query->posts_per_page = $r['posts_per_page'];
+	$ideaboard->search_query->paged          = $r['paged'];
 
 	// Never home, regardless of what parse_query says
-	$bbp->search_query->is_home        = false;
+	$ideaboard->search_query->is_home        = false;
 
 	// Only add pagination is query returned results
-	if ( ! empty( $bbp->search_query->found_posts ) && ! empty( $bbp->search_query->posts_per_page ) ) {
+	if ( ! empty( $ideaboard->search_query->found_posts ) && ! empty( $ideaboard->search_query->posts_per_page ) ) {
 
 		// Array of arguments to add after pagination links
 		$add_args = array();
@@ -132,12 +132,12 @@ function ideaboard_has_search_results( $args = '' ) {
 		}
 
 		// Add pagination to query object
-		$bbp->search_query->pagination_links = paginate_links(
+		$ideaboard->search_query->pagination_links = paginate_links(
 			apply_filters( 'ideaboard_search_results_pagination', array(
 				'base'      => $base,
 				'format'    => '',
-				'total'     => ceil( (int) $bbp->search_query->found_posts / (int) $r['posts_per_page'] ),
-				'current'   => (int) $bbp->search_query->paged,
+				'total'     => ceil( (int) $ideaboard->search_query->found_posts / (int) $r['posts_per_page'] ),
+				'current'   => (int) $ideaboard->search_query->paged,
 				'prev_text' => is_rtl() ? '&rarr;' : '&larr;',
 				'next_text' => is_rtl() ? '&larr;' : '&rarr;',
 				'mid_size'  => 1,
@@ -147,14 +147,14 @@ function ideaboard_has_search_results( $args = '' ) {
 
 		// Remove first page from pagination
 		if ( $wp_rewrite->using_permalinks() ) {
-			$bbp->search_query->pagination_links = str_replace( $wp_rewrite->pagination_base . '/1/', '', $bbp->search_query->pagination_links );
+			$ideaboard->search_query->pagination_links = str_replace( $wp_rewrite->pagination_base . '/1/', '', $ideaboard->search_query->pagination_links );
 		} else {
-			$bbp->search_query->pagination_links = str_replace( '&#038;paged=1', '', $bbp->search_query->pagination_links );
+			$ideaboard->search_query->pagination_links = str_replace( '&#038;paged=1', '', $ideaboard->search_query->pagination_links );
 		}
 	}
 
 	// Return object
-	return apply_filters( 'ideaboard_has_search_results', $bbp->search_query->have_posts(), $bbp->search_query );
+	return apply_filters( 'ideaboard_has_search_results', $ideaboard->search_query->have_posts(), $ideaboard->search_query );
 }
 
 /**
@@ -384,16 +384,16 @@ function ideaboard_search_pagination_count() {
 	 * @return string Search pagination count
 	 */
 	function ideaboard_get_search_pagination_count() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Define local variable(s)
 		$retstr = '';
 
 		// Set pagination values
-		$start_num = intval( ( $bbp->search_query->paged - 1 ) * $bbp->search_query->posts_per_page ) + 1;
+		$start_num = intval( ( $ideaboard->search_query->paged - 1 ) * $ideaboard->search_query->posts_per_page ) + 1;
 		$from_num  = ideaboard_number_format( $start_num );
-		$to_num    = ideaboard_number_format( ( $start_num + ( $bbp->search_query->posts_per_page - 1 ) > $bbp->search_query->found_posts ) ? $bbp->search_query->found_posts : $start_num + ( $bbp->search_query->posts_per_page - 1 ) );
-		$total_int = (int) $bbp->search_query->found_posts;
+		$to_num    = ideaboard_number_format( ( $start_num + ( $ideaboard->search_query->posts_per_page - 1 ) > $ideaboard->search_query->found_posts ) ? $ideaboard->search_query->found_posts : $start_num + ( $ideaboard->search_query->posts_per_page - 1 ) );
+		$total_int = (int) $ideaboard->search_query->found_posts;
 		$total     = ideaboard_number_format( $total_int );
 
 		// Single page of results
@@ -402,7 +402,7 @@ function ideaboard_search_pagination_count() {
 
 		// Several pages of results
 		} else {
-			$retstr = sprintf( _n( 'Viewing %2$s results (of %4$s total)', 'Viewing %1$s results - %2$s through %3$s (of %4$s total)', $bbp->search_query->post_count, 'ideaboard' ), $bbp->search_query->post_count, $from_num, $to_num, $total );
+			$retstr = sprintf( _n( 'Viewing %2$s results (of %4$s total)', 'Viewing %1$s results - %2$s through %3$s (of %4$s total)', $ideaboard->search_query->post_count, 'ideaboard' ), $ideaboard->search_query->post_count, $from_num, $to_num, $total );
 
 		}
 
@@ -431,10 +431,10 @@ function ideaboard_search_pagination_links() {
 	 * @return string Search pagination links
 	 */
 	function ideaboard_get_search_pagination_links() {
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
-		if ( !isset( $bbp->search_query->pagination_links ) || empty( $bbp->search_query->pagination_links ) )
+		if ( !isset( $ideaboard->search_query->pagination_links ) || empty( $ideaboard->search_query->pagination_links ) )
 			return false;
 
-		return apply_filters( 'ideaboard_get_search_pagination_links', $bbp->search_query->pagination_links );
+		return apply_filters( 'ideaboard_get_search_pagination_links', $ideaboard->search_query->pagination_links );
 	}

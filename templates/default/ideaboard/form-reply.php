@@ -19,20 +19,20 @@
 
 <?php if ( ideaboard_current_user_can_access_create_reply_form() ) : ?>
 
-	<div id="new-reply-<?php ideaboard_topic_id(); ?>" class="bbp-reply-form">
+	<div id="new-reply-<?php ideaboard_topic_id(); ?>" class="ideaboard-reply-form">
 
 		<form id="new-post" name="new-post" method="post" action="<?php the_permalink(); ?>">
 
 			<?php do_action( 'ideaboard_theme_before_reply_form' ); ?>
 
-			<fieldset class="bbp-form">
+			<fieldset class="ideaboard-form">
 				<legend><?php printf( __( 'Reply To: %s', 'ideaboard' ), ideaboard_get_topic_title() ); ?></legend>
 
 				<?php do_action( 'ideaboard_theme_before_reply_form_notices' ); ?>
 
 				<?php if ( !ideaboard_is_topic_open() && !ideaboard_is_reply_edit() ) : ?>
 
-					<div class="bbp-template-notice">
+					<div class="ideaboard-template-notice">
 						<p><?php _e( 'This topic is marked as closed to new replies, however your posting capabilities still allow you to do so.', 'ideaboard' ); ?></p>
 					</div>
 
@@ -40,7 +40,7 @@
 
 				<?php if ( current_user_can( 'unfiltered_html' ) ) : ?>
 
-					<div class="bbp-template-notice">
+					<div class="ideaboard-template-notice">
 						<p><?php _e( 'Your account has the ability to post unrestricted HTML content.', 'ideaboard' ); ?></p>
 					</div>
 
@@ -108,7 +108,7 @@
 
 						<?php do_action( 'ideaboard_theme_before_reply_form_revisions' ); ?>
 
-						<fieldset class="bbp-form">
+						<fieldset class="ideaboard-form">
 							<legend>
 								<input name="ideaboard_log_reply_edit" id="ideaboard_log_reply_edit" type="checkbox" value="1" <?php ideaboard_form_reply_log_edit(); ?> tabindex="<?php ideaboard_tab_index(); ?>" />
 								<label for="ideaboard_log_reply_edit"><?php _e( 'Keep a log of this edit:', 'ideaboard' ); ?></label><br />
@@ -126,7 +126,7 @@
 
 					<?php do_action( 'ideaboard_theme_before_reply_form_submit_wrapper' ); ?>
 
-					<div class="bbp-submit-wrapper">
+					<div class="ideaboard-submit-wrapper">
 
 						<?php do_action( 'ideaboard_theme_before_reply_form_submit_button' ); ?>
 
@@ -153,24 +153,24 @@
 
 <?php elseif ( ideaboard_is_topic_closed() ) : ?>
 
-	<div id="no-reply-<?php ideaboard_topic_id(); ?>" class="bbp-no-reply">
-		<div class="bbp-template-notice">
+	<div id="no-reply-<?php ideaboard_topic_id(); ?>" class="ideaboard-no-reply">
+		<div class="ideaboard-template-notice">
 			<p><?php printf( __( 'The topic &#8216;%s&#8217; is closed to new replies.', 'ideaboard' ), ideaboard_get_topic_title() ); ?></p>
 		</div>
 	</div>
 
 <?php elseif ( ideaboard_is_forum_closed( ideaboard_get_topic_forum_id() ) ) : ?>
 
-	<div id="no-reply-<?php ideaboard_topic_id(); ?>" class="bbp-no-reply">
-		<div class="bbp-template-notice">
+	<div id="no-reply-<?php ideaboard_topic_id(); ?>" class="ideaboard-no-reply">
+		<div class="ideaboard-template-notice">
 			<p><?php printf( __( 'The forum &#8216;%s&#8217; is closed to new topics and replies.', 'ideaboard' ), ideaboard_get_forum_title( ideaboard_get_topic_forum_id() ) ); ?></p>
 		</div>
 	</div>
 
 <?php else : ?>
 
-	<div id="no-reply-<?php ideaboard_topic_id(); ?>" class="bbp-no-reply">
-		<div class="bbp-template-notice">
+	<div id="no-reply-<?php ideaboard_topic_id(); ?>" class="ideaboard-no-reply">
+		<div class="ideaboard-template-notice">
 			<p><?php is_user_logged_in() ? _e( 'You cannot reply to this topic.', 'ideaboard' ) : _e( 'You must be logged in to reply to this topic.', 'ideaboard' ); ?></p>
 		</div>
 	</div>

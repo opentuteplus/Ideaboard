@@ -93,15 +93,15 @@ class BBP_Theme_Compat {
  * @param BBP_Theme_Compat $theme
  */
 function ideaboard_setup_theme_compat( $theme = '' ) {
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Make sure theme package is available, set to default if not
-	if ( ! isset( $bbp->theme_compat->packages[$theme] ) || ! is_a( $bbp->theme_compat->packages[$theme], 'BBP_Theme_Compat' ) ) {
+	if ( ! isset( $ideaboard->theme_compat->packages[$theme] ) || ! is_a( $ideaboard->theme_compat->packages[$theme], 'BBP_Theme_Compat' ) ) {
 		$theme = 'default';
 	}
 
 	// Set the active theme compat theme
-	$bbp->theme_compat->theme = $bbp->theme_compat->packages[$theme];
+	$ideaboard->theme_compat->theme = $ideaboard->theme_compat->packages[$theme];
 }
 
 /**
@@ -181,12 +181,12 @@ function ideaboard_get_theme_compat_url() {
  * @return bool
  */
 function ideaboard_is_theme_compat_active() {
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
-	if ( empty( $bbp->theme_compat->active ) )
+	if ( empty( $ideaboard->theme_compat->active ) )
 		return false;
 
-	return $bbp->theme_compat->active;
+	return $ideaboard->theme_compat->active;
 }
 
 /**
@@ -253,12 +253,12 @@ function ideaboard_set_theme_compat_original_template( $template = '' ) {
  * @since IdeaBoard (r3926)
  */
 function ideaboard_is_theme_compat_original_template( $template = '' ) {
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
-	if ( empty( $bbp->theme_compat->original_template ) )
+	if ( empty( $ideaboard->theme_compat->original_template ) )
 		return false;
 
-	return (bool) ( $bbp->theme_compat->original_template === $template );
+	return (bool) ( $ideaboard->theme_compat->original_template === $template );
 }
 
 /**
@@ -278,11 +278,11 @@ function ideaboard_register_theme_package( $theme = array(), $override = true ) 
 		return;
 
 	// Load up IdeaBoard
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Only override if the flag is set and not previously registered
-	if ( empty( $bbp->theme_compat->packages[$theme->id] ) || ( true === $override ) ) {
-		$bbp->theme_compat->packages[$theme->id] = $theme;
+	if ( empty( $ideaboard->theme_compat->packages[$theme->id] ) || ( true === $override ) ) {
+		$ideaboard->theme_compat->packages[$theme->id] = $theme;
 	}
 }
 /**
@@ -841,7 +841,7 @@ function ideaboard_redirect_canonical( $redirect_url ) {
 /** Filters *******************************************************************/
 
 /**
- * Removes all filters from a WordPress filter, and stashes them in the $bbp
+ * Removes all filters from a WordPress filter, and stashes them in the $ideaboard
  * global in the event they need to be restored later.
  *
  * @since IdeaBoard (r3251)
@@ -854,7 +854,7 @@ function ideaboard_redirect_canonical( $redirect_url ) {
 function ideaboard_remove_all_filters( $tag, $priority = false ) {
 	global $wp_filter, $merged_filters;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Filters exist
 	if ( isset( $wp_filter[$tag] ) ) {
@@ -863,7 +863,7 @@ function ideaboard_remove_all_filters( $tag, $priority = false ) {
 		if ( !empty( $priority ) && isset( $wp_filter[$tag][$priority] ) ) {
 
 			// Store filters in a backup
-			$bbp->filters->wp_filter[$tag][$priority] = $wp_filter[$tag][$priority];
+			$ideaboard->filters->wp_filter[$tag][$priority] = $wp_filter[$tag][$priority];
 
 			// Unset the filters
 			unset( $wp_filter[$tag][$priority] );
@@ -872,7 +872,7 @@ function ideaboard_remove_all_filters( $tag, $priority = false ) {
 		} else {
 
 			// Store filters in a backup
-			$bbp->filters->wp_filter[$tag] = $wp_filter[$tag];
+			$ideaboard->filters->wp_filter[$tag] = $wp_filter[$tag];
 
 			// Unset the filters
 			unset( $wp_filter[$tag] );
@@ -883,7 +883,7 @@ function ideaboard_remove_all_filters( $tag, $priority = false ) {
 	if ( isset( $merged_filters[$tag] ) ) {
 
 		// Store filters in a backup
-		$bbp->filters->merged_filters[$tag] = $merged_filters[$tag];
+		$ideaboard->filters->merged_filters[$tag] = $merged_filters[$tag];
 
 		// Unset the filters
 		unset( $merged_filters[$tag] );
@@ -893,7 +893,7 @@ function ideaboard_remove_all_filters( $tag, $priority = false ) {
 }
 
 /**
- * Restores filters from the $bbp global that were removed using
+ * Restores filters from the $ideaboard global that were removed using
  * ideaboard_remove_all_filters()
  *
  * @since IdeaBoard (r3251)
@@ -906,39 +906,39 @@ function ideaboard_remove_all_filters( $tag, $priority = false ) {
 function ideaboard_restore_all_filters( $tag, $priority = false ) {
 	global $wp_filter, $merged_filters;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Filters exist
-	if ( isset( $bbp->filters->wp_filter[$tag] ) ) {
+	if ( isset( $ideaboard->filters->wp_filter[$tag] ) ) {
 
 		// Filters exist in this priority
-		if ( !empty( $priority ) && isset( $bbp->filters->wp_filter[$tag][$priority] ) ) {
+		if ( !empty( $priority ) && isset( $ideaboard->filters->wp_filter[$tag][$priority] ) ) {
 
 			// Store filters in a backup
-			$wp_filter[$tag][$priority] = $bbp->filters->wp_filter[$tag][$priority];
+			$wp_filter[$tag][$priority] = $ideaboard->filters->wp_filter[$tag][$priority];
 
 			// Unset the filters
-			unset( $bbp->filters->wp_filter[$tag][$priority] );
+			unset( $ideaboard->filters->wp_filter[$tag][$priority] );
 
 		// Priority is empty
 		} else {
 
 			// Store filters in a backup
-			$wp_filter[$tag] = $bbp->filters->wp_filter[$tag];
+			$wp_filter[$tag] = $ideaboard->filters->wp_filter[$tag];
 
 			// Unset the filters
-			unset( $bbp->filters->wp_filter[$tag] );
+			unset( $ideaboard->filters->wp_filter[$tag] );
 		}
 	}
 
 	// Check merged filters
-	if ( isset( $bbp->filters->merged_filters[$tag] ) ) {
+	if ( isset( $ideaboard->filters->merged_filters[$tag] ) ) {
 
 		// Store filters in a backup
-		$merged_filters[$tag] = $bbp->filters->merged_filters[$tag];
+		$merged_filters[$tag] = $ideaboard->filters->merged_filters[$tag];
 
 		// Unset the filters
-		unset( $bbp->filters->merged_filters[$tag] );
+		unset( $ideaboard->filters->merged_filters[$tag] );
 	}
 
 	return true;

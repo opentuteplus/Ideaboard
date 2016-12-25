@@ -15,8 +15,8 @@
  *  - IdeaBoard: In {@link IdeaBoard::setup_actions()} in ideaboard.php
  *  - Admin: More in {@link BBP_Admin::setup_actions()} in admin.php
  *
- * @see bbp-core-actions.php
- * @see bbp-core-filters.php
+ * @see ideaboard-core-actions.php
+ * @see ideaboard-core-filters.php
  */
 
 // Exit if accessed directly
@@ -77,8 +77,8 @@ add_action( 'ideaboard_new_site', 'ideaboard_create_initial_content', 8 );
 add_action( 'load-settings_page_ideaboard', 'ideaboard_admin_settings_help' );
 
 // Handle submission of Tools pages
-add_action( 'load-tools_page_bbp-repair', 'ideaboard_admin_repair_handler' );
-add_action( 'load-tools_page_bbp-reset',  'ideaboard_admin_reset_handler'  );
+add_action( 'load-tools_page_ideaboard-repair', 'ideaboard_admin_repair_handler' );
+add_action( 'load-tools_page_ideaboard-reset',  'ideaboard_admin_reset_handler'  );
 
 // Add sample permalink filter
 add_filter( 'post_type_link', 'ideaboard_filter_sample_permalink', 10, 4 );

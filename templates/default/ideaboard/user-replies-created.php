@@ -11,9 +11,9 @@
 
 	<?php do_action( 'ideaboard_template_before_user_replies' ); ?>
 
-	<div id="bbp-user-replies-created" class="bbp-user-replies-created">
+	<div id="ideaboard-user-replies-created" class="ideaboard-user-replies-created">
 		<h2 class="entry-title"><?php _e( 'Forum Replies Created', 'ideaboard' ); ?></h2>
-		<div class="bbp-user-section">
+		<div class="ideaboard-user-section">
 
 			<?php if ( ideaboard_get_user_replies_created() ) : ?>
 
@@ -30,6 +30,6 @@
 			<?php endif; ?>
 
 		</div>
-	</div><!-- #bbp-user-replies-created -->
+	</div><!-- #ideaboard-user-replies-created -->
 
 	<?php do_action( 'ideaboard_template_after_user_replies' ); ?>

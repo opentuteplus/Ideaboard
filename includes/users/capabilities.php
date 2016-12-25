@@ -193,11 +193,11 @@ function ideaboard_profile_update_role( $user_id = 0 ) {
 		return;
 
 	// Bail if no role
-	if ( ! isset( $_POST['bbp-forums-role'] ) )
+	if ( ! isset( $_POST['ideaboard-forums-role'] ) )
 		return;
 
 	// Fromus role we want the user to have
-	$new_role    = sanitize_text_field( $_POST['bbp-forums-role'] );
+	$new_role    = sanitize_text_field( $_POST['ideaboard-forums-role'] );
 	$forums_role = ideaboard_get_user_role( $user_id );
 
 	// Bail if no role change
@@ -264,7 +264,7 @@ function ideaboard_set_current_user_default_role() {
 	/** Ready *****************************************************************/
 
 	// Load up IdeaBoard once
-	$bbp         = ideaboard();
+	$ideaboard         = ideaboard();
 
 	// Get whether or not to add a role to the user account
 	$add_to_site = ideaboard_allow_global_access();
@@ -294,12 +294,12 @@ function ideaboard_set_current_user_default_role() {
 		// Make sure IdeaBoard roles are added
 		ideaboard_add_forums_roles();
 
-		$bbp->current_user->add_role( $new_role );
+		$ideaboard->current_user->add_role( $new_role );
 
 	// Don't add the user, but still give them the correct caps dynamically
 	} else {		
-		$bbp->current_user->caps[$new_role] = true;
-		$bbp->current_user->get_role_caps();
+		$ideaboard->current_user->caps[$new_role] = true;
+		$ideaboard->current_user->get_role_caps();
 	}
 }
 

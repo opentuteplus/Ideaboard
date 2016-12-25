@@ -13,7 +13,7 @@ get_header(); ?>
 
 	<?php do_action( 'ideaboard_template_notices' ); ?>
 
-	<div id="forum-front" class="bbp-forum-front">
+	<div id="forum-front" class="ideaboard-forum-front">
 		<h1 class="entry-title"><?php ideaboard_forum_archive_title(); ?></h1>
 		<div class="entry-content">
 

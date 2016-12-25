@@ -42,7 +42,7 @@ class BBP_Converter {
 
 			// Some other admin page
 			case 'GET'  :
-				if ( ( empty( $_GET['page'] ) || ( 'bbp-converter' !=  $_GET['page'] ) ) )
+				if ( ( empty( $_GET['page'] ) || ( 'ideaboard-converter' !=  $_GET['page'] ) ) )
 					return;
 
 				break;
@@ -145,15 +145,15 @@ class BBP_Converter {
 		<style type="text/css" media="screen">
 			/*<![CDATA[*/
 
-			div.bbp-converter-updated,
-			div.bbp-converter-warning {
+			div.ideaboard-converter-updated,
+			div.ideaboard-converter-warning {
 				border-radius: 3px 3px 3px 3px;
 				border-style: solid;
 				border-width: 1px;
 				padding: 5px 5px 5px 5px;
 			}
 
-			div.bbp-converter-updated {
+			div.ideaboard-converter-updated {
 				height: 300px;
 				overflow: auto;
 				display: none;
@@ -163,25 +163,25 @@ class BBP_Converter {
 				font-weight: bold;
 			}
 
-			div.bbp-converter-updated p {
+			div.ideaboard-converter-updated p {
 				margin: 0.5em 0;
 				padding: 2px;
 				float: left;
 				clear: left;
 			}
 
-			div.bbp-converter-updated p.loading {
+			div.ideaboard-converter-updated p.loading {
 				padding: 2px 20px 2px 2px;
 				background-image: url('<?php echo admin_url(); ?>images/wpspin_light.gif');
 				background-repeat: no-repeat;
 				background-position: center right;
 			}
 
-			#bbp-converter-stop {
+			#ideaboard-converter-stop {
 				display:none;
 			}
 
-			#bbp-converter-progress {
+			#ideaboard-converter-progress {
 				display:none;
 			}
 
@@ -196,7 +196,7 @@ class BBP_Converter {
 
 			function bbconverter_grab_data() {
 				var values = {};
-				jQuery.each(jQuery('#bbp-converter-settings').serializeArray(), function(i, field) {
+				jQuery.each(jQuery('#ideaboard-converter-settings').serializeArray(), function(i, field) {
 					values[field.name] = field.value;
 				});
 
@@ -217,9 +217,9 @@ class BBP_Converter {
 			function bbconverter_start() {
 				if( false == bbconverter_is_running ) {
 					bbconverter_is_running = true;
-					jQuery('#bbp-converter-start').hide();
-					jQuery('#bbp-converter-stop').show();
-					jQuery('#bbp-converter-progress').show();
+					jQuery('#ideaboard-converter-start').hide();
+					jQuery('#ideaboard-converter-stop').show();
+					jQuery('#ideaboard-converter-progress').show();
 					bbconverter_log( '<p class="loading"><?php esc_html_e( 'Starting Conversion', 'ideaboard' ); ?></p>' );
 					bbconverter_run();
 				}
@@ -234,10 +234,10 @@ class BBP_Converter {
 			}
 
 			function bbconverter_stop() {
-				jQuery('#bbp-converter-start').show();
-				jQuery('#bbp-converter-stop').hide();
-				jQuery('#bbp-converter-progress').hide();
-				jQuery('#bbp-converter-message p').removeClass( 'loading' );
+				jQuery('#ideaboard-converter-start').show();
+				jQuery('#ideaboard-converter-stop').hide();
+				jQuery('#ideaboard-converter-progress').hide();
+				jQuery('#ideaboard-converter-message p').removeClass( 'loading' );
 				bbconverter_is_running = false;
 				clearTimeout( bbconverter_run_timer );
 			}
@@ -246,10 +246,10 @@ class BBP_Converter {
 				bbconverter_log(response);
 
 				if ( response == '<p class="loading"><?php esc_html_e( 'Conversion Complete', 'ideaboard' ); ?></p>' || response.indexOf('error') > -1 ) {
-					bbconverter_log('<p>Repair any missing information: <a href="<?php echo admin_url(); ?>tools.php?page=bbp-repair">Continue</a></p>');
+					bbconverter_log('<p>Repair any missing information: <a href="<?php echo admin_url(); ?>tools.php?page=ideaboard-repair">Continue</a></p>');
 					bbconverter_stop();
 				} else if( bbconverter_is_running ) { // keep going
-					jQuery('#bbp-converter-progress').show();
+					jQuery('#ideaboard-converter-progress').show();
 					clearTimeout( bbconverter_run_timer );
 					bbconverter_run_timer = setTimeout( 'bbconverter_run()', bbconverter_delay_time );
 				} else {
@@ -258,12 +258,12 @@ class BBP_Converter {
 			}
 
 			function bbconverter_log(text) {
-				if ( jQuery('#bbp-converter-message').css('display') == 'none' ) {
-					jQuery('#bbp-converter-message').show();
+				if ( jQuery('#ideaboard-converter-message').css('display') == 'none' ) {
+					jQuery('#ideaboard-converter-message').show();
 				}
 				if ( text ) {
-					jQuery('#bbp-converter-message p').removeClass( 'loading' );
-					jQuery('#bbp-converter-message').prepend( text );
+					jQuery('#ideaboard-converter-message p').removeClass( 'loading' );
+					jQuery('#ideaboard-converter-message').prepend( text );
 				}
 			}
 

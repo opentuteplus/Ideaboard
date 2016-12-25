@@ -15,7 +15,7 @@ get_header(); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<div id="bbp-topic-tags" class="bbp-topic-tags">
+		<div id="ideaboard-topic-tags" class="ideaboard-topic-tags">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="entry-content">
 
@@ -25,14 +25,14 @@ get_header(); ?>
 
 					<?php ideaboard_breadcrumb(); ?>
 
-					<div id="bbp-topic-hot-tags">
+					<div id="ideaboard-topic-hot-tags">
 
 						<?php wp_tag_cloud( array( 'smallest' => 9, 'largest' => 38, 'number' => 80, 'taxonomy' => ideaboard_get_topic_tag_tax_id() ) ); ?>
 
 					</div>
 				</div>
 			</div>
-		</div><!-- #bbp-topic-tags -->
+		</div><!-- #ideaboard-topic-tags -->
 
 	<?php endwhile; ?>
 

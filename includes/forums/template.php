@@ -139,10 +139,10 @@ function ideaboard_has_forums( $args = '' ) {
 	), 'has_forums' );
 
 	// Run the query
-	$bbp              = ideaboard();
-	$bbp->forum_query = new WP_Query( $ideaboard_f );
+	$ideaboard              = ideaboard();
+	$ideaboard->forum_query = new WP_Query( $ideaboard_f );
 
-	return apply_filters( 'ideaboard_has_forums', $bbp->forum_query->have_posts(), $bbp->forum_query );
+	return apply_filters( 'ideaboard_has_forums', $ideaboard->forum_query->have_posts(), $ideaboard->forum_query );
 }
 
 /**
@@ -212,23 +212,23 @@ function ideaboard_forum_id( $forum_id = 0 ) {
 	function ideaboard_get_forum_id( $forum_id = 0 ) {
 		global $wp_query;
 
-		$bbp = ideaboard();
+		$ideaboard = ideaboard();
 
 		// Easy empty checking
 		if ( !empty( $forum_id ) && is_numeric( $forum_id ) ) {
 			$ideaboard_forum_id = $forum_id;
 
 		// Currently inside a forum loop
-		} elseif ( !empty( $bbp->forum_query->in_the_loop ) && isset( $bbp->forum_query->post->ID ) ) {
-			$ideaboard_forum_id = $bbp->forum_query->post->ID;
+		} elseif ( !empty( $ideaboard->forum_query->in_the_loop ) && isset( $ideaboard->forum_query->post->ID ) ) {
+			$ideaboard_forum_id = $ideaboard->forum_query->post->ID;
 
 		// Currently inside a search loop
-		} elseif ( !empty( $bbp->search_query->in_the_loop ) && isset( $bbp->search_query->post->ID ) && ideaboard_is_forum( $bbp->search_query->post->ID ) ) {
-			$ideaboard_forum_id = $bbp->search_query->post->ID;
+		} elseif ( !empty( $ideaboard->search_query->in_the_loop ) && isset( $ideaboard->search_query->post->ID ) && ideaboard_is_forum( $ideaboard->search_query->post->ID ) ) {
+			$ideaboard_forum_id = $ideaboard->search_query->post->ID;
 
 		// Currently viewing a forum
-		} elseif ( ( ideaboard_is_single_forum() || ideaboard_is_forum_edit() ) && !empty( $bbp->current_forum_id ) ) {
-			$ideaboard_forum_id = $bbp->current_forum_id;
+		} elseif ( ( ideaboard_is_single_forum() || ideaboard_is_forum_edit() ) && !empty( $ideaboard->current_forum_id ) ) {
+			$ideaboard_forum_id = $ideaboard->current_forum_id;
 
 		// Currently viewing a forum
 		} elseif ( ( ideaboard_is_single_forum() || ideaboard_is_forum_edit() ) && isset( $wp_query->post->ID ) ) {
@@ -726,9 +726,9 @@ function ideaboard_forum_get_subforums( $args = '' ) {
  * Output a list of forums (can be used to list subforums)
  *
  * @param mixed $args The function supports these args:
- *  - before: To put before the output. Defaults to '<ul class="bbp-forums">'
+ *  - before: To put before the output. Defaults to '<ul class="ideaboard-forums">'
  *  - after: To put after the output. Defaults to '</ul>'
- *  - link_before: To put before every link. Defaults to '<li class="bbp-forum">'
+ *  - link_before: To put before every link. Defaults to '<li class="ideaboard-forum">'
  *  - link_after: To put after every link. Defaults to '</li>'
  *  - separator: Separator. Defaults to ', '
  *  - forum_id: Forum id. Defaults to ''
@@ -750,9 +750,9 @@ function ideaboard_list_forums( $args = '' ) {
 
 	// Parse arguments against default values
 	$r = ideaboard_parse_args( $args, array(
-		'before'            => '<ul class="bbp-forums-list">',
+		'before'            => '<ul class="ideaboard-forums-list">',
 		'after'             => '</ul>',
-		'link_before'       => '<li class="bbp-forum">',
+		'link_before'       => '<li class="ideaboard-forum">',
 		'link_after'        => '</li>',
 		'count_before'      => ' (',
 		'count_after'       => ')',
@@ -794,7 +794,7 @@ function ideaboard_list_forums( $args = '' ) {
 			}
 
 			// Build this sub forums link
-			$output .= $r['link_before'] . '<a href="' . esc_url( $permalink ) . '" class="bbp-forum-link">' . $title . $counts . '</a>' . $show_sep . $r['link_after'];
+			$output .= $r['link_before'] . '<a href="' . esc_url( $permalink ) . '" class="ideaboard-forum-link">' . $title . $counts . '</a>' . $show_sep . $r['link_after'];
 		}
 
 		// Output the list
@@ -1875,19 +1875,19 @@ function ideaboard_forum_class( $forum_id = 0, $classes = array() ) {
 	 * @return string Row class of the forum
 	 */
 	function ideaboard_get_forum_class( $forum_id = 0, $classes = array() ) {
-		$bbp       = ideaboard();
+		$ideaboard       = ideaboard();
 		$forum_id  = ideaboard_get_forum_id( $forum_id );
-		$count     = isset( $bbp->forum_query->current_post ) ? $bbp->forum_query->current_post : 1;
+		$count     = isset( $ideaboard->forum_query->current_post ) ? $ideaboard->forum_query->current_post : 1;
 		$classes   = (array) $classes;
 
 		// Get some classes
 		$classes[] = 'loop-item-' . $count;
 		$classes[] = ( (int) $count % 2 )                      ? 'even'              : 'odd';
 		$classes[] = ideaboard_is_forum_category( $forum_id )        ? 'status-category'   : '';
-		$classes[] = ideaboard_get_forum_subforum_count( $forum_id ) ? 'bbp-has-subforums' : '';
-		$classes[] = ideaboard_get_forum_parent_id( $forum_id )      ? 'bbp-parent-forum-' . ideaboard_get_forum_parent_id( $forum_id ) : '';
-		$classes[] = 'bbp-forum-status-'     . ideaboard_get_forum_status( $forum_id );
-		$classes[] = 'bbp-forum-visibility-' . ideaboard_get_forum_visibility( $forum_id );
+		$classes[] = ideaboard_get_forum_subforum_count( $forum_id ) ? 'ideaboard-has-subforums' : '';
+		$classes[] = ideaboard_get_forum_parent_id( $forum_id )      ? 'ideaboard-parent-forum-' . ideaboard_get_forum_parent_id( $forum_id ) : '';
+		$classes[] = 'ideaboard-forum-status-'     . ideaboard_get_forum_status( $forum_id );
+		$classes[] = 'ideaboard-forum-visibility-' . ideaboard_get_forum_visibility( $forum_id );
 
 		// Ditch the empties
 		$classes   = array_filter( $classes );
@@ -1941,7 +1941,7 @@ function ideaboard_single_forum_description( $args = '' ) {
 		// Parse arguments against default values
 		$r = ideaboard_parse_args( $args, array(
 			'forum_id'  => 0,
-			'before'    => '<div class="bbp-template-notice info"><p class="bbp-forum-description">',
+			'before'    => '<div class="ideaboard-template-notice info"><p class="ideaboard-forum-description">',
 			'after'     => '</p></div>',
 			'size'      => 14,
 			'feed'      => true
@@ -2598,7 +2598,7 @@ function ideaboard_forum_topics_feed_link( $forum_id = 0 ) {
 				) ) );
 			}
 
-			$link = '<a href="' . esc_url( $url ) . '" class="bbp-forum-rss-link topics"><span>' . esc_attr__( 'Topics', 'ideaboard' ) . '</span></a>';
+			$link = '<a href="' . esc_url( $url ) . '" class="ideaboard-forum-rss-link topics"><span>' . esc_attr__( 'Topics', 'ideaboard' ) . '</span></a>';
 		}
 
 		return apply_filters( 'ideaboard_get_forum_topics_feed_link', $link, $url, $forum_id );
@@ -2662,7 +2662,7 @@ function ideaboard_forum_replies_feed_link( $forum_id = 0 ) {
 				) ) );
 			}
 
-			$link = '<a href="' . esc_url( $url ) . '" class="bbp-forum-rss-link replies"><span>' . esc_html__( 'Replies', 'ideaboard' ) . '</span></a>';
+			$link = '<a href="' . esc_url( $url ) . '" class="ideaboard-forum-rss-link replies"><span>' . esc_html__( 'Replies', 'ideaboard' ) . '</span></a>';
 		}
 
 		return apply_filters( 'ideaboard_get_forum_replies_feed_link', $link, $url, $forum_id );

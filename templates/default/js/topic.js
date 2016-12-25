@@ -7,12 +7,12 @@ jQuery( document ).ready( function ( $ ) {
 			nonce  : nonce
 		};
 
-		$.post( bbpTopicJS.ideaboard_ajaxurl, $data, function ( response ) {
+		$.post( ideaboardTopicJS.ideaboard_ajaxurl, $data, function ( response ) {
 			if ( response.success ) {
 				$( update_selector ).html( response.content );
 			} else {
 				if ( !response.content ) {
-					response.content = bbpTopicJS.generic_ajax_error;
+					response.content = ideaboardTopicJS.generic_ajax_error;
 				}
 				alert( response.content );
 			}
@@ -21,11 +21,11 @@ jQuery( document ).ready( function ( $ ) {
 
 	$( '#favorite-toggle' ).on( 'click', 'span a.favorite-toggle', function( e ) {
 		e.preventDefault();
-		ideaboard_ajax_call( 'favorite', $( this ).attr( 'data-topic' ), bbpTopicJS.fav_nonce, '#favorite-toggle' );
+		ideaboard_ajax_call( 'favorite', $( this ).attr( 'data-topic' ), ideaboardTopicJS.fav_nonce, '#favorite-toggle' );
 	} );
 
 	$( '#subscription-toggle' ).on( 'click', 'span a.subscription-toggle', function( e ) {
 		e.preventDefault();
-		ideaboard_ajax_call( 'subscription', $( this ).attr( 'data-topic' ), bbpTopicJS.subs_nonce, '#subscription-toggle' );
+		ideaboard_ajax_call( 'subscription', $( this ).attr( 'data-topic' ), ideaboardTopicJS.subs_nonce, '#subscription-toggle' );
 	} );
 } );

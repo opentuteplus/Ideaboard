@@ -15,7 +15,7 @@ get_header(); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<div id="bbp-new-topic" class="bbp-new-topic">
+		<div id="ideaboard-new-topic" class="ideaboard-new-topic">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="entry-content">
 
@@ -24,7 +24,7 @@ get_header(); ?>
 				<?php ideaboard_get_template_part( 'form', 'topic' ); ?>
 
 			</div>
-		</div><!-- #bbp-new-topic -->
+		</div><!-- #ideaboard-new-topic -->
 
 	<?php endwhile; ?>
 

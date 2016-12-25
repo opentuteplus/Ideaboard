@@ -558,14 +558,14 @@ function ideaboard_group_is_admin() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Set the global if not set
-	if ( ! isset( $bbp->current_user->is_group_admin ) )
-		$bbp->current_user->is_group_admin = groups_is_user_admin( get_current_user_id(), bp_get_current_group_id() );
+	if ( ! isset( $ideaboard->current_user->is_group_admin ) )
+		$ideaboard->current_user->is_group_admin = groups_is_user_admin( get_current_user_id(), bp_get_current_group_id() );
 
 	// Return the value
-	return (bool) $bbp->current_user->is_group_admin;
+	return (bool) $ideaboard->current_user->is_group_admin;
 }
 
 /**
@@ -587,14 +587,14 @@ function ideaboard_group_is_mod() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Set the global if not set
-	if ( ! isset( $bbp->current_user->is_group_mod ) )
-		$bbp->current_user->is_group_mod = groups_is_user_mod( get_current_user_id(), bp_get_current_group_id() );
+	if ( ! isset( $ideaboard->current_user->is_group_mod ) )
+		$ideaboard->current_user->is_group_mod = groups_is_user_mod( get_current_user_id(), bp_get_current_group_id() );
 
 	// Return the value
-	return (bool) $bbp->current_user->is_group_mod;
+	return (bool) $ideaboard->current_user->is_group_mod;
 }
 
 /**
@@ -616,14 +616,14 @@ function ideaboard_group_is_member() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Set the global if not set
-	if ( ! isset( $bbp->current_user->is_group_member ) )
-		$bbp->current_user->is_group_member = groups_is_user_member( get_current_user_id(), bp_get_current_group_id() );
+	if ( ! isset( $ideaboard->current_user->is_group_member ) )
+		$ideaboard->current_user->is_group_member = groups_is_user_member( get_current_user_id(), bp_get_current_group_id() );
 
 	// Return the value
-	return (bool) $bbp->current_user->is_group_member;
+	return (bool) $ideaboard->current_user->is_group_member;
 }
 
 /**
@@ -645,14 +645,14 @@ function ideaboard_group_is_banned() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Set the global if not set
-	if ( ! isset( $bbp->current_user->is_group_banned ) )
-		$bbp->current_user->is_group_banned = groups_is_user_banned( get_current_user_id(), bp_get_current_group_id() );
+	if ( ! isset( $ideaboard->current_user->is_group_banned ) )
+		$ideaboard->current_user->is_group_banned = groups_is_user_banned( get_current_user_id(), bp_get_current_group_id() );
 
 	// Return the value
-	return (bool) $bbp->current_user->is_group_banned;
+	return (bool) $ideaboard->current_user->is_group_banned;
 }
 
 /**
@@ -674,12 +674,12 @@ function ideaboard_group_is_creator() {
 	if ( ! is_user_logged_in() || ! bp_is_group() )
 		return false;
 
-	$bbp = ideaboard();
+	$ideaboard = ideaboard();
 
 	// Set the global if not set
-	if ( ! isset( $bbp->current_user->is_group_creator ) )
-		$bbp->current_user->is_group_creator = groups_is_user_creator( get_current_user_id(), bp_get_current_group_id() );
+	if ( ! isset( $ideaboard->current_user->is_group_creator ) )
+		$ideaboard->current_user->is_group_creator = groups_is_user_creator( get_current_user_id(), bp_get_current_group_id() );
 
 	// Return the value
-	return (bool) $bbp->current_user->is_group_creator;
+	return (bool) $ideaboard->current_user->is_group_creator;
 }

@@ -11,13 +11,13 @@
 
 <?php do_action( 'ideaboard_template_before_replies_loop' ); ?>
 
-<ul id="topic-<?php ideaboard_topic_id(); ?>-replies" class="forums bbp-replies">
+<ul id="topic-<?php ideaboard_topic_id(); ?>-replies" class="forums ideaboard-replies">
 
-	<li class="bbp-header">
+	<li class="ideaboard-header">
 
-		<div class="bbp-reply-author"><?php  _e( 'Author',  'ideaboard' ); ?></div><!-- .bbp-reply-author -->
+		<div class="ideaboard-reply-author"><?php  _e( 'Author',  'ideaboard' ); ?></div><!-- .ideaboard-reply-author -->
 
-		<div class="bbp-reply-content">
+		<div class="ideaboard-reply-content">
 
 			<?php if ( !ideaboard_show_lead_topic() ) : ?>
 
@@ -33,11 +33,11 @@
 
 			<?php endif; ?>
 
-		</div><!-- .bbp-reply-content -->
+		</div><!-- .ideaboard-reply-content -->
 
-	</li><!-- .bbp-header -->
+	</li><!-- .ideaboard-header -->
 
-	<li class="bbp-body">
+	<li class="ideaboard-body">
 
 		<?php if ( ideaboard_thread_replies() ) : ?>
 
@@ -53,13 +53,13 @@
 
 		<?php endif; ?>
 
-	</li><!-- .bbp-body -->
+	</li><!-- .ideaboard-body -->
 
-	<li class="bbp-footer">
+	<li class="ideaboard-footer">
 
-		<div class="bbp-reply-author"><?php  _e( 'Author',  'ideaboard' ); ?></div>
+		<div class="ideaboard-reply-author"><?php  _e( 'Author',  'ideaboard' ); ?></div>
 
-		<div class="bbp-reply-content">
+		<div class="ideaboard-reply-content">
 
 			<?php if ( !ideaboard_show_lead_topic() ) : ?>
 
@@ -71,9 +71,9 @@
 
 			<?php endif; ?>
 
-		</div><!-- .bbp-reply-content -->
+		</div><!-- .ideaboard-reply-content -->
 
-	</li><!-- .bbp-footer -->
+	</li><!-- .ideaboard-footer -->
 
 </ul><!-- #topic-<?php ideaboard_topic_id(); ?>-replies -->
 

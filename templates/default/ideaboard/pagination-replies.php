@@ -11,14 +11,14 @@
 
 <?php do_action( 'ideaboard_template_before_pagination_loop' ); ?>
 
-<div class="bbp-pagination">
-	<div class="bbp-pagination-count">
+<div class="ideaboard-pagination">
+	<div class="ideaboard-pagination-count">
 
 		<?php ideaboard_topic_pagination_count(); ?>
 
 	</div>
 
-	<div class="bbp-pagination-links">
+	<div class="ideaboard-pagination-links">
 
 		<?php ideaboard_topic_pagination_links(); ?>
 

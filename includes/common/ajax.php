@@ -35,7 +35,7 @@ function ideaboard_ajax_url() {
 		global $wp;
 
 		$base_url = home_url( trailingslashit( $wp->request ), ( is_ssl() ? 'https' : 'http' ) );
-		$ajaxurl  = add_query_arg( array( 'bbp-ajax' => 'true' ), $base_url );
+		$ajaxurl  = add_query_arg( array( 'ideaboard-ajax' => 'true' ), $base_url );
 
 		return apply_filters( 'ideaboard_get_ajax_url', $ajaxurl );
 	}
@@ -45,10 +45,10 @@ function ideaboard_ajax_url() {
  *
  * @since IdeaBoard (r4543)
  *
- * @return bool Looking for bbp-ajax
+ * @return bool Looking for ideaboard-ajax
  */
 function ideaboard_is_ajax() {
-	return (bool) ( ( isset( $_GET['bbp-ajax'] ) || isset( $_POST['bbp-ajax'] ) ) && ! empty( $_REQUEST['action'] ) );
+	return (bool) ( ( isset( $_GET['ideaboard-ajax'] ) || isset( $_POST['ideaboard-ajax'] ) ) && ! empty( $_REQUEST['action'] ) );
 }
 
 /**

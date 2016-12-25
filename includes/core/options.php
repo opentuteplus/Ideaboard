@@ -154,7 +154,7 @@ function ideaboard_delete_options() {
 
 /**
  * Add filters to each IdeaBoard option and allow them to be overloaded from
- * inside the $bbp->options array.
+ * inside the $ideaboard->options array.
  *
  * @since IdeaBoard (r3451)
  * @uses ideaboard_get_default_options() To get default options
@@ -173,7 +173,7 @@ function ideaboard_setup_option_filters() {
 
 /**
  * Filter default options and allow them to be overloaded from inside the
- * $bbp->options array.
+ * $ideaboard->options array.
  *
  * @since IdeaBoard (r3451)
  * @param bool $value Optional. Default value false

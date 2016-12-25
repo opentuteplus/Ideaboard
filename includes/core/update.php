@@ -52,7 +52,7 @@ function ideaboard_is_update() {
 function ideaboard_is_activation( $basename = '' ) {
 	global $pagenow;
 
-	$bbp    = ideaboard();
+	$ideaboard    = ideaboard();
 	$action = false;
 
 	// Bail if not in admin/plugins
@@ -79,8 +79,8 @@ function ideaboard_is_activation( $basename = '' ) {
 	}
 
 	// Set basename if empty
-	if ( empty( $basename ) && !empty( $bbp->basename ) ) {
-		$basename = $bbp->basename;
+	if ( empty( $basename ) && !empty( $ideaboard->basename ) ) {
+		$basename = $ideaboard->basename;
 	}
 
 	// Bail if no basename
@@ -101,7 +101,7 @@ function ideaboard_is_activation( $basename = '' ) {
 function ideaboard_is_deactivation( $basename = '' ) {
 	global $pagenow;
 
-	$bbp    = ideaboard();
+	$ideaboard    = ideaboard();
 	$action = false;
 
 	// Bail if not in admin/plugins
@@ -128,8 +128,8 @@ function ideaboard_is_deactivation( $basename = '' ) {
 	}
 
 	// Set basename if empty
-	if ( empty( $basename ) && !empty( $bbp->basename ) ) {
-		$basename = $bbp->basename;
+	if ( empty( $basename ) && !empty( $ideaboard->basename ) ) {
+		$basename = $ideaboard->basename;
 	}
 
 	// Bail if no basename

@@ -15,9 +15,9 @@
 
 		<?php if ( ideaboard_is_user_home() || current_user_can( 'edit_users' ) ) : ?>
 
-			<div id="bbp-user-subscriptions" class="bbp-user-subscriptions">
+			<div id="ideaboard-user-subscriptions" class="ideaboard-user-subscriptions">
 				<h2 class="entry-title"><?php _e( 'Subscribed Forums', 'ideaboard' ); ?></h2>
-				<div class="bbp-user-section">
+				<div class="ideaboard-user-section">
 
 					<?php if ( ideaboard_get_user_forum_subscriptions() ) : ?>
 
@@ -32,7 +32,7 @@
 				</div>
 
 				<h2 class="entry-title"><?php _e( 'Subscribed Topics', 'ideaboard' ); ?></h2>
-				<div class="bbp-user-section">
+				<div class="ideaboard-user-section">
 
 					<?php if ( ideaboard_get_user_topic_subscriptions() ) : ?>
 
@@ -49,7 +49,7 @@
 					<?php endif; ?>
 
 				</div>
-			</div><!-- #bbp-user-subscriptions -->
+			</div><!-- #ideaboard-user-subscriptions -->
 
 		<?php endif; ?>
 

@@ -1365,8 +1365,8 @@ function ideaboard_subscriptions_handler( $action = '' ) {
  */
 function ideaboard_edit_user_handler( $action = '' ) {
 
-	// Bail if action is not 'bbp-update-user'
-	if ( 'bbp-update-user' !== $action )
+	// Bail if action is not 'ideaboard-update-user'
+	if ( 'ideaboard-update-user' !== $action )
 		return;
 
 	// Get the displayed user ID

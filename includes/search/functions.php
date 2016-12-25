@@ -64,7 +64,7 @@ function ideaboard_search_results_redirect() {
 	global $wp_rewrite;
 	
 	// Bail if not a search request action
-	if ( empty( $_GET['action'] ) || ( 'bbp-search-request' !== $_GET['action'] ) ) {
+	if ( empty( $_GET['action'] ) || ( 'ideaboard-search-request' !== $_GET['action'] ) ) {
 		return;
 	}
 

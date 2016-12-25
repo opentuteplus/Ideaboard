@@ -92,9 +92,9 @@ class BBP_Admin {
 	 * @access private
 	 */
 	private function setup_globals() {
-		$bbp = ideaboard();
-		$this->admin_dir  = trailingslashit( $bbp->includes_dir . 'admin'  ); // Admin path
-		$this->admin_url  = trailingslashit( $bbp->includes_url . 'admin'  ); // Admin url
+		$ideaboard = ideaboard();
+		$this->admin_dir  = trailingslashit( $ideaboard->includes_dir . 'admin'  ); // Admin path
+		$this->admin_url  = trailingslashit( $ideaboard->includes_url . 'admin'  ); // Admin url
 		$this->images_url = trailingslashit( $this->admin_url   . 'images' ); // Admin images URL
 		$this->styles_url = trailingslashit( $this->admin_url   . 'styles' ); // Admin styles URL
 		$this->css_url    = trailingslashit( $this->admin_url   . 'css'    ); // Admin css URL
@@ -198,7 +198,7 @@ class BBP_Admin {
 					__( 'Repair Forums', 'ideaboard' ),
 					__( 'Forum Repair',  'ideaboard' ),
 					$this->minimum_capability,
-					'bbp-repair',
+					'ideaboard-repair',
 					'ideaboard_admin_repair'
 				);
 			}
@@ -208,7 +208,7 @@ class BBP_Admin {
 					__( 'Import Forums', 'ideaboard' ),
 					__( 'Forum Import',  'ideaboard' ),
 					$this->minimum_capability,
-					'bbp-converter',
+					'ideaboard-converter',
 					'ideaboard_converter_settings'
 				);
 			}
@@ -218,7 +218,7 @@ class BBP_Admin {
 					__( 'Reset Forums', 'ideaboard' ),
 					__( 'Forum Reset',  'ideaboard' ),
 					$this->minimum_capability,
-					'bbp-reset',
+					'ideaboard-reset',
 					'ideaboard_admin_reset'
 				);
 			}
@@ -233,7 +233,7 @@ class BBP_Admin {
 				__( 'Forums', 'ideaboard' ),
 				__( 'Forums', 'ideaboard' ),
 				$this->minimum_capability,
-				'bbp-repair',
+				'ideaboard-repair',
 				'ideaboard_admin_repair'
 			);
 		}
@@ -257,7 +257,7 @@ class BBP_Admin {
 				__( 'Welcome to IdeaBoard',  'ideaboard' ),
 				__( 'Welcome to IdeaBoard',  'ideaboard' ),
 				$this->minimum_capability,
-				'bbp-about',
+				'ideaboard-about',
 				array( $this, 'about_screen' )
 			);
 
@@ -266,7 +266,7 @@ class BBP_Admin {
 				__( 'Welcome to IdeaBoard',  'ideaboard' ),
 				__( 'Welcome to IdeaBoard',  'ideaboard' ),
 				$this->minimum_capability,
-				'bbp-credits',
+				'ideaboard-credits',
 				array( $this, 'credits_screen' )
 			);
 		}
@@ -280,7 +280,7 @@ class BBP_Admin {
 			__( 'Update Forums', 'ideaboard' ),
 			__( 'Update Forums', 'ideaboard' ),
 			'manage_network',
-			'bbp-update',
+			'ideaboard-update',
 			array( $this, 'update_screen' )
 		);
 	}
@@ -512,7 +512,7 @@ class BBP_Admin {
 
 		// About page link
 		if ( current_user_can( 'ideaboard_about_page' ) ) {
-			$new_links['about']    = '<a href="' . esc_url( add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php'           ) ) ) . '">' . esc_html__( 'About',    'ideaboard' ) . '</a>';
+			$new_links['about']    = '<a href="' . esc_url( add_query_arg( array( 'page' => 'ideaboard-about' ), admin_url( 'index.php'           ) ) ) . '">' . esc_html__( 'About',    'ideaboard' ) . '</a>';
 		}
 
 		// Add a few links to the existing links array
@@ -527,7 +527,7 @@ class BBP_Admin {
 	 * @uses wp_add_dashboard_widget() To add the dashboard widget
 	 */
 	public static function dashboard_widget_right_now() {
-		wp_add_dashboard_widget( 'bbp-dashboard-right-now', __( 'Right Now in Forums', 'ideaboard' ), 'ideaboard_dashboard_widget_right_now' );
+		wp_add_dashboard_widget( 'ideaboard-dashboard-right-now', __( 'Right Now in Forums', 'ideaboard' ), 'ideaboard_dashboard_widget_right_now' );
 	}
 
 	/**
@@ -541,9 +541,9 @@ class BBP_Admin {
 		if ( is_user_logged_in() ) {
 			$wp_admin_bar->add_menu( array(
 				'parent' => 'wp-logo',
-				'id'     => 'bbp-about',
+				'id'     => 'ideaboard-about',
 				'title'  => esc_html__( 'About IdeaBoard', 'ideaboard' ),
-				'href'   => add_query_arg( array( 'page' => 'bbp-about' ), admin_url( 'index.php' ) )
+				'href'   => add_query_arg( array( 'page' => 'ideaboard-about' ), admin_url( 'index.php' ) )
 			) );
 		}
 	}
@@ -566,15 +566,15 @@ class BBP_Admin {
 				case ideaboard_get_topic_post_type() :
 
 					// Enqueue the common JS
-					wp_enqueue_script( 'bbp-admin-common-js', $this->js_url . 'common.js', array( 'jquery' ), $version );
+					wp_enqueue_script( 'ideaboard-admin-common-js', $this->js_url . 'common.js', array( 'jquery' ), $version );
 
 					// Topics admin
 					if ( ideaboard_get_topic_post_type() === get_current_screen()->post_type ) {
-						wp_enqueue_script( 'bbp-admin-topics-js', $this->js_url . 'topics.js', array( 'jquery' ), $version );
+						wp_enqueue_script( 'ideaboard-admin-topics-js', $this->js_url . 'topics.js', array( 'jquery' ), $version );
 
 					// Replies admin
 					} elseif ( ideaboard_get_reply_post_type() === get_current_screen()->post_type ) {
-						wp_enqueue_script( 'bbp-admin-replies-js', $this->js_url . 'replies.js', array( 'jquery' ), $version );
+						wp_enqueue_script( 'ideaboard-admin-replies-js', $this->js_url . 'replies.js', array( 'jquery' ), $version );
 					}
 
 					break;
@@ -588,7 +588,7 @@ class BBP_Admin {
 	 * @since IdeaBoard (r5224)
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style( 'bbp-admin-css', $this->css_url . 'admin.css', array( 'dashicons' ), ideaboard_get_version() );
+		wp_enqueue_style( 'ideaboard-admin-css', $this->css_url . 'admin.css', array( 'dashicons' ), ideaboard_get_version() );
 	}
 
 	/**
@@ -600,11 +600,11 @@ class BBP_Admin {
 	 * @uses remove_submenu_page() To remove menu items with alternat navigation
 	 */
 	public function admin_head() {
-		remove_submenu_page( 'tools.php', 'bbp-repair'    );
-		remove_submenu_page( 'tools.php', 'bbp-converter' );
-		remove_submenu_page( 'tools.php', 'bbp-reset'     );
-		remove_submenu_page( 'index.php', 'bbp-about'     );
-		remove_submenu_page( 'index.php', 'bbp-credits'   );
+		remove_submenu_page( 'tools.php', 'ideaboard-repair'    );
+		remove_submenu_page( 'tools.php', 'ideaboard-converter' );
+		remove_submenu_page( 'tools.php', 'ideaboard-reset'     );
+		remove_submenu_page( 'index.php', 'ideaboard-about'     );
+		remove_submenu_page( 'index.php', 'ideaboard-credits'   );
 	}
 
 	/**
@@ -626,7 +626,7 @@ class BBP_Admin {
 
 		// Mint
 		wp_admin_css_color(
-			'bbp-mint',
+			'ideaboard-mint',
 			esc_html_x( 'Mint',      'admin color scheme', 'ideaboard' ),
 			$this->styles_url . 'mint' . $suffix . '.css',
 			array( '#4f6d59', '#33834e', '#5FB37C', '#81c498' ),
@@ -635,7 +635,7 @@ class BBP_Admin {
 
 		// Evergreen
 		wp_admin_css_color(
-			'bbp-evergreen',
+			'ideaboard-evergreen',
 			esc_html_x( 'Evergreen', 'admin color scheme', 'ideaboard' ),
 			$this->styles_url . 'evergreen' . $suffix . '.css',
 			array( '#324d3a', '#446950', '#56b274', '#324d3a' ),
@@ -775,12 +775,12 @@ class BBP_Admin {
 		<div class="wrap about-wrap">
 			<h1><?php printf( esc_html__( 'Welcome to IdeaBoard %s', 'ideaboard' ), $display_version ); ?></h1>
 			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! IdeaBoard %s is bundled up and ready to weather the storm of users in your community!', 'ideaboard' ), $display_version ); ?></div>
-			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'ideaboard' ), $display_version ); ?></div>
+			<div class="ideaboard-badge"><?php printf( esc_html__( 'Version %s', 'ideaboard' ), $display_version ); ?></div>
 
 			<h2 class="nav-tab-wrapper">
-				<a class="nav-tab nav-tab-active" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-about' ), 'index.php' ) ) ); ?>">
+				<a class="nav-tab nav-tab-active" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'ideaboard-about' ), 'index.php' ) ) ); ?>">
 					<?php esc_html_e( 'What&#8217;s New', 'ideaboard' ); ?>
-				</a><a class="nav-tab" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-credits' ), 'index.php' ) ) ); ?>">
+				</a><a class="nav-tab" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'ideaboard-credits' ), 'index.php' ) ) ); ?>">
 					<?php esc_html_e( 'Credits', 'ideaboard' ); ?>
 				</a>
 			</h2>
@@ -852,12 +852,12 @@ class BBP_Admin {
 		<div class="wrap about-wrap">
 			<h1><?php printf( esc_html__( 'Welcome to IdeaBoard %s', 'ideaboard' ), $display_version ); ?></h1>
 			<div class="about-text"><?php printf( esc_html__( 'Thank you for updating! IdeaBoard %s is waxed, polished, and ready for you to take it for a lap or two around the block!', 'ideaboard' ), $display_version ); ?></div>
-			<div class="bbp-badge"><?php printf( esc_html__( 'Version %s', 'ideaboard' ), $display_version ); ?></div>
+			<div class="ideaboard-badge"><?php printf( esc_html__( 'Version %s', 'ideaboard' ), $display_version ); ?></div>
 
 			<h2 class="nav-tab-wrapper">
-				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-about' ), 'index.php' ) ) ); ?>" class="nav-tab">
+				<a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'ideaboard-about' ), 'index.php' ) ) ); ?>" class="nav-tab">
 					<?php esc_html_e( 'What&#8217;s New', 'ideaboard' ); ?>
-				</a><a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'bbp-credits' ), 'index.php' ) ) ); ?>" class="nav-tab nav-tab-active">
+				</a><a href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'ideaboard-credits' ), 'index.php' ) ) ); ?>" class="nav-tab nav-tab-active">
 					<?php esc_html_e( 'Credits', 'ideaboard' ); ?>
 				</a>
 			</h2>
@@ -965,13 +965,13 @@ class BBP_Admin {
 
 		// Taking action
 		switch ( $action ) {
-			case 'bbp-update' :
+			case 'ideaboard-update' :
 
 				// Run the full updater
 				ideaboard_version_updater(); ?>
 
 				<p><?php esc_html_e( 'All done!', 'ideaboard' ); ?></p>
-				<a class="button" href="index.php?page=bbp-update"><?php esc_html_e( 'Go Back', 'ideaboard' ); ?></a>
+				<a class="button" href="index.php?page=ideaboard-update"><?php esc_html_e( 'Go Back', 'ideaboard' ); ?></a>
 
 				<?php
 
@@ -981,7 +981,7 @@ class BBP_Admin {
 			default : ?>
 
 				<p><?php esc_html_e( 'You can update your forum through this page. Hit the link below to update.', 'ideaboard' ); ?></p>
-				<p><a class="button" href="index.php?page=bbp-update&amp;action=bbp-update"><?php esc_html_e( 'Update Forum', 'ideaboard' ); ?></a></p>
+				<p><a class="button" href="index.php?page=ideaboard-update&amp;action=ideaboard-update"><?php esc_html_e( 'Update Forum', 'ideaboard' ); ?></a></p>
 
 			<?php break;
 
@@ -1044,7 +1044,7 @@ class BBP_Admin {
 
 							// Get the response of the IdeaBoard update on this site
 							$response = wp_remote_get(
-								trailingslashit( $siteurl ) . 'wp-admin/index.php?page=bbp-update&action=bbp-update',
+								trailingslashit( $siteurl ) . 'wp-admin/index.php?page=ideaboard-update&action=ideaboard-update',
 								array( 'timeout' => 30, 'httpversion' => '1.1' )
 							);
 

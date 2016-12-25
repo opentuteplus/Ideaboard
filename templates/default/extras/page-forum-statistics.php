@@ -15,7 +15,7 @@ get_header(); ?>
 
 	<?php while ( have_posts() ) : the_post(); ?>
 
-		<div id="bbp-statistics" class="bbp-statistics">
+		<div id="ideaboard-statistics" class="ideaboard-statistics">
 			<h1 class="entry-title"><?php the_title(); ?></h1>
 			<div class="entry-content">
 
@@ -47,7 +47,7 @@ get_header(); ?>
 
 				</div>
 			</div>
-		</div><!-- #bbp-statistics -->
+		</div><!-- #ideaboard-statistics -->
 
 	<?php endwhile; ?>
 

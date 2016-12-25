@@ -9,28 +9,28 @@
 
 ?>
 
-<div class="bbp-reply-header">
+<div class="ideaboard-reply-header">
 
-	<div class="bbp-meta">
+	<div class="ideaboard-meta">
 
-		<span class="bbp-reply-post-date"><?php ideaboard_reply_post_date(); ?></span>
+		<span class="ideaboard-reply-post-date"><?php ideaboard_reply_post_date(); ?></span>
 
-		<a href="<?php ideaboard_reply_url(); ?>" class="bbp-reply-permalink">#<?php ideaboard_reply_id(); ?></a>
+		<a href="<?php ideaboard_reply_url(); ?>" class="ideaboard-reply-permalink">#<?php ideaboard_reply_id(); ?></a>
 
-	</div><!-- .bbp-meta -->
+	</div><!-- .ideaboard-meta -->
 
-	<div class="bbp-reply-title">
+	<div class="ideaboard-reply-title">
 
 		<h3><?php _e( 'In reply to: ', 'ideaboard' ); ?>
-		<a class="bbp-topic-permalink" href="<?php ideaboard_topic_permalink( ideaboard_get_reply_topic_id() ); ?>"><?php ideaboard_topic_title( ideaboard_get_reply_topic_id() ); ?></a></h3>
+		<a class="ideaboard-topic-permalink" href="<?php ideaboard_topic_permalink( ideaboard_get_reply_topic_id() ); ?>"><?php ideaboard_topic_title( ideaboard_get_reply_topic_id() ); ?></a></h3>
 
-	</div><!-- .bbp-reply-title -->
+	</div><!-- .ideaboard-reply-title -->
 
-</div><!-- .bbp-reply-header -->
+</div><!-- .ideaboard-reply-header -->
 
 <div id="post-<?php ideaboard_reply_id(); ?>" <?php ideaboard_reply_class(); ?>>
 
-	<div class="bbp-reply-author">
+	<div class="ideaboard-reply-author">
 
 		<?php do_action( 'ideaboard_theme_before_reply_author_details' ); ?>
 
@@ -40,7 +40,7 @@
 
 			<?php do_action( 'ideaboard_theme_before_reply_author_admin_details' ); ?>
 
-			<div class="bbp-reply-ip"><?php ideaboard_author_ip( ideaboard_get_reply_id() ); ?></div>
+			<div class="ideaboard-reply-ip"><?php ideaboard_author_ip( ideaboard_get_reply_id() ); ?></div>
 
 			<?php do_action( 'ideaboard_theme_after_reply_author_admin_details' ); ?>
 
@@ -48,9 +48,9 @@
 
 		<?php do_action( 'ideaboard_theme_after_reply_author_details' ); ?>
 
-	</div><!-- .bbp-reply-author -->
+	</div><!-- .ideaboard-reply-author -->
 
-	<div class="bbp-reply-content">
+	<div class="ideaboard-reply-content">
 
 		<?php do_action( 'ideaboard_theme_before_reply_content' ); ?>
 
@@ -58,7 +58,7 @@
 
 		<?php do_action( 'ideaboard_theme_after_reply_content' ); ?>
 
-	</div><!-- .bbp-reply-content -->
+	</div><!-- .ideaboard-reply-content -->
 
 </div><!-- #post-<?php ideaboard_reply_id(); ?> -->
 

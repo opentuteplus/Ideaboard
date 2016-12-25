@@ -15,25 +15,25 @@
 
 	<?php if ( is_user_logged_in() && current_user_can( 'edit_topic', ideaboard_get_topic_id() ) ) : ?>
 
-		<div id="move-reply-<?php ideaboard_topic_id(); ?>" class="bbp-reply-move">
+		<div id="move-reply-<?php ideaboard_topic_id(); ?>" class="ideaboard-reply-move">
 
 			<form id="move_reply" name="move_reply" method="post" action="<?php the_permalink(); ?>">
 
-				<fieldset class="bbp-form">
+				<fieldset class="ideaboard-form">
 
 					<legend><?php printf( __( 'Move reply "%s"', 'ideaboard' ), ideaboard_get_reply_title() ); ?></legend>
 
 					<div>
 
-						<div class="bbp-template-notice info">
+						<div class="ideaboard-template-notice info">
 							<p><?php _e( 'You can either make this reply a new topic with a new title, or merge it into an existing topic.', 'ideaboard' ); ?></p>
 						</div>
 
-						<div class="bbp-template-notice">
+						<div class="ideaboard-template-notice">
 							<p><?php _e( 'If you choose an existing topic, replies will be ordered by the time and date they were created.', 'ideaboard' ); ?></p>
 						</div>
 
-						<fieldset class="bbp-form">
+						<fieldset class="ideaboard-form">
 							<legend><?php _e( 'Move Method', 'ideaboard' ); ?></legend>
 
 							<div>
@@ -64,11 +64,11 @@
 
 						</fieldset>
 
-						<div class="bbp-template-notice error">
+						<div class="ideaboard-template-notice error">
 							<p><?php _e( '<strong>WARNING:</strong> This process cannot be undone.', 'ideaboard' ); ?></p>
 						</div>
 
-						<div class="bbp-submit-wrapper">
+						<div class="ideaboard-submit-wrapper">
 							<button type="submit" tabindex="<?php ideaboard_tab_index(); ?>" id="ideaboard_move_reply_submit" name="ideaboard_move_reply_submit" class="button submit"><?php _e( 'Submit', 'ideaboard' ); ?></button>
 						</div>
 					</div>
@@ -81,7 +81,7 @@
 
 	<?php else : ?>
 
-		<div id="no-reply-<?php ideaboard_reply_id(); ?>" class="bbp-no-reply">
+		<div id="no-reply-<?php ideaboard_reply_id(); ?>" class="ideaboard-no-reply">
 			<div class="entry-content"><?php is_user_logged_in() ? _e( 'You do not have the permissions to edit this reply!', 'ideaboard' ) : _e( 'You cannot edit this reply.', 'ideaboard' ); ?></div>
 		</div>
 

@@ -13,10 +13,10 @@
 
 	<?php do_action( 'ideaboard_template_notices' ); ?>
 
-	<div id="bbp-user-wrapper">
+	<div id="ideaboard-user-wrapper">
 		<?php ideaboard_get_template_part( 'user', 'details' ); ?>
 
-		<div id="bbp-user-body">
+		<div id="ideaboard-user-body">
 			<?php if ( ideaboard_is_favorites()                 ) ideaboard_get_template_part( 'user', 'favorites'       ); ?>
 			<?php if ( ideaboard_is_subscriptions()             ) ideaboard_get_template_part( 'user', 'subscriptions'   ); ?>
 			<?php if ( ideaboard_is_single_user_topics()        ) ideaboard_get_template_part( 'user', 'topics-created'  ); ?>

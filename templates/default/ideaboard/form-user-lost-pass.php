@@ -9,11 +9,11 @@
 
 ?>
 
-<form method="post" action="<?php ideaboard_wp_login_action( array( 'action' => 'lostpassword', 'context' => 'login_post' ) ); ?>" class="bbp-login-form">
-	<fieldset class="bbp-form">
+<form method="post" action="<?php ideaboard_wp_login_action( array( 'action' => 'lostpassword', 'context' => 'login_post' ) ); ?>" class="ideaboard-login-form">
+	<fieldset class="ideaboard-form">
 		<legend><?php _e( 'Lost Password', 'ideaboard' ); ?></legend>
 
-		<div class="bbp-username">
+		<div class="ideaboard-username">
 			<p>
 				<label for="user_login" class="hide"><?php _e( 'Username or Email', 'ideaboard' ); ?>: </label>
 				<input type="text" name="user_login" value="" size="20" id="user_login" tabindex="<?php ideaboard_tab_index(); ?>" />
@@ -22,7 +22,7 @@
 
 		<?php do_action( 'login_form', 'resetpass' ); ?>
 
-		<div class="bbp-submit-wrapper">
+		<div class="ideaboard-submit-wrapper">
 
 			<button type="submit" tabindex="<?php ideaboard_tab_index(); ?>" name="user-submit" class="button submit user-submit"><?php _e( 'Reset My Password', 'ideaboard' ); ?></button>
 

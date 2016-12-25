@@ -11,9 +11,9 @@
 
 	<?php do_action( 'ideaboard_template_before_user_favorites' ); ?>
 
-	<div id="bbp-user-favorites" class="bbp-user-favorites">
+	<div id="ideaboard-user-favorites" class="ideaboard-user-favorites">
 		<h2 class="entry-title"><?php _e( 'Favorite Forum Topics', 'ideaboard' ); ?></h2>
-		<div class="bbp-user-section">
+		<div class="ideaboard-user-section">
 
 			<?php if ( ideaboard_get_user_favorites() ) : ?>
 
@@ -30,6 +30,6 @@
 			<?php endif; ?>
 
 		</div>
-	</div><!-- #bbp-user-favorites -->
+	</div><!-- #ideaboard-user-favorites -->
 
 	<?php do_action( 'ideaboard_template_after_user_favorites' ); ?>
