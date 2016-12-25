@@ -918,8 +918,8 @@ function ideaboard() {
  * This gives all other plugins the chance to load before IdeaBoard, to get their
  * actions, filters, and overrides setup without IdeaBoard being in the way.
  */
-if ( defined( 'BBPRESS_LATE_LOAD' ) ) {
-	add_action( 'plugins_loaded', 'ideaboard', (int) BBPRESS_LATE_LOAD );
+if ( defined( 'IDEABOARD_LATE_LOAD' ) ) {
+	add_action( 'plugins_loaded', 'ideaboard', (int) IDEABOARD_LATE_LOAD );
 
 // "And now here's something we hope you'll really like!"
 } else {
