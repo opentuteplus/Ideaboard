@@ -11,7 +11,7 @@
  */
 
 /**
- * Plugin Name: TheIdeaBoard
+ * Plugin Name: IdeaBoard
  * Plugin URI:  https://github.com/opentuteplus/ideaboard
  * Description: IdeaBoard is forum software for building better products with intelligent product feedback.
  * Author:      OpenTute+
